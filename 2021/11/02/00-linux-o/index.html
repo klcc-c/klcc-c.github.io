@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="Ubuntu扩容lvm12lvextend -l +100%FREE &#x2F;dev&#x2F;mapper&#x2F;ubuntu--vg-ubuntu--lvresize2fs &#x2F;dev&#x2F;mapper&#x2F;ubuntu--vg-ubuntu--lv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux-疑难杂症">
+<meta property="og:url" content="https://klcc.cc/2021/11/02/00-linux-o/index.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="Ubuntu扩容lvm12lvextend -l +100%FREE &#x2F;dev&#x2F;mapper&#x2F;ubuntu--vg-ubuntu--lvresize2fs &#x2F;dev&#x2F;mapper&#x2F;ubuntu--vg-ubuntu--lv">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-02T11:13:44.841Z">
+<meta property="article:modified_time" content="2021-11-02T11:13:44.841Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/2021/11/02/00-linux-o/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/2021/11/02/00-linux-o/","path":"2021/11/02/00-linux-o/","title":"Linux-疑难杂症"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux-疑难杂症 | klcc</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/klcc-c.github.io/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">5</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">3</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">4</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu%E6%89%A9%E5%AE%B9lvm"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu扩容lvm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%A1%AC%E7%9B%98%E7%81%AF"><span class="nav-number">2.</span> <span class="nav-text">测试硬盘灯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU%E9%AB%98%E5%8E%8B%E6%B5%8B%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">CPU高压测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ip%E6%8E%92%E5%BA%8F"><span class="nav-number">4.</span> <span class="nav-text">ip排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mdadm%E8%BD%AFraid"><span class="nav-number">5.</span> <span class="nav-text">mdadm软raid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dpkg-error"><span class="nav-number">6.</span> <span class="nav-text">dpkg-error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU%E6%B8%A9%E5%BA%A6%E6%9F%A5%E7%9C%8B"><span class="nav-number">7.</span> <span class="nav-text">CPU温度查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E4%BA%A4%E4%BA%92%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-number">8.</span> <span class="nav-text">无交互修改密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AFyum%E7%BC%93%E5%AD%98"><span class="nav-number">9.</span> <span class="nav-text">开启yum缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find%E6%89%BE%E5%87%BA%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%88%96%E5%88%A0%E9%99%A4"><span class="nav-number">10.</span> <span class="nav-text">find找出的移动或删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">11.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash%E9%94%99%E8%AF%AF%E4%BF%AE%E5%A4%8D"><span class="nav-number">12.</span> <span class="nav-text">-bash错误修复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useradd"><span class="nav-number">13.</span> <span class="nav-text">useradd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%85%8D%E5%AF%86"><span class="nav-number">14.</span> <span class="nav-text">设置免密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">15.</span> <span class="nav-text">rpm管理命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%95%B4%E7%90%86"><span class="nav-number">16.</span> <span class="nav-text">输出格式化整理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">17.</span> <span class="nav-text">自动补全命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VMware%E7%9B%B8%E5%85%B3"><span class="nav-number">18.</span> <span class="nav-text">VMware相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#history%E8%AE%BE%E7%BD%AE"><span class="nav-number">19.</span> <span class="nav-text">history设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4%E6%98%BE%E7%A4%BA%E6%97%B6%E9%97%B4"><span class="nav-number">19.1.</span> <span class="nav-text">历史命令显示时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%94%A8%E6%88%B7bash"><span class="nav-number">19.2.</span> <span class="nav-text">记录用户bash</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim%E8%AE%BE%E7%BD%AE"><span class="nav-number">20.</span> <span class="nav-text">vim设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E6%89%A9%E5%AE%B9"><span class="nav-number">21.</span> <span class="nav-text">分区扩容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90"><span class="nav-number">22.</span> <span class="nav-text">随机数生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcpdump%E4%BD%BF%E7%94%A8"><span class="nav-number">23.</span> <span class="nav-text">tcpdump使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="nav-number">24.</span> <span class="nav-text">时间同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E9%A2%9C%E8%89%B2"><span class="nav-number">25.</span> <span class="nav-text">终端颜色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux%E6%A0%BC%E5%BC%8F%E9%97%AE%E9%A2%98"><span class="nav-number">26.</span> <span class="nav-text">linux格式问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%88%86%E5%89%B2"><span class="nav-number">27.</span> <span class="nav-text">文件分割</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/2021/11/02/00-linux-o/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux-疑难杂症
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-02 19:13:44" itemprop="dateCreated datePublished" datetime="2021-11-02T19:13:44+08:00">2021-11-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="Ubuntu扩容lvm"><a href="#Ubuntu扩容lvm" class="headerlink" title="Ubuntu扩容lvm"></a>Ubuntu扩容lvm</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv</span><br><span class="line">resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="测试硬盘灯"><a href="#测试硬盘灯" class="headerlink" title="测试硬盘灯"></a>测试硬盘灯</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">time dd if=/dev/sdb of=/dev/null bs=4k</span><br><span class="line"></span><br><span class="line">for i in `lsblk |grep -w sd[a-z] |grep T  |awk &#x27;&#123;print $1&#125;&#x27;`</span><br><span class="line">do</span><br><span class="line">	nohup  dd if=/dev/$i of=/dev/null bs=4k &gt; /tmp/$&#123;i&#125;.log   &amp;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h2 id="CPU高压测试"><a href="#CPU高压测试" class="headerlink" title="CPU高压测试"></a>CPU高压测试</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for i in `seq 1 30`; do dd if=/dev/zero of=/dev/null &amp; done</span><br><span class="line">ps -ef |grep -v grep|grep &#x27;dd if=/dev/zero of=/dev/null&#x27;|awk &#x27;&#123;print $2&#125;&#x27;|xargs kill -9</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">top</span><br><span class="line">Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line"></span><br><span class="line">id 前面数值是空闲率</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="ip排序"><a href="#ip排序" class="headerlink" title="ip排序"></a>ip排序</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sort -t . -k 4,4n tt</span><br><span class="line">sort -t<span class="string">&#x27;.&#x27;</span> -k1,1n -k2,2n -k3,3n -k4,4n</span><br></pre></td></tr></table></figure>
+<h2 id="mdadm软raid"><a href="#mdadm软raid" class="headerlink" title="mdadm软raid"></a>mdadm软raid</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mdadm -C /dev/md1 -l raid0 -n 2 /dev/nvme2n2 /dev/nvme3n1 </span><br></pre></td></tr></table></figure>
+<h2 id="dpkg-error"><a href="#dpkg-error" class="headerlink" title="dpkg-error"></a>dpkg-error</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">dpkg: error processing package</span><br><span class="line"></span><br><span class="line">mv /var/lib/dpkg/info /var/lib/dpkg/info.bak</span><br><span class="line">mkdir /var/lib/dpkg/info</span><br><span class="line">apt update</span><br><span class="line"></span><br><span class="line">apt install sl</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mv /var/lib/dpkg/info       /var/lib/dpkg/info.ori</span><br><span class="line">mv /var/lib/dpkg/info.bak   /var/lib/dpkg/info</span><br><span class="line"></span><br><span class="line">apt install lrzsz </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="CPU温度查看"><a href="#CPU温度查看" class="headerlink" title="CPU温度查看"></a>CPU温度查看</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">apt-get install lm-sensors sensors-applet -y</span><br><span class="line">yes| sensors-detect</span><br><span class="line"></span><br><span class="line">cat /sys/class/hwmon/hwmon0/device/hwmon/hwmon0/temp1_input</span><br><span class="line"></span><br><span class="line">sensors</span><br></pre></td></tr></table></figure>
+<h2 id="无交互修改密码"><a href="#无交互修改密码" class="headerlink" title="无交互修改密码"></a>无交互修改密码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;root:test123.&quot;</span>|chpasswd</span><br></pre></td></tr></table></figure>
+<h2 id="开启yum缓存"><a href="#开启yum缓存" class="headerlink" title="开启yum缓存"></a>开启yum缓存</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/yum.conf</span><br><span class="line"><span class="meta">#</span><span class="bash">修改为1</span></span><br><span class="line">keepcache=1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">默认存放目录在/var/cache</span></span><br></pre></td></tr></table></figure>
+<h2 id="find找出的移动或删除"><a href="#find找出的移动或删除" class="headerlink" title="find找出的移动或删除"></a>find找出的移动或删除</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">find ./ -name &#x27;means&#x27;|xargs -i mv &#123;&#125;  /k-means/</span><br><span class="line">find ./ -name &#x27;means&#x27;|xargs -i cp &#123;&#125;  /k-means/</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">找出小于90G的文件</span></span><br><span class="line">find ./ -type f   -size -90G</span><br></pre></td></tr></table></figure>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="bash错误修复"><a href="#bash错误修复" class="headerlink" title="-bash错误修复"></a>-bash错误修复</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-bash-4.2$</span><br><span class="line">cp /etc/skel/.bashrc  /home/user/</span><br><span class="line">cp /etc/skel/.bash_profile   /home/user</span><br></pre></td></tr></table></figure>
+<h2 id="useradd"><a href="#useradd" class="headerlink" title="useradd"></a>useradd</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">指定目录</span></span><br><span class="line">-d </span><br></pre></td></tr></table></figure>
+<h2 id="设置免密"><a href="#设置免密" class="headerlink" title="设置免密"></a>设置免密</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -f ~/.ssh/id_rsa  -P &#x27;&#x27; -q</span><br><span class="line">sshpass -p123456</span><br><span class="line"></span><br><span class="line">ssh-copy-id -f -i ~/.ssh/id_rsa.pub &quot;-o StrictHostKeyChecking=no&quot; 10.0.0.100</span><br></pre></td></tr></table></figure>
+<h2 id="rpm管理命令"><a href="#rpm管理命令" class="headerlink" title="rpm管理命令"></a>rpm管理命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -ql  nginx		#列出所有相关目录</span><br><span class="line">rpm -qc  nginx		#列出配置目录</span><br><span class="line">rpm -e	 nginx		#单独卸载</span><br></pre></td></tr></table></figure>
+<h2 id="输出格式化整理"><a href="#输出格式化整理" class="headerlink" title="输出格式化整理"></a>输出格式化整理</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">column -t    <span class="comment">#格式化整理</span></span><br></pre></td></tr></table></figure>
+<h2 id="自动补全命令"><a href="#自动补全命令" class="headerlink" title="自动补全命令"></a>自动补全命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install bash-completion #自动补全命令</span><br></pre></td></tr></table></figure>
+<h2 id="VMware相关"><a href="#VMware相关" class="headerlink" title="VMware相关"></a>VMware相关</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">VM安装linux在docker中装mysql挂起再启动后无法连接解决方法</span></span><br><span class="line">vim /usr/lib/sysctl.d/00-system.conf</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">重启网络服务</span></span><br><span class="line">systemctl restart network</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">查看IPv4转发状态</span></span><br><span class="line">sysctl net.ipv4.ip_forward</span><br><span class="line">net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
+<h2 id="history设置"><a href="#history设置" class="headerlink" title="history设置"></a>history设置</h2><h3 id="历史命令显示时间"><a href="#历史命令显示时间" class="headerlink" title="历史命令显示时间"></a>历史命令显示时间</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">写入/etc/bashrc或者/etc/profile</span></span><br><span class="line">HISTFILESIZE=4000 #默认保存命令是1000条，这里修改为4000条</span><br><span class="line">HISTSIZE=4000</span><br><span class="line">USER_IP=`who -u am i 2&gt;/dev/null| awk &#x27;&#123;print $NF&#125;&#x27;|sed -e &#x27;s/[()]//g&#x27;` #取得登录客户端的IP</span><br><span class="line">if [ -z $USER_IP ]</span><br><span class="line">then</span><br><span class="line">USER_IP=`hostname`</span><br><span class="line">fi</span><br><span class="line">HISTTIMEFORMAT=&quot;%F %T $USER_IP:`whoami` &quot; #设置新的显示history的格式</span><br><span class="line">export HISTTIMEFORMAT</span><br><span class="line"></span><br><span class="line">. /etc/bashrc</span><br></pre></td></tr></table></figure>
+<h3 id="记录用户bash"><a href="#记录用户bash" class="headerlink" title="记录用户bash"></a>记录用户bash</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#####记录用户bash######################################################</span></span><br><span class="line"><span class="built_in">history</span></span><br><span class="line">USER=`whoami`</span><br><span class="line">USER_IP=`who -u am i 2&gt;/dev/null| awk <span class="string">&#x27;&#123;print $NF&#125;&#x27;</span>|sed -e <span class="string">&#x27;s/[()]//g&#x27;</span>`</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$USER_IP</span>&quot;</span> = <span class="string">&quot;&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">USER_IP=`hostname`</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d /var/<span class="built_in">log</span>/<span class="built_in">history</span> ]; <span class="keyword">then</span></span><br><span class="line">mkdir /var/<span class="built_in">log</span>/<span class="built_in">history</span></span><br><span class="line">chmod 777 /var/<span class="built_in">log</span>/<span class="built_in">history</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [ ! -d /var/<span class="built_in">log</span>/<span class="built_in">history</span>/<span class="variable">$&#123;LOGNAME&#125;</span> ]; <span class="keyword">then</span></span><br><span class="line">mkdir /var/<span class="built_in">log</span>/<span class="built_in">history</span>/<span class="variable">$&#123;LOGNAME&#125;</span></span><br><span class="line">chmod 300 /var/<span class="built_in">log</span>/<span class="built_in">history</span>/<span class="variable">$&#123;LOGNAME&#125;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">export</span> HISTSIZE=4096</span><br><span class="line">DT=`date +<span class="string">&quot;%Y%m%d_%H:%M:%S&quot;</span>`</span><br><span class="line"><span class="built_in">export</span> HISTFILE=<span class="string">&quot;/var/log/history/<span class="variable">$&#123;LOGNAME&#125;</span>/<span class="variable">$&#123;USER&#125;</span>@<span class="variable">$&#123;USER_IP&#125;</span>_<span class="variable">$DT</span>&quot;</span></span><br><span class="line">chmod 600 /var/<span class="built_in">log</span>/<span class="built_in">history</span>/<span class="variable">$&#123;LOGNAME&#125;</span>/*<span class="built_in">history</span>* 2&gt;/dev/null</span><br><span class="line"><span class="comment">#######################################################################</span></span><br></pre></td></tr></table></figure>
+<h2 id="vim设置"><a href="#vim设置" class="headerlink" title="vim设置"></a>vim设置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">TAB 键为四个空格 永久显示行号</span></span><br><span class="line">vim /etc/vimrc</span><br><span class="line">set ts=4</span><br><span class="line">set sw=4</span><br><span class="line">set number</span><br></pre></td></tr></table></figure>
+<h2 id="分区扩容"><a href="#分区扩容" class="headerlink" title="分区扩容"></a>分区扩容</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">umount /data/</span><br><span class="line">fdisk /dev/vdb</span><br><span class="line">d</span><br><span class="line">n</span><br><span class="line">p</span><br><span class="line"></span><br><span class="line">w</span><br><span class="line"></span><br><span class="line">e2fsck -f /dev/vdb1</span><br><span class="line">resize2fs /dev/vdb1 </span><br><span class="line">mount /dev/vdb1 /data/</span><br><span class="line">df -h </span><br><span class="line">cd /data/</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+<h2 id="随机数生成"><a href="#随机数生成" class="headerlink" title="随机数生成"></a>随机数生成</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rand -base64 3</span><br></pre></td></tr></table></figure>
+<h2 id="tcpdump使用"><a href="#tcpdump使用" class="headerlink" title="tcpdump使用"></a>tcpdump使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">参数：</span><br><span class="line">-i 指定网卡</span><br><span class="line">-c 指定抓包数量</span><br></pre></td></tr></table></figure>
+<h2 id="时间同步"><a href="#时间同步" class="headerlink" title="时间同步"></a>时间同步</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">如果不是北京时间先改成北京时间</span></span><br><span class="line">1.删除自带的localtime</span><br><span class="line">  rm -rf /etc/localtime</span><br><span class="line">2.创建软链接到localtime</span><br><span class="line">ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">同步阿里云</span></span><br><span class="line">ntpdate ntp.aliyun.com</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">写入硬件主板</span></span><br><span class="line">hwclock -w</span><br></pre></td></tr></table></figure>
+<h2 id="终端颜色"><a href="#终端颜色" class="headerlink" title="终端颜色"></a>终端颜色</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#写入到环境变量内</span></span><br><span class="line">RED:</span><br><span class="line">PS1=<span class="string">&#x27;$&#123;debian_chroot:+($debian_chroot)&#125;\[\033[01;31;40m\]\u\[\033[00;00;40m\]@\[\033[01;31;40m\]\h\[\033[00;31;40m\]:\[\033[00;00;40m\]\w \[\033[01;32;40m\]\$ \[\033[01;37;40m\]&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">YELLOW:</span><br><span class="line">PS1=<span class="string">&#x27;$&#123;debian_chroot:+($debian_chroot)&#125;\[\033[01;33;40m\]\u\[\033[00;00;40m\]@\[\033[01;33;40m\]\h\[\033[00;33;40m\]:\[\033[00;00;40m\]\w \[\033[01;32;40m\]\$ \[\033[01;37;40m\]&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="linux格式问题"><a href="#linux格式问题" class="headerlink" title="linux格式问题"></a>linux格式问题</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">检查文件格式，如果带M即是Windows，需要使用dosunix转换</span></span><br><span class="line">cat -v filename</span><br><span class="line">apt install dosunix -y</span><br><span class="line">yum install dosunix -y</span><br><span class="line">dos2unix filename</span><br><span class="line"></span><br><span class="line">参考：</span><br><span class="line">https://www.cnblogs.com/chuyiwang/p/13823551.html</span><br></pre></td></tr></table></figure>
+<h2 id="文件分割"><a href="#文件分割" class="headerlink" title="文件分割"></a>文件分割</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">split</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/2021/11/02/03-python-1/" rel="prev" title="python基础-01">
+                  <i class="fa fa-chevron-left"></i> python基础-01
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
