@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="1、Python解释器安装1.1 Python下载12345#官网，下载速度慢https:&#x2F;&#x2F;www.python.org#国内下载https:&#x2F;&#x2F;npm.taobao.org&#x2F;mirrors&#x2F;python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python解释器与Pycharm">
+<meta property="og:url" content="http://example.com/2021/11/01/02-python-pycharm/index.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="1、Python解释器安装1.1 Python下载12345#官网，下载速度慢https:&#x2F;&#x2F;www.python.org#国内下载https:&#x2F;&#x2F;npm.taobao.org&#x2F;mirrors&#x2F;python">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/NoHxoM.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/enrDoA.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Se7Gmo.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/J0BKed.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/LdenzD.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Dl1wXm.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/tjeIhK.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/XhyZ3E.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/3YqU60.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Ja6EtC.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/A717xq.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/dhoaNQ.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/DGvRCE.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/KZmLEE.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/aOntw1.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/cBrS1B.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Ciyvlb.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/aJKd3J.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/dag3R6.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/BJbgci.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/3u8VVR.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/ddVmoo.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/ZEJ0Od.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/3kEn2a.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/kdhtq0.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/mKW9Nt.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/p1l5h0.png">
+<meta property="article:published_time" content="2021-11-01T07:26:55.130Z">
+<meta property="article:modified_time" content="2021-11-02T05:51:53.172Z">
+<meta property="article:author" content="klcc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/NoHxoM.png">
+
+
+<link rel="canonical" href="http://example.com/2021/11/01/02-python-pycharm/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2021/11/01/02-python-pycharm/","path":"2021/11/01/02-python-pycharm/","title":"Python解释器与Pycharm"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Python解释器与Pycharm | klcc</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1%E3%80%81Python%E8%A7%A3%E9%87%8A%E5%99%A8%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">1、Python解释器安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Python%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Python下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Python%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Python安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-Mac%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 Mac安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-Windows%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 Windows安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-%E5%A4%9A%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.2.3 多版本</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2%E3%80%81Pycharm%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">2、Pycharm安装</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/01/02-python-pycharm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python解释器与Pycharm
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-01 15:26:55" itemprop="dateCreated datePublished" datetime="2021-11-01T15:26:55+08:00">2021-11-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-02 13:51:53" itemprop="dateModified" datetime="2021-11-02T13:51:53+08:00">2021-11-02</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="1、Python解释器安装"><a href="#1、Python解释器安装" class="headerlink" title="1、Python解释器安装"></a>1、Python解释器安装</h1><h2 id="1-1-Python下载"><a href="#1-1-Python下载" class="headerlink" title="1.1 Python下载"></a>1.1 Python下载</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#官网，下载速度慢</span></span><br><span class="line">https://www.python.org</span><br><span class="line"></span><br><span class="line"><span class="comment">#国内下载</span></span><br><span class="line">https://npm.taobao.org/mirrors/python</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<ol>
+<li>找到下载位置并点击</li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/NoHxoM.png" alt="NoHxoM"></p>
+<ol start="2">
+<li><p>选择对应的版本以及操作系统进行下载</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/enrDoA.png" alt="enrDoA"></p>
+</li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Se7Gmo.png" alt="Se7Gmo"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/J0BKed.png" alt="J0BKed"></p>
+<h2 id="1-2-Python安装"><a href="#1-2-Python安装" class="headerlink" title="1.2 Python安装"></a>1.2 Python安装</h2><h3 id="1-2-1-Mac安装"><a href="#1-2-1-Mac安装" class="headerlink" title="1.2.1 Mac安装"></a>1.2.1 Mac安装</h3><p>根据提示下载的安装包如下：</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/LdenzD.png" alt="LdenzD"></p>
+<p>双击打开之后直接继续即可</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Dl1wXm.png" alt="Dl1wXm"></p>
+<h3 id="1-2-2-Windows安装"><a href="#1-2-2-Windows安装" class="headerlink" title="1.2.2 Windows安装"></a>1.2.2 Windows安装</h3><p>第一个红框选择自定义安装，可选择python安装路径。第二个红框是自动配置环境变量</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/tjeIhK.png" alt="tjeIhK"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/XhyZ3E.png" alt="XhyZ3E"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/3YqU60.png" alt="d"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Ja6EtC.png" alt="Ja6EtC"></p>
+<p>环境变量设置</p>
+<p>此时还无法直接使用python</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/A717xq.png" alt="A717xq"></p>
+<p>此电脑右键，选择属性，选择高级系统设置，选择环境变量，选择Path，编辑，再变量最后使用英文状态下的 ; 进行结尾，将Python安装的路径复制出来，粘贴到最后然后选择确定。最后新打开命令提示符输入python即可</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/dhoaNQ.png" alt="dhoaNQ"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/DGvRCE.png" alt="DGvRCE"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/KZmLEE.png" alt="KZmLEE"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/aOntw1.png" alt="aOntw1"></p>
+<h3 id="1-2-3-多版本"><a href="#1-2-3-多版本" class="headerlink" title="1.2.3 多版本"></a>1.2.3 多版本</h3><ol>
+<li><p>Mac系统下</p>
+<p>可以使用pyenv进行多版本控制</p>
+</li>
+<li><p>Windows</p>
+</li>
+</ol>
+<p>python2.7安装：</p>
+<p>下载加速地址：<a target="_blank" rel="noopener" href="https://npm.taobao.org/mirrors/python">https://npm.taobao.org/mirrors/python</a></p>
+<p>下载完成后继续将Python2.7的路径放入到Path的最后，将对应版本的exe改名，最后在终端输入对应版本</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/cBrS1B.png" alt="cBrS1B">     </p>
+<p>更对应版本的名称</p>
+<p>![image-20211101161418575](/Users/zhijinliu/Library/Application Support/typora-user-images/image-20211101161418575.png)</p>
+<p>此时就可以多版本试用</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Ciyvlb.png" alt="Ciyvlb"></p>
+<h1 id="2、Pycharm安装"><a href="#2、Pycharm安装" class="headerlink" title="2、Pycharm安装"></a>2、Pycharm安装</h1><ol>
+<li>下载安装</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#官网</span></span><br><span class="line">https://www.jetbrains.com/pycharm/download/</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/aJKd3J.png" alt="aJKd3J"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/dag3R6.png" alt="dag3R6"></p>
+<p>下载完成后下一步下一步安装即可</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/BJbgci.png" alt="BJbgci"></p>
+<ol start="2">
+<li><p>2021.3版本破解</p>
+<p>无限期试用方法参考：<a target="_blank" rel="noopener" href="https://www.macwk.com/article/jetbrains-crack">https://www.macwk.com/article/jetbrains-crack</a></p>
+</li>
+</ol>
+<p>最新版本试用需要登录账号才可以</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/3u8VVR.png" alt="3u8VVR"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/ddVmoo.png" alt="ddVmoo"></p>
+<p>破解：</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/ZEJ0Od.png" alt="ZEJ0Od"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/3kEn2a.png" alt="3kEn2a"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/kdhtq0.png" alt="kdhtq0"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/mKW9Nt.png" alt="mKW9Nt"></p>
+<p>![image-20211101164144658](/Users/zhijinliu/Library/Application Support/typora-user-images/image-20211101164144658.png)</p>
+<p>使用插件即可重置试用时间</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/p1l5h0.png" alt="p1l5h0"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/29/01-Markdown/" rel="prev" title="Markdown使用">
+                  <i class="fa fa-chevron-left"></i> Markdown使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/02/hello-world/" rel="next" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
