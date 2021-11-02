@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="1、Pycharm基本使用1.1 新建项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python基础-01">
+<meta property="og:url" content="https://klcc.cc/2021/11/02/03-python-1/index.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="1、Pycharm基本使用1.1 新建项目">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Fg5CT2.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/koHl29.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Yr8VSa.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/xy5MbY.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/kBm63I.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/dI0FCk.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/I6iPWT.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/gyg2Ck.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/CR2fkx.png">
+<meta property="article:published_time" content="2021-11-02T07:06:21.905Z">
+<meta property="article:modified_time" content="2021-11-02T10:33:36.934Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Fg5CT2.png">
+
+
+<link rel="canonical" href="https://klcc.cc/2021/11/02/03-python-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/2021/11/02/03-python-1/","path":"2021/11/02/03-python-1/","title":"python基础-01"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>python基础-01 | klcc</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/klcc-c.github.io/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">4</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">2</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">3</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81Pycharm%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">1、Pycharm基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 新建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 主题设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Pycharm%E5%88%87%E6%8D%A2%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Pycharm切换解释器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E8%B0%83%E6%95%B4%E5%AD%97%E4%BD%93"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 调整字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 运行python脚本文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81Python%E7%9A%84%E6%B3%A8%E9%87%8A%E8%AF%AD%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">2、Python的注释语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%B3%A8%E9%87%8A"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%BD%BF%E7%94%A8%E6%B3%A8%E9%87%8A"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 使用注释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%8F%98%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">3、变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%98%E9%87%8F"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 什么是变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 使用变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E8%AF%AD%E6%B3%95%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 语法格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E5%8F%98%E9%87%8F%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 变量三要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 底层原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-Python%E5%BA%95%E5%B1%82%E4%BC%98%E5%8C%96"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 Python底层优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E5%B8%B8%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">4、常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">5、垃圾回收机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%9E%83%E5%9C%BE%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 垃圾数据的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E5%9B%9E%E6%94%B6%E6%96%B9%E6%A1%88"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 回收方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-%E5%BC%95%E7%94%A8%E8%AE%B0%E6%95%B0"><span class="nav-number">5.2.1.</span> <span class="nav-text">5.2.1 引用记数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4"><span class="nav-number">5.2.2.</span> <span class="nav-text">5.2.2 标记清除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-3-%E5%88%86%E4%BB%A3%E5%9B%9E%E6%94%B6"><span class="nav-number">5.2.3.</span> <span class="nav-text">5.2.3 分代回收</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text">6、数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 什么是数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-int%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 int类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-float%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 float类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E3%80%81%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83"><span class="nav-number">7.</span> <span class="nav-text">7、代码规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E6%B3%A8%E9%87%8A%E8%A7%84%E8%8C%83"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 注释规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 命名规范</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/2021/11/02/03-python-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python基础-01
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-02 15:06:21 / 修改时间：18:33:36" itemprop="dateCreated datePublished" datetime="2021-11-02T15:06:21+08:00">2021-11-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1、Pycharm基本使用"><a href="#1、Pycharm基本使用" class="headerlink" title="1、Pycharm基本使用"></a>1、Pycharm基本使用</h2><h3 id="1-1-新建项目"><a href="#1-1-新建项目" class="headerlink" title="1.1 新建项目"></a>1.1 新建项目</h3><span id="more"></span>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Fg5CT2.png" alt="Fg5CT2"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/koHl29.png" alt="koHl29"></p>
+<h3 id="1-2-主题设置"><a href="#1-2-主题设置" class="headerlink" title="1.2 主题设置"></a>1.2 主题设置</h3><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Yr8VSa.png" alt="Yr8VSa"></p>
+<h3 id="1-3-Pycharm切换解释器"><a href="#1-3-Pycharm切换解释器" class="headerlink" title="1.3 Pycharm切换解释器"></a>1.3 Pycharm切换解释器</h3><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/xy5MbY.png" alt="xy5MbY"></p>
+<h3 id="1-4-调整字体"><a href="#1-4-调整字体" class="headerlink" title="1.4 调整字体"></a>1.4 调整字体</h3><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/kBm63I.png" alt="kBm63I"></p>
+<h3 id="1-5-运行python脚本文件"><a href="#1-5-运行python脚本文件" class="headerlink" title="1.5 运行python脚本文件"></a>1.5 运行python脚本文件</h3><p>鼠标右键到项目目录之后可以创建文件夹与文件，在代码空白处右键选择如下的Run即可运行python脚本</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/dI0FCk.png" alt="dI0FCk"></p>
+<h2 id="2、Python的注释语法"><a href="#2、Python的注释语法" class="headerlink" title="2、Python的注释语法"></a>2、Python的注释语法</h2><h3 id="2-1-注释"><a href="#2-1-注释" class="headerlink" title="2.1 注释"></a>2.1 注释</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;注释是代码之母&quot;&quot;&quot;</span></span><br><span class="line">注释：对代码的解释和说明，目的是为了让人们能够轻松的了解代码，注释不参与持续的运行</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-使用注释"><a href="#2-2-使用注释" class="headerlink" title="2.2 使用注释"></a>2.2 使用注释</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">方式一:使用井号</span><br><span class="line">  <span class="comment"># 这是一行注释</span></span><br><span class="line">方式二:使用三引号(单引号和双引号)</span><br><span class="line">  <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">  这是多行注释</span></span><br><span class="line"><span class="string">  这是多行注释</span></span><br><span class="line"><span class="string">  &quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.3 Pycharm注释快捷键</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Windows： ctrl + ?</span><br><span class="line">Mac:      command + ?</span><br><span class="line">选中多行代码之后执行快捷键就会被一起注释</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、变量"><a href="#3、变量" class="headerlink" title="3、变量"></a>3、变量</h2><h3 id="3-1-什么是变量"><a href="#3-1-什么是变量" class="headerlink" title="3.1 什么是变量"></a>3.1 什么是变量</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量即变化的量，用于记录事物的某种状态，是模仿人类事物记忆能力</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-使用变量"><a href="#3-2-使用变量" class="headerlink" title="3.2 使用变量"></a>3.2 使用变量</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">日常生活种:</span><br><span class="line">  姓名:xxx</span><br><span class="line">  年龄:<span class="number">28</span></span><br><span class="line">  爱好:学习</span><br><span class="line">程序中:</span><br><span class="line">  username = <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line">  age      = <span class="number">18</span></span><br><span class="line">  hobby    = <span class="string">&#x27;music&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-语法格式"><a href="#3-3-语法格式" class="headerlink" title="3.3 语法格式"></a>3.3 语法格式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">username = <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line">变量名  赋值号 变量值</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-变量三要素"><a href="#3-4-变量三要素" class="headerlink" title="3.4 变量三要素"></a>3.4 变量三要素</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>变量的值 </span><br><span class="line"><span class="number">2.</span>变量的内存地址</span><br><span class="line"><span class="number">3.</span>变量的数据类型</span><br><span class="line"></span><br><span class="line">name = <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(name)         <span class="comment"># 变量值</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(name))     <span class="comment"># 返回一串数字 相当于是内存地址编号</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(name))   <span class="comment"># 返回数据类型  &lt;class &#x27;str&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/I6iPWT.png" alt="I6iPWT"></p>
+<h3 id="3-5-底层原理"><a href="#3-5-底层原理" class="headerlink" title="3.5 底层原理"></a>3.5 底层原理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># eg:</span></span><br><span class="line">  age = <span class="number">18</span></span><br><span class="line">  </span><br><span class="line">  <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">  遇到赋值号先看符号右边，再看到左边</span></span><br><span class="line"><span class="string">  1.在内存中申请到了一块内存空间来存储18这个数字</span></span><br><span class="line"><span class="string">  2.将18所在的内存空间地址指向绑定给变量名age</span></span><br><span class="line"><span class="string">  3.后续如果要访问18可以直接通过访问变量age</span></span><br><span class="line"><span class="string">  &#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/gyg2Ck.png" alt="gyg2Ck"></p>
+<h3 id="3-6-Python底层优化"><a href="#3-6-Python底层优化" class="headerlink" title="3.6 Python底层优化"></a>3.6 Python底层优化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">当值数据量很小的时候 如果有多个变量名需要使用 那么会指向同一块地址</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">一个变量名只能指向一个内存地址</span></span><br><span class="line"><span class="string">一个内存地址可以有多个变量名指向</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4、常量"><a href="#4、常量" class="headerlink" title="4、常量"></a>4、常量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">常量:主要记录一些不变的状态</span><br><span class="line">  </span><br><span class="line">在python中没有真正意义上的常量 我们墨守成规的将全大写的变量看成是常量</span><br><span class="line">	HOST = <span class="string">&#x27;127.0.0.1&#x27;</span>  <span class="comment"># 一般情况下在配置文件中使用较多</span></span><br><span class="line">在其他编程语言中是存在真正意义上的常量 定义了就无法修改</span><br><span class="line"><span class="comment"># JavaScript代码</span></span><br><span class="line">	const pi = <span class="number">3.14</span>  <span class="comment"># 定义常量</span></span><br><span class="line">    pi = <span class="number">4</span>  <span class="comment"># 不支持修改</span></span><br><span class="line"><span class="comment"># golang常量声明</span></span><br><span class="line">const MAX = <span class="number">1024</span></span><br><span class="line">const (</span><br><span class="line">  a = iota</span><br><span class="line">  b = iota</span><br><span class="line">  c = iota</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5、垃圾回收机制"><a href="#5、垃圾回收机制" class="headerlink" title="5、垃圾回收机制"></a>5、垃圾回收机制</h2><h3 id="5-1-垃圾数据的定义"><a href="#5-1-垃圾数据的定义" class="headerlink" title="5.1 垃圾数据的定义"></a>5.1 垃圾数据的定义</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在内存中没有任何变量名指向的数据</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-回收方案"><a href="#5-2-回收方案" class="headerlink" title="5.2 回收方案"></a>5.2 回收方案</h3><h4 id="5-2-1-引用记数"><a href="#5-2-1-引用记数" class="headerlink" title="5.2.1 引用记数"></a>5.2.1 引用记数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">内存中变量值身上有几个变量名绑定引用计数就是几,只要不为<span class="number">0</span>就不是垃圾</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-2-2-标记清除"><a href="#5-2-2-标记清除" class="headerlink" title="5.2.2 标记清除"></a>5.2.2 标记清除</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当内存即将沾满的时候,python会自动暂停程序的执行,从头到尾将内存中数据进行扫描,并打上标记,之后一次性清除掉标记的数据</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-2-3-分代回收"><a href="#5-2-3-分代回收" class="headerlink" title="5.2.3 分代回收"></a>5.2.3 分代回收</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">会将数据的监管分为三个层次,随着层级的下降监督的频率降低</span><br><span class="line">用时间换空间</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/CR2fkx.png" alt="CR2fkx"></p>
+<h2 id="6、数据类型"><a href="#6、数据类型" class="headerlink" title="6、数据类型"></a>6、数据类型</h2><h3 id="6-1-什么是数据类型"><a href="#6-1-什么是数据类型" class="headerlink" title="6.1 什么是数据类型"></a>6.1 什么是数据类型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">存储数据的方式和表现形式有很多种，例如文本文件，视频文件，音频文件......</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-int类型"><a href="#6-2-int类型" class="headerlink" title="6.2 int类型"></a>6.2 int类型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int类型:整数类型,长度与其他语言对比无限</span></span><br><span class="line">作用:可以记录人的年龄，人数......</span><br><span class="line">eg:</span><br><span class="line">  age = <span class="number">18</span>  <span class="comment"># 直接些整数就是整型</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-float类型"><a href="#6-3-float类型" class="headerlink" title="6.3 float类型"></a>6.3 float类型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># float可以理解为小数</span></span><br><span class="line">作用:记录人的体重，薪资......</span><br><span class="line">eg:</span><br><span class="line">  salary = <span class="number">3.14</span>  <span class="comment"># 直接写小数就是浮点型</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="7、代码规范"><a href="#7、代码规范" class="headerlink" title="7、代码规范"></a>7、代码规范</h2><h3 id="7-1-注释规范"><a href="#7-1-注释规范" class="headerlink" title="7.1 注释规范"></a>7.1 注释规范</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">1.警号与注释文本之间一定要有一个空格</span></span><br><span class="line"><span class="string">2.如果单行注释跟在了一行代码的后面 需要先空两个再写</span></span><br><span class="line"><span class="string">pycharm也提供自动化格式代码的功能 </span></span><br><span class="line"><span class="string">code </span></span><br><span class="line"><span class="string">reformat code</span></span><br><span class="line"><span class="string">Windows快捷键：ctrl + alt + l</span></span><br><span class="line"><span class="string">Mac快捷键： option + command + L </span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">python代码编写规范  &gt;&gt;&gt;: PEP8规范</span><br><span class="line"><span class="comment"># 如何快速掌握 借助于pycharm的自动化提示 前后对比 每天记忆</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-2-命名规范"><a href="#7-2-命名规范" class="headerlink" title="7.2 命名规范"></a>7.2 命名规范</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 命名规范</span></span><br><span class="line">	  <span class="number">1.</span>变量名只能由数字、字母、下划线任意组合</span><br><span class="line">    	user@name(不对)、_(可以)、pwd_123_aaa(可以)</span><br><span class="line">    <span class="number">2.</span>变量名不能以数字开头，下划线建议不要开头因为有特殊含义</span><br><span class="line">    <span class="number">3.</span>变量名不能与关键字冲突</span><br><span class="line">    <span class="number">4.</span>变量名的命名一定要做到见名知意(重要)</span><br><span class="line">    	<span class="string">&#x27;&#x27;&#x27;变量名见名知意是核心 无论变量多长&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># 命名风格</span></span><br><span class="line">	<span class="number">1.</span>驼峰体  </span><br><span class="line">    	大驼峰  <span class="comment"># 所有单词首字母大写</span></span><br><span class="line">        	UserNameFromDb</span><br><span class="line">        小驼峰  <span class="comment"># 第一首字母小写其余首字母大写</span></span><br><span class="line">        	userNameFromDB</span><br><span class="line">        <span class="string">&quot;&quot;&quot;JavaScript推荐使用驼峰体&quot;&quot;&quot;</span></span><br><span class="line">    <span class="number">2.</span>下划线  <span class="comment"># 单词与单词之间下划线隔开</span></span><br><span class="line">    	user_name_from_db </span><br><span class="line">        <span class="string">&quot;&quot;&quot;python推荐使用下划线&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 好东西！！！输入中文即可给出对应英文命名</span></span><br><span class="line">https://unbug.github.io/codelf/</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/2021/11/01/02-python-pycharm/" rel="prev" title="Python解释器与Pycharm">
+                  <i class="fa fa-chevron-left"></i> Python解释器与Pycharm
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
