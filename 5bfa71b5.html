@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="1. while循环1.1 continue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="for循环及内置方法">
+<meta property="og:url" content="https://klcc.cc/5bfa71b5.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="1. while循环1.1 continue">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/uVzeKa.png">
+<meta property="article:published_time" content="2021-11-05T06:47:51.830Z">
+<meta property="article:modified_time" content="2021-11-05T10:22:08.420Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/uVzeKa.png">
+
+
+<link rel="canonical" href="https://klcc.cc/5bfa71b5.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/5bfa71b5.html","path":"5bfa71b5.html","title":"for循环及内置方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>for循环及内置方法 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/klcc-c.github.io/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">5</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">3</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">7</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-while%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.</span> <span class="nav-text">1. while循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-continue"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 continue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-else"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E6%AD%BB%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 死循环</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-for%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.</span> <span class="nav-text">2. for循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-range"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 range</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-break"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 break</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-continue"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 continue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-else"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-%E5%B5%8C%E5%A5%97"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 嵌套</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">3. 数据类型内置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E6%95%B4%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 整型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 浮点型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-1-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2str"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 类型转换str()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-2-%E7%B4%A2%E5%BC%95%E5%8F%96%E5%80%BC"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.2 索引取值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-3-%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C"><span class="nav-number">3.3.3.</span> <span class="nav-text">3.3.3 切片操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-4-%E6%AD%A5%E9%95%BF%E6%93%8D%E4%BD%9C"><span class="nav-number">3.3.4.</span> <span class="nav-text">3.3.4 步长操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-5-len"><span class="nav-number">3.3.5.</span> <span class="nav-text">3.3.5 len()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-6-strip"><span class="nav-number">3.3.6.</span> <span class="nav-text">3.3.6 strip()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-7-split"><span class="nav-number">3.3.7.</span> <span class="nav-text">3.3.7 split()</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/5bfa71b5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          for循环及内置方法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-05 14:47:51 / 修改时间：18:22:08" itemprop="dateCreated datePublished" datetime="2021-11-05T14:47:51+08:00">2021-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="1-while循环"><a href="#1-while循环" class="headerlink" title="1. while循环"></a>1. while循环</h3><h4 id="1-1-continue"><a href="#1-1-continue" class="headerlink" title="1.1 continue"></a>1.1 continue</h4><span id="more"></span>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">contiue可以让循环体代码直接回到条件判断处重新判断,相当于跳出本次循环</span><br><span class="line">eg:</span><br><span class="line">  <span class="comment"># 使用while循环打印0-10但是不打印4</span></span><br><span class="line">  num = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span> num &lt; <span class="number">11</span>:</span><br><span class="line">      <span class="keyword">if</span> num == <span class="number">4</span>:</span><br><span class="line">          num += <span class="number">1</span>  <span class="comment"># 跳出的时候将num加1到num为5,好继续下次的循环,否则会卡在4一直循环</span></span><br><span class="line">          <span class="keyword">continue</span>  <span class="comment"># 当num为4时跳出本次循环</span></span><br><span class="line">      <span class="built_in">print</span>(num)</span><br><span class="line">      num += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="1-2-else"><a href="#1-2-else" class="headerlink" title="1.2 else"></a>1.2 else</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">当<span class="keyword">while</span>循环没有被人为中断(<span class="keyword">break</span>)的情况下才会走<span class="keyword">else</span></span><br><span class="line">eg:</span><br><span class="line">  count = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span> count &lt; <span class="number">5</span>:</span><br><span class="line">      <span class="built_in">print</span>(count)</span><br><span class="line">      count += <span class="number">1</span></span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;被执行了&quot;</span>)  <span class="comment"># 结果:在打印了0-4之后,这段代码被执行了</span></span><br><span class="line">    </span><br><span class="line">  </span><br><span class="line">  count = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span> count &lt; <span class="number">5</span>:</span><br><span class="line">      <span class="built_in">print</span>(count)</span><br><span class="line">      count += <span class="number">1</span></span><br><span class="line">      <span class="keyword">break</span>  <span class="comment"># 遇到break之后跳出了循环</span></span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;不被执行了&quot;</span>)  <span class="comment"># 这段就没有执行</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-死循环"><a href="#1-3-死循环" class="headerlink" title="1.3 死循环"></a>1.3 死循环</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一个靠自身控制无法终止的程序叫死循环,死循环会让CPU极度繁忙</span><br><span class="line">eg：</span><br><span class="line">  <span class="keyword">while</span> <span class="literal">True</span></span><br><span class="line">      <span class="built_in">print</span>(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-for循环"><a href="#2-for循环" class="headerlink" title="2. for循环"></a>2. for循环</h3><h4 id="2-1-基本使用"><a href="#2-1-基本使用" class="headerlink" title="2.1 基本使用"></a>2.1 基本使用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span><span class="keyword">for</span>循环能做到的事情 <span class="keyword">while</span>循环都可以做到,但是<span class="keyword">for</span>循环语法更加简洁 并且在循环取值问题上更加方便</span><br><span class="line"><span class="number">2.</span><span class="keyword">for</span>循环一般用于遍历任意可迭代对象中的元素,可迭代对象包括字符串,列表,元组,集合和字典,字典默认只能取到K</span><br><span class="line"><span class="number">3.</span>变量名如果没有合适的名称,可以使用i,j,k,v,item</span><br><span class="line"><span class="number">4.</span>结构：</span><br><span class="line">  <span class="keyword">for</span> 变量 <span class="keyword">in</span> 迭代对象:</span><br><span class="line">      重复执行的代码</span><br><span class="line"> <span class="number">5.</span>eg:</span><br><span class="line">   name_list = [<span class="string">&#x27;jason&#x27;</span>, <span class="string">&#x27;tony&#x27;</span>, <span class="string">&#x27;kevin&#x27;</span>, <span class="string">&#x27;jack&#x27;</span>, <span class="string">&#x27;xxx&#x27;</span>]</span><br><span class="line">   <span class="comment"># 循环打印列表中的每一个元素</span></span><br><span class="line">   <span class="comment"># while实现</span></span><br><span class="line">     count = <span class="number">0</span></span><br><span class="line">     <span class="keyword">while</span> count &lt; <span class="number">5</span>:</span><br><span class="line">         <span class="built_in">print</span>(name_list[count])</span><br><span class="line">         count += <span class="number">1</span></span><br><span class="line">   <span class="comment"># for实现</span></span><br><span class="line">     <span class="keyword">for</span> i <span class="keyword">in</span> name_list:</span><br><span class="line">         <span class="built_in">print</span>(i)</span><br><span class="line">   <span class="comment"># for循环打印字符串中每个字符</span></span><br><span class="line">     <span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&#x27;hello world&#x27;</span></span><br><span class="line">         <span class="built_in">print</span>(i)  <span class="comment"># 每个字母都会被打印,中间的空格也回被打印</span></span><br><span class="line">   <span class="comment"># for循环字典,默认只能取到K</span></span><br><span class="line">     d = &#123;<span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;jason&#x27;</span>, <span class="string">&#x27;pwd&#x27;</span>: <span class="number">123</span>, <span class="string">&#x27;hobby&#x27;</span>: <span class="string">&#x27;read&#x27;</span>&#125;</span><br><span class="line">     <span class="keyword">for</span> k <span class="keyword">in</span> d:</span><br><span class="line">         <span class="built_in">print</span>(k, d[k])  <span class="comment"># 结果:前面是K值,后面是V值</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/uVzeKa.png" alt="uVzeKa"></p>
+<h4 id="2-2-range"><a href="#2-2-range" class="headerlink" title="2.2 range"></a>2.2 range</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>第一种:一个参数,从零开始,顾头不顾尾</span><br><span class="line">  eg:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">        <span class="built_in">print</span>(i)  <span class="comment"># 循环打印0-9</span></span><br><span class="line"><span class="number">2.</span>第二种:两个参数,自定义起始位置,顾头不顾尾</span><br><span class="line">  eg:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>,<span class="number">10</span>):</span><br><span class="line">        <span class="built_in">print</span>(i)  <span class="comment"># 循环打印4-9</span></span><br><span class="line"><span class="number">3.</span>第三种:三个参数,第三个数字用来控制等差值</span><br><span class="line">  eg:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="number">100</span>, <span class="number">10</span>):</span><br><span class="line">        <span class="built_in">print</span>(i)  <span class="comment"># 循环打印从2开始每隔10个数的值,2 12 22...92</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">扩展:</span></span><br><span class="line"><span class="string">    https://movie.douban.com/top250  第一页</span></span><br><span class="line"><span class="string">    https://movie.douban.com/top250?start=25&amp;filter=  第二页 每页相差25</span></span><br><span class="line"><span class="string">    https://movie.douban.com/top250?start=50&amp;filter=  第三页</span></span><br><span class="line"><span class="string">    https://movie.douban.com/top250?start=75&amp;filter=  第四页</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">base_url = <span class="string">&#x27;https://movie.douban.com/top250?start=%s&amp;filter=&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">250</span>, <span class="number">25</span>):</span><br><span class="line">  <span class="built_in">print</span>(base_url % i)  <span class="comment"># 打印出了豆瓣top250每页的url</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># range()在python2.x和python3.x返回值不同</span></span><br><span class="line">  在python2.x中<span class="built_in">range</span>()会生成一个列表,但有个xrange()也是迭代器</span><br><span class="line">  在python3.x中<span class="built_in">range</span>()是一个迭代器,相对于python2.x生成列表更加节省内存</span><br><span class="line"><span class="comment"># python2.x中的xrange()就是python3.x中的range()</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-3-break"><a href="#2-3-break" class="headerlink" title="2.3 break"></a>2.3 break</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">结束本层循环</span><br><span class="line">eg:</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">if</span> i == <span class="number">4</span>:</span><br><span class="line">        <span class="keyword">break</span>  <span class="comment"># 当i等于4的时候遇到了break,直接结束这层的for循环</span></span><br><span class="line">    <span class="built_in">print</span>(i)  <span class="comment"># 结果是打印0-3</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-4-continue"><a href="#2-4-continue" class="headerlink" title="2.4 continue"></a>2.4 continue</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">结束本次循环</span><br><span class="line">eg:</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">if</span> i == <span class="number">4</span>:</span><br><span class="line">        <span class="keyword">continue</span>  <span class="comment"># 当i等于4的时候,结束本次循环,不影响</span></span><br><span class="line">    <span class="built_in">print</span>(i)  <span class="comment"># 打印0-3,5-9</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-5-else"><a href="#2-5-else" class="headerlink" title="2.5 else"></a>2.5 else</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">在<span class="keyword">for</span>循环正常结束的情况下才会被执行</span><br><span class="line">eg:</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> rnage(<span class="number">10</span>)：</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这段被执行了&quot;</span>)  <span class="comment"># 在循环打印了0-9之后,会继续执行这段代码,打印 这段被执行了</span></span><br><span class="line"></span><br><span class="line">eg:</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">if</span> i == <span class="number">4</span>:</span><br><span class="line">        <span class="keyword">break</span>  <span class="comment"># 在循环打印了0-3之后,就被跳出了本层循环</span></span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这段代码没有被执行&quot;</span>)  <span class="comment">#这段代码就没有被执行</span></span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-6-嵌套"><a href="#2-6-嵌套" class="headerlink" title="2.6 嵌套"></a>2.6 嵌套</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for i in range(3):</span></span><br><span class="line"><span class="comment">#     for j in range(5):</span></span><br><span class="line"><span class="comment">#         print(&quot;*&quot;, end=&#x27;&#x27;)</span></span><br><span class="line"><span class="comment">#     print()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">10</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, i + <span class="number">1</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;%s*%s=%s&#x27;</span> % (i, j, i * j), end=<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-数据类型内置方法"><a href="#3-数据类型内置方法" class="headerlink" title="3. 数据类型内置方法"></a>3. 数据类型内置方法</h3><h4 id="3-1-整型"><a href="#3-1-整型" class="headerlink" title="3.1 整型"></a>3.1 整型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>类型转换 <span class="built_in">int</span>()</span><br><span class="line"><span class="comment"># 只能转换成纯数字,且在转换的时候只识别整数,遇到其他类型的都会报错,如小数,带字母的等</span></span><br><span class="line">eg:</span><br><span class="line">  res = <span class="string">&#x27;123&#x27;</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="built_in">type</span>(res))  <span class="comment"># 输出结果是 str</span></span><br><span class="line">  <span class="built_in">int</span>(res)</span><br><span class="line">  <span class="built_in">print</span>(<span class="built_in">type</span>(res))  <span class="comment"># 输出结果是 int</span></span><br><span class="line">  </span><br><span class="line">  <span class="built_in">int</span>(<span class="number">123.123</span>)  <span class="comment"># 报错,不识别小数</span></span><br><span class="line">  <span class="built_in">int</span>(t123)  <span class="comment"># 报错，不识别除数字以外的</span></span><br><span class="line">  </span><br><span class="line"> <span class="number">2.</span>进制转换</span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">bin</span>(<span class="number">100</span>))  <span class="comment"># 将十进制的100转换成二进制  0b1100100</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">oct</span>(<span class="number">100</span>))  <span class="comment"># 将十进制的100转换成八进制  0o144</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">hex</span>(<span class="number">100</span>))  <span class="comment"># 将十进制的100转换成十六进制  0x64</span></span><br><span class="line">  <span class="comment"># 0b开头为二进制数  0o开头为八进制数  0x开头为十六进制数</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">int</span>(<span class="string">&#x27;0b1100100&#x27;</span>, <span class="number">2</span>))  <span class="comment"># 使用int()将0b1100100以二进制的方式转换为十进制</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">int</span>(<span class="string">&#x27;0o144&#x27;</span>, <span class="number">8</span>))  <span class="comment"># 使用int()将0o144以八进制的方式转换为十进制</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">int</span>(<span class="string">&#x27;0x64&#x27;</span>, <span class="number">16</span>))  <span class="comment"># 使用int()将0x64以十六进制的方式转换为十进制</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2-浮点型"><a href="#3-2-浮点型" class="headerlink" title="3.2 浮点型"></a>3.2 浮点型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">类型转换 <span class="built_in">float</span>()</span><br><span class="line">可以转换成小数,在转换的时候可以识别整数和小数,遇到其他类型的都会报错</span><br><span class="line">eg:</span><br><span class="line">  res1 = <span class="string">&#x27;123.123&#x27;</span></span><br><span class="line">  res2 = <span class="string">&#x27;123&#x27;</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="built_in">type</span>(res1))  <span class="comment"># 没被转换前类型是 str</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="built_in">type</span>(res2))  <span class="comment"># 没被转换前类型是 str</span></span><br><span class="line">  <span class="built_in">float</span>(res1)  <span class="comment"># 使用float()进行转换</span></span><br><span class="line">  <span class="built_in">float</span>(res2)  <span class="comment"># 使用float()进行转换</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="built_in">type</span>(res1))  <span class="comment"># 转换后res1类型是整型</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="built_in">type</span>(res2))  <span class="comment"># 转换后res2类型是整型</span></span><br><span class="line">  <span class="built_in">print</span>(res2)  <span class="comment"># res2的结果变成 123.0</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-字符串"><a href="#3-3-字符串" class="headerlink" title="3.3 字符串"></a>3.3 字符串</h4><h5 id="3-3-1-类型转换str"><a href="#3-3-1-类型转换str" class="headerlink" title="3.3.1 类型转换str()"></a>3.3.1 类型转换str()</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">任何类型都可以转换成字符串类型 <span class="built_in">str</span>()</span><br><span class="line"><span class="built_in">str</span>(<span class="number">123</span>)</span><br><span class="line"><span class="built_in">str</span>(<span class="number">123.123</span>)</span><br><span class="line"><span class="built_in">str</span>([<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;paswd&#x27;</span>])</span><br><span class="line"><span class="built_in">str</span>(&#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;xxx&#x27;</span>, <span class="string">&#x27;passwd&#x27;</span>: <span class="number">123</span>&#125;)</span><br><span class="line">...</span><br><span class="line"><span class="comment">#最终结果都会是str类型</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-2-索引取值"><a href="#3-3-2-索引取值" class="headerlink" title="3.3.2 索引取值"></a>3.3.2 索引取值</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">res = <span class="string">&#x27;hello world!&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(res[<span class="number">1</span>])  <span class="comment"># 结果为e</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#还可以支持负数索引</span></span><br><span class="line"><span class="built_in">print</span>(res[-<span class="number">1</span>])  <span class="comment"># 结果为 ！ </span></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-3-切片操作"><a href="#3-3-3-切片操作" class="headerlink" title="3.3.3 切片操作"></a>3.3.3 切片操作</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">res = <span class="string">&#x27;hello world!&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(res[<span class="number">1</span>:<span class="number">4</span>])  <span class="comment"># 结果为ell</span></span><br><span class="line"><span class="comment">#切片操作顾头不顾尾,左闭右开</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-4-步长操作"><a href="#3-3-4-步长操作" class="headerlink" title="3.3.4 步长操作"></a>3.3.4 步长操作</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">res = <span class="string">&#x27;hello world!&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(res[<span class="number">1</span>:<span class="number">10</span>:<span class="number">2</span>])  <span class="comment"># 结果为el ol</span></span><br><span class="line"><span class="comment">#先取到1到10的字符为在ello worl,同样顾头不顾尾</span></span><br><span class="line"><span class="comment">#再每隔两个取,结果就是el ol</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(res[-5:-1])  # orld  顾头不顾尾</span></span><br><span class="line"><span class="comment"># print(res[-5:-1:-1])  # 方向冲突</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-5-len"><a href="#3-3-5-len" class="headerlink" title="3.3.5 len()"></a>3.3.5 len()</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">统计字符串内部字符的个数 <span class="built_in">len</span>()</span><br><span class="line">res = <span class="string">&#x27;hello world!&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(res))  <span class="comment"># 结果为12</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-6-strip"><a href="#3-3-6-strip" class="headerlink" title="3.3.6 strip()"></a>3.3.6 strip()</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">移除字符串首尾指定的字符,默认移除的是首位的空格 strip()</span><br><span class="line">eg1:</span><br><span class="line">  name = <span class="string">&#x27;  jason  &#x27;</span></span><br><span class="line">  <span class="built_in">print</span>(name, <span class="built_in">len</span>(name))</span><br><span class="line">  <span class="built_in">print</span>(<span class="built_in">len</span>(name.strip()))  <span class="comment"># 默认移除首尾的空格</span></span><br><span class="line">eg2:</span><br><span class="line">  name1 = <span class="string">&#x27;$$jason$$&#x27;</span></span><br><span class="line">  <span class="built_in">print</span>(name1.strip(<span class="string">&#x27;$&#x27;</span>))  <span class="comment"># 移除指定字符$ 结果为jason</span></span><br><span class="line">  <span class="built_in">print</span>(name1.lstrip(<span class="string">&#x27;$&#x27;</span>))  <span class="comment"># 移除左边的$$ 结果为jason$$  </span></span><br><span class="line">  <span class="built_in">print</span>(name1.rstrip(<span class="string">&#x27;$&#x27;</span>))  <span class="comment"># 移除右边的$$ 结果为$$jason</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 在应用中,用户在输入的时候在首位手残输入了空格之后的解决办法</span></span><br><span class="line">  username = <span class="built_in">input</span>(<span class="string">&quot;请输入用户名:&quot;</span>).strip()  <span class="comment"># 用户在输入的时候前后输入了空格将不受影响</span></span><br><span class="line">  <span class="keyword">if</span> username == <span class="string">&#x27;root&#x27;</span>:</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;用户名输入正确&#x27;</span>)</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;用户名输入错误&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-3-7-split"><a href="#3-3-7-split" class="headerlink" title="3.3.7 split()"></a>3.3.7 split()</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">按照指定的字符切割字符串,该方法返回的是一个列表 split()</span><br><span class="line">res = <span class="string">&#x27;root|123|test&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(res.split(<span class="string">&#x27;|&#x27;</span>))  <span class="comment"># [&#x27;root&#x27;, &#x27;123&#x27;, &#x27;test&#x27;] 以|进行分割,返回列表</span></span><br><span class="line"><span class="built_in">print</span>(res.split(<span class="string">&#x27;|&#x27;</span>, maxsplit=<span class="number">1</span>))  <span class="comment"># [&#x27;root&#x27;, &#x27;123|test&#x27;]  maxsplit用于控制切割的次数</span></span><br><span class="line"><span class="built_in">print</span>(res.rsplit(<span class="string">&#x27;|&#x27;</span>, maxsplit=<span class="number">1</span>))  <span class="comment"># [&#x27;root|123&#x27;, &#x27;test&#x27;] 从右边开始分割</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/26ba1150.html" rel="prev" title="python-流程控制">
+                  <i class="fa fa-chevron-left"></i> python-流程控制
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
