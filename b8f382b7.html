@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="1. 字符编码只跟文本和字符串有关由于计算机内部只是别二进制,但是用户在使用计算机的时候却可以看到各种语言字符,字符编码就是内部记录了人类字符与数字对应关系的数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python-编码和文件操作">
+<meta property="og:url" content="https://klcc.cc/b8f382b7.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="1. 字符编码只跟文本和字符串有关由于计算机内部只是别二进制,但是用户在使用计算机的时候却可以看到各种语言字符,字符编码就是内部记录了人类字符与数字对应关系的数据">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/L7G4SM.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/uJTsDP.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/JSfh9B.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/AMmZCZ.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/BrFJ9l.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/xfnoQa.png">
+<meta property="article:published_time" content="2021-11-10T06:27:41.117Z">
+<meta property="article:modified_time" content="2021-11-10T08:30:15.598Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/L7G4SM.jpg">
+
+
+<link rel="canonical" href="https://klcc.cc/b8f382b7.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/b8f382b7.html","path":"b8f382b7.html","title":"python-编码和文件操作"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>python-编码和文件操作 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">7</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">4</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">11</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">1. 字符编码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E5%8F%B2"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 字符编码史</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E7%BC%96%E7%A0%81%E6%93%8D%E4%BD%9C"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 编码操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2. 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 文件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-%E5%A6%82%E4%BD%95%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 如何操作文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-%E8%B7%AF%E5%BE%84%E6%96%9C%E6%9D%A0"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 路径斜杠</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3 操作文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-4-with%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.1.4 with上下文管理</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E8%AF%BB%E5%86%99%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 读写模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-%E5%8F%AA%E8%AF%BB%E6%A8%A1%E5%BC%8F-r"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 只读模式 r</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-%E5%8F%AA%E5%86%99%E6%A8%A1%E5%BC%8F-w"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 只写模式 w</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-3-%E5%8F%AA%E8%BF%BD%E5%8A%A0%E6%A8%A1%E5%BC%8F-a"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 只追加模式 a</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-debug%E4%BB%A3%E7%A0%81%E8%B0%83%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">3. debug代码调试</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/b8f382b7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python-编码和文件操作
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-10 14:27:41 / 修改时间：16:30:15" itemprop="dateCreated datePublished" datetime="2021-11-10T14:27:41+08:00">2021-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="1-字符编码"><a href="#1-字符编码" class="headerlink" title="1. 字符编码"></a>1. 字符编码</h3><p>只跟文本和字符串有关<br>由于计算机内部只是别二进制,但是用户在使用计算机的时候却可以看到各种语言字符,字符编码就是内部记录了人类字符与数字对应关系的数据</p>
+<span id="more"></span>
+<h4 id="1-1-字符编码史"><a href="#1-1-字符编码史" class="headerlink" title="1.1 字符编码史"></a>1.1 字符编码史</h4><ol>
+<li>一家独大<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">计算机由美国发明,因此美国人为了能让计算机识别英文字符诞生了ASCII码表</span><br><span class="line">特点:</span><br><span class="line">  只有英文字符与数字的一一对应关系</span><br><span class="line">  一个英文字符对应1Bytes,1Bytes=8bit,8bit最多包含<span class="number">256</span>个数字,可以对应<span class="number">256</span>个字符,足够表示所有的英文字符,目前只用到<span class="number">127</span>个,剩下的为了后续发现新的语言</span><br><span class="line">需要记住的是:</span><br><span class="line">  A-Z: <span class="number">65</span>-<span class="number">90</span></span><br><span class="line">  a-z: <span class="number">97</span>-<span class="number">122</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/L7G4SM.jpg" alt="L7G4SM"></p>
+<ol start="2">
+<li>群雄割据<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">中国:</span><br><span class="line">  GBK码:记录了英文中文与数字的对应关系</span><br><span class="line">        对于英文还是使用一个字节</span><br><span class="line">        中文使用了两个字节甚至更多字节,两个字节也不能够全部表示出所有的中文,需要生僻字需要更多位</span><br><span class="line">        </span><br><span class="line">日本:</span><br><span class="line">  shift_JIS码:记录了日文英文与数字的对应关系</span><br><span class="line">韩国</span><br><span class="line">  Euc_kr码:记录了韩文英文与数字的对应关系</span><br></pre></td></tr></table></figure></li>
+<li>分久必合</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">为了能够实现不同国家之间的文本数据能够彼此无障碍交流需要对编码统一</span><br><span class="line">unicode(万国码)出现了</span><br><span class="line">  特点:统一使用两个及以上字符记录字符与数字的对应关系</span><br><span class="line">    </span><br><span class="line">utf8(万国码的优化版)</span><br><span class="line">  英文还是用一个字节存储,中文使用三个字节或更多字节存储</span><br><span class="line"> </span><br><span class="line">现在默认使用的编码是uft8</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-编码操作"><a href="#1-2-编码操作" class="headerlink" title="1.2 编码操作"></a>1.2 编码操作</h4><ol>
+<li>如何解决文件乱码</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文件当初以什么编码编的,打开的时候就以什么编码解</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>python解释器不同版本的编码差异</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">python2.x内部使用的编码默认是ASCII</span><br><span class="line">  <span class="number">1.</span>文件头</span><br><span class="line">  <span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line">  <span class="number">2.</span>在python2中定义字符串前面需要加一个u</span><br><span class="line">    s = <span class="string">u&#x27;你&#x27;</span></span><br><span class="line">  </span><br><span class="line">python3.x内部使用utf8</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Pycharm定义文件模板内容</li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/uJTsDP.png" alt="uJTsDP"></p>
+<ol start="4">
+<li>编码与解码</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">编码</span><br><span class="line">  将人类能够读懂的字符按照指定的编码转换成数字</span><br><span class="line">解码</span><br><span class="line">  将数字按照指定的编码转换成人类能够读懂的字符</span><br><span class="line">  </span><br><span class="line">eg:</span><br><span class="line"> <span class="comment"># 编码</span></span><br><span class="line">   s = <span class="string">&#x27;这是一段文字&#x27;</span></span><br><span class="line">   res = s.encode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">   <span class="built_in">print</span>(res, <span class="built_in">type</span>(res))  <span class="comment"># b&#x27;\xe8\xbf\x99\xe6\x98\xaf\xe4\xb8\x80\xe6\xae\xb5\xe6\x96\x87\xe5\xad\x97&#x27; &lt;class &#x27;bytes&#x27;&gt;</span></span><br><span class="line">  </span><br><span class="line"> <span class="comment"># 解码</span></span><br><span class="line">  res1 = res.decode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  <span class="built_in">print</span>(res1)  <span class="comment"># 这是一段文字</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-文件"><a href="#2-文件" class="headerlink" title="2. 文件"></a>2. 文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文件其实是操作系统暴露给用户操作硬盘的接口</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-文件操作"><a href="#2-1-文件操作" class="headerlink" title="2.1 文件操作"></a>2.1 文件操作</h4><h5 id="2-1-1-如何操作文件"><a href="#2-1-1-如何操作文件" class="headerlink" title="2.1.1 如何操作文件"></a>2.1.1 如何操作文件</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">关键字<span class="built_in">open</span>()</span><br><span class="line">    <span class="number">1.</span><span class="built_in">open</span>()打开文件</span><br><span class="line">    <span class="number">2.</span>其他方法操作文件</span><br><span class="line">    <span class="number">3.</span>关闭文件</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-2-路径斜杠"><a href="#2-1-2-路径斜杠" class="headerlink" title="2.1.2 路径斜杠"></a>2.1.2 路径斜杠</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在路径中出现字母与斜杠的组合产生了特殊含义如何取消</span><br><span class="line">在路径字符串前面加一个r</span><br><span class="line">  <span class="string">r&#x27;D:\py20\day08\a.txt&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-3-操作文件"><a href="#2-1-3-操作文件" class="headerlink" title="2.1.3 操作文件"></a>2.1.3 操作文件</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">格式:</span><br><span class="line">  <span class="built_in">open</span>(文件路径,读写模式,字符编码)</span><br><span class="line">       文件路径与读写模式是必须的</span><br><span class="line">       字符编码是可选的(有些模式需要编码)</span><br><span class="line">      </span><br><span class="line">  eg:</span><br><span class="line">    res = <span class="built_in">open</span>(<span class="string">&#x27;a.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(res.read())</span><br><span class="line">    res.close()</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-4-with上下文管理"><a href="#2-1-4-with上下文管理" class="headerlink" title="2.1.4 with上下文管理"></a>2.1.4 with上下文管理</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">可以自动close()</span><br><span class="line">eg:</span><br><span class="line">   <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">       <span class="built_in">print</span>(f1.read())</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-读写模式"><a href="#2-2-读写模式" class="headerlink" title="2.2 读写模式"></a>2.2 读写模式</h4><h5 id="2-2-1-只读模式-r"><a href="#2-2-1-只读模式-r" class="headerlink" title="2.2.1 只读模式 r"></a>2.2.1 只读模式 r</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">只能查看不能修改</span><br><span class="line"><span class="comment"># 当路径不存在时,直接报错</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;b.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">    <span class="keyword">pass</span>  <span class="comment"># 运行代码报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 当路劲存在时,读取没有问题,写操作时报错</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">    <span class="built_in">print</span>(f1.read())  <span class="comment"># 能读取文件内容</span></span><br><span class="line">    f1.write(<span class="string">&#x27;123&#x27;</span>)  <span class="comment"># 报错,无法写入</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-2-只写模式-w"><a href="#2-2-2-只写模式-w" class="headerlink" title="2.2.2 只写模式 w"></a>2.2.2 只写模式 w</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当路劲不存在时,不会报错,会创建该文件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;b.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f2:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 路劲存在时,写入会先清空文件内容,再写入内容</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>,encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">    <span class="built_in">print</span>(f1.read())  <span class="comment"># 读取会报错</span></span><br><span class="line">    f1.write(<span class="string">&#x27;123&#x27;</span>)  <span class="comment"># 写入的都会在一行,不会自动换行</span></span><br><span class="line">    f1.write(<span class="string">&#x27;\n123\n&#x27;</span>)  <span class="comment"># 需要加入换行符</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-3-只追加模式-a"><a href="#2-2-3-只追加模式-a" class="headerlink" title="2.2.3 只追加模式 a"></a>2.2.3 只追加模式 a</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当路劲不存在时,不会报错,同样会创建该文件</span></span><br><span class="line">  <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;c.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f3:</span><br><span class="line">      <span class="keyword">pass</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 当路劲存在时,写入不会清空文件</span></span><br><span class="line">  <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">      f1.write(<span class="string">&#x27;\nwoooooo&#x27;</span>)  <span class="comment"># 需要加入换行符,否则都会在一行</span></span><br><span class="line">      f1.write(<span class="string">&#x27;\nwoooooo&#x27;</span>)</span><br><span class="line">      <span class="built_in">print</span>(f1.read())  <span class="comment"># 读取会报错</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-debug代码调试"><a href="#3-debug代码调试" class="headerlink" title="3. debug代码调试"></a>3. debug代码调试</h3><ol>
+<li>在代码右侧使用右键标记，空白处右键出现在Run下面有Debug运行</li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/JSfh9B.png" alt="JSfh9B"></p>
+<ol start="2">
+<li>debug运行的时候会一步步执行,并给出每一步的结果</li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/AMmZCZ.png" alt="AMmZCZ"></p>
+<ol start="3">
+<li>停止debug</li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/BrFJ9l.png" alt="BrFJ9l"></p>
+<p>取消小点</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/xfnoQa.png" alt="xfnoQa"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/bb5f959.html" rel="prev" title="python-内置方法(三)">
+                  <i class="fa fa-chevron-left"></i> python-内置方法(三)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

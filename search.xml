@@ -760,4 +760,76 @@
         <tag>kubeadm</tag>
       </tags>
   </entry>
+  <entry>
+    <title>python-编码和文件操作</title>
+    <url>/klcc-c.github.io/b8f382b7.html</url>
+    <content><![CDATA[<h3 id="1-字符编码"><a href="#1-字符编码" class="headerlink" title="1. 字符编码"></a>1. 字符编码</h3><p>只跟文本和字符串有关<br>由于计算机内部只是别二进制,但是用户在使用计算机的时候却可以看到各种语言字符,字符编码就是内部记录了人类字符与数字对应关系的数据</p>
+<span id="more"></span>
+<h4 id="1-1-字符编码史"><a href="#1-1-字符编码史" class="headerlink" title="1.1 字符编码史"></a>1.1 字符编码史</h4><ol>
+<li>一家独大<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">计算机由美国发明,因此美国人为了能让计算机识别英文字符诞生了ASCII码表</span><br><span class="line">特点:</span><br><span class="line">  只有英文字符与数字的一一对应关系</span><br><span class="line">  一个英文字符对应1Bytes,1Bytes=8bit,8bit最多包含<span class="number">256</span>个数字,可以对应<span class="number">256</span>个字符,足够表示所有的英文字符,目前只用到<span class="number">127</span>个,剩下的为了后续发现新的语言</span><br><span class="line">需要记住的是:</span><br><span class="line">  A-Z: <span class="number">65</span>-<span class="number">90</span></span><br><span class="line">  a-z: <span class="number">97</span>-<span class="number">122</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/L7G4SM.jpg" alt="L7G4SM"></p>
+<ol start="2">
+<li>群雄割据<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">中国:</span><br><span class="line">  GBK码:记录了英文中文与数字的对应关系</span><br><span class="line">        对于英文还是使用一个字节</span><br><span class="line">        中文使用了两个字节甚至更多字节,两个字节也不能够全部表示出所有的中文,需要生僻字需要更多位</span><br><span class="line">        </span><br><span class="line">日本:</span><br><span class="line">  shift_JIS码:记录了日文英文与数字的对应关系</span><br><span class="line">韩国</span><br><span class="line">  Euc_kr码:记录了韩文英文与数字的对应关系</span><br></pre></td></tr></table></figure></li>
+<li>分久必合</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">为了能够实现不同国家之间的文本数据能够彼此无障碍交流需要对编码统一</span><br><span class="line">unicode(万国码)出现了</span><br><span class="line">  特点:统一使用两个及以上字符记录字符与数字的对应关系</span><br><span class="line">    </span><br><span class="line">utf8(万国码的优化版)</span><br><span class="line">  英文还是用一个字节存储,中文使用三个字节或更多字节存储</span><br><span class="line"> </span><br><span class="line">现在默认使用的编码是uft8</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-编码操作"><a href="#1-2-编码操作" class="headerlink" title="1.2 编码操作"></a>1.2 编码操作</h4><ol>
+<li>如何解决文件乱码</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">文件当初以什么编码编的,打开的时候就以什么编码解</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>python解释器不同版本的编码差异</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python2.x内部使用的编码默认是ASCII</span><br><span class="line">  <span class="number">1.</span>文件头</span><br><span class="line">  <span class="comment"># coding:utf8</span></span><br><span class="line"></span><br><span class="line">  <span class="number">2.</span>在python2中定义字符串前面需要加一个u</span><br><span class="line">    s = <span class="string">u&#x27;你&#x27;</span></span><br><span class="line">  </span><br><span class="line">python3.x内部使用utf8</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Pycharm定义文件模板内容</li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/uJTsDP.png" alt="uJTsDP"></p>
+<ol start="4">
+<li>编码与解码</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">编码</span><br><span class="line">  将人类能够读懂的字符按照指定的编码转换成数字</span><br><span class="line">解码</span><br><span class="line">  将数字按照指定的编码转换成人类能够读懂的字符</span><br><span class="line">  </span><br><span class="line">eg:</span><br><span class="line"> <span class="comment"># 编码</span></span><br><span class="line">   s = <span class="string">&#x27;这是一段文字&#x27;</span></span><br><span class="line">   res = s.encode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">   <span class="built_in">print</span>(res, <span class="built_in">type</span>(res))  <span class="comment"># b&#x27;\xe8\xbf\x99\xe6\x98\xaf\xe4\xb8\x80\xe6\xae\xb5\xe6\x96\x87\xe5\xad\x97&#x27; &lt;class &#x27;bytes&#x27;&gt;</span></span><br><span class="line">  </span><br><span class="line"> <span class="comment"># 解码</span></span><br><span class="line">  res1 = res.decode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  <span class="built_in">print</span>(res1)  <span class="comment"># 这是一段文字</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-文件"><a href="#2-文件" class="headerlink" title="2. 文件"></a>2. 文件</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">文件其实是操作系统暴露给用户操作硬盘的接口</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-1-文件操作"><a href="#2-1-文件操作" class="headerlink" title="2.1 文件操作"></a>2.1 文件操作</h4><h5 id="2-1-1-如何操作文件"><a href="#2-1-1-如何操作文件" class="headerlink" title="2.1.1 如何操作文件"></a>2.1.1 如何操作文件</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">关键字<span class="built_in">open</span>()</span><br><span class="line">    <span class="number">1.</span><span class="built_in">open</span>()打开文件</span><br><span class="line">    <span class="number">2.</span>其他方法操作文件</span><br><span class="line">    <span class="number">3.</span>关闭文件</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-2-路径斜杠"><a href="#2-1-2-路径斜杠" class="headerlink" title="2.1.2 路径斜杠"></a>2.1.2 路径斜杠</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">在路径中出现字母与斜杠的组合产生了特殊含义如何取消</span><br><span class="line">在路径字符串前面加一个r</span><br><span class="line">  <span class="string">r&#x27;D:\py20\day08\a.txt&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-3-操作文件"><a href="#2-1-3-操作文件" class="headerlink" title="2.1.3 操作文件"></a>2.1.3 操作文件</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">格式:</span><br><span class="line">  <span class="built_in">open</span>(文件路径,读写模式,字符编码)</span><br><span class="line">       文件路径与读写模式是必须的</span><br><span class="line">       字符编码是可选的(有些模式需要编码)</span><br><span class="line">      </span><br><span class="line">  eg:</span><br><span class="line">    res = <span class="built_in">open</span>(<span class="string">&#x27;a.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(res.read())</span><br><span class="line">    res.close()</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-1-4-with上下文管理"><a href="#2-1-4-with上下文管理" class="headerlink" title="2.1.4 with上下文管理"></a>2.1.4 with上下文管理</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">可以自动close()</span><br><span class="line">eg:</span><br><span class="line">   <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">       <span class="built_in">print</span>(f1.read())</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-读写模式"><a href="#2-2-读写模式" class="headerlink" title="2.2 读写模式"></a>2.2 读写模式</h4><h5 id="2-2-1-只读模式-r"><a href="#2-2-1-只读模式-r" class="headerlink" title="2.2.1 只读模式 r"></a>2.2.1 只读模式 r</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">只能查看不能修改</span><br><span class="line"><span class="comment"># 当路径不存在时,直接报错</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;b.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">    <span class="keyword">pass</span>  <span class="comment"># 运行代码报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 当路劲存在时,读取没有问题,写操作时报错</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>,encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">    <span class="built_in">print</span>(f1.read())  <span class="comment"># 能读取文件内容</span></span><br><span class="line">    f1.write(<span class="string">&#x27;123&#x27;</span>)  <span class="comment"># 报错,无法写入</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-2-只写模式-w"><a href="#2-2-2-只写模式-w" class="headerlink" title="2.2.2 只写模式 w"></a>2.2.2 只写模式 w</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 当路劲不存在时,不会报错,会创建该文件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;b.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f2:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 路劲存在时,写入会先清空文件内容,再写入内容</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>,encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">    <span class="built_in">print</span>(f1.read())  <span class="comment"># 读取会报错</span></span><br><span class="line">    f1.write(<span class="string">&#x27;123&#x27;</span>)  <span class="comment"># 写入的都会在一行,不会自动换行</span></span><br><span class="line">    f1.write(<span class="string">&#x27;\n123\n&#x27;</span>)  <span class="comment"># 需要加入换行符</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-3-只追加模式-a"><a href="#2-2-3-只追加模式-a" class="headerlink" title="2.2.3 只追加模式 a"></a>2.2.3 只追加模式 a</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 当路劲不存在时,不会报错,同样会创建该文件</span></span><br><span class="line">  <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;c.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f3:</span><br><span class="line">      <span class="keyword">pass</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 当路劲存在时,写入不会清空文件</span></span><br><span class="line">  <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">      f1.write(<span class="string">&#x27;\nwoooooo&#x27;</span>)  <span class="comment"># 需要加入换行符,否则都会在一行</span></span><br><span class="line">      f1.write(<span class="string">&#x27;\nwoooooo&#x27;</span>)</span><br><span class="line">      <span class="built_in">print</span>(f1.read())  <span class="comment"># 读取会报错</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-debug代码调试"><a href="#3-debug代码调试" class="headerlink" title="3. debug代码调试"></a>3. debug代码调试</h3><ol>
+<li>在代码右侧使用右键标记，空白处右键出现在Run下面有Debug运行</li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/JSfh9B.png" alt="JSfh9B"></p>
+<ol start="2">
+<li>debug运行的时候会一步步执行,并给出每一步的结果</li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/AMmZCZ.png" alt="AMmZCZ"></p>
+<ol start="3">
+<li>停止debug</li>
+</ol>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/BrFJ9l.png" alt="BrFJ9l"></p>
+<p>取消小点</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/xfnoQa.png" alt="xfnoQa"></p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
 </search>
