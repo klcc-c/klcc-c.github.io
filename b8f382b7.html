@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/BrFJ9l.png">
 <meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/xfnoQa.png">
 <meta property="article:published_time" content="2021-11-10T06:27:41.117Z">
-<meta property="article:modified_time" content="2021-11-10T08:30:15.598Z">
+<meta property="article:modified_time" content="2021-11-11T09:01:48.870Z">
 <meta property="article:author" content="klcc">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -98,7 +98,7 @@
         <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">7</span></a></li>
         <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">4</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">11</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">12</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/klcc-c.github.io/archives/">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -241,10 +241,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-11-10 14:27:41 / 修改时间：16:30:15" itemprop="dateCreated datePublished" datetime="2021-11-10T14:27:41+08:00">2021-11-10</time>
+      <time title="创建时间：2021-11-10 14:27:41" itemprop="dateCreated datePublished" datetime="2021-11-10T14:27:41+08:00">2021-11-10</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-11 17:01:48" itemprop="dateModified" datetime="2021-11-11T17:01:48+08:00">2021-11-11</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -268,11 +274,16 @@
         <h3 id="1-字符编码"><a href="#1-字符编码" class="headerlink" title="1. 字符编码"></a>1. 字符编码</h3><p>只跟文本和字符串有关<br>由于计算机内部只是别二进制,但是用户在使用计算机的时候却可以看到各种语言字符,字符编码就是内部记录了人类字符与数字对应关系的数据</p>
 <span id="more"></span>
 <h4 id="1-1-字符编码史"><a href="#1-1-字符编码史" class="headerlink" title="1.1 字符编码史"></a>1.1 字符编码史</h4><ol>
-<li>一家独大<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">计算机由美国发明,因此美国人为了能让计算机识别英文字符诞生了ASCII码表</span><br><span class="line">特点:</span><br><span class="line">  只有英文字符与数字的一一对应关系</span><br><span class="line">  一个英文字符对应1Bytes,1Bytes=8bit,8bit最多包含<span class="number">256</span>个数字,可以对应<span class="number">256</span>个字符,足够表示所有的英文字符,目前只用到<span class="number">127</span>个,剩下的为了后续发现新的语言</span><br><span class="line">需要记住的是:</span><br><span class="line">  A-Z: <span class="number">65</span>-<span class="number">90</span></span><br><span class="line">  a-z: <span class="number">97</span>-<span class="number">122</span></span><br></pre></td></tr></table></figure></li>
+<li>一家独大</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">计算机由美国发明,因此美国人为了能让计算机识别英文字符诞生了ASCII码表</span><br><span class="line">特点:</span><br><span class="line">  只有英文字符与数字的一一对应关系</span><br><span class="line">  一个英文字符对应1Bytes,1Bytes=8bit,8bit最多包含<span class="number">256</span>个数字,可以对应<span class="number">256</span>个字符,足够表示所有的英文字符,目前只用到<span class="number">127</span>个,剩下的为了后续发现新的语言</span><br><span class="line">需要记住的是:</span><br><span class="line">  A-Z: <span class="number">65</span>-<span class="number">90</span></span><br><span class="line">  a-z: <span class="number">97</span>-<span class="number">122</span></span><br></pre></td></tr></table></figure>
+
 <p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/L7G4SM.jpg" alt="L7G4SM"></p>
-<ol start="2">
-<li>群雄割据<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">中国:</span><br><span class="line">  GBK码:记录了英文中文与数字的对应关系</span><br><span class="line">        对于英文还是使用一个字节</span><br><span class="line">        中文使用了两个字节甚至更多字节,两个字节也不能够全部表示出所有的中文,需要生僻字需要更多位</span><br><span class="line">        </span><br><span class="line">日本:</span><br><span class="line">  shift_JIS码:记录了日文英文与数字的对应关系</span><br><span class="line">韩国</span><br><span class="line">  Euc_kr码:记录了韩文英文与数字的对应关系</span><br></pre></td></tr></table></figure></li>
+<ol>
+<li>群雄割据</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">中国:</span><br><span class="line">  GBK码:记录了英文中文与数字的对应关系</span><br><span class="line">        对于英文还是使用一个字节</span><br><span class="line">        中文使用了两个字节甚至更多字节,两个字节也不能够全部表示出所有的中文,需要生僻字需要更多位</span><br><span class="line">        </span><br><span class="line">日本:</span><br><span class="line">  shift_JIS码:记录了日文英文与数字的对应关系</span><br><span class="line">韩国</span><br><span class="line">  Euc_kr码:记录了韩文英文与数字的对应关系</span><br></pre></td></tr></table></figure>
+<ol>
 <li>分久必合</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">为了能够实现不同国家之间的文本数据能够彼此无障碍交流需要对编码统一</span><br><span class="line">unicode(万国码)出现了</span><br><span class="line">  特点:统一使用两个及以上字符记录字符与数字的对应关系</span><br><span class="line">    </span><br><span class="line">utf8(万国码的优化版)</span><br><span class="line">  英文还是用一个字节存储,中文使用三个字节或更多字节存储</span><br><span class="line"> </span><br><span class="line">现在默认使用的编码是uft8</span><br></pre></td></tr></table></figure>
@@ -310,7 +321,7 @@
 
 <h5 id="2-2-2-只写模式-w"><a href="#2-2-2-只写模式-w" class="headerlink" title="2.2.2 只写模式 w"></a>2.2.2 只写模式 w</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当路劲不存在时,不会报错,会创建该文件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;b.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f2:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 路劲存在时,写入会先清空文件内容,再写入内容</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>,encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">    <span class="built_in">print</span>(f1.read())  <span class="comment"># 读取会报错</span></span><br><span class="line">    f1.write(<span class="string">&#x27;123&#x27;</span>)  <span class="comment"># 写入的都会在一行,不会自动换行</span></span><br><span class="line">    f1.write(<span class="string">&#x27;\n123\n&#x27;</span>)  <span class="comment"># 需要加入换行符</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="2-2-3-只追加模式-a"><a href="#2-2-3-只追加模式-a" class="headerlink" title="2.2.3 只追加模式 a"></a>2.2.3 只追加模式 a</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当路劲不存在时,不会报错,同样会创建该文件</span></span><br><span class="line">  <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;c.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f3:</span><br><span class="line">      <span class="keyword">pass</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 当路劲存在时,写入不会清空文件</span></span><br><span class="line">  <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">      f1.write(<span class="string">&#x27;\nwoooooo&#x27;</span>)  <span class="comment"># 需要加入换行符,否则都会在一行</span></span><br><span class="line">      f1.write(<span class="string">&#x27;\nwoooooo&#x27;</span>)</span><br><span class="line">      <span class="built_in">print</span>(f1.read())  <span class="comment"># 读取会报错</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-2-3-只追加模式-a"><a href="#2-2-3-只追加模式-a" class="headerlink" title="2.2.3 只追加模式 a"></a>2.2.3 只追加模式 a</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当路劲不存在时,不会报错,同样会创建该文件</span></span><br><span class="line">  <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;c.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f3:</span><br><span class="line">      <span class="keyword">pass</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 当路劲存在时,写入不会清空文件</span></span><br><span class="line">  <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">      f1.write(<span class="string">&#x27;\nwoooooo&#x27;</span>)  <span class="comment"># 需要加入换行符,否则都会在一行</span></span><br><span class="line">      f1.write(<span class="string">&#x27;\nwoooooo&#x27;</span>)</span><br><span class="line">      <span class="built_in">print</span>(f1.read())  <span class="comment"># 读取会报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># r w a读写模式都只能操作文本文件</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="3-debug代码调试"><a href="#3-debug代码调试" class="headerlink" title="3. debug代码调试"></a>3. debug代码调试</h3><ol>
 <li>在代码右侧使用右键标记，空白处右键出现在Run下面有Debug运行</li>
@@ -347,6 +358,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/klcc-c.github.io/19603b60.html" rel="next" title="python-文件操作(二)">
+                  python-文件操作(二) <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
