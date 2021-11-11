@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="Containerd安装12345#依赖安装rpm -qa |grep libseccompyum install wget -ywget http:&#x2F;&#x2F;mirror.centos.org&#x2F;centos&#x2F;7&#x2F;os&#x2F;x86_64&#x2F;Packages&#x2F;libseccomp-2.3.1-4.el7.x86_64.rpmyum install libseccomp-2.3.1-4.el7.x86_64.rp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Containerd相关使用">
+<meta property="og:url" content="https://klcc.cc/4610149.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="Containerd安装12345#依赖安装rpm -qa |grep libseccompyum install wget -ywget http:&#x2F;&#x2F;mirror.centos.org&#x2F;centos&#x2F;7&#x2F;os&#x2F;x86_64&#x2F;Packages&#x2F;libseccomp-2.3.1-4.el7.x86_64.rpmyum install libseccomp-2.3.1-4.el7.x86_64.rp">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-09T13:27:59.491Z">
+<meta property="article:modified_time" content="2021-11-11T10:23:05.281Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="Containerd">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/4610149.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/4610149.html","path":"4610149.html","title":"Containerd相关使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Containerd相关使用 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">8</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">5</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">13</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Containerd%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">Containerd安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Containerd%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">Containerd使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E7%9B%B8%E5%85%B3"><span class="nav-number">2.1.</span> <span class="nav-text">镜像相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%9B%B8%E5%85%B3"><span class="nav-number">2.2.</span> <span class="nav-text">容器相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%9B%B8%E5%85%B3"><span class="nav-number">2.3.</span> <span class="nav-text">任务相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="nav-number">2.4.</span> <span class="nav-text">命名空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Containerd%E9%AB%98%E7%BA%A7%E5%B7%A5%E5%85%B7nerdctl"><span class="nav-number">3.</span> <span class="nav-text">Containerd高级工具nerdctl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.</span> <span class="nav-text">使用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%9B%B8%E5%85%B3-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">容器相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E7%9B%B8%E5%85%B3-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">镜像相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="nav-number">3.2.3.</span> <span class="nav-text">构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-buildctl"><span class="nav-number">3.2.3.1.</span> <span class="nav-text">安装 buildctl</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA"><span class="nav-number">3.2.3.2.</span> <span class="nav-text">构建</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/4610149.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Containerd相关使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-09 21:27:59" itemprop="dateCreated datePublished" datetime="2021-11-09T21:27:59+08:00">2021-11-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-11 18:23:05" itemprop="dateModified" datetime="2021-11-11T18:23:05+08:00">2021-11-11</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/Containerd/" itemprop="url" rel="index"><span itemprop="name">Containerd</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="Containerd安装"><a href="#Containerd安装" class="headerlink" title="Containerd安装"></a>Containerd安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#依赖安装</span></span><br><span class="line">rpm -qa |grep libseccomp</span><br><span class="line">yum install wget -y</span><br><span class="line">wget http://mirror.centos.org/centos/7/os/x86_64/Packages/libseccomp-2.3.1-4.el7.x86_64.rpm</span><br><span class="line">yum install libseccomp-2.3.1-4.el7.x86_64.rpm -y</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#下载</span></span><br><span class="line">wget https://github.com/containerd/containerd/releases/download/v1.5.5/cri-containerd-cni-1.5.5-linux-amd64.tar.gz</span><br><span class="line"><span class="comment"># 如果有限制，也可以替换成下面的 URL 加速下载</span></span><br><span class="line"><span class="comment"># wget https://download.fastgit.org/containerd/containerd/releases/download/v1.5.5/cri-containerd-cni-1.5.5-linux-amd64.tar.gz</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#解压到系统各个目录中去</span></span><br><span class="line">tar -C / -xzf cri-containerd-cni-1.5.5-linux-amd64.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">#环境变量设置</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$PATH:/usr/local/bin:/usr/local/sbin&#x27;</span> &gt;&gt; ~/.bashrc </span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成默认配置</span></span><br><span class="line">mkdir -p /etc/containerd</span><br><span class="line">containerd config default &gt; /etc/containerd/config.toml</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看启动配置文件</span></span><br><span class="line">cat /etc/systemd/system/containerd.service</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> containerd --now</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看版本</span></span><br><span class="line">ctr version</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看插件列表</span></span><br><span class="line">ctr plugin ls</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置加速器</span></span><br><span class="line">[plugins.<span class="string">&quot;io.containerd.grpc.v1.cri&quot;</span>.registry]</span><br><span class="line">  [plugins.<span class="string">&quot;io.containerd.grpc.v1.cri&quot;</span>.registry.mirrors]</span><br><span class="line">    [plugins.<span class="string">&quot;io.containerd.grpc.v1.cri&quot;</span>.registry.mirrors.<span class="string">&quot;docker.io&quot;</span>]</span><br><span class="line">      endpoint = [<span class="string">&quot;https://bqr1dr1n.mirror.aliyuncs.com&quot;</span>]</span><br><span class="line">    [plugins.<span class="string">&quot;io.containerd.grpc.v1.cri&quot;</span>.registry.mirrors.<span class="string">&quot;k8s.gcr.io&quot;</span>]</span><br><span class="line">      endpoint = [<span class="string">&quot;https://registry.aliyuncs.com/k8sxio&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Containerd使用"><a href="#Containerd使用" class="headerlink" title="Containerd使用"></a>Containerd使用</h2><h3 id="镜像相关"><a href="#镜像相关" class="headerlink" title="镜像相关"></a>镜像相关</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#要注意的是镜像地址需要加上 docker.io Host 地址,  --platform 选项指定对应平台的镜像</span></span><br><span class="line">ctr image pull docker.io/library/nginx:alpine</span><br><span class="line"></span><br><span class="line"><span class="comment">#推送镜像,如果是私有镜像则在推送的时候可以通过 --user 来自定义仓库的用户名和密码</span></span><br><span class="line">ctr image push</span><br><span class="line"></span><br><span class="line"><span class="comment">#列出本地镜像  -q 参数只打印镜像名称</span></span><br><span class="line">ctr image ls</span><br><span class="line"></span><br><span class="line"><span class="comment">#检测本地镜像,主要查看其中的 STATUS, complete 表示镜像是完整可用的状态</span></span><br><span class="line">ctr image check</span><br><span class="line"></span><br><span class="line"><span class="comment">#重新打标签</span></span><br><span class="line">ctr image tag docker.io/library/nginx:alpine harbor.k8s.local/course/nginx:alpine</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除镜像 加上 --sync 选项可以同步删除镜像和所有相关的资源</span></span><br><span class="line">ctr image rm harbor.k8s.local/course/nginx:alpine</span><br><span class="line"></span><br><span class="line"><span class="comment">#将镜像挂载到主机目录</span></span><br><span class="line">ctr image mount docker.io/library/nginx:alpine /mnt</span><br><span class="line"></span><br><span class="line"><span class="comment">#将镜像从主机目录上卸载</span></span><br><span class="line">ctr image unmount /mnt</span><br><span class="line"></span><br><span class="line"><span class="comment">#将镜像到处为压缩包</span></span><br><span class="line">ctr image <span class="built_in">export</span>  --all-platforms nginx.tar.gz docker.io/library/nginx:alpine</span><br><span class="line"></span><br><span class="line"><span class="comment">#将压缩包导入镜像</span></span><br><span class="line">ctr image import nginx.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">#直接导入可能会出现类似于 ctr: content digest sha256:xxxxxx not found 的错误，要解决这个办法需要 pull 所有平台镜像：</span></span><br><span class="line">ctr i pull --all-platforms docker.io/library/nginx:alpine</span><br><span class="line">ctr i <span class="built_in">export</span> --all-platforms nginx.tar.gz docker.io/library/nginx:alpine</span><br><span class="line">ctr i rm docker.io/library/nginx:alpine</span><br><span class="line">ctr i import nginx.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="容器相关"><a href="#容器相关" class="headerlink" title="容器相关"></a>容器相关</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建容器</span></span><br><span class="line">ctr container create docker.io/library/nginx:alpine nginx</span><br><span class="line"></span><br><span class="line"><span class="comment">#列出容器 -q 精简内容</span></span><br><span class="line">ctr container ls</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看容器详细配置,类似docker inspect</span></span><br><span class="line">ctr container info nginx</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除容器 也可以使用 delete 或者 del 删除容器</span></span><br><span class="line">ctr container rm nginx</span><br><span class="line">ctr container ls</span><br></pre></td></tr></table></figure>
+
+<h3 id="任务相关"><a href="#任务相关" class="headerlink" title="任务相关"></a>任务相关</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#container create 命令创建的容器，并没有处于运行状态，只是一个静态的容器</span></span><br><span class="line"><span class="comment">#一个 container 对象只是包含了运行一个容器所需的资源及相关配置数据，表示 namespaces、rootfs 和容器的配置都已经初始化成功了，只是用户进程还没有启动</span></span><br><span class="line"><span class="comment">#一个容器真正运行起来是由 Task 任务实现的，Task 可以为容器设置网卡，还可以配置工具来对容器进行监控等</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#运行容器</span></span><br><span class="line">ctr container create docker.io/library/nginx:alpine nginx</span><br><span class="line">ctr task start -d nginx</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看正在运行的容器</span></span><br><span class="line">ctr task ls</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取容器的cgroup相关信息,还有内存、CPU 和 PID 的限额与使用量</span></span><br><span class="line">ctr task metrics nginx</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看容器中所有进程在宿主机中的 PID</span></span><br><span class="line">ctr task ps nginx</span><br><span class="line"></span><br><span class="line"><span class="comment">#进入容器操作 --exec-id 后的id可以随意,唯一即可</span></span><br><span class="line">ctr task exex --exec-id 0 -t nginx sh</span><br><span class="line"></span><br><span class="line"><span class="comment">#暂停容器</span></span><br><span class="line">ctr task pause nginx</span><br><span class="line">ctr task ls  <span class="comment"># STATUS 变成了PAUSED</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#恢复容器</span></span><br><span class="line">ctr task resume nginx</span><br><span class="line">ctr task ls  <span class="comment"># STATUS 变成了RUNING</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#杀掉容器  没有stop,只有暂停或者杀死</span></span><br><span class="line">ctr task <span class="built_in">kill</span> nginx</span><br><span class="line">ctr task ls  <span class="comment"># STATUS 变成了STOPPED</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#删除task</span></span><br><span class="line">ctr task rm nginx</span><br><span class="line">ctr task ls  <span class="comment"># 此时没有了</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#containerd支持命名空间概念,不指定命名空间就是在default</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查看命名空间</span></span><br><span class="line">ctr ns ls</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建命名空间</span></span><br><span class="line">ctr ns creat <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#删除命名空间</span></span><br><span class="line">ctr ns rm <span class="built_in">test</span>  <span class="comment"># ctr ns remove test</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#操作资源的时候就可以指定命名空间,使用 -n 参数指定即可</span></span><br><span class="line">ctr -n <span class="built_in">test</span> image ls</span><br><span class="line"></span><br><span class="line"><span class="comment">#Docker 使用的 containerd 下面的命名空间默认是 moby，而不是 default，所以假如我们有用 docker 启动容器，那么我们也可以通过 ctr -n moby 来定位下面的容器</span></span><br><span class="line">ctr -n moby container ls</span><br><span class="line"></span><br><span class="line"><span class="comment">#同样 Kubernetes 下使用的 containerd 默认命名空间是 k8s.io，所以我们可以使用 ctr -n k8s.io 来查看 Kubernetes 下面创建的容器</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Containerd高级工具nerdctl"><a href="#Containerd高级工具nerdctl" class="headerlink" title="Containerd高级工具nerdctl"></a>Containerd高级工具nerdctl</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果没有安装 containerd，则可以下载 nerdctl-full-&lt;VERSION&gt;-linux-amd64.tar.gz 包进行安装</span></span><br><span class="line">wget https://github.com/containerd/nerdctl/releases/download/v0.12.1/nerdctl-0.12.1-linux-amd64.tar.gz</span><br><span class="line"><span class="comment"># 如果有限制，也可以替换成下面的 URL 加速下载</span></span><br><span class="line"><span class="comment"># wget https://download.fastgit.org/containerd/nerdctl/releases/download/v0.12.1/nerdctl-0.12.1-linux-amd64.tar.gz</span></span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/containerd/bin/ &amp;&amp; tar -zxvf nerdctl-0.12.1-linux-amd64.tar.gz nerdctl &amp;&amp; mv nerdctl /usr/<span class="built_in">local</span>/containerd/bin/</span><br><span class="line"></span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/containerd/bin/nerdctl /usr/<span class="built_in">local</span>/bin/nerdctl</span><br><span class="line"></span><br><span class="line">nerdctl version</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用命令"><a href="#使用命令" class="headerlink" title="使用命令"></a>使用命令</h3><h4 id="容器相关-1"><a href="#容器相关-1" class="headerlink" title="容器相关"></a>容器相关</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#运行容器</span></span><br><span class="line">nerdctl run -d -p 80:80 --name=nginx --restart=always nginx:alpine</span><br><span class="line"></span><br><span class="line"><span class="comment">#进入容器</span></span><br><span class="line">nerdctl <span class="built_in">exec</span> -it nginx /bin/sh</span><br><span class="line"></span><br><span class="line"><span class="comment">#列出容器 -a -q</span></span><br><span class="line">nerdctl ps </span><br><span class="line"></span><br><span class="line"><span class="comment">#获取容器详细信息</span></span><br><span class="line">nerdctl inspect nginx</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看容器日志</span></span><br><span class="line">nerdctl logs -f nginx</span><br><span class="line"></span><br><span class="line"><span class="comment">#停止容器</span></span><br><span class="line">nerdctl stop nginx</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除容器 -f 或者 --force 强制删除</span></span><br><span class="line">nerdctl rm nginx</span><br></pre></td></tr></table></figure>
+
+<h4 id="镜像相关-1"><a href="#镜像相关-1" class="headerlink" title="镜像相关"></a>镜像相关</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看所有镜像</span></span><br><span class="line">nerdctl images</span><br><span class="line"></span><br><span class="line"><span class="comment">#拉取镜像</span></span><br><span class="line">nerdctl pull docker.io/library/busybox:latest</span><br><span class="line"></span><br><span class="line"><span class="comment">#推送镜像</span></span><br><span class="line">nerdctl login --username xxx --password xxx  <span class="comment">#登录</span></span><br><span class="line">nerdctl <span class="built_in">logout</span>  <span class="comment">#注销退出登录</span></span><br><span class="line">nerdctl push</span><br><span class="line"></span><br><span class="line"><span class="comment">#重新给镜像打标签</span></span><br><span class="line">nerdctl tag nginx:alpine harbor.k8s.local/course/nginx:alpine</span><br><span class="line"></span><br><span class="line"><span class="comment">#导出镜像</span></span><br><span class="line">nerdctl save -o busybox.tar.gz busybox:lastest</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除镜像</span></span><br><span class="line">nerdctl rmi busybox</span><br><span class="line"></span><br><span class="line"><span class="comment">#导入镜像</span></span><br><span class="line">nerdctl load -i busybox.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h4 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h4><h5 id="安装-buildctl"><a href="#安装-buildctl" class="headerlink" title="安装 buildctl"></a>安装 buildctl</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">nerdctl build 需要依赖 buildkit 工具</span><br><span class="line"></span><br><span class="line">buildkit 项目也是 Docker 公司开源的一个构建工具包，支持 OCI 标准的镜像构建。它主要包含以下部分</span><br><span class="line">		服务端 buildkitd：当前支持 runc 和 containerd 作为 worker，默认是 runc，我们这里使用 containerd</span><br><span class="line">		客户端 buildctl：负责解析 Dockerfile，并向服务端 buildkitd 发出构建请求</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">buildkit 是典型的 C/S 架构，客户端和服务端是可以不在一台服务器上，而 nerdctl 在构建镜像的时候也作为 buildkitd 的客户端，所以需要我们安装并运行 buildkitd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">wget https://github.com/moby/buildkit/releases/download/v0.9.1/buildkit-v0.9.1.linux-amd64.tar.gz</span><br><span class="line"><span class="comment"># 如果有限制，也可以替换成下面的 URL 加速下载</span></span><br><span class="line"><span class="comment"># wget https://download.fastgit.org/moby/buildkit/releases/download/v0.9.1/buildkit-v0.9.1.linux-amd64.tar.gz</span></span><br><span class="line">tar -zxvf buildkit-v0.9.1.linux-amd64.tar.gz -C /usr/<span class="built_in">local</span>/containerd/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/containerd/bin/buildkitd /usr/<span class="built_in">local</span>/bin/buildkitd</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/containerd/bin/buildctl /usr/<span class="built_in">local</span>/bin/buildctl</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cat /etc/systemd/system/buildkit.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=BuildKit</span><br><span class="line">Documentation=https://github.com/moby/buildkit</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStart=/usr/<span class="built_in">local</span>/bin/buildkitd --oci-worker=<span class="literal">false</span> --containerd-worker=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">systemctl daemon-reload </span><br><span class="line">systemctl <span class="built_in">enable</span> buildkit --now</span><br><span class="line">systemctl status buildkit</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cat Dockerfile </span><br><span class="line">FROM nginx</span><br><span class="line">RUN <span class="built_in">echo</span> <span class="string">&#x27;Hello Nerdctl From Containerd&#x27;</span> &gt; /usr/share/nginx/html/index.html</span><br><span class="line"></span><br><span class="line"><span class="comment">#一定要关闭防火墙和selinux</span></span><br><span class="line">nerdctl build -t nginx:nerdctl -f Dockerfile .</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看是否构建成功</span></span><br><span class="line">nerdctl images </span><br><span class="line"></span><br><span class="line"><span class="comment">#测试是否成功</span></span><br><span class="line">nerdctl run -d -p 80:80 --name=nginx --restart=always nginx:nerdctl</span><br><span class="line"></span><br><span class="line">crul 127.0.0.1</span><br></pre></td></tr></table></figure>
+<p>文档整理:<a target="_blank" rel="noopener" href="https://www.qikqiak.com/k3s/">https://www.qikqiak.com/k3s/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/Containerd/" rel="tag"># Containerd</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/bb5f959.html" rel="prev" title="python-内置方法(三)">
+                  <i class="fa fa-chevron-left"></i> python-内置方法(三)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/b8f382b7.html" rel="next" title="python-编码和文件操作">
+                  python-编码和文件操作 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

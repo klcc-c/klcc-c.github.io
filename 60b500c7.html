@@ -28,7 +28,7 @@
 <meta property="og:description" content="规划   IP Hostname 配置 系统    192.168.0.11 master1 4c8g Centos7.6   192.168.0.12 node1 4c8g Centos7.6   192.168.0.13 node2 4c8g Centos7.6">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-11-04T11:55:34.338Z">
-<meta property="article:modified_time" content="2021-11-09T13:19:45.676Z">
+<meta property="article:modified_time" content="2021-11-11T10:21:03.445Z">
 <meta property="article:author" content="klcc">
 <meta property="article:tag" content="Kuberneters">
 <meta property="article:tag" content="kubeadm">
@@ -90,9 +90,9 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">7</span></a></li>
-        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">4</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">12</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">8</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">5</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">13</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/klcc-c.github.io/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/klcc-c.github.io/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/klcc-c.github.io/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -243,7 +243,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-09 21:19:45" itemprop="dateModified" datetime="2021-11-09T21:19:45+08:00">2021-11-09</time>
+        <time title="修改时间：2021-11-11 18:21:03" itemprop="dateModified" datetime="2021-11-11T18:21:03+08:00">2021-11-11</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -335,7 +335,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f admin.yaml</span><br><span class="line"></span><br><span class="line">kubectl get secret -n kubernetes-dashboard|grep admin-token</span><br><span class="line"><span class="comment">#得到一个以 admin-token-xxx 的一个</span></span><br><span class="line"></span><br><span class="line">kubectl get secret &#123;admin-token-xxx&#125; -o jsonpath=&#123;.data.token&#125; -n kubernetes-dashboard |base64 -d</span><br><span class="line"><span class="comment"># 会生成一串很长的base64后的字符串</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#谷歌浏览器访问的时候会打不开</span></span><br><span class="line"><span class="comment">#解决方法一: 更换火狐浏览器</span></span><br><span class="line"><span class="comment">#解决方法二: 谷歌浏览器非安全页面,空白处输入thisisunsafe即可</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="kubectl命令补全"><a href="#kubectl命令补全" class="headerlink" title="kubectl命令补全"></a>kubectl命令补全</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y bash-completion*</span><br><span class="line"><span class="built_in">source</span> &lt;(kubectl completion bash)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;source &lt;(kubectl completion bash)&quot;</span> &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
-
+<p>文档整理:<a target="_blank" rel="noopener" href="https://www.qikqiak.com/k3s/">https://www.qikqiak.com/k3s/</a></p>
 
     </div>
 
