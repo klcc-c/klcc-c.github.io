@@ -916,6 +916,8 @@
     <title>python-文件与函数初识</title>
     <url>/klcc-c.github.io/a7f42e80.html</url>
     <content><![CDATA[<h2 id="1-文件"><a href="#1-文件" class="headerlink" title="1. 文件"></a>1. 文件</h2><h3 id="1-1-二进制模式读"><a href="#1-1-二进制模式读" class="headerlink" title="1.1 二进制模式读"></a>1.1 二进制模式读</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f.read())  <span class="comment"># 读取的是二进制内容</span></span><br><span class="line">    <span class="built_in">print</span>(f.read().decode(<span class="string">&#x27;utf8&#x27;</span>))  <span class="comment"># 经过住解码，能正常读取内容</span></span><br><span class="line">    <span class="built_in">print</span>(f.read(<span class="number">3</span>).decode(<span class="string">&#x27;utf8&#x27;</span>))  <span class="comment"># 三个字节为一个中文</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">read()  括号内可以放数字</span></span><br><span class="line"><span class="string">    在t模式下表示字符个数</span></span><br><span class="line"><span class="string">    在b模式下表示字节个数</span></span><br><span class="line"><span class="string">英文字符统一使用一个bytes来表示</span></span><br><span class="line"><span class="string">中文字符统一使用三个bytes来表示</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
 
 <h3 id="1-2-文件内光标的移动"><a href="#1-2-文件内光标的移动" class="headerlink" title="1.2 文件内光标的移动"></a>1.2 文件内光标的移动</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f.read(<span class="number">6</span>).decode(<span class="string">&#x27;utf8&#x27;</span>))</span><br><span class="line">    <span class="built_in">print</span>(f.tell())  <span class="comment"># 查看光标移动了多少字节</span></span><br><span class="line">    <span class="built_in">print</span>(f.seek(<span class="number">8</span>, <span class="number">1</span>))  <span class="comment"># 从上面第6字节位置开始往后移动8个字节</span></span><br><span class="line">    <span class="built_in">print</span>(f.read().decode(<span class="string">&#x27;utf8&#x27;</span>))  <span class="comment"># 查看上面移动后的结果</span></span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">seek()</span></span><br><span class="line"><span class="string">  控制文件光标的移动,eg:</span></span><br><span class="line"><span class="string">  f.seek(offset,whence)</span></span><br><span class="line"><span class="string">      offset表示位移量,始终以字节为最小单位,正数从左往右，负数从右往左</span></span><br><span class="line"><span class="string">      </span></span><br><span class="line"><span class="string">      whence表示模式</span></span><br><span class="line"><span class="string">          0:以文件开头为参考(支持tb两种模式)</span></span><br><span class="line"><span class="string">          1:以当前位置为参考,只支持b模式</span></span><br><span class="line"><span class="string">          2:以文件末尾为参考,只支持b模</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
 
@@ -940,6 +942,79 @@
       </categories>
       <tags>
         <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>YAML格式</title>
+    <url>/klcc-c.github.io/2391e1e4.html</url>
+    <content><![CDATA[<h2 id="资源清单"><a href="#资源清单" class="headerlink" title="资源清单"></a>资源清单</h2><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>在Kubernetes 环境下可以使用 kubectl run 运行应用，但是不推荐，而是希望使用资源清单的东西来描述应用，资源清单可以使用YAML和JSON文件来编写，一般YAML更方便阅读</p>
+<p>通过一个资源清单文件定义好一个应用后，可以使用kubectl工具直接运行</p>
+<span id="more"></span>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kuebctl create -f xxx.yaml</span><br></pre></td></tr></table></figure>
+
+<p>资源清单提交给了 APIServer，然后集群获取到清单描述的应用信息后存入到 etcd 数据库中，然后 <code>kube-scheduler</code> 组件发现这个时候有一个 Pod 还没有绑定到节点上，就会对这个 Pod 进行一系列的调度，把它调度到一个最合适的节点上，然后把这个节点和 Pod 绑定到一起（写回到 etcd），然后节点上的 kubelet 组件这个时候 watch 到有一个 Pod 被分配过来了，就去把这个 Pod 的信息拉取下来，然后根据描述通过容器运行时把容器创建出来，最后当然同样把 Pod 状态再写回到 etcd 中去</p>
+<p>示例:</p>
+<p>nginx-deployment.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span>  <span class="comment"># API版本</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span>  <span class="comment"># API对象类型</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx-deploy</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">chapter:</span> <span class="string">first-app</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">2</span>  <span class="comment"># Pod 副本数量</span></span><br><span class="line">  <span class="attr">template:</span>  <span class="comment"># Pod 模板</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">nginx:1.7.9</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+<p>创建应用:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl apply -f nginx-deployment.yaml</span><br><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure>
+
+<p>创建应用之后可以看到有两个副本，由定义的属性<code>replicas: 2</code> 决定的</p>
+<p>可以使用<code>kubectl describe</code> 命令查看资源对象的详细信息</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl  describe pod nginx-deploy-75b69bd684-h4sc2  <span class="comment">#后面编号随机的</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到看到很多这个 Pod 的详细信息，比如调度到的节点、状态、IP 等，一般我们比较关心的是下面的 <code>Events</code> 部分，可以看到这个Pod是如何创建的</p>
+<p>在集群中删除这个应用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl delete -f nginx-deployment.yaml</span><br></pre></td></tr></table></figure>
+
+<h3 id="YAML文件"><a href="#YAML文件" class="headerlink" title="YAML文件"></a>YAML文件</h3><p><code>YAML</code> 是专门用来写配置文件的语言，非常简洁和强大，远比 <code>JSON</code> 格式方便，为了方便人类读写，实质上是一种通用的数据串行化格式。</p>
+<h4 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h4><ul>
+<li>大小写敏感</li>
+<li>使用缩进表示层级关系</li>
+<li>缩进时不允许使用<code>Tab</code>键，只允许使用空格</li>
+<li>缩进的空格数目不重要，只要相同层级的元素左侧对齐即可</li>
+<li><code>#</code> 表示注释</li>
+</ul>
+<h4 id="结构类型"><a href="#结构类型" class="headerlink" title="结构类型"></a>结构类型</h4><p>在kubernets中只需要了解以下结构类型</p>
+<ul>
+<li>Lists(列表)</li>
+<li>Maps(字典)</li>
+</ul>
+<h4 id="Maps"><a href="#Maps" class="headerlink" title="Maps"></a>Maps</h4><p>字典，key:value的键值对，例如:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">Kind:</span> <span class="string">Pod</span></span><br></pre></td></tr></table></figure>
+
+<p>转换为JSON</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;apiVersion&quot;: &quot;v1&quot;,</span><br><span class="line">    &quot;kind&quot;: &quot;pod&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建复杂一点的Maps，</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ydzs-site</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">web</span></span><br></pre></td></tr></table></figure>
+
+<p>metadata对应的值又可以是一个Maps，转换为JSON</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;apiVersion&quot;</span>: <span class="string">&quot;v1&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;kind&quot;</span>: <span class="string">&quot;Pod&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;metadata&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;kube100-site&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;labels&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;app&quot;</span>: <span class="string">&quot;web&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h4><p>列表，也就是一个数组，定义：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">args</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Cat</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Dog</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Fish</span></span><br></pre></td></tr></table></figure>
+
+<p>对应的JSON格式:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;args&quot;</span>: [ &#x27;Cat&#x27;, &#x27;Dog&#x27;, &#x27;Fish&#x27; ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Lists 的子项也可以是 Maps，Maps 的子项也可以是 Lists 如下所示：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">ydzs-site</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">web</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">front-end</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">flaskapp-demo</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">cnych/flaskapp</span></span><br><span class="line">      <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">5000</span></span><br></pre></td></tr></table></figure>
+
+<p>转换为JSON格式如下:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;apiVersion&quot;</span>: <span class="string">&quot;v1&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;kind&quot;</span>: <span class="string">&quot;Pod&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;metadata&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ydzs-site&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;labels&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;app&quot;</span>: <span class="string">&quot;web&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;spec&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;containers&quot;</span>: [&#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;front-end&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;image&quot;</span>: <span class="string">&quot;nginx&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;ports&quot;</span>: [&#123;</span><br><span class="line">                <span class="attr">&quot;containerPort&quot;</span>: <span class="string">&quot;80&quot;</span></span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;, &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;flaskapp-demo&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;image&quot;</span>: <span class="string">&quot;cnych/flaskapp&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;ports&quot;</span>: [&#123;</span><br><span class="line">                <span class="attr">&quot;containerPort&quot;</span>: <span class="string">&quot;5000&quot;</span></span><br><span class="line">            &#125;]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Kuberneters</category>
+      </categories>
+      <tags>
+        <tag>Kuberneters</tag>
+        <tag>YAML</tag>
       </tags>
   </entry>
 </search>
