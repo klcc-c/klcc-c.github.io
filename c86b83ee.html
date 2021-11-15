@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="1. 函数参数分类1.1 形式参数在函数定义阶段括号内所填写的参数，简称形参">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python-函数参数">
+<meta property="og:url" content="https://klcc.cc/c86b83ee.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="1. 函数参数分类1.1 形式参数在函数定义阶段括号内所填写的参数，简称形参">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-15T06:03:10.161Z">
+<meta property="article:modified_time" content="2021-11-15T08:46:09.408Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/c86b83ee.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/c86b83ee.html","path":"c86b83ee.html","title":"python-函数参数"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>python-函数参数 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">10</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">5</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">18</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">1. 函数参数分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E5%BD%A2%E5%BC%8F%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 形式参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E5%AE%9E%E9%99%85%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 实际参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E5%85%B3%E7%B3%BB"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">2. 位置参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">3. 默认参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8F%AF%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">4. 可变长参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-%E5%BD%A2%E5%8F%82"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 形参</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-1-%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1 位置参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-2-%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0"><span class="nav-number">4.1.2.</span> <span class="nav-text">4.1.2 关键字参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-3-%E4%BD%8D%E7%BD%AE%E5%8F%82%E6%95%B0-%E5%85%B3%E9%94%AE%E5%AD%97%E5%8F%82%E6%95%B0"><span class="nav-number">4.1.3.</span> <span class="nav-text">4.1.3 位置参数+关键字参数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-%E5%AE%9E%E5%8F%82"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 实参</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-1-%E5%9C%A8%E5%AE%9E%E5%8F%82%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1 *在实参中使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-3-%E5%9C%A8%E5%AE%9E%E5%8F%82%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.3 **在实参中使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E8%A1%A5%E5%85%85"><span class="nav-number">5.</span> <span class="nav-text">5. 函数参数补充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4"><span class="nav-number">6.</span> <span class="nav-text">6. 名称空间</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#6-1-%E5%88%86%E7%B1%BB"><span class="nav-number">6.0.1.</span> <span class="nav-text">6.1 分类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-2-%E5%AD%98%E6%B4%BB%E5%91%A8%E6%9C%9F"><span class="nav-number">6.0.2.</span> <span class="nav-text">6.2 存活周期</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-3-%E6%9F%A5%E6%89%BE%E9%A1%BA%E5%BA%8F"><span class="nav-number">6.0.3.</span> <span class="nav-text">6.3 查找顺序</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/c86b83ee.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python-函数参数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-15 14:03:10 / 修改时间：16:46:09" itemprop="dateCreated datePublished" datetime="2021-11-15T14:03:10+08:00">2021-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="1-函数参数分类"><a href="#1-函数参数分类" class="headerlink" title="1. 函数参数分类"></a>1. 函数参数分类</h3><h4 id="1-1-形式参数"><a href="#1-1-形式参数" class="headerlink" title="1.1 形式参数"></a>1.1 形式参数</h4><p>在函数定义阶段括号内所填写的参数，简称形参</p>
+<span id="more"></span>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="comment"># a和b就是函数func的形参</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-实际参数"><a href="#1-2-实际参数" class="headerlink" title="1.2 实际参数"></a>1.2 实际参数</h4><p>在函数调用阶段括号内传入的参数，简称实参</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func(<span class="number">1</span>, <span class="number">2</span>)  <span class="comment"># 数据1和2就是函数func的实参</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-关系"><a href="#1-3-关系" class="headerlink" title="1.3 关系"></a>1.3 关系</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">形参可以看成变量名,实参可以看成变量值</span><br><span class="line">两者在函数调用阶段临时绑定,函数运行结束断开</span><br><span class="line"></span><br><span class="line">形参的表现形式只有一种就是变量名</span><br><span class="line">实参的表现形式有很多中(核心是数据值)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-位置参数"><a href="#2-位置参数" class="headerlink" title="2. 位置参数"></a>2. 位置参数</h3><ol>
+<li><p>位置参数</p>
+<p>按照从左往右的顺序依次填入的参数</p>
+</li>
+<li><p>位置形参</p>
+<p>在函数定义阶段括号内按照从左往右的顺序依次填入的变量名</p>
+</li>
+<li><p>位置实参</p>
+<p>在函数调用阶段括号内按照从左往右的顺序依次传入的数据值</p>
+</li>
+<li><p>关键字实参</p>
+<p>可以打破位置顺序</p>
+<p>在函数调用阶段可以通过 <code>形参名=数据值</code>  的形式进行传值</p>
+</li>
+<li><p>总结</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>位置形参与位置实参在函数调用阶段，按照位置一一对应</span><br><span class="line"><span class="number">2.</span>位置参数在绑定的时候个数一致</span><br><span class="line"><span class="number">3.</span>格式越简单的越靠前，格式越复杂的越靠后</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="3-默认参数"><a href="#3-默认参数" class="headerlink" title="3. 默认参数"></a>3. 默认参数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">默认参数描述的是默认形参:</span><br><span class="line">  <span class="number">1.</span>函数在定义阶段就给形参赋值了</span><br><span class="line">  <span class="number">2.</span>该形参在调用阶段如果不给值，则使用默认值</span><br><span class="line">  <span class="number">3.</span>该形参在函数调用阶段也可以继续给值，则使用所给的值</span><br><span class="line">  <span class="number">4.</span>位置形参与默认形参在定义的时候，位置形参必须在默认形参的前面</span><br><span class="line">  </span><br><span class="line">  eg:</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">register</span>(<span class="params">name, age, gender=<span class="string">&#x27;male&#x27;</span></span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;%s:%s:%s&#x27;</span> % (name, age, gender))</span><br><span class="line"></span><br><span class="line">    register(<span class="string">&#x27;jason&#x27;</span>, <span class="number">18</span>)  <span class="comment"># jason:18:male</span></span><br><span class="line">    register(<span class="string">&#x27;lili&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;female&#x27;</span>)  <span class="comment"># lili:18:female</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-可变长参数"><a href="#4-可变长参数" class="headerlink" title="4. 可变长参数"></a>4. 可变长参数</h3><h4 id="4-1-形参"><a href="#4-1-形参" class="headerlink" title="4.1 形参"></a>4.1 形参</h4><h5 id="4-1-1-位置参数"><a href="#4-1-1-位置参数" class="headerlink" title="4.1.1 位置参数"></a>4.1.1 位置参数</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">函数无论传入多少位置参数都可以正常运行</span><br><span class="line"></span><br><span class="line">eg:</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">a, b, *c</span>):</span></span><br><span class="line">      <span class="built_in">print</span>(a, b, c)</span><br><span class="line"></span><br><span class="line">  func(<span class="number">1</span>, <span class="number">2</span>)  <span class="comment"># 1 2 ()</span></span><br><span class="line">  func(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)  <span class="comment"># 1 2 (3,)</span></span><br><span class="line">  func(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)  <span class="comment"># 1 2 (3, 4)</span></span><br><span class="line"></span><br><span class="line">* 在形参数中的使用，用于接收多余位置的参数，并组织成元组的形式赋值给*号后面的变量名</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-1-2-关键字参数"><a href="#4-1-2-关键字参数" class="headerlink" title="4.1.2 关键字参数"></a>4.1.2 关键字参数</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">函数无论传入多少关键字参数都可以正常运行</span><br><span class="line"></span><br><span class="line">eg:</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">a, b, **c</span>):</span></span><br><span class="line">      <span class="built_in">print</span>(a, b, c)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  func(a=<span class="number">1</span>, b=<span class="number">2</span>)  <span class="comment"># 1 2 &#123;&#125;</span></span><br><span class="line">  func(a=<span class="number">1</span>, b=<span class="number">2</span>, c=<span class="number">3</span>)  <span class="comment"># 1 2 &#123;&#x27;c&#x27;: 3&#125;</span></span><br><span class="line">  func(a=<span class="number">1</span>, b=<span class="number">2</span>, c=<span class="number">3</span>, d=<span class="number">4</span>)  <span class="comment"># 1 2 &#123;&#x27;c&#x27;: 3, &#x27;d&#x27;: 4&#125; </span></span><br><span class="line">  </span><br><span class="line">** 号在形参中的使用，用于接收多余的关键字参数，并组织成字典的形式赋值给给**号后面的变量名</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-1-3-位置参数-关键字参数"><a href="#4-1-3-位置参数-关键字参数" class="headerlink" title="4.1.3 位置参数+关键字参数"></a>4.1.3 位置参数+关键字参数</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">函数无论传入多少位置参数和关键字参数都可以正常运行</span><br><span class="line"></span><br><span class="line">eg:</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*a, **b</span>):</span></span><br><span class="line">      <span class="built_in">print</span>(a, b)</span><br><span class="line"></span><br><span class="line">  func()  <span class="comment"># () &#123;&#125;</span></span><br><span class="line">  func(<span class="number">1</span>, <span class="number">2</span>)  <span class="comment"># (1, 2) &#123;&#125;</span></span><br><span class="line">  func(a=<span class="number">1</span>, b=<span class="number">2</span>  <span class="comment"># () &#123;&#x27;a&#x27;: 1, &#x27;b&#x27;: 2&#125;</span></span><br><span class="line">  func(<span class="number">1</span>, <span class="number">2</span>, a=<span class="number">1</span>, b=<span class="number">2</span>)  <span class="comment"># (1, 2) &#123;&#x27;a&#x27;: 1, &#x27;b&#x27;: 2&#125;</span></span><br><span class="line"></span><br><span class="line">规定:</span><br><span class="line">    可变长形参 *和**后面的变量名可以随便定义，但是python中推荐使用</span><br><span class="line">       *args</span><br><span class="line">       **kwargs</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-实参"><a href="#4-2-实参" class="headerlink" title="4.2 实参"></a>4.2 实参</h4><h5 id="4-2-1-在实参中使用"><a href="#4-2-1-在实参中使用" class="headerlink" title="4.2.1 *在实参中使用"></a>4.2.1 <code>*</code>在实参中使用</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">a, b, c</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(a, b, c)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">list1 = [<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>]</span><br><span class="line"><span class="comment"># func(list1)  # 报错，list1是一个整体给了a，后面的b和c参数没有传入</span></span><br><span class="line">func(list1[<span class="number">0</span>], list1[<span class="number">1</span>], list1[<span class="number">2</span>])  <span class="comment"># 需要拆散一一传值</span></span><br><span class="line"></span><br><span class="line">当形参是*args，列表里面的元素如何按照位置一一传值</span><br><span class="line">eg:</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">*args</span>):</span></span><br><span class="line">      <span class="built_in">print</span>(args)</span><br><span class="line">  list1 = [<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>, <span class="number">44</span>]</span><br><span class="line">  func(*list1)  <span class="comment"># (11, 22, 33, 44)</span></span><br><span class="line">*号在实参中的使用，会将列表、元组内的元素打散成位置参数的形式一一传值</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-2-3-在实参中使用"><a href="#4-2-3-在实参中使用" class="headerlink" title="4.2.3 **在实参中使用"></a>4.2.3 <code>**</code>在实参中使用</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(kwargs)</span><br><span class="line">dict1 = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;xxx&#x27;</span>, <span class="string">&#x27;pwd&#x27;</span>: <span class="number">123</span>&#125;</span><br><span class="line">func(**dict1)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;xxx&#x27;, &#x27;pwd&#x27;: 123&#125;</span></span><br><span class="line"><span class="comment"># name=&#x27;xxx&#x27;  --&gt; &#x27;name&#x27;: &#x27;xxx&#x27;</span></span><br><span class="line"><span class="comment"># pwd=123     --&gt; &#x27;pwd&#x27;: 123</span></span><br><span class="line"></span><br><span class="line">**号在实参中的使用，会将字典内的键值对打散成关键字参数传入</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-函数参数补充"><a href="#5-函数参数补充" class="headerlink" title="5. 函数参数补充"></a>5. 函数参数补充</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">name, age, *a, sex, height</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(name, age, a, sex, height)</span><br><span class="line"></span><br><span class="line"><span class="comment"># func(&#x27;jason&#x27;, 18, &#x27;male&#x27;, 183)  # 报错</span></span><br><span class="line">func(<span class="string">&#x27;lili&#x27;</span>, <span class="number">18</span>, sex=<span class="string">&#x27;male&#x27;</span>, height=<span class="number">183</span>) </span><br><span class="line"></span><br><span class="line">当*号后面还有参数时，后面传入实参的时候必须以关键字参数的形式，该形式不常用</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-名称空间"><a href="#6-名称空间" class="headerlink" title="6. 名称空间"></a>6. 名称空间</h3><p>用于存放变量名与变量值绑定关系的地方</p>
+<h5 id="6-1-分类"><a href="#6-1-分类" class="headerlink" title="6.1 分类"></a>6.1 分类</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>内置名称空间</span><br><span class="line">  python解释器定义好的，如 <span class="built_in">len</span>()</span><br><span class="line">  </span><br><span class="line"><span class="number">2.</span>全局名称空间</span><br><span class="line">	在py文件中顶格编写的代码运行之后都会存入全局名称空间</span><br><span class="line">	        	name = <span class="string">&#x27;jason&#x27;</span>  <span class="comment"># name全局</span></span><br><span class="line">            <span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span>  <span class="comment"># func全局</span></span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">if</span> <span class="number">1</span>:</span><br><span class="line">                a = <span class="number">123</span>  <span class="comment"># a全局</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">                <span class="built_in">print</span>(i)  <span class="comment"># i全局</span></span><br><span class="line">            <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                a = <span class="number">123</span>  <span class="comment"># a全局</span></span><br><span class="line">                </span><br><span class="line"><span class="number">3.</span>局部名称空间</span><br><span class="line">  函数体代码运行之后产生的都是局部名称空间</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-2-存活周期"><a href="#6-2-存活周期" class="headerlink" title="6.2 存活周期"></a>6.2 存活周期</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>内置名称空间</span><br><span class="line">  python解释器启动与关闭而创建和销毁</span><br><span class="line"><span class="number">2.</span>全局名称空间</span><br><span class="line">  随着py文件的运行与结束而创建和销毁</span><br><span class="line"><span class="number">3.</span>局部名称空间</span><br><span class="line">  随着函数体代码的执行与结束而创建和销毁</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-3-查找顺序"><a href="#6-3-查找顺序" class="headerlink" title="6.3 查找顺序"></a>6.3 查找顺序</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>查找名字的时候，先确定自己当前在哪儿</span><br><span class="line">  如果在局部</span><br><span class="line">    局部 --&gt; 全局 --&gt; 内置</span><br><span class="line">  如果在全局</span><br><span class="line">    全局 --&gt; 内置</span><br><span class="line">    </span><br><span class="line"><span class="number">2.</span>局部名称空间的嵌套</span><br><span class="line">x = <span class="number">111</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f1</span>():</span></span><br><span class="line">    x = <span class="number">222</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">f2</span>():</span></span><br><span class="line">        x = <span class="number">333</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">f3</span>():</span></span><br><span class="line">            x = <span class="number">444</span>  <span class="comment"># 如果没在这定义 x 会向上查找，依次类推</span></span><br><span class="line">            <span class="built_in">print</span>(x)</span><br><span class="line">            <span class="comment"># x = 444 # 当x定义在这时，会报错</span></span><br><span class="line">        f3()</span><br><span class="line">    f2()</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 调用f1() 执行所有函数</span></span><br><span class="line">f1()  <span class="comment"># 444</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/c2b5b878.html" rel="prev" title="Bond4配置">
+                  <i class="fa fa-chevron-left"></i> Bond4配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/36b9df2b.html" rel="next" title="Linux-命令记录-02">
+                  Linux-命令记录-02 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
