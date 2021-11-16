@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="1. 名称空间作用域 作用域 1名称空间所能够作用的范围 内置名称空间 1程序任何阶段位置均可使用(全局有效)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python-函数使用(二)">
+<meta property="og:url" content="https://klcc.cc/abc4492a.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="1. 名称空间作用域 作用域 1名称空间所能够作用的范围 内置名称空间 1程序任何阶段位置均可使用(全局有效)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-16T06:32:10.718Z">
+<meta property="article:modified_time" content="2021-11-16T10:20:36.168Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/abc4492a.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/abc4492a.html","path":"abc4492a.html","title":"python-函数使用(二)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>python-函数使用(二) | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">11</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">6</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">20</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.</span> <span class="nav-text">1. 名称空间作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-global%E4%B8%8Enonlocal"><span class="nav-number">2.</span> <span class="nav-text">2. global与nonlocal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-global"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 global</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-nolocal"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 nolocal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">3. 函数使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1-%E5%87%BD%E6%95%B0%E5%90%8D"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 函数对象(函数名)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%87%BD%E6%95%B0%E5%B5%8C%E5%A5%97%E8%B0%83%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 函数嵌套调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%87%BD%E6%95%B0%E5%B5%8C%E5%A5%97%E5%AE%9A%E4%B9%89"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 函数嵌套定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 闭包函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 装饰器</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/abc4492a.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python-函数使用(二)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-16 14:32:10 / 修改时间：18:20:36" itemprop="dateCreated datePublished" datetime="2021-11-16T14:32:10+08:00">2021-11-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="1-名称空间作用域"><a href="#1-名称空间作用域" class="headerlink" title="1. 名称空间作用域"></a>1. 名称空间作用域</h2><ol>
+<li><p>作用域</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">名称空间所能够作用的范围</span><br></pre></td></tr></table></figure></li>
+<li><p>内置名称空间</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">程序任何阶段位置均可使用(全局有效)</span><br></pre></td></tr></table></figure>
+<span id="more"></span></li>
+<li><p>全局名称空间</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">程序任何阶段位置均可使用(全局有效)</span><br></pre></td></tr></table></figure></li>
+<li><p>局部名称空间</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一般情况下只在各自的局部名称空间中有效</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="2-global与nonlocal"><a href="#2-global与nonlocal" class="headerlink" title="2. global与nonlocal"></a>2. global与nonlocal</h2><h3 id="2-1-global"><a href="#2-1-global" class="headerlink" title="2.1 global"></a>2.1 global</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">eg1:</span><br><span class="line">x = <span class="number">111</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    <span class="keyword">global</span> x  <span class="comment"># 局部修改全局变量</span></span><br><span class="line">    x = <span class="number">222</span></span><br><span class="line">index()  <span class="comment"># 调用函数之后,因为有了global，x可以被修改</span></span><br><span class="line"><span class="built_in">print</span>(x)  <span class="comment"># 结果为222</span></span><br><span class="line"></span><br><span class="line">eg2:</span><br><span class="line">name_list = [<span class="string">&#x27;jason&#x27;</span>, <span class="string">&#x27;xxx&#x27;</span>]</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">a</span>):</span></span><br><span class="line">    name_list.append(a)</span><br><span class="line">index(<span class="string">&#x27;tony&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(name_list)  <span class="comment"># [&#x27;jason&#x27;, &#x27;xxx&#x27;, &#x27;tony&#x27;]</span></span><br><span class="line"></span><br><span class="line">结论:</span><br><span class="line">  如果想在局部修改全局数据</span><br><span class="line">    数据为不可变类型则需要关键字<span class="keyword">global</span>声明</span><br><span class="line">    数据为可变类型则不需要关键字<span class="keyword">global</span>声明</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-nolocal"><a href="#2-2-nolocal" class="headerlink" title="2.2 nolocal"></a>2.2 nolocal</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">eg1:</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    x = <span class="number">111</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">        <span class="keyword">nonlocal</span> x  <span class="comment"># 内部的局部修改外部的局部数据使用 nonlocal </span></span><br><span class="line">        x = <span class="number">222</span></span><br><span class="line">    func()  <span class="comment"># 此时已经将 x 重新赋值为222</span></span><br><span class="line">    <span class="built_in">print</span>(x)  <span class="comment"># 打印x</span></span><br><span class="line">index()  <span class="comment"># 调用index函数,结果为222</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">eg2:</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    l1 = [<span class="string">&#x27;jason&#x27;</span>, <span class="number">18</span>]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">        l1.append(<span class="string">&#x27;male&#x27;</span>)</span><br><span class="line">    func()</span><br><span class="line">    <span class="built_in">print</span>(l1)  <span class="comment"># [&#x27;jason&#x27;, 18, &#x27;male&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-函数使用"><a href="#3-函数使用" class="headerlink" title="3. 函数使用"></a>3. 函数使用</h2><h3 id="3-1-函数对象-函数名"><a href="#3-1-函数对象-函数名" class="headerlink" title="3.1 函数对象(函数名)"></a>3.1 函数对象(函数名)</h3><blockquote>
+<p><strong>函数名遇到括号就会被调用</strong></p>
+</blockquote>
+<ol>
+<li><p>用法一：函数名可以当做变量名赋值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;from index&quot;</span>)</span><br><span class="line">a = index</span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># &lt;function index at 0x7fcb278c5ea0&gt; 相当于函数的内存地址</span></span><br><span class="line">a()  <span class="comment"># 相当于调用index() 结果为 from index</span></span><br></pre></td></tr></table></figure></li>
+<li><p>用法二：函数名可以当做函数的参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;from index&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">a</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;from func&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(a)  <span class="comment"># 函数的内存地址</span></span><br><span class="line">    a()</span><br><span class="line">func(index) </span><br><span class="line"><span class="comment"># from func</span></span><br><span class="line"><span class="comment"># from index</span></span><br></pre></td></tr></table></figure></li>
+<li><p>用法三：函数名可以当做函数的返回值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;from index&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;from func&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> index</span><br><span class="line">res = func()  <span class="comment"># 先得到 from func</span></span><br><span class="line"><span class="built_in">print</span>(res)  <span class="comment"># 得到func函数的返回值，是index函数的内存地址</span></span><br><span class="line">res()  <span class="comment"># 得到 from index</span></span><br></pre></td></tr></table></figure></li>
+<li><p>用法四：函数名可以当做容器类型(内部可以存放多个数据)的元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">eg1:</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;from index&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;from func&quot;</span>)</span><br><span class="line">l1 = [index, func]</span><br><span class="line">l1[<span class="number">0</span>]()  <span class="comment"># 本质就是index() 即调用函数index</span></span><br><span class="line">l1[<span class="number">1</span>]()  <span class="comment"># 本质就是func()  即调用函数func</span></span><br><span class="line"><span class="built_in">print</span>(l1)  <span class="comment"># 得到函数index和func的内存地址</span></span><br><span class="line"></span><br><span class="line">eg2:</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;功能1&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;功能2&quot;</span>)</span><br><span class="line">choice_dict = &#123;<span class="string">&#x27;1&#x27;</span>: func1,</span><br><span class="line">               <span class="string">&#x27;2&#x27;</span>: func2&#125;</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        1.功能1</span></span><br><span class="line"><span class="string">        2.功能2</span></span><br><span class="line"><span class="string">        3.退出</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span>)</span><br><span class="line">    choice = <span class="built_in">input</span>(<span class="string">&quot;请输入选项&gt;&gt;&gt;: &quot;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> choice == <span class="string">&#x27;3&#x27;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;退出&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 比if-elif-else格式精简</span></span><br><span class="line">        <span class="keyword">if</span> choice <span class="keyword">in</span> choice_dict:</span><br><span class="line">            func_name = choice_dict.get(choice)</span><br><span class="line">            func_name()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;选项不存在&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="3-2-函数嵌套调用"><a href="#3-2-函数嵌套调用" class="headerlink" title="3.2 函数嵌套调用"></a>3.2 函数嵌套调用</h3><ul>
+<li><p>函数内部调用其他函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">eg1:</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;from index&#x27;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    index()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;from func&#x27;</span>)</span><br><span class="line">func()</span><br><span class="line"></span><br><span class="line">eg2:</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">two_max</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">if</span> a &gt; b:</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> b</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">four_max</span>(<span class="params">x, y, m, n</span>):</span></span><br><span class="line">    res1 = two_max(x, y)</span><br><span class="line">    res2 = two_max(res1, m)</span><br><span class="line">    res3 = two_max(res2, n)</span><br><span class="line">    <span class="keyword">return</span> res3</span><br><span class="line"><span class="built_in">max</span> = four_max(<span class="number">11</span>, <span class="number">23</span>, <span class="number">9</span>, <span class="number">59</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">max</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-3-函数嵌套定义"><a href="#3-3-函数嵌套定义" class="headerlink" title="3.3 函数嵌套定义"></a>3.3 函数嵌套定义</h3><ul>
+<li><p>函数体内部定义其他函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将复杂的功能全部隐藏起来，暴露一个简单的接口</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">all_func</span>(<span class="params"><span class="built_in">type</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func1</span>():</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;功能一&#x27;</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func2</span>():</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;功能二&#x27;</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func3</span>():</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;功能三&#x27;</span>)</span><br><span class="line">    all_dict = &#123;<span class="string">&#x27;1&#x27;</span>: func1,</span><br><span class="line">                <span class="string">&#x27;2&#x27;</span>: func2,</span><br><span class="line">                <span class="string">&#x27;3&#x27;</span>: func3&#125;</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">type</span> <span class="keyword">in</span> all_dict:</span><br><span class="line">        func_name = all_dict.get(<span class="built_in">type</span>)</span><br><span class="line">        func_name()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;功能不存在&quot;</span>)</span><br><span class="line">        </span><br><span class="line">all_func(<span class="string">&#x27;2&#x27;</span>)  <span class="comment"># 功能二</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-4-闭包函数"><a href="#3-4-闭包函数" class="headerlink" title="3.4 闭包函数"></a>3.4 闭包函数</h3><ol>
+<li><p>闭包函数定义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">闭:定义在函数内部的函数</span><br><span class="line">包:内部函数使用了外部函数名称空间中的名字</span><br><span class="line">  </span><br><span class="line">eg:</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">outer</span>():</span></span><br><span class="line">      x = <span class="number">111</span></span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">          <span class="built_in">print</span>(<span class="string">&#x27;form func&#x27;</span>, x)</span><br><span class="line">      <span class="keyword">return</span> func</span><br><span class="line">  <span class="built_in">print</span>(outer())</span><br><span class="line">  a = outer()</span><br><span class="line">  a()</span><br></pre></td></tr></table></figure></li>
+<li><p>函数传参的两种方式</p>
+<ol>
+<li><p>方式一:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 函数体打码需要用到的数据直接在括号内定义形参即可</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>(<span class="params">username</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(username)</span><br><span class="line">index(<span class="string">&#x27;jason&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>方式二:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 闭包函数</span></span><br><span class="line">eg1:</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">outer</span>(<span class="params">x, y</span>):</span></span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">          <span class="keyword">if</span> x &gt; y:</span><br><span class="line">              <span class="keyword">return</span> x</span><br><span class="line">          <span class="keyword">else</span>:</span><br><span class="line">              <span class="keyword">return</span> y</span><br><span class="line">      <span class="keyword">return</span> func</span><br><span class="line">  res = outer(<span class="number">23</span>, <span class="number">5</span>)</span><br><span class="line">  <span class="built_in">print</span>(res())  <span class="comment"># 23</span></span><br><span class="line">  <span class="built_in">print</span>(res())  <span class="comment"># 23</span></span><br><span class="line">  </span><br><span class="line">eg2:</span><br><span class="line">  <span class="keyword">import</span> requests</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">outer</span>(<span class="params">url</span>):</span></span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">get_content</span>():</span></span><br><span class="line">          res = requests.get(url)</span><br><span class="line">          <span class="keyword">if</span> res.status_code == <span class="number">200</span>:</span><br><span class="line">              <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;xxx.html&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                  f.write(res.content)</span><br><span class="line">      <span class="keyword">return</span> get_content</span><br><span class="line"></span><br><span class="line">  res = outer(<span class="string">&#x27;https://jd.com&#x27;</span>)  <span class="comment"># 需要爬哪个网站直接替换实参，比定义全局url更灵活</span></span><br><span class="line">  res()</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<h3 id="3-5-装饰器"><a href="#3-5-装饰器" class="headerlink" title="3.5 装饰器"></a>3.5 装饰器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">装饰器由名称空间，函数对象，闭包函数组合而来</span><br><span class="line"></span><br><span class="line">装饰:给被装饰对象添加额外的功能</span><br><span class="line">器:指的是工具</span><br><span class="line"></span><br><span class="line">装饰器的原则:开放封闭原则</span><br><span class="line">  开放:对扩展开放</span><br><span class="line">  封闭:对修改封闭</span><br><span class="line">    </span><br><span class="line">装饰器核心思想:在不改变被<span class="string">&quot;装饰对象内部代码&quot;</span>和<span class="string">&quot;原有调用方式&quot;</span>的基础上添加额外的功能</span><br><span class="line">  </span><br><span class="line">eg:</span><br><span class="line">  <span class="keyword">import</span> time</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">      time.sleep(<span class="number">3</span>)  <span class="comment"># 阻塞3秒</span></span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;form index&#x27;</span>)</span><br><span class="line">  start_time = time.time()  <span class="comment"># 记录函数运行之前的时间戳(1970年1月1日开始计算的秒数)</span></span><br><span class="line">  index()  <span class="comment"># 调用函数</span></span><br><span class="line">  end_time = time.time()  <span class="comment"># 记录函数运行之后的时间戳</span></span><br><span class="line">  <span class="built_in">print</span>(end_time - start_time)  <span class="comment"># 计算出函数运行的时间值</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/13085aa8.html" rel="prev" title="Nginx安装配置使用">
+                  <i class="fa fa-chevron-left"></i> Nginx安装配置使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
