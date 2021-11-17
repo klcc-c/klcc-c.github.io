@@ -28,7 +28,7 @@
 <meta property="og:description" content="1. 名称空间作用域 作用域 1名称空间所能够作用的范围 内置名称空间 1程序任何阶段位置均可使用(全局有效)">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-11-16T06:32:10.718Z">
-<meta property="article:modified_time" content="2021-11-16T10:20:36.168Z">
+<meta property="article:modified_time" content="2021-11-17T11:12:37.964Z">
 <meta property="article:author" content="klcc">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -91,7 +91,7 @@
         <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">11</span></a></li>
         <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">6</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">20</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">21</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -148,7 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.</span> <span class="nav-text">1. 名称空间作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-global%E4%B8%8Enonlocal"><span class="nav-number">2.</span> <span class="nav-text">2. global与nonlocal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-global"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 global</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-nolocal"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 nolocal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">3. 函数使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1-%E5%87%BD%E6%95%B0%E5%90%8D"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 函数对象(函数名)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%87%BD%E6%95%B0%E5%B5%8C%E5%A5%97%E8%B0%83%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 函数嵌套调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%87%BD%E6%95%B0%E5%B5%8C%E5%A5%97%E5%AE%9A%E4%B9%89"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 函数嵌套定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 闭包函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 装饰器</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.</span> <span class="nav-text">1. 名称空间作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-global%E4%B8%8Enonlocal"><span class="nav-number">2.</span> <span class="nav-text">2. global与nonlocal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-global"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 global</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-nolocal"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 nolocal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">3. 函数使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1-%E5%87%BD%E6%95%B0%E5%90%8D"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 函数对象(函数名)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%87%BD%E6%95%B0%E5%B5%8C%E5%A5%97%E8%B0%83%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 函数嵌套调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%87%BD%E6%95%B0%E5%B5%8C%E5%A5%97%E5%AE%9A%E4%B9%89"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 函数嵌套定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 闭包函数</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -161,7 +161,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/klcc-c.github.io/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -234,10 +234,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-11-16 14:32:10 / 修改时间：18:20:36" itemprop="dateCreated datePublished" datetime="2021-11-16T14:32:10+08:00">2021-11-16</time>
+      <time title="创建时间：2021-11-16 14:32:10" itemprop="dateCreated datePublished" datetime="2021-11-16T14:32:10+08:00">2021-11-16</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-17 19:12:37" itemprop="dateModified" datetime="2021-11-17T19:12:37+08:00">2021-11-17</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -308,7 +314,7 @@
 </ol>
 </li>
 </ol>
-<h3 id="3-5-装饰器"><a href="#3-5-装饰器" class="headerlink" title="3.5 装饰器"></a>3.5 装饰器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">装饰器由名称空间，函数对象，闭包函数组合而来</span><br><span class="line"></span><br><span class="line">装饰:给被装饰对象添加额外的功能</span><br><span class="line">器:指的是工具</span><br><span class="line"></span><br><span class="line">装饰器的原则:开放封闭原则</span><br><span class="line">  开放:对扩展开放</span><br><span class="line">  封闭:对修改封闭</span><br><span class="line">    </span><br><span class="line">装饰器核心思想:在不改变被<span class="string">&quot;装饰对象内部代码&quot;</span>和<span class="string">&quot;原有调用方式&quot;</span>的基础上添加额外的功能</span><br><span class="line">  </span><br><span class="line">eg:</span><br><span class="line">  <span class="keyword">import</span> time</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">      time.sleep(<span class="number">3</span>)  <span class="comment"># 阻塞3秒</span></span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;form index&#x27;</span>)</span><br><span class="line">  start_time = time.time()  <span class="comment"># 记录函数运行之前的时间戳(1970年1月1日开始计算的秒数)</span></span><br><span class="line">  index()  <span class="comment"># 调用函数</span></span><br><span class="line">  end_time = time.time()  <span class="comment"># 记录函数运行之后的时间戳</span></span><br><span class="line">  <span class="built_in">print</span>(end_time - start_time)  <span class="comment"># 计算出函数运行的时间值</span></span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -329,6 +335,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/klcc-c.github.io/3a5cdcf8.html" rel="next" title="python-装饰器">
+                  python-装饰器 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
