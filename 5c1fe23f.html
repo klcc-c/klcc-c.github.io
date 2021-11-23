@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="1. 面向过程编程面向过程编程，核心是过程二字，过程指的是解决问题的步骤，即先干什么、后干什么、再干什么、然后干什么…… 基于该思想编写程序就好比在设计一条流水线，面向对称编程其实是一种机械式的思维方式 优点: 复杂的问题流程化，进而简单化 缺点: 一旦要修改功能 那么需要整体改造(牵一发而动全身)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python-模块(一)">
+<meta property="og:url" content="https://klcc.cc/5c1fe23f.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="1. 面向过程编程面向过程编程，核心是过程二字，过程指的是解决问题的步骤，即先干什么、后干什么、再干什么、然后干什么…… 基于该思想编写程序就好比在设计一条流水线，面向对称编程其实是一种机械式的思维方式 优点: 复杂的问题流程化，进而简单化 缺点: 一旦要修改功能 那么需要整体改造(牵一发而动全身)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-23T06:27:12.284Z">
+<meta property="article:modified_time" content="2021-11-23T09:16:23.244Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/5c1fe23f.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/5c1fe23f.html","path":"5c1fe23f.html","title":"python-模块(一)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>python-模块(一) | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">11</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">6</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">25</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B%E7%BC%96%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">1. 面向过程编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">2. 模块简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AF%BC%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">3. 模块的导入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-import"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 import</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-from%E2%80%A6import%E2%80%A6"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 from…import…</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97%E6%89%A9%E5%B1%95%E7%94%A8%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 导入模块扩展用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 判断文件类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-%E5%BE%AA%E7%8E%AF%E5%AF%BC%E5%85%A5"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 循环导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 模块导入的顺序</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/5c1fe23f.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python-模块(一)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-23 14:27:12 / 修改时间：17:16:23" itemprop="dateCreated datePublished" datetime="2021-11-23T14:27:12+08:00">2021-11-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="1-面向过程编程"><a href="#1-面向过程编程" class="headerlink" title="1. 面向过程编程"></a>1. 面向过程编程</h3><p>面向过程编程，核心是过程二字，过程指的是解决问题的步骤，即先干什么、后干什么、再干什么、然后干什么……</p>
+<p>基于该思想编写程序就好比在设计一条流水线，面向对称编程其实是一种机械式的思维方式</p>
+<p>优点: 复杂的问题流程化，进而简单化</p>
+<p>缺点: 一旦要修改功能 那么需要整体改造(牵一发而动全身)</p>
+<span id="more"></span>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用户注册功能</span></span><br><span class="line"><span class="comment"># 1.获取用户名和密码</span></span><br><span class="line"><span class="comment"># 2.组织成固定的格式</span></span><br><span class="line"><span class="comment"># 3.文件操作写入文件</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_info</span>():</span></span><br><span class="line">    username = <span class="built_in">input</span>(<span class="string">&#x27;请输入用户名: &#x27;</span>).strip()</span><br><span class="line">    passwd = <span class="built_in">input</span>(<span class="string">&#x27;请输入密码: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(username) == <span class="number">0</span> <span class="keyword">or</span> <span class="built_in">len</span>(passwd) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;用户名密码不能为空&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    id_msg = &#123;<span class="string">&#x27;1&#x27;</span>: <span class="string">&#x27;admin&#x27;</span>,</span><br><span class="line">              <span class="string">&#x27;2&#x27;</span>: <span class="string">&#x27;user&#x27;</span>&#125;</span><br><span class="line">    u_id = <span class="built_in">input</span>(<span class="string">&#x27;%s\n请输入身份: &#x27;</span> % id_msg).strip()</span><br><span class="line">    <span class="keyword">if</span> u_id <span class="keyword">in</span> id_msg:</span><br><span class="line">        user_id = id_msg.get(u_id)</span><br><span class="line">        <span class="keyword">return</span> deal_data(username, passwd, user_id)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;输入的信息不合法&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deal_data</span>(<span class="params">username, passwd, u_id</span>):</span></span><br><span class="line">    msg = <span class="string">&#x27;%s|%s|%s\n&#x27;</span> % (username, passwd, u_id)</span><br><span class="line">    <span class="keyword">return</span> save_data(msg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_data</span>(<span class="params">msg</span>):</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;info.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(msg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">get_info()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-模块简介"><a href="#2-模块简介" class="headerlink" title="2. 模块简介"></a>2. 模块简介</h3><ol>
+<li><p><strong>什么是模块</strong></p>
+<p>模块是一系列功能的结合体</p>
+</li>
+<li><p><strong>为什么要用模块</strong></p>
+<p>为了提升开发效率</p>
+</li>
+<li><p><strong>模块的三种来源</strong></p>
+<ol>
+<li>内置: Python解释器自带的，能直接导入使用</li>
+<li>第三方: 别人已经写好的，下载后可以直接拿来用</li>
+<li>自定义: 自己写的模块</li>
+</ol>
+</li>
+<li><p><strong>模块的四种表现形式</strong></p>
+<ol>
+<li>使用Python编写的代码(.py文件)</li>
+<li>已被编译为共享库活DLL或C++扩展</li>
+<li>包好一组模块的包(文件夹)，其实是多个py文件的集合，包内通常用<code>__init__.py</code>文件</li>
+<li>使用C编写并链接到Python解释器的内置模块</li>
+</ol>
+</li>
+</ol>
+<p>PS: 在编写大型项目的时候，遇到一些复杂的功能可以先考虑是否有相应的模块可以调用</p>
+<h3 id="3-模块的导入"><a href="#3-模块的导入" class="headerlink" title="3. 模块的导入"></a>3. 模块的导入</h3><h4 id="3-1-import"><a href="#3-1-import" class="headerlink" title="3.1 import"></a>3.1 import</h4><ul>
+<li><p>在同级目录下创建两个.py文件</p>
+<p> mod-imp.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> imtest</span><br><span class="line"></span><br><span class="line">money = <span class="number">999</span></span><br><span class="line"><span class="built_in">print</span>(imtest.money)  <span class="comment"># 1000</span></span><br><span class="line"><span class="built_in">print</span>(imtest.func1())  <span class="comment"># from func1</span></span><br><span class="line">imtest.change()  </span><br><span class="line"><span class="built_in">print</span>(imtest.money)  <span class="comment"># 10</span></span><br><span class="line"><span class="built_in">print</span>(money)  <span class="comment"># 999</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行该文件时会首先打印 imtest模块</span></span><br></pre></td></tr></table></figure>
+
+<p>imtest.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;imtest模块&#x27;</span>)</span><br><span class="line">money = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;from func1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">change</span>():</span></span><br><span class="line">    <span class="keyword">global</span> money</span><br><span class="line">    money = <span class="number">10</span></span><br></pre></td></tr></table></figure></li>
+<li><p>结论</p>
+<ol>
+<li>多次导入相同模块时，只会执行一次</li>
+<li>首次导入<code>imtest</code>模块的过程<ol>
+<li>运行导入文件(import句式.py)产生该文件的全局名称空间</li>
+<li>运行<code>imtest.py</code>文件</li>
+<li>运行<code>imtest.py</code>内代码，将产生的名字全部存档于<code>imtest.py</code>名称空间</li>
+<li>在导入文件名称空间产生一个<code>imtest</code>的名字指向<code>imtest.py</code>全局名称空间</li>
+</ol>
+</li>
+<li>import句式导入模块之后<ol>
+<li>通过<code>模块名.</code>的方式可以使用模块内所有的名字，并且肯定不会产生冲突</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="3-2-from…import…"><a href="#3-2-from…import…" class="headerlink" title="3.2 from…import…"></a>3.2 from…import…</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> imtest <span class="keyword">import</span> money, func1, change</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>多次导入相同模块是，只会执行一次</li>
+<li>导入发生的过程<ol>
+<li>先产生执行文件的全局名称空间</li>
+<li>执行模块文件，产生模块的全局名称空间</li>
+<li>将模块中执行之后产生的名字全部存档于模块名称空间中</li>
+<li>在执行文件中有一个<code>money</code>执行模块名称空间中<code>money</code>指向的值</li>
+</ol>
+</li>
+<li>导入之后<ol>
+<li>在使用的时候直接写名字即可，但是当当前名称空间有相同名字的时候，就会产生冲突，使用的就变成了当前名称空间</li>
+</ol>
+</li>
+</ol>
+<h4 id="3-3-导入模块扩展用法"><a href="#3-3-导入模块扩展用法" class="headerlink" title="3.3 导入模块扩展用法"></a>3.3 导入模块扩展用法</h4><ol>
+<li><p>起别名</p>
+<p>既可以给模块起别名也可以给模块中的某个起别名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> modisverylonglong  <span class="keyword">as</span> m</span><br><span class="line"><span class="keyword">from</span> modisverylonglong <span class="keyword">import</span> name <span class="keyword">as</span> n</span><br></pre></td></tr></table></figure></li>
+<li><p>连续导入</p>
+<p>可以连续导入多个模块，但是只有当多个模块功能相似或属于同一系列，否则推荐分行导入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mod1, mod2</span><br><span class="line"><span class="keyword">from</span> mod1 <span class="keyword">import</span> name1, name2</span><br></pre></td></tr></table></figure></li>
+<li><p>通用导入</p>
+<p>将模块中所有名字全部导入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mod <span class="keyword">import</span> *  <span class="comment"># * 表示所有</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__all__ = [<span class="string">&#x27;name1&#x27;</span>, <span class="string">&#x27;name2&#x27;</span>]  <span class="comment"># 在被导入的模块文件中可以使用该方法指定可以被导入的名字,限制的是 * </span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="3-4-判断文件类型"><a href="#3-4-判断文件类型" class="headerlink" title="3.4 判断文件类型"></a>3.4 判断文件类型</h4><ul>
+<li><p>判断py文件是作为模块文件还是执行文件</p>
+<p><code>__name__</code>当文件是执行文件时会返回<code>__main__</code></p>
+<p>文件被当做模块导入则返回文件名(模块名)</p>
+<p>执行mod-imp.py时</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> imtest</span><br><span class="line"><span class="built_in">print</span>(__name__)  <span class="comment"># __main__</span></span><br><span class="line"><span class="built_in">print</span>(imtest.__name__)  <span class="comment"># imtest</span></span><br></pre></td></tr></table></figure>
+
+<p>执行imtest.py时</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;imtest模块&#x27;</span>)</span><br><span class="line">money = <span class="number">1000</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;from func1&#x27;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">change</span>():</span></span><br><span class="line">    <span class="keyword">global</span> money</span><br><span class="line">    money = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(__name__)  <span class="comment"># __main__</span></span><br></pre></td></tr></table></figure></li>
+<li><p>应用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">  func1()  <span class="comment"># 可以在这里放测试代码，避免在别模块导入之后执行</span></span><br></pre></td></tr></table></figure>
+
+<p>ps: 在Pycharm中打出main之后按tab自动补全</p>
+</li>
+</ul>
+<h4 id="3-5-循环导入"><a href="#3-5-循环导入" class="headerlink" title="3.5 循环导入"></a>3.5 循环导入</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当出现循环导入的情况时，程序设计不合理。所以在编写程序时不能出现循环导入现象</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>现象:</li>
+</ul>
+<p>a.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> b <span class="keyword">import</span> num_b</span><br><span class="line">num_a = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<p>b.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> a <span class="keyword">import</span> num_a</span><br><span class="line">num_b = <span class="number">20</span></span><br></pre></td></tr></table></figure>
+
+<p>mod-imp.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> a <span class="keyword">import</span> num_a  <span class="comment"># 此时会出现异常</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解决方案:<ol>
+<li>调换顺序，将彼此调用的句式放在代码的最后</li>
+<li>函数形式，将导入的句式放入到函数体代码，等待所有的名字加载完毕之后再调用(本质等同于调换顺序)</li>
+</ol>
+</li>
+</ul>
+<h4 id="3-6-模块导入的顺序"><a href="#3-6-模块导入的顺序" class="headerlink" title="3.6 模块导入的顺序"></a>3.6 模块导入的顺序</h4><ul>
+<li><p>查找顺序</p>
+<ol>
+<li><p>先从内存中查找</p>
+</li>
+<li><p>再去内置模块中查找</p>
+</li>
+<li><p>最后去<code>sys.path</code>系统路劲中查找(自定义模块)</p>
+<p>如果都没找到就会报错</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="built_in">print</span>(sys.path)  <span class="comment"># 结果中你的第一个元素永远是当前执行文件的路径</span></span><br></pre></td></tr></table></figure></li>
+<li><p>当自定义模块查找不到的时候解决方案</p>
+<ol>
+<li><p>手动将该模块的路径添加到<code>sys.path</code>中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append(<span class="string">r&#x27;path&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>使用<code>from...import...</code></p>
+<ol>
+<li><code>from</code>    文件夹名称.文件夹名称  <code>import</code>   模块名</li>
+<li><code>from</code>    文件夹名称.模块名称     <code>import </code>       名字</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/ae4233d7.html" rel="prev" title="python-生成器和常见内置函数">
+                  <i class="fa fa-chevron-left"></i> python-生成器和常见内置函数
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

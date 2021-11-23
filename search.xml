@@ -1375,8 +1375,166 @@
 <li><p>笔试题</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 求和</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">n, i</span>):</span></span><br><span class="line">    <span class="keyword">return</span> n + i</span><br><span class="line"><span class="comment"># 调用之前是函数 调用之后是生成器</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>():</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">        <span class="keyword">yield</span> i</span><br><span class="line">g = test()  <span class="comment"># 初始化生成器对象</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">10</span>]:</span><br><span class="line">    g = (add(n, i) <span class="keyword">for</span> i <span class="keyword">in</span> g)</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    第一次for循环</span></span><br><span class="line"><span class="string">        g = (add(n, i) for i in g)</span></span><br><span class="line"><span class="string">    第二次for循环</span></span><br><span class="line"><span class="string">        g = (add(10, i) for i in (add(10, i) for i in g))</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">res = <span class="built_in">list</span>(g)</span><br><span class="line"><span class="built_in">print</span>(res)</span><br><span class="line"></span><br><span class="line"><span class="comment">#A. res=[10,11,12,13]</span></span><br><span class="line"><span class="comment">#B. res=[11,12,13,14]</span></span><br><span class="line">C. res=[<span class="number">20</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">23</span>]</span><br><span class="line"><span class="comment">#D. res=[21,22,23,24]</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="常见内置函数"><a href="#常见内置函数" class="headerlink" title="常见内置函数"></a>常见内置函数</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">abs</span>()  <span class="comment"># 取绝对值</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">abs</span>(-<span class="number">10</span>))  <span class="comment"># 10</span></span><br><span class="line">  </span><br><span class="line"><span class="number">2.</span> <span class="built_in">all</span>()  <span class="built_in">any</span>()</span><br><span class="line">   l = [<span class="number">11</span>, <span class="number">22</span>, <span class="number">0</span>]</span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">all</span>(l))  <span class="comment"># 所有元素为True才是True</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">any</span>(l))  <span class="comment"># 所有元素有一个为True就是True</span></span><br><span class="line">  </span><br><span class="line"><span class="number">3.</span> <span class="built_in">bin</span>()  <span class="built_in">oct</span>()  <span class="built_in">hex</span>() </span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">bin</span>(<span class="number">12</span>))  <span class="comment"># 0b1100  二进制</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">oct</span>(<span class="number">12</span>))  <span class="comment"># 0o14  八进制</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">hex</span>(<span class="number">12</span>))  <span class="comment"># 0xc  十六进制</span></span><br><span class="line">  </span><br><span class="line"><span class="number">4.</span> <span class="built_in">bytes</span>()  <span class="built_in">str</span>()</span><br><span class="line">   res = <span class="string">&#x27;测试&#x27;</span></span><br><span class="line">   ret1 = <span class="built_in">bytes</span>(res, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">   <span class="built_in">print</span>(ret1)  <span class="comment"># b&#x27;\xe6\xb5\x8b\xe8\xaf\x95&#x27;</span></span><br><span class="line">   ret2 = <span class="built_in">str</span>(ret1, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">   <span class="built_in">print</span>(ret2)  <span class="comment"># 测试</span></span><br><span class="line">  </span><br><span class="line"><span class="number">5.</span> <span class="built_in">callable</span>()  <span class="comment"># 是否看调用(看是否能加括号运行)</span></span><br><span class="line">   i = <span class="number">1</span></span><br><span class="line">	 <span class="function"><span class="keyword">def</span> <span class="title">f</span>():</span></span><br><span class="line">       <span class="keyword">pass</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">callable</span>(i), <span class="built_in">callable</span>(f))  <span class="comment"># Flse True</span></span><br><span class="line">  </span><br><span class="line"><span class="number">6.</span> <span class="built_in">chr</span>()  <span class="built_in">ord</span>()</span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">65</span>))  <span class="comment"># A  按照ASICC码表的数字打印字符</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>))  <span class="comment"># 65  按照ASICC码表的字符打印数字</span></span><br><span class="line">    </span><br><span class="line"><span class="number">7.</span> <span class="built_in">complex</span>()  复数</span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">complex</span>(<span class="number">123</span>))  <span class="comment"># (123+0j)</span></span><br><span class="line">  </span><br><span class="line"><span class="number">8.</span> <span class="built_in">dir</span>()  <span class="comment"># 查看当前对象可以调用的名字</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">f</span>():</span></span><br><span class="line">       <span class="keyword">pass</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">dir</span>(f))</span><br><span class="line">  </span><br><span class="line"><span class="number">9.</span> divmode()  <span class="comment"># 接收两个数字类型参数，返回一个包含商和余数的元组(a // b, a % b)</span></span><br><span class="line">   <span class="built_in">print</span>(divmode(<span class="number">101</span>, <span class="number">10</span>))  <span class="comment"># (10 1)</span></span><br><span class="line">   应用:</span><br><span class="line">      <span class="comment"># 生成页数</span></span><br><span class="line">      num, more = <span class="built_in">divmod</span>(<span class="number">201</span>, <span class="number">10</span>)</span><br><span class="line">      <span class="keyword">if</span> more:</span><br><span class="line">          num += <span class="number">1</span></span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;总共需要%s页&#x27;</span> % num)</span><br><span class="line">      </span><br><span class="line"><span class="number">10.</span> <span class="built_in">eval</span>()  <span class="built_in">exec</span>()  <span class="comment"># 将字符串内的内容加载执行</span></span><br><span class="line">    s1 = <span class="string">&quot;print(&#x27;hello&#x27;)&quot;</span></span><br><span class="line">    s2 = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    for i in range(10):</span></span><br><span class="line"><span class="string">        print(i)</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">eval</span>(s1)  <span class="comment"># 只能执行简单的内容</span></span><br><span class="line">    <span class="built_in">exec</span>(s2)  <span class="comment"># 可以执行复杂的内容</span></span><br><span class="line">    </span><br><span class="line"><span class="number">11.</span> <span class="built_in">isinstance</span>()  <span class="comment"># 判断是否属于某个数据类型</span></span><br><span class="line">    i = <span class="number">1</span></span><br><span class="line">		<span class="built_in">print</span>(<span class="built_in">isinstance</span>(i, <span class="built_in">int</span>))  <span class="comment"># True</span></span><br><span class="line">    </span><br><span class="line"><span class="number">12.</span> <span class="built_in">pow</span>() </span><br><span class="line">		<span class="built_in">print</span>(<span class="built_in">pow</span>(<span class="number">4</span>, <span class="number">3</span>))  <span class="comment"># 64  4**3</span></span><br><span class="line">  </span><br><span class="line"><span class="number">13.</span> <span class="built_in">round</span>()</span><br><span class="line">		<span class="built_in">print</span>(<span class="built_in">round</span>(<span class="number">4.5</span>))  <span class="comment"># 4</span></span><br><span class="line">		<span class="built_in">print</span>(<span class="built_in">round</span>(<span class="number">4.6</span>))  <span class="comment"># 5</span></span><br><span class="line"> </span><br><span class="line"><span class="number">14.</span> <span class="built_in">sum</span>()  <span class="comment"># 求和</span></span><br><span class="line">    l = [<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>, <span class="number">44</span>]</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">sum</span>(l))  <span class="comment"># 110 将列表 l 中的元素求和</span></span><br></pre></td></tr></table></figure>
+<h3 id="常见内置函数"><a href="#常见内置函数" class="headerlink" title="常见内置函数"></a>常见内置函数</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">abs</span>()  <span class="comment"># 取绝对值</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">abs</span>(-<span class="number">10</span>))  <span class="comment"># 10</span></span><br><span class="line">  </span><br><span class="line"><span class="number">2.</span> <span class="built_in">all</span>()  <span class="built_in">any</span>()</span><br><span class="line">   l = [<span class="number">11</span>, <span class="number">22</span>, <span class="number">0</span>]</span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">all</span>(l))  <span class="comment"># 所有元素为True才是True</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">any</span>(l))  <span class="comment"># 所有元素有一个为True就是True</span></span><br><span class="line">  </span><br><span class="line"><span class="number">3.</span> <span class="built_in">bin</span>()  <span class="built_in">oct</span>()  <span class="built_in">hex</span>() </span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">bin</span>(<span class="number">12</span>))  <span class="comment"># 0b1100  二进制</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">oct</span>(<span class="number">12</span>))  <span class="comment"># 0o14  八进制</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">hex</span>(<span class="number">12</span>))  <span class="comment"># 0xc  十六进制</span></span><br><span class="line">  </span><br><span class="line"><span class="number">4.</span> <span class="built_in">bytes</span>()  <span class="built_in">str</span>()</span><br><span class="line">   res = <span class="string">&#x27;测试&#x27;</span></span><br><span class="line">   ret1 = <span class="built_in">bytes</span>(res, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">   <span class="built_in">print</span>(ret1)  <span class="comment"># b&#x27;\xe6\xb5\x8b\xe8\xaf\x95&#x27;</span></span><br><span class="line">   ret2 = <span class="built_in">str</span>(ret1, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">   <span class="built_in">print</span>(ret2)  <span class="comment"># 测试</span></span><br><span class="line">  </span><br><span class="line"><span class="number">5.</span> <span class="built_in">callable</span>()  <span class="comment"># 是否看调用(看是否能加括号运行)</span></span><br><span class="line">   i = <span class="number">1</span></span><br><span class="line">	 <span class="function"><span class="keyword">def</span> <span class="title">f</span>():</span></span><br><span class="line">       <span class="keyword">pass</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">callable</span>(i), <span class="built_in">callable</span>(f))  <span class="comment"># Flse True</span></span><br><span class="line">  </span><br><span class="line"><span class="number">6.</span> <span class="built_in">chr</span>()  <span class="built_in">ord</span>()</span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">chr</span>(<span class="number">65</span>))  <span class="comment"># A  按照ASICC码表的数字打印字符</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">ord</span>(<span class="string">&#x27;A&#x27;</span>))  <span class="comment"># 65  按照ASICC码表的字符打印数字</span></span><br><span class="line">    </span><br><span class="line"><span class="number">7.</span> <span class="built_in">complex</span>()  复数</span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">complex</span>(<span class="number">123</span>))  <span class="comment"># (123+0j)</span></span><br><span class="line">  </span><br><span class="line"><span class="number">8.</span> <span class="built_in">dir</span>()  <span class="comment"># 查看当前对象可以调用的名字</span></span><br><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">f</span>():</span></span><br><span class="line">       <span class="keyword">pass</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">dir</span>(f))</span><br><span class="line">  </span><br><span class="line"><span class="number">9.</span> <span class="built_in">divmod</span>()  <span class="comment"># 接收两个数字类型参数，返回一个包含商和余数的元组(a // b, a % b)</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="built_in">divmod</span>(<span class="number">101</span>, <span class="number">10</span>))  <span class="comment"># (10 1)</span></span><br><span class="line">   应用:</span><br><span class="line">      <span class="comment"># 生成页数</span></span><br><span class="line">      num, more = <span class="built_in">divmod</span>(<span class="number">201</span>, <span class="number">10</span>)</span><br><span class="line">      <span class="keyword">if</span> more:</span><br><span class="line">          num += <span class="number">1</span></span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;总共需要%s页&#x27;</span> % num)</span><br><span class="line">      </span><br><span class="line"><span class="number">10.</span> <span class="built_in">eval</span>()  <span class="built_in">exec</span>()  <span class="comment"># 将字符串内的内容加载执行</span></span><br><span class="line">    s1 = <span class="string">&quot;print(&#x27;hello&#x27;)&quot;</span></span><br><span class="line">    s2 = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    for i in range(10):</span></span><br><span class="line"><span class="string">        print(i)</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="built_in">eval</span>(s1)  <span class="comment"># 只能执行简单的内容</span></span><br><span class="line">    <span class="built_in">exec</span>(s2)  <span class="comment"># 可以执行复杂的内容</span></span><br><span class="line">    </span><br><span class="line"><span class="number">11.</span> <span class="built_in">isinstance</span>()  <span class="comment"># 判断是否属于某个数据类型</span></span><br><span class="line">    i = <span class="number">1</span></span><br><span class="line">		<span class="built_in">print</span>(<span class="built_in">isinstance</span>(i, <span class="built_in">int</span>))  <span class="comment"># True</span></span><br><span class="line">    </span><br><span class="line"><span class="number">12.</span> <span class="built_in">pow</span>() </span><br><span class="line">		<span class="built_in">print</span>(<span class="built_in">pow</span>(<span class="number">4</span>, <span class="number">3</span>))  <span class="comment"># 64  4**3</span></span><br><span class="line">  </span><br><span class="line"><span class="number">13.</span> <span class="built_in">round</span>()</span><br><span class="line">		<span class="built_in">print</span>(<span class="built_in">round</span>(<span class="number">4.5</span>))  <span class="comment"># 4</span></span><br><span class="line">		<span class="built_in">print</span>(<span class="built_in">round</span>(<span class="number">4.6</span>))  <span class="comment"># 5</span></span><br><span class="line"> </span><br><span class="line"><span class="number">14.</span> <span class="built_in">sum</span>()  <span class="comment"># 求和</span></span><br><span class="line">    l = [<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>, <span class="number">44</span>]</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">sum</span>(l))  <span class="comment"># 110 将列表 l 中的元素求和</span></span><br></pre></td></tr></table></figure>
 
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python-模块(一)</title>
+    <url>/klcc-c.github.io/5c1fe23f.html</url>
+    <content><![CDATA[<h3 id="1-面向过程编程"><a href="#1-面向过程编程" class="headerlink" title="1. 面向过程编程"></a>1. 面向过程编程</h3><p>面向过程编程，核心是过程二字，过程指的是解决问题的步骤，即先干什么、后干什么、再干什么、然后干什么……</p>
+<p>基于该思想编写程序就好比在设计一条流水线，面向对称编程其实是一种机械式的思维方式</p>
+<p>优点: 复杂的问题流程化，进而简单化</p>
+<p>缺点: 一旦要修改功能 那么需要整体改造(牵一发而动全身)</p>
+<span id="more"></span>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 用户注册功能</span></span><br><span class="line"><span class="comment"># 1.获取用户名和密码</span></span><br><span class="line"><span class="comment"># 2.组织成固定的格式</span></span><br><span class="line"><span class="comment"># 3.文件操作写入文件</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_info</span>():</span></span><br><span class="line">    username = <span class="built_in">input</span>(<span class="string">&#x27;请输入用户名: &#x27;</span>).strip()</span><br><span class="line">    passwd = <span class="built_in">input</span>(<span class="string">&#x27;请输入密码: &#x27;</span>).strip()</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(username) == <span class="number">0</span> <span class="keyword">or</span> <span class="built_in">len</span>(passwd) == <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;用户名密码不能为空&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    id_msg = &#123;<span class="string">&#x27;1&#x27;</span>: <span class="string">&#x27;admin&#x27;</span>,</span><br><span class="line">              <span class="string">&#x27;2&#x27;</span>: <span class="string">&#x27;user&#x27;</span>&#125;</span><br><span class="line">    u_id = <span class="built_in">input</span>(<span class="string">&#x27;%s\n请输入身份: &#x27;</span> % id_msg).strip()</span><br><span class="line">    <span class="keyword">if</span> u_id <span class="keyword">in</span> id_msg:</span><br><span class="line">        user_id = id_msg.get(u_id)</span><br><span class="line">        <span class="keyword">return</span> deal_data(username, passwd, user_id)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;输入的信息不合法&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deal_data</span>(<span class="params">username, passwd, u_id</span>):</span></span><br><span class="line">    msg = <span class="string">&#x27;%s|%s|%s\n&#x27;</span> % (username, passwd, u_id)</span><br><span class="line">    <span class="keyword">return</span> save_data(msg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_data</span>(<span class="params">msg</span>):</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;info.txt&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(msg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">get_info()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-模块简介"><a href="#2-模块简介" class="headerlink" title="2. 模块简介"></a>2. 模块简介</h3><ol>
+<li><p><strong>什么是模块</strong></p>
+<p>模块是一系列功能的结合体</p>
+</li>
+<li><p><strong>为什么要用模块</strong></p>
+<p>为了提升开发效率</p>
+</li>
+<li><p><strong>模块的三种来源</strong></p>
+<ol>
+<li>内置: Python解释器自带的，能直接导入使用</li>
+<li>第三方: 别人已经写好的，下载后可以直接拿来用</li>
+<li>自定义: 自己写的模块</li>
+</ol>
+</li>
+<li><p><strong>模块的四种表现形式</strong></p>
+<ol>
+<li>使用Python编写的代码(.py文件)</li>
+<li>已被编译为共享库活DLL或C++扩展</li>
+<li>包好一组模块的包(文件夹)，其实是多个py文件的集合，包内通常用<code>__init__.py</code>文件</li>
+<li>使用C编写并链接到Python解释器的内置模块</li>
+</ol>
+</li>
+</ol>
+<p>PS: 在编写大型项目的时候，遇到一些复杂的功能可以先考虑是否有相应的模块可以调用</p>
+<h3 id="3-模块的导入"><a href="#3-模块的导入" class="headerlink" title="3. 模块的导入"></a>3. 模块的导入</h3><h4 id="3-1-import"><a href="#3-1-import" class="headerlink" title="3.1 import"></a>3.1 import</h4><ul>
+<li><p>在同级目录下创建两个.py文件</p>
+<p> mod-imp.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> imtest</span><br><span class="line"></span><br><span class="line">money = <span class="number">999</span></span><br><span class="line"><span class="built_in">print</span>(imtest.money)  <span class="comment"># 1000</span></span><br><span class="line"><span class="built_in">print</span>(imtest.func1())  <span class="comment"># from func1</span></span><br><span class="line">imtest.change()  </span><br><span class="line"><span class="built_in">print</span>(imtest.money)  <span class="comment"># 10</span></span><br><span class="line"><span class="built_in">print</span>(money)  <span class="comment"># 999</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行该文件时会首先打印 imtest模块</span></span><br></pre></td></tr></table></figure>
+
+<p>imtest.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;imtest模块&#x27;</span>)</span><br><span class="line">money = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;from func1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">change</span>():</span></span><br><span class="line">    <span class="keyword">global</span> money</span><br><span class="line">    money = <span class="number">10</span></span><br></pre></td></tr></table></figure></li>
+<li><p>结论</p>
+<ol>
+<li>多次导入相同模块时，只会执行一次</li>
+<li>首次导入<code>imtest</code>模块的过程<ol>
+<li>运行导入文件(import句式.py)产生该文件的全局名称空间</li>
+<li>运行<code>imtest.py</code>文件</li>
+<li>运行<code>imtest.py</code>内代码，将产生的名字全部存档于<code>imtest.py</code>名称空间</li>
+<li>在导入文件名称空间产生一个<code>imtest</code>的名字指向<code>imtest.py</code>全局名称空间</li>
+</ol>
+</li>
+<li>import句式导入模块之后<ol>
+<li>通过<code>模块名.</code>的方式可以使用模块内所有的名字，并且肯定不会产生冲突</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="3-2-from…import…"><a href="#3-2-from…import…" class="headerlink" title="3.2 from…import…"></a>3.2 from…import…</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> imtest <span class="keyword">import</span> money, func1, change</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>多次导入相同模块是，只会执行一次</li>
+<li>导入发生的过程<ol>
+<li>先产生执行文件的全局名称空间</li>
+<li>执行模块文件，产生模块的全局名称空间</li>
+<li>将模块中执行之后产生的名字全部存档于模块名称空间中</li>
+<li>在执行文件中有一个<code>money</code>执行模块名称空间中<code>money</code>指向的值</li>
+</ol>
+</li>
+<li>导入之后<ol>
+<li>在使用的时候直接写名字即可，但是当当前名称空间有相同名字的时候，就会产生冲突，使用的就变成了当前名称空间</li>
+</ol>
+</li>
+</ol>
+<h4 id="3-3-导入模块扩展用法"><a href="#3-3-导入模块扩展用法" class="headerlink" title="3.3 导入模块扩展用法"></a>3.3 导入模块扩展用法</h4><ol>
+<li><p>起别名</p>
+<p>既可以给模块起别名也可以给模块中的某个起别名</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> modisverylonglong  <span class="keyword">as</span> m</span><br><span class="line"><span class="keyword">from</span> modisverylonglong <span class="keyword">import</span> name <span class="keyword">as</span> n</span><br></pre></td></tr></table></figure></li>
+<li><p>连续导入</p>
+<p>可以连续导入多个模块，但是只有当多个模块功能相似或属于同一系列，否则推荐分行导入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> mod1, mod2</span><br><span class="line"><span class="keyword">from</span> mod1 <span class="keyword">import</span> name1, name2</span><br></pre></td></tr></table></figure></li>
+<li><p>通用导入</p>
+<p>将模块中所有名字全部导入</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> mod <span class="keyword">import</span> *  <span class="comment"># * 表示所有</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">__all__ = [<span class="string">&#x27;name1&#x27;</span>, <span class="string">&#x27;name2&#x27;</span>]  <span class="comment"># 在被导入的模块文件中可以使用该方法指定可以被导入的名字,限制的是 * </span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="3-4-判断文件类型"><a href="#3-4-判断文件类型" class="headerlink" title="3.4 判断文件类型"></a>3.4 判断文件类型</h4><ul>
+<li><p>判断py文件是作为模块文件还是执行文件</p>
+<p><code>__name__</code>当文件是执行文件时会返回<code>__main__</code></p>
+<p>文件被当做模块导入则返回文件名(模块名)</p>
+<p>执行mod-imp.py时</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> imtest</span><br><span class="line"><span class="built_in">print</span>(__name__)  <span class="comment"># __main__</span></span><br><span class="line"><span class="built_in">print</span>(imtest.__name__)  <span class="comment"># imtest</span></span><br></pre></td></tr></table></figure>
+
+<p>执行imtest.py时</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;imtest模块&#x27;</span>)</span><br><span class="line">money = <span class="number">1000</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;from func1&#x27;</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">change</span>():</span></span><br><span class="line">    <span class="keyword">global</span> money</span><br><span class="line">    money = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(__name__)  <span class="comment"># __main__</span></span><br></pre></td></tr></table></figure></li>
+<li><p>应用</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">  func1()  <span class="comment"># 可以在这里放测试代码，避免在别模块导入之后执行</span></span><br></pre></td></tr></table></figure>
+
+<p>ps: 在Pycharm中打出main之后按tab自动补全</p>
+</li>
+</ul>
+<h4 id="3-5-循环导入"><a href="#3-5-循环导入" class="headerlink" title="3.5 循环导入"></a>3.5 循环导入</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">当出现循环导入的情况时，程序设计不合理。所以在编写程序时不能出现循环导入现象</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>现象:</li>
+</ul>
+<p>a.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> b <span class="keyword">import</span> num_b</span><br><span class="line">num_a = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<p>b.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> a <span class="keyword">import</span> num_a</span><br><span class="line">num_b = <span class="number">20</span></span><br></pre></td></tr></table></figure>
+
+<p>mod-imp.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> a <span class="keyword">import</span> num_a  <span class="comment"># 此时会出现异常</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解决方案:<ol>
+<li>调换顺序，将彼此调用的句式放在代码的最后</li>
+<li>函数形式，将导入的句式放入到函数体代码，等待所有的名字加载完毕之后再调用(本质等同于调换顺序)</li>
+</ol>
+</li>
+</ul>
+<h4 id="3-6-模块导入的顺序"><a href="#3-6-模块导入的顺序" class="headerlink" title="3.6 模块导入的顺序"></a>3.6 模块导入的顺序</h4><ul>
+<li><p>查找顺序</p>
+<ol>
+<li><p>先从内存中查找</p>
+</li>
+<li><p>再去内置模块中查找</p>
+</li>
+<li><p>最后去<code>sys.path</code>系统路劲中查找(自定义模块)</p>
+<p>如果都没找到就会报错</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="built_in">print</span>(sys.path)  <span class="comment"># 结果中你的第一个元素永远是当前执行文件的路径</span></span><br></pre></td></tr></table></figure></li>
+<li><p>当自定义模块查找不到的时候解决方案</p>
+<ol>
+<li><p>手动将该模块的路径添加到<code>sys.path</code>中</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append(<span class="string">r&#x27;path&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>使用<code>from...import...</code></p>
+<ol>
+<li><code>from</code>    文件夹名称.文件夹名称  <code>import</code>   模块名</li>
+<li><code>from</code>    文件夹名称.模块名称     <code>import </code>       名字</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>python</category>
