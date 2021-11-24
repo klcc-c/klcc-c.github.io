@@ -229,7 +229,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-11-24 16:35:20 / 修改时间：17:12:36" itemprop="dateCreated datePublished" datetime="2021-11-24T16:35:20+08:00">2021-11-24</time>
+      <time title="创建时间：2021-11-24 16:35:20 / 修改时间：17:16:39" itemprop="dateCreated datePublished" datetime="2021-11-24T16:35:20+08:00">2021-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -251,7 +251,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="安装NVIDIA驱动"><a href="#安装NVIDIA驱动" class="headerlink" title="安装NVIDIA驱动"></a>安装NVIDIA驱动</h3><h4 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 官网下载Linux版驱动 https://www.nvidia.cn/Download/index.aspx</span></span><br><span class="line"></span><br><span class="line">chmod +x NVIDIA-Linux-x86_64-440.100.run</span><br><span class="line">apt install curl make gcc g++ wget pkg-config --reinstall -y</span><br><span class="line"></span><br><span class="line">./NVIDIA-Linux-x86_64-440.100.run  -a -q -s -z -Z</span><br></pre></td></tr></table></figure>
+          <h3 id="安装NVIDIA驱动"><a href="#安装NVIDIA驱动" class="headerlink" title="安装NVIDIA驱动"></a>安装NVIDIA驱动</h3><h4 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#关闭桌面</span></span><br><span class="line">systemctl <span class="built_in">disable</span> gdm3</span><br><span class="line"></span><br><span class="line"><span class="comment">#禁用nouveau</span></span><br><span class="line">sudo <span class="built_in">echo</span> <span class="string">&quot;blacklist nouveau&quot;</span> &gt;&gt;  /etc/modprobe.d/blacklist.conf</span><br><span class="line">sudo <span class="built_in">echo</span> <span class="string">&quot;options nouveau modeset=0&quot;</span> &gt;&gt;  /etc/modprobe.d/blacklist.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 官网下载Linux版驱动 https://www.nvidia.cn/Download/index.aspx</span></span><br><span class="line"></span><br><span class="line">chmod +x NVIDIA-Linux-x86_64-440.100.run</span><br><span class="line">apt install curl make gcc g++ wget pkg-config --reinstall -y</span><br><span class="line"></span><br><span class="line">./NVIDIA-Linux-x86_64-440.100.run  -a -q -s -z -Z</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/klcc-c.github.io/b9c60b23.html#more" rel="contents">
