@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="CGroupCGroups概述CGroups 全称为 Linux Control Group，其作用是限制一组进程使用的资源（CPU、内存等）上限，CGroups 也是 Containerd 容器技术的核心实现原理之一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CGroups和Namespace">
+<meta property="og:url" content="https://klcc.cc/4a318272.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="CGroupCGroups概述CGroups 全称为 Linux Control Group，其作用是限制一组进程使用的资源（CPU、内存等）上限，CGroups 也是 Containerd 容器技术的核心实现原理之一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/n6YGX3.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/fARleD.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/hdIO6e.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/hv8Mr8.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Cw8YLg.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/1Sc8kM.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Xdpq7i.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/jxos29.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/snZVnb.png">
+<meta property="article:published_time" content="2021-11-22T15:09:30.018Z">
+<meta property="article:modified_time" content="2021-11-24T09:13:55.019Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/n6YGX3.png">
+
+
+<link rel="canonical" href="https://klcc.cc/4a318272.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/4a318272.html","path":"4a318272.html","title":"CGroups和Namespace"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CGroups和Namespace | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">14</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">8</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">28</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CGroup"><span class="nav-number">1.</span> <span class="nav-text">CGroup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CGroups%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">CGroups概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CGroups%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.</span> <span class="nav-text">CGroups测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E4%B8%ADCGroup%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">容器中CGroup的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Namespace"><span class="nav-number">2.</span> <span class="nav-text">Namespace</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/4a318272.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CGroups和Namespace
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-22 23:09:30" itemprop="dateCreated datePublished" datetime="2021-11-22T23:09:30+08:00">2021-11-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-24 17:13:55" itemprop="dateModified" datetime="2021-11-24T17:13:55+08:00">2021-11-24</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="CGroup"><a href="#CGroup" class="headerlink" title="CGroup"></a>CGroup</h2><h3 id="CGroups概述"><a href="#CGroups概述" class="headerlink" title="CGroups概述"></a>CGroups概述</h3><p><code>CGroups</code> 全称为 <code>Linux Control Group</code>，其作用是限制一组进程使用的资源（CPU、内存等）上限，<code>CGroups</code> 也是 Containerd 容器技术的核心实现原理之一</p>
+<span id="more"></span>
+<ul>
+<li>Task: 在 cgroup 中，task 可以理解为一个进程，但这里的进程和一般意义上的操作系统进程不太一样，实际上是进程 ID 和线程 ID 列表。</li>
+<li>CGroup: 即控制组，一个控制组就是一组按照某种标准划分的 Tasks，可以理解为资源限制是以进程组为单位实现的，一个进程加入到某个控制组后，就会受到相应配置的资源限制。</li>
+<li>Hierarchy: cgroup 的层级组织关系，cgroup 以树形层级组织，每个 cgroup 子节点默认继承其父 cgroup 节点的配置属性，这样每个 Hierarchy 在初始化会有 root cgroup。</li>
+<li>Subsystem: 即子系统，子系统表示具体的资源配置，如CPU使用，内存占用等，Subsystem附加到Hierarchy上后可用。</li>
+</ul>
+<ul>
+<li>查看当前系统支持的CGroups子系统</li>
+</ul>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/n6YGX3.png" alt="n6YGX3"></p>
+<p>查看cgroup</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -h |grep cgroup</span><br></pre></td></tr></table></figure>
+
+<p>查看当前系统挂载了哪些 cgroup</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/fARleD.png" alt="fARleD"></p>
+<p><code>/sys/fs/cgroup</code> 目录下的每个子目录就对应着一个子系统，cgroup 是以目录形式组织的，<code>/</code> 是 cgroup 的根目录，但是这个根目录可以被挂载到任意目录，例如 CGroups 的 memory 子系统的挂载点是 <code>/sys/fs/cgroup/memory</code>，那么 <code>/sys/fs/cgroup/memory/</code> 对应 memory 子系统的根目录</p>
+<h3 id="CGroups测试"><a href="#CGroups测试" class="headerlink" title="CGroups测试"></a>CGroups测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /sys/fsc</span><br><span class="line">ls /sys/fs/cgroup/cpu/klcc.test</span><br><span class="line">cat /sys/fs/cgroup/cpu/klcc.test/cpu.cfs_period_us </span><br><span class="line">cat /sys/fs/cgroup/cpu/klcc.test/cpu.cfs_quota_us </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/hdIO6e.png" alt="hdIO6e"></p>
+<p>目录创建完成后，下面就会已经自动创建 cgroup 的相关文件</p>
+<p><code>cpu.cfs_period_us</code> 文件，用来配置 CPU 时间周期长度的，默认为 <code>100000us</code></p>
+<p>cpu.cfs_quota_us文件，用来设置在此时间周期长度内所能使用的 CPU 时间数，默认值为-1，表示不受时间限制。</p>
+<p>编写一个简单的python脚本消耗cpu</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>直接运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python cgroup.py &amp;</span><br><span class="line">[1] 8288</span><br></pre></td></tr></table></figure>
+<p>此时用top命令查看到 8288 进程已经达到了100%</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/hv8Mr8.png" alt="hv8Mr8"></p>
+<p>现在我们将这个进程ID写入到 <code>/sys/fs/cgroup/cpu/klcc.test/tasks</code> 文件下面去，然后设置 <code>/sys/fs/cgroup/cpu/ydzs.test/cpu.cfs_quota_us</code> 为 <code>10000us</code>，因为 <code>cpu.cfs_period_us</code> 默认值为 <code>100000us</code>，所以这表示我们要限制 CPU 使用率为10%：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 8288 &gt;  /sys/fs/cgroup/cpu/klcc.test/tasks</span><br><span class="line"><span class="built_in">echo</span> 10000 &gt; /sys/fs/cgroup/cpu/klcc.test/cpu.cfs_quota_us</span><br></pre></td></tr></table></figure>
+
+<p> 此时使用<code>top</code>命令查看是就是被限制在10%左右了</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Cw8YLg.png" alt="Cw8YLg"></p>
+<p>如果要限制内存等其他资源的话，同样去对应的子系统下面设置资源，并将进程 ID 加入 tasks 中即可。如果要删除这个 cgroup，直接删除文件夹是不行的，需要使用 <code>libcgroup</code> 工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install libcgroup libcgroup-tools</span><br><span class="line">cgdelete cpu:klcc.test</span><br></pre></td></tr></table></figure>
+
+<h3 id="容器中CGroup的使用"><a href="#容器中CGroup的使用" class="headerlink" title="容器中CGroup的使用"></a>容器中CGroup的使用</h3><p>创建一个加<code>-m</code>参数限制容器内存</p>
+<p>此时启动完成后容器的cgroup会出现在<code>/sys/fs/cgroup/memory/docker</code>下</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/1Sc8kM.png" alt="1Sc8kM"></p>
+<p>可以看到很多和内存相关的配置文件</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Xdpq7i.png" alt="Xdpq7i"></p>
+<p>查看<code>memory.limit_in_bytes</code> 结果是创建时设置的内存大小</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat  /sys/fs/cgroup/memory/docker/3f1a79a1ef6d613d36d32a5b7216068ef008d59cce879475b3ce5ad7ee131263/memory.limit_in_bytes </span><br><span class="line">52428800</span><br></pre></td></tr></table></figure>
+<p>容器的进程ID也会在task文件中</p>
+<p>![image-20211124165322290](/Users/zhijinliu/Library/Application Support/typora-user-images/image-20211124165322290.png)</p>
+<p>当删除这个容器之后，相应的容器ID也会被删除</p>
+<h2 id="Namespace"><a href="#Namespace" class="headerlink" title="Namespace"></a>Namespace</h2><p><code>namespace</code> 也称命名空间，是 Linux 为我们提供的用于隔离进程树、网络接口、挂载点以及进程间通信等资源的方法。在日常使用个人 PC 时，我们并没有运行多个完全分离的服务器的需求，但是如果我们在服务器上启动了多个服务，这些服务其实会相互影响的，每一个服务都能看到其他服务的进程，也可以访问宿主机器上的任意文件，一旦服务器上的某一个服务被入侵，那么入侵者就能够访问当前机器上的所有服务和文件，这是我们不愿意看到的，我们更希望运行在同一台机器上的不同服务能做到完全隔离，就像运行在多台不同的机器上一样。而我们这里的容器其实就通过 Linux 的 Namespaces 技术来实现的对不同的容器进行隔离。</p>
+<p>linux 共有6(7)种命名空间:</p>
+<ul>
+<li><code>ipc namespace</code>: 管理对 IPC 资源（进程间通信（信号量、消息队列和共享内存）的访问</li>
+<li><code>net namespace</code>: 网络设备、网络栈、端口等隔离</li>
+<li><code>mnt namespace</code>: 文件系统挂载点隔离</li>
+<li><code>pid namespace</code>: 用于进程隔离</li>
+<li><code>user namespace</code>: 用户和用户组隔离（3.8以后的内核才支持）</li>
+<li><code>uts namespace</code>: 主机和域名隔离</li>
+<li><code>cgroup namespace</code>：用于 cgroup 根目录隔离（4.6以后版本的内核才支持）</li>
+</ul>
+<p>通过lsns查看当前系统已经创建的名称空间</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/jxos29.png" alt="jxos29"></p>
+<p>要查看一个进程所属的命名空间信息，可以到 <code>/proc/&lt;pid&gt;/ns</code> 目录下查看，</p>
+<p>这些 namespace 都是链接文件, 格式为 <code>namespaceType:[inode number]</code>，<code>inode number</code> 用来标识一个 namespace，可以理解为 namespace id，如果两个进程的某个命名空间的链接文件指向同一个，那么其相关资源在同一个命名空间中，也就没有隔离了</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/snZVnb.png" alt="snZVnb"></p>
+<p>可以看出 nginx 容器启动后，已经为该容器自动创建了单独的 <code>mtn</code>、<code>uts</code>、<code>ipc</code>、<code>pid</code>、<code>net</code> 命名空间，也就是这个容器在这些方面是独立隔离的，其他容器想要和该容器共享某一个命名空间，那么就需要指向同一个命名空间</p>
+<p>白嫖地址: <a target="_blank" rel="noopener" href="https://www.qikqiak.com/k3s/runtime/cgroups-namespaces/">https://www.qikqiak.com/k3s/runtime/cgroups-namespaces/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/ae4233d7.html" rel="prev" title="python-生成器和常见内置函数">
+                  <i class="fa fa-chevron-left"></i> python-生成器和常见内置函数
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/5c1fe23f.html" rel="next" title="python-模块(一)">
+                  python-模块(一) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
