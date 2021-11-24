@@ -86,7 +86,7 @@
         <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">11</span></a></li>
         <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">6</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">25</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">26</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/klcc-c.github.io/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -195,6 +195,87 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/26f31071.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/klcc-c.github.io/26f31071.html" class="post-title-link" itemprop="url">python-软件目录规范和正则表达式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-24 14:30:03 / 修改时间：16:17:03" itemprop="dateCreated datePublished" datetime="2021-11-24T14:30:03+08:00">2021-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="1-软件开发目录规范"><a href="#1-软件开发目录规范" class="headerlink" title="1. 软件开发目录规范"></a>1. 软件开发目录规范</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">demo</span><br><span class="line">├── <span class="built_in">bin</span>  <span class="comment"># 存放一系列启动文件,当启动文件很少或者只有一个时也可以直接放外面</span></span><br><span class="line">│   └── start.py</span><br><span class="line">├── conf  <span class="comment"># 存放一系列配置文件</span></span><br><span class="line">│   └── settings.py  <span class="comment"># 一般情况下该文件的变量名都大写</span></span><br><span class="line">├── core  <span class="comment"># 存放项目核心代码文件</span></span><br><span class="line">│   └── src.py</span><br><span class="line">├── db  <span class="comment"># 存放数据相关文件</span></span><br><span class="line">│   └── userinfo.txt</span><br><span class="line">├── lib  <span class="comment"># 存放公共的功能</span></span><br><span class="line">│   └── common.py</span><br><span class="line">├── log  <span class="comment"># 存放日志的目录</span></span><br><span class="line">│   └── log.txt</span><br><span class="line">├── readme  <span class="comment"># 存放相关信息(使用说明等)</span></span><br><span class="line">└── requirements.txt  <span class="comment"># 存放项目所需的第三方模块及版本号</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/klcc-c.github.io/26f31071.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -942,87 +1023,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/klcc-c.github.io/c86b83ee.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://klcc.cc/c2b5b878.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
-      <meta itemprop="name" content="klcc">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="klcc">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/klcc-c.github.io/c2b5b878.html" class="post-title-link" itemprop="url">Bond4配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2021-11-13 08:22:06 / 修改时间：08:35:17" itemprop="dateCreated datePublished" datetime="2021-11-13T08:22:06+08:00">2021-11-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/klcc-c.github.io/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="Ubuntu配置"><a href="#Ubuntu配置" class="headerlink" title="Ubuntu配置"></a>Ubuntu配置</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/klcc-c.github.io/c2b5b878.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
