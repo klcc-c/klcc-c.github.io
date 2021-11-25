@@ -28,7 +28,7 @@
 <meta property="og:description" content="1. 面向过程编程面向过程编程，核心是过程二字，过程指的是解决问题的步骤，即先干什么、后干什么、再干什么、然后干什么…… 基于该思想编写程序就好比在设计一条流水线，面向对称编程其实是一种机械式的思维方式 优点: 复杂的问题流程化，进而简单化 缺点: 一旦要修改功能 那么需要整体改造(牵一发而动全身)">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-11-23T06:27:12.284Z">
-<meta property="article:modified_time" content="2021-11-23T09:16:23.244Z">
+<meta property="article:modified_time" content="2021-11-25T00:35:57.772Z">
 <meta property="article:author" content="klcc">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -91,7 +91,7 @@
         <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">14</span></a></li>
         <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">8</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">29</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -148,7 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B%E7%BC%96%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">1. 面向过程编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">2. 模块简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AF%BC%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">3. 模块的导入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-import"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 import</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-from%E2%80%A6import%E2%80%A6"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 from…import…</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97%E6%89%A9%E5%B1%95%E7%94%A8%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 导入模块扩展用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 判断文件类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-%E5%BE%AA%E7%8E%AF%E5%AF%BC%E5%85%A5"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 循环导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 模块导入的顺序</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B%E7%BC%96%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">1. 面向过程编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">2. 模块简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AF%BC%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">3. 模块的导入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-import"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 import</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-from%E2%80%A6import%E2%80%A6"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 from…import…</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97%E6%89%A9%E5%B1%95%E7%94%A8%E6%B3%95"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 导入模块扩展用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 判断文件类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-%E5%BE%AA%E7%8E%AF%E5%AF%BC%E5%85%A5"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 循环导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 模块导入的顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7-%E7%BB%9D%E5%AF%B9%E5%AF%BC%E5%85%A5%E4%B8%8E%E7%9B%B8%E5%AF%B9%E5%AF%BC%E5%85%A5"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 绝对导入与相对导入</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -161,7 +161,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/klcc-c.github.io/archives/">
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -234,10 +234,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-11-23 14:27:12 / 修改时间：17:16:23" itemprop="dateCreated datePublished" datetime="2021-11-23T14:27:12+08:00">2021-11-23</time>
+      <time title="创建时间：2021-11-23 14:27:12" itemprop="dateCreated datePublished" datetime="2021-11-23T14:27:12+08:00">2021-11-23</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-25 08:35:57" itemprop="dateModified" datetime="2021-11-25T08:35:57+08:00">2021-11-25</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -405,7 +411,7 @@
 </ol>
 </li>
 </ul>
-
+<h4 id="3-7-绝对导入与相对导入"><a href="#3-7-绝对导入与相对导入" class="headerlink" title="3.7 绝对导入与相对导入"></a>3.7 绝对导入与相对导入</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;在程序中涉及到多个文件之间导入模块的情况 一律按照执行文件所在的路径为准&quot;&quot;&quot;</span></span><br><span class="line">绝对导入</span><br><span class="line">	始终按照执行文件所在的sys.path查找模块</span><br><span class="line">相对导入</span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">	句点符(.)</span></span><br><span class="line"><span class="string">		.表示当前文件路径</span></span><br><span class="line"><span class="string">		..表示上一层文件路径</span></span><br><span class="line"><span class="string">	&quot;&quot;&quot;</span></span><br><span class="line">    能够打破始终以执行文件为准的规则 只考虑两个文件之间的位置</span><br><span class="line">    <span class="comment"># 相对导入只能用在模块文件中 不能在执行文件中使用</span></span><br></pre></td></tr></table></figure>
     </div>
 
     
