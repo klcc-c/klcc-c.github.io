@@ -1982,4 +1982,26 @@
         <tag>python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Mac上VMware的NAT网络设置</title>
+    <url>/klcc-c.github.io/2ba065a.html</url>
+    <content><![CDATA[<h3 id="NAT网络设置"><a href="#NAT网络设置" class="headerlink" title="NAT网络设置"></a>NAT网络设置</h3><h4 id="创建一个NAT网络"><a href="#创建一个NAT网络" class="headerlink" title="创建一个NAT网络"></a>创建一个NAT网络</h4><span id="more"></span>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/4vNGH4.png" alt="4vNGH4"></p>
+<h4 id="修改子网段"><a href="#修改子网段" class="headerlink" title="修改子网段"></a>修改子网段</h4><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20211214144606331.png" alt="image-20211214144606331"></p>
+<h4 id="Mac上查看该子网段的网关"><a href="#Mac上查看该子网段的网关" class="headerlink" title="Mac上查看该子网段的网关"></a>Mac上查看该子网段的网关</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># mac上查自己的</span></span><br><span class="line">cat /Library/Preferences/VMware\ Fusion/vmnet3/nat.conf | grep gateway -A 2</span><br><span class="line"></span><br><span class="line"><span class="comment"># NAT gateway address</span></span><br><span class="line">ip = 192.168.100.1</span><br><span class="line">netmask = 255.255.255.0</span><br></pre></td></tr></table></figure>
+
+<h4 id="设置虚拟机网络"><a href="#设置虚拟机网络" class="headerlink" title="设置虚拟机网络"></a>设置虚拟机网络</h4><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20211214144722670.png" alt="image-20211214144722670"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20211214144745643.png" alt="image-20211214144745643"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20211214144802455.png" alt="image-20211214144802455"></p>
+<h4 id="Centos镜像源设置"><a href="#Centos镜像源设置" class="headerlink" title="Centos镜像源设置"></a>Centos镜像源设置</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># centos更换阿里云源</span></span><br><span class="line">mkdir -p /etc/yum.repos.d/bak </span><br><span class="line">mv /etc/yum.repos.d/* /etc/yum.repos.d/bak</span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line">curl -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo</span><br><span class="line">yum install vim net-tools gcc make -y</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Mac</category>
+      </categories>
+      <tags>
+        <tag>Mac</tag>
+      </tags>
+  </entry>
 </search>
