@@ -86,7 +86,7 @@
         <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">14</span></a></li>
         <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">8</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">33</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">35</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/klcc-c.github.io/archives/">
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -195,6 +195,175 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/a7f42e80.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/klcc-c.github.io/a7f42e80.html" class="post-title-link" itemprop="url">python-文件与函数初识</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-12 14:30:32 / 修改时间：19:07:21" itemprop="dateCreated datePublished" datetime="2021-11-12T14:30:32+08:00">2021-11-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-文件"><a href="#1-文件" class="headerlink" title="1. 文件"></a>1. 文件</h2><h3 id="1-1-二进制模式读"><a href="#1-1-二进制模式读" class="headerlink" title="1.1 二进制模式读"></a>1.1 二进制模式读</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f.read())  <span class="comment"># 读取的是二进制内容</span></span><br><span class="line">    <span class="built_in">print</span>(f.read().decode(<span class="string">&#x27;utf8&#x27;</span>))  <span class="comment"># 经过住解码，能正常读取内容</span></span><br><span class="line">    <span class="built_in">print</span>(f.read(<span class="number">3</span>).decode(<span class="string">&#x27;utf8&#x27;</span>))  <span class="comment"># 三个字节为一个中文</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">read()  括号内可以放数字</span></span><br><span class="line"><span class="string">    在t模式下表示字符个数</span></span><br><span class="line"><span class="string">    在b模式下表示字节个数</span></span><br><span class="line"><span class="string">英文字符统一使用一个bytes来表示</span></span><br><span class="line"><span class="string">中文字符统一使用三个bytes来表示</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/klcc-c.github.io/a7f42e80.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/2391e1e4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/klcc-c.github.io/2391e1e4.html" class="post-title-link" itemprop="url">YAML格式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-11 20:39:19" itemprop="dateCreated datePublished" datetime="2021-11-11T20:39:19+08:00">2021-11-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-11-12 19:10:33" itemprop="dateModified" datetime="2021-11-12T19:10:33+08:00">2021-11-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/Kuberneters/" itemprop="url" rel="index"><span itemprop="name">Kuberneters</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="资源清单"><a href="#资源清单" class="headerlink" title="资源清单"></a>资源清单</h2><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>在Kubernetes 环境下可以使用 kubectl run 运行应用，但是不推荐，而是希望使用资源清单的东西来描述应用，资源清单可以使用YAML和JSON文件来编写，一般YAML更方便阅读</p>
+<p>通过一个资源清单文件定义好一个应用后，可以使用kubectl工具直接运行</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/klcc-c.github.io/2391e1e4.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -739,7 +908,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-13 18:42:35" itemprop="dateModified" datetime="2021-11-13T18:42:35+08:00">2021-11-13</time>
+        <time title="修改时间：2021-12-15 15:22:47" itemprop="dateModified" datetime="2021-12-15T15:22:47+08:00">2021-12-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -873,180 +1042,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/klcc-c.github.io/26ba1150.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://klcc.cc/43f82467.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
-      <meta itemprop="name" content="klcc">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="klcc">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/klcc-c.github.io/43f82467.html" class="post-title-link" itemprop="url">python基础-02</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-03 14:14:28" itemprop="dateCreated datePublished" datetime="2021-11-03T14:14:28+08:00">2021-11-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-04 14:44:59" itemprop="dateModified" datetime="2021-11-04T14:44:59+08:00">2021-11-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="1、数据类型"><a href="#1、数据类型" class="headerlink" title="1、数据类型"></a>1、数据类型</h2><h3 id="1-1-字符串str"><a href="#1-1-字符串str" class="headerlink" title="1.1 字符串str"></a>1.1 字符串str</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/klcc-c.github.io/43f82467.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://klcc.cc/daf175dd.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
-      <meta itemprop="name" content="klcc">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="klcc">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/klcc-c.github.io/daf175dd.html" class="post-title-link" itemprop="url">python基础-01</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-02 15:06:21" itemprop="dateCreated datePublished" datetime="2021-11-02T15:06:21+08:00">2021-11-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-11-03 18:56:16" itemprop="dateModified" datetime="2021-11-03T18:56:16+08:00">2021-11-03</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="1、Pycharm基本使用"><a href="#1、Pycharm基本使用" class="headerlink" title="1、Pycharm基本使用"></a>1、Pycharm基本使用</h2><h3 id="1-1-新建项目"><a href="#1-1-新建项目" class="headerlink" title="1.1 新建项目"></a>1.1 新建项目</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/klcc-c.github.io/daf175dd.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
