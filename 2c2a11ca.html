@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="数据库备份恢复职责">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL备份恢复与迁移">
+<meta property="og:url" content="https://klcc.cc/2c2a11ca.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="数据库备份恢复职责">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/40j93z.png">
+<meta property="article:published_time" content="2021-12-28T07:31:18.772Z">
+<meta property="article:modified_time" content="2021-12-28T07:47:17.962Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/40j93z.png">
+
+
+<link rel="canonical" href="https://klcc.cc/2c2a11ca.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/2c2a11ca.html","path":"2c2a11ca.html","title":"MySQL备份恢复与迁移"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL备份恢复与迁移 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">49</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D%E8%81%8C%E8%B4%A3"><span class="nav-number">1.</span> <span class="nav-text">数据库备份恢复职责</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">备份类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">备份方式及工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E7%AD%96%E7%95%A5"><span class="nav-number">4.</span> <span class="nav-text">备份策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mysqldump%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">mysqldump使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%80%9A%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">5.1.</span> <span class="nav-text">客户端通用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%A4%87%E4%BB%BD%E5%8F%82%E6%95%B0"><span class="nav-number">5.2.</span> <span class="nav-text">基本备份参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E5%8F%82%E6%95%B0%E4%BD%BF%E7%94%A8"><span class="nav-number">5.3.</span> <span class="nav-text">高级参数使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E5%8F%8A%E6%81%A2%E5%A4%8D"><span class="nav-number">5.4.</span> <span class="nav-text">备份及恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E6%A1%88%E4%BE%8B%E6%81%A2%E5%A4%8D"><span class="nav-number">5.5.</span> <span class="nav-text">故障案例恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E8%A1%A8%E7%9A%84%E6%81%A2%E5%A4%8D"><span class="nav-number">5.6.</span> <span class="nav-text">单表的恢复</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xtrabackup%E4%BD%BF%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">xtrabackup使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">6.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E6%96%B9%E5%BC%8F"><span class="nav-number">6.2.</span> <span class="nav-text">备份方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#InnoDB%E8%A1%A8%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D%E6%B5%81%E7%A8%8B"><span class="nav-number">6.3.</span> <span class="nav-text">InnoDB表备份恢复流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#innobackupex%E4%BD%BF%E7%94%A8"><span class="nav-number">6.4.</span> <span class="nav-text">innobackupex使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%A8%E5%A4%87%E6%81%A2%E5%A4%8D"><span class="nav-number">6.5.</span> <span class="nav-text">全备恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A2%9E%E9%87%8F%E5%A4%87%E4%BB%BD%E5%92%8C%E6%81%A2%E5%A4%8D"><span class="nav-number">6.6.</span> <span class="nav-text">增量备份和恢复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A9%E5%B1%95"><span class="nav-number">6.7.</span> <span class="nav-text">扩展</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB"><span class="nav-number">7.</span> <span class="nav-text">MySQL数据迁移</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/2c2a11ca.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL备份恢复与迁移
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-12-28 15:31:18 / 修改时间：15:47:17" itemprop="dateCreated datePublished" datetime="2021-12-28T15:31:18+08:00">2021-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="数据库备份恢复职责"><a href="#数据库备份恢复职责" class="headerlink" title="数据库备份恢复职责"></a>数据库备份恢复职责</h3><span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 备份策略</span><br><span class="line">全备、增量、时间、自动</span><br><span class="line"></span><br><span class="line"># 日常备份检查</span><br><span class="line">备份存在性</span><br><span class="line">备份空间够用否</span><br><span class="line"></span><br><span class="line"># 定期恢复演练(测试库)</span><br><span class="line">一季度 或者 半年</span><br><span class="line"></span><br><span class="line"># 故障恢复</span><br><span class="line">通过现有备份,能够将数据库恢复到故障之前的时间点</span><br><span class="line"></span><br><span class="line"># 迁移</span><br><span class="line">1. 停机时间</span><br><span class="line">2. 回退方案</span><br></pre></td></tr></table></figure>
+
+<h3 id="备份类型"><a href="#备份类型" class="headerlink" title="备份类型"></a>备份类型</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 热备</span><br><span class="line">在数据库正常业务时,备份数据,并且能够一致性恢复（只能是innodb）</span><br><span class="line">对业务影响非常小</span><br><span class="line"></span><br><span class="line"># 温备</span><br><span class="line">锁表备份,只能查询不能修改（myisam）</span><br><span class="line">影响到写入操作</span><br><span class="line"></span><br><span class="line"># 冷备</span><br><span class="line">关闭数据库业务,数据库没有任何变更的情况下,进行备份数据.</span><br><span class="line">业务停止</span><br></pre></td></tr></table></figure>
+
+<h3 id="备份方式及工具"><a href="#备份方式及工具" class="headerlink" title="备份方式及工具"></a>备份方式及工具</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># 逻辑备份</span><br><span class="line">基于SQL语句进行备份</span><br><span class="line">mysqldump</span><br><span class="line">mysqlbinlog</span><br><span class="line"></span><br><span class="line"># 物理备份</span><br><span class="line">基于磁盘数据文件备份</span><br><span class="line">xtrabackup(XBK) ：percona 第三方</span><br><span class="line">MySQL Enterprise Backup（MEB）</span><br><span class="line"></span><br><span class="line"># 逻辑备份与物理备份比较</span><br><span class="line">    # mysqldump</span><br><span class="line">    优点：</span><br><span class="line">    1.不需要下载安装</span><br><span class="line">    2.备份出来的是SQL，文本格式，可读性高,便于备份处理</span><br><span class="line">    3.压缩比较高，节省备份的磁盘空间</span><br><span class="line"></span><br><span class="line">    缺点：</span><br><span class="line">    4.依赖于数据库引擎，需要从磁盘把数据读出</span><br><span class="line">    然后转换成SQL进行转储，比较耗费资源，数据量大的话效率较低</span><br><span class="line">    建议：</span><br><span class="line">    100G以内的数据量级，可以使用mysqldump</span><br><span class="line">    超过TB以上，我们也可能选择的是mysqldump，配合分布式的系统</span><br><span class="line">    1EB  =1024 PB =1000000 TB</span><br><span class="line"></span><br><span class="line">    # xtrabackup</span><br><span class="line">    优点：</span><br><span class="line">    1.类似于直接cp数据文件，不需要管逻辑结构，相对来说性能较高</span><br><span class="line">    缺点：</span><br><span class="line">    2.可读性差</span><br><span class="line">    3.压缩比低，需要更多磁盘空间</span><br><span class="line">    建议：</span><br><span class="line">    &gt;100G&lt;TB</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="备份策略"><a href="#备份策略" class="headerlink" title="备份策略"></a>备份策略</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 备份方式</span><br><span class="line">全备:全库备份，备份所有数据</span><br><span class="line">增量:备份变化的数据</span><br><span class="line">逻辑备份=mysqldump+mysqlbinlog</span><br><span class="line">物理备份=xtrabackup_full+xtrabackup_incr+binlog或者xtrabackup_full+binlog</span><br><span class="line"></span><br><span class="line"># 备份周期</span><br><span class="line">根据数据量设计备份周期</span><br><span class="line">比如：周日全备，周1-周6增量</span><br><span class="line"></span><br><span class="line"># 其他: 主从复制备份</span><br></pre></td></tr></table></figure>
+
+<h3 id="mysqldump使用"><a href="#mysqldump使用" class="headerlink" title="mysqldump使用"></a><code>mysqldump</code>使用</h3><h4 id="客户端通用命令"><a href="#客户端通用命令" class="headerlink" title="客户端通用命令"></a>客户端通用命令</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 和mysql通用命令</span><br><span class="line">-u  -p   -S   -h  -P    </span><br><span class="line"></span><br><span class="line"># 本地备份</span><br><span class="line">mysqldump -uroot -p  -S /tmp/mysql.sock</span><br><span class="line"></span><br><span class="line"># 远程备份</span><br><span class="line">mysqldump -uroot -p  -h 10.0.0.51 -P3306</span><br></pre></td></tr></table></figure>
+
+<h4 id="基本备份参数"><a href="#基本备份参数" class="headerlink" title="基本备份参数"></a>基本备份参数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 全库备份 -A</span><br><span class="line">    mkdir -p /data/backup</span><br><span class="line">    mysqldump -uroot -p1 -A -S /tmp/mysql.sock &gt; /data/backup/full.sql</span><br><span class="line"></span><br><span class="line"># 备份多个单库 -B</span><br><span class="line">    # 备份worldhe testdb库</span><br><span class="line">    mysqldump -uroot -p1 -B -S /tmp/mysql.sock  world testdb &gt;/data/backup/db.sql</span><br><span class="line"></span><br><span class="line"># 备份单个或多个表</span><br><span class="line">    # 备份world下的city表和country表</span><br><span class="line">    mysqldump -uroot -p1 world city country  -S /tmp/mysql.sock &gt;/backup/bak.sql</span><br><span class="line">    # 此方法只会备份建表语句和插入语句，所以恢复前需要把库建好然后 use 到库中</span><br></pre></td></tr></table></figure>
+
+<h4 id="高级参数使用"><a href="#高级参数使用" class="headerlink" title="高级参数使用"></a>高级参数使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"># 必加参数</span><br><span class="line">-R                    # 在备份时，同时备份存储过程和函数，如果没有会自动忽略</span><br><span class="line">-E                    # 在备份时，同时备份EVENT，如果没有会自动忽略</span><br><span class="line">--triggers            # 在备份时，同时备份触发器，如果没有会自动忽略</span><br><span class="line"></span><br><span class="line">--master-data=2       # 记录备份开始时记录position号，可以作为将来做日志截取的起点</span><br><span class="line">    功能:</span><br><span class="line">    (1)在备份时，会自动记录，二进制日志文件名和位置号</span><br><span class="line">        参数有:</span><br><span class="line">            0 默认值</span><br><span class="line">            1  以change master to命令形式，可以用作主从复制</span><br><span class="line">            2  以注释的形式记录，备份时刻的文件名+postion号</span><br><span class="line">    (2)自动锁表</span><br><span class="line">    (3)如果配合 --single-transaction ，只对非InnoDB表进行锁表备份，InnoDB表进行“热“”备，实际上是实现快照备份</span><br><span class="line"></span><br><span class="line">--single-transaction  # 存储引擎开启热备(快照备份)功能</span><br><span class="line">		功能:</span><br><span class="line">		使用 master-data 参数时</span><br><span class="line">    (1)在不加 --single-transaction ,启动所有表的温备份,所有表都锁定</span><br><span class="line">    (2)加上 --single-transaction ,对innodb进行快照备份,对非innodb表可以实现自动锁表功能</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"># 其他参数 了解功能即可</span><br><span class="line">-F  # 在备份开始时,刷新一个新binlog日志，刷新的个数较多，一个库一个</span><br><span class="line"></span><br><span class="line">--set-gtid-purged=auto</span><br><span class="line"># 参数:</span><br><span class="line">    auto  # 默认参数</span><br><span class="line">    on</span><br><span class="line">    off</span><br><span class="line"># 使用场景</span><br><span class="line">1. --set-gtid-purged=OFF,可以使用在日常备份参数中</span><br><span class="line">mysqldump -uroot -p -A -R -E --triggers --master-data=2 --single-transaction --set-gtid-purged=OFF &gt;/data/backup/full.sql</span><br><span class="line">2. auto , on:在构建主从复制环境时需要的参数配置</span><br><span class="line">mysqldump -uroot -p -A -R -E --triggers --master-data=2 --single-transaction --set-gtid-purged=ON &gt;/data/backup/full.sql</span><br><span class="line"></span><br><span class="line">--max-allowed-packet=#  # 表特别大时设置参数避免超出大小</span><br><span class="line">mysqldump -uroot -p -A -R -E --triggers --master-data=2 --single-transaction --set-gtid-purged=OFF --max-allowed-packet=256M &gt;/data/backup/full.sql</span><br></pre></td></tr></table></figure>
+
+<h4 id="备份及恢复"><a href="#备份及恢复" class="headerlink" title="备份及恢复"></a>备份及恢复</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 备份语句</span><br><span class="line">mysqldump -uroot -p1 -A -R -E --triggers --master-data=2 --single-transaction --set-gtid-purged=OFF &gt;/data/backup/full.sql</span><br><span class="line"></span><br><span class="line"># 恢复</span><br><span class="line">mysqldump备份的恢复方式（在生产中恢复要谨慎，恢复会删除重复的表）</span><br><span class="line">set sql_log_bin=0;</span><br><span class="line">source /backup/full_2018-06-28.sql</span><br><span class="line"></span><br><span class="line"># 压缩版</span><br><span class="line">mysqldump -uroot -p1 -A -R -E --triggers --max-allowed-packet=128M --master-data=2 --single-transaction|gzip &gt; /data/backup/full_$(date +%F-%T).sql.gz</span><br><span class="line"></span><br><span class="line">gunzip full_2021-12-27-14:19:32.sql.gz</span><br><span class="line"></span><br><span class="line">注意:</span><br><span class="line">1、mysqldump在备份和恢复时都需要mysql实例启动为前提</span><br><span class="line">2、一般数据量级100G以内，大约15-45分钟可以恢复，数据量级很大很大的时候（PB、EB）</span><br><span class="line">3、mysqldump是覆盖形式恢复的方法</span><br><span class="line"></span><br><span class="line">一般我们认为，在同数据量级，物理备份要比逻辑备份速度快</span><br><span class="line">逻辑备份的优势:</span><br><span class="line">1、可读性强</span><br><span class="line">2、压缩比很高</span><br></pre></td></tr></table></figure>
+
+<h4 id="故障案例恢复"><a href="#故障案例恢复" class="headerlink" title="故障案例恢复"></a>故障案例恢复</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 背景</span></span><br><span class="line">正在运行的网站系统，mysql-5.7.20 数据库，数据量50G，日业务增量1-5M。</span><br><span class="line">每天23:00点，计划任务调用mysqldump执行全备脚本</span><br><span class="line">年底故障演练:模拟周三上午10点误删除数据库，并进行恢复.</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复思路</span></span><br><span class="line">1、停业务，避免数据的二次伤害</span><br><span class="line">2、找一个临时库，恢复周三23：00全备</span><br><span class="line">3、截取周二23：00  --- 周三10点误删除之间的binlog，恢复到临时库</span><br><span class="line">4、测试可用性和完整性</span><br><span class="line">5、 </span><br><span class="line">    5.1 方法一：直接使用临时库顶替原生产库，前端应用割接到新库</span><br><span class="line">    5.2 方法二：将误删除的表导出，导入到原生产库</span><br><span class="line">6、开启业务</span><br><span class="line">处理结果：经过20分钟的处理，最终业务恢复正常</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模拟全备之前的数据</span></span><br><span class="line">create database mbp charset utf8mb4;</span><br><span class="line">use mbp;</span><br><span class="line">create table t1 (id int);</span><br><span class="line">insert into t1 values(1),(2),(3);</span><br><span class="line">commit;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 做全备</span></span><br><span class="line">mysqldump -uroot -p1 -A -R --triggers --set-gtid-purged=OFF --master-data=2 --single-transaction&gt; /data/backup/full_$(date +%F).sql</span><br><span class="line">ls /data/backup/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模拟增量的数据</span></span><br><span class="line">use mbp;</span><br><span class="line">insert into t1 values(11),(22),(33);</span><br><span class="line">commit;</span><br><span class="line">create table t2 (id int);</span><br><span class="line">insert into t2 values(11),(22),(33);</span><br><span class="line">commit;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模拟数据库损害</span></span><br><span class="line">rm -rf /data/mysql/data/*</span><br><span class="line">pkill mysql</span><br><span class="line">rm -rf /data/mysql/data/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复数据</span></span><br><span class="line"><span class="comment"># 重新初始化数据库</span></span><br><span class="line">mysqld --initialize-insecure --user=mysql --basedir=/usr/<span class="built_in">local</span>/mysql --datadir=/data/mysql/data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动数据库</span></span><br><span class="line">service mysqld restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全备恢复，此时没有增量的数据</span></span><br><span class="line"><span class="built_in">set</span> sql_log_bin=0;</span><br><span class="line"><span class="built_in">source</span> /data/backup/full_2021-12-27.sql;</span><br><span class="line"><span class="built_in">set</span> sql_log_bin=1;</span><br><span class="line">flush privileges;  <span class="comment"># 刷新权限，恢复账号权限等</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复增量的数据---&gt; 全备到故障时刻的数据</span></span><br><span class="line"><span class="comment"># 找日志起点和终点</span></span><br><span class="line">vim /data/backup/full_2021-12-27.sql</span><br><span class="line">CHANGE MASTER TO MASTER_LOG_FILE=<span class="string">&#x27;mysql-bin.000005&#x27;</span>, MASTER_LOG_POS=949;  <span class="comment"># 找打全备时的 binlog 日志文件，--master-data=2 参数实现的</span></span><br><span class="line"></span><br><span class="line">show binlog events <span class="keyword">in</span> <span class="string">&#x27;mysql-bin.000005&#x27;</span>;</span><br><span class="line"><span class="comment"># 下图可以看到 GTID 号应该是11-13 就是后面增量的数据信息</span></span><br><span class="line"><span class="comment"># 截取日志</span></span><br><span class="line">mysqlbinlog --skip-gtids --include-gtids=<span class="string">&#x27;b25a4cc7-609b-11ec-afea-525400aaf73e:11-13&#x27;</span> /data/binlog/mysql-bin.000005 &gt; /data/backup/bin.sql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复增量数据</span></span><br><span class="line"><span class="built_in">set</span> sql_log_bin=0;</span><br><span class="line"><span class="built_in">source</span> /data/backup/bin.sql;</span><br><span class="line"><span class="built_in">set</span> sql_log_bin=1;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查是否恢复</span></span><br><span class="line">select * from mbp.t2;</span><br></pre></td></tr></table></figure>
+
+<p>![image-20211227124136331](/Users/zhijinliu/Library/Application Support/typora-user-images/image-20211227124136331.png)</p>
+<h4 id="单表的恢复"><a href="#单表的恢复" class="headerlink" title="单表的恢复"></a>单表的恢复</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 从全备中导出单表备份</span><br><span class="line"># 获取表结构</span><br><span class="line">sed -e &#x27;/./&#123;H;$!d;&#125;&#x27; -e &#x27;x;/CREATE TABLE `city`/!d;q&#x27; full.sql &gt; createtable.sql</span><br><span class="line"></span><br><span class="line"># 获取INSERT INTO语句，用于数据的恢复</span><br><span class="line">grep -i &#x27;INSERT INTO `city`&#x27; full.sql &gt; data.sql</span><br><span class="line"></span><br><span class="line"># 获取单库的备份，可以直接创建库就行</span><br><span class="line">sed -n &#x27;/^-- Current Database: `world`/,/^-- Current Database: `/p&#x27; full.sql &gt; world.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="xtrabackup使用"><a href="#xtrabackup使用" class="headerlink" title="xtrabackup使用"></a><code>xtrabackup</code>使用</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载依赖</span></span><br><span class="line">wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo</span><br><span class="line">yum -y install perl perl-devel libaio libaio-devel perl-Time-HiRes perl-DBD-MySQL libev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个版本只支持8.0数据库以下的，最新版本支持8.0</span></span><br><span class="line"><span class="comment"># wget https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/sql/percona-xtrabackup-24-2.4.12-1.el7.x86_64.rpm</span></span><br><span class="line">wget https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.12/binary/redhat/7/x86_64/percona-xtrabackup-24-2.4.12-1.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">yum -y install percona-xtrabackup-24-2.4.4-1.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 版本</span></span><br><span class="line">innobackupex --version</span><br></pre></td></tr></table></figure>
+
+<h4 id="备份方式"><a href="#备份方式" class="headerlink" title="备份方式"></a>备份方式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.对于非Innodb表（比如 myisam）是，锁表cp数据文件，属于一种温备份。</span><br><span class="line">2.对于Innodb的表（支持事务的），不锁表，拷贝数据页，最终以数据文件的方式保存下来，把一部分redo和undo一并备走，属于热备方式</span><br></pre></td></tr></table></figure>
+
+<h4 id="InnoDB表备份恢复流程"><a href="#InnoDB表备份恢复流程" class="headerlink" title="InnoDB表备份恢复流程"></a>InnoDB表备份恢复流程</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.xbk备份执行的瞬间,立即触发ckpt,已提交的数据脏页,从内存刷写到磁盘,并记录此时的LSN号</span><br><span class="line">2.备份时，拷贝磁盘数据页，并且记录备份过程中产生的redo和undo一起拷贝走,也就是checkpoint LSN之后的日志</span><br><span class="line">3.在恢复之前，模拟Innodb“自动故障恢复”的过程，将redo（前滚）与undo（回滚）进行应用</span><br><span class="line">4.恢复过程是cp 备份到原来数据目录下</span><br></pre></td></tr></table></figure>
+
+<h4 id="innobackupex使用"><a href="#innobackupex使用" class="headerlink" title="innobackupex使用"></a><code>innobackupex</code>使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"># 会自动读取/etc/my.cnf 或者手动指定</span><br><span class="line">    # 配置文件修改</span><br><span class="line">    vim /etc/my.cnf</span><br><span class="line">    ...</span><br><span class="line">    [client]</span><br><span class="line">    socket=/tmp/mysql.sock</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    service mysqld restart </span><br><span class="line"></span><br><span class="line">    # 指定配置文件</span><br><span class="line">    innobackupex --defaults-file=/etc/my.cnf --user=root --password=1 /data/bak</span><br><span class="line"></span><br><span class="line"># 默认是全备</span><br><span class="line">mkdir -p /data/bak</span><br><span class="line">innobackupex --user=root --password=1 /data/bak</span><br><span class="line"></span><br><span class="line">innobackupex --defaults-file=/etc/my.cnf --user=root --password=1 --no-timestamp /data/bak/full_$(date +%F)</span><br><span class="line">--no-timestap  # 自定义备份目录名</span><br><span class="line"></span><br><span class="line"># 检查</span><br><span class="line">ls /data/bak  # 会自动以当前时间戳创建目录</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 备份文件说明 </span><br><span class="line">    cat xtrabackup_binlog_info</span><br><span class="line">    mysql-bin.000010	274	5bee84cd-66ce-11ec-b1fd-525400aaf73e:1,</span><br><span class="line">    934ba059-66ca-11ec-8dce-525400aaf73e:1,</span><br><span class="line">    b25a4cc7-609b-11ec-afea-525400aaf73e:1-13</span><br><span class="line">    # 备份时刻的binlog位置</span><br><span class="line">    # 记录的是备份时刻，binlog的文件名字和当时的结束的position，可以用来作为截取binlog时的起点</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    cat xtrabackup_checkpoints</span><br><span class="line">    backup_type = full-backuped</span><br><span class="line">    from_lsn = 0          # 上次所到达的LSN号(对于全备就是从0开始,对于增量有别的显示方法)</span><br><span class="line">    to_lsn = 155266303    #  备份开始时间(ckpt)点数据页的LSN    </span><br><span class="line">    last_lsn = 155266312  # 备份结束后，redo日志最终的LSN</span><br><span class="line">    compact = 0</span><br><span class="line">    recover_binlog_info = 0</span><br><span class="line">    # 备份时刻，立即将已经commit过的，内存中的数据页刷新到磁盘(CKPT).开始备份数据，数据文件的LSN会停留在to_lsn位置</span><br><span class="line">    # 备份时刻有可能会有其他的数据写入，已备走的数据文件就不会再发生变化了</span><br><span class="line">    # 在备份过程中，备份软件会一直监控着redo的undo，如果一旦有变化会将日志也一并备走，并记录LSN到last_lsn</span><br><span class="line">    # 从to_lsn ----&gt; last_lsn 就是，备份过程中产生的数据变化.</span><br><span class="line"></span><br><span class="line">    xtrabackup_info  # 整体统计</span><br><span class="line">    xtrabackup_logfile  # 部分redo日志</span><br></pre></td></tr></table></figure>
+
+<h4 id="全备恢复"><a href="#全备恢复" class="headerlink" title="全备恢复"></a>全备恢复</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全备</span></span><br><span class="line">innobackupex --defaults-file=/etc/my.cnf --user=root --password=1 /data/bak</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模拟删除(不代表生成操作)</span></span><br><span class="line">pkill mysql</span><br><span class="line">rm -rf /data/mysql/data/* </span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复步骤</span></span><br><span class="line"><span class="comment"># 准备备份(Prepared)，将redo进行重做，已提交的写到数据文件，未提交的使用undo回滚掉，模拟了CSR的过程</span></span><br><span class="line">innobackupex --apply-log  /data/bak/2021-12-27_14-51-12/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复启动</span></span><br><span class="line">cp -a /data/bak/2021-12-27_14-51-12/* /data/mysql/data/</span><br><span class="line">chown -R mysql:mysql /data/</span><br><span class="line">service mysqld restart</span><br></pre></td></tr></table></figure>
+
+<h4 id="增量备份和恢复"><a href="#增量备份和恢复" class="headerlink" title="增量备份和恢复"></a>增量备份和恢复</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 说明</span></span><br><span class="line">(1)增量备份的方式，是基于上一次备份进行增量</span><br><span class="line">(2)增量备份无法单独恢复。必须基于全备进行恢复</span><br><span class="line">(3)所有增量必须要按顺序合并到全备中</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始模拟</span></span><br><span class="line"><span class="comment"># 全备一次</span></span><br><span class="line">innobackupex --user=root --password=1 --no-timestamp /data/bak/full_$(date +%F)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一次数据变化</span></span><br><span class="line">create database xbk charset utf8mb4;</span><br><span class="line">use xbk;</span><br><span class="line">create table t1(id int);</span><br><span class="line">insert into t1 values (1),(2),(3);</span><br><span class="line">commit;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一次数据变化的增量备份，基于全备而备份</span></span><br><span class="line">innobackupex --user=root --password=1 --no-timestamp --incremental --incremental-basedir=/data/bak/full_2021-12-27 /data/bak/inc1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二次数据变化</span></span><br><span class="line">use xbk;</span><br><span class="line">create table t2(id int);</span><br><span class="line">insert into t2 values (11),(22),(33);</span><br><span class="line">commit;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二次数据变化的增量备份，基于第一次增量备份进行备份</span></span><br><span class="line">innobackupex --user=root --password=1 --no-timestamp --incremental --incremental-basedir=/data/bak/inc1 /data/bak/inc2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 判断是否备份成功，可以查看每个xtrabackup_checkpoints信息是否接上</span></span><br><span class="line"><span class="built_in">cd</span> /data/bak/</span><br><span class="line">cat full_2021-12-27/xtrabackup_checkpoints</span><br><span class="line">cat inc1/xtrabackup_checkpoints</span><br><span class="line">cat inc2/xtrabackup_checkpoints</span><br><span class="line"></span><br><span class="line"><span class="comment"># 增量恢复</span></span><br><span class="line">合并所有的增备到全备</span><br><span class="line">每个XBK备份都需要恢复准备(prepare)</span><br><span class="line">参数:</span><br><span class="line">--apply-log </span><br><span class="line">--redo-noly</span><br><span class="line"></span><br><span class="line"><span class="comment"># 目录说明</span></span><br><span class="line">/data/bak/full_2021-12-27  <span class="comment"># 全备目录</span></span><br><span class="line">/data/bak/inc1  <span class="comment"># 第一次增备目录</span></span><br><span class="line">/data/bak/inc2  <span class="comment"># 第二次增备目录</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 整理全备</span></span><br><span class="line">innobackupex --apply-log --redo-only /data/bak/full_2021-12-27 </span><br><span class="line"></span><br><span class="line"><span class="comment"># 整理并合并第一次数据变化的增量到全备</span></span><br><span class="line">innobackupex --apply-log --redo-only --incremental-dir=/data/bak/inc1 /data/bak/full_2021-12-27</span><br><span class="line"></span><br><span class="line"><span class="comment"># 整理并合并第二次数据变化的增量到全备中</span></span><br><span class="line">innobackupex --apply-log --incremental-dir=/data/bak/inc2 /data/bak/full_2021-12-27</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再次整理全备</span></span><br><span class="line">innobackupex --apply-log /data/bak/full_2021-12-27</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模拟故障</span></span><br><span class="line">pkill mysql</span><br><span class="line">rm -rf /data/mysql/data*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复</span></span><br><span class="line">cp -a /data/bak/full_2021-12-27/* /data/mysql/data/</span><br><span class="line">chown -R /data/</span><br><span class="line">service mysqld start</span><br></pre></td></tr></table></figure>
+
+<p>检查是否增量备份成功：<br><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/40j93z.png" alt="40j93z"></p>
+<h4 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># xtrabackup的全备目录内有表空间结构等信息</span></span><br><span class="line">ll /data/bak/full_2021-12-27/xbk/</span><br><span class="line">总用量 220</span><br><span class="line">-rw-r----- 1 mysql mysql    67 12月 27 17:10 db.opt</span><br><span class="line">-rw-r----- 1 mysql mysql  8556 12月 27 17:10 t1.frm</span><br><span class="line">-rw-r----- 1 mysql mysql 98304 12月 27 17:07 t1.ibd</span><br><span class="line">-rw-r----- 1 mysql mysql  8556 12月 27 17:10 t2.frm</span><br><span class="line">-rw-r----- 1 mysql mysql 98304 12月 27 17:10 t2.ibd</span><br><span class="line"><span class="comment"># 所以可以考虑使用迁移表空间恢复，参考 8、存储引擎 ---&gt; 迁移表空间</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生产中的备份命令</span></span><br><span class="line">innobackupex --defaults-file=/etc/my.cnf --user=root --password=1 --no-timestamp --stream=tar --use-memory=256M --parallel=2 /data/bak/full | gzip | ssh root@192.168.0.12 <span class="string">&quot;cat - &gt; /data/bak/full.tgz&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 参数说明</span></span><br><span class="line">--stream=tar       <span class="comment"># 压缩</span></span><br><span class="line">--use-memory=256M  <span class="comment"># 开辟内存空间</span></span><br><span class="line">--parallel=8       <span class="comment"># 并发，依据CPU核心调整</span></span><br><span class="line">ssh root@192.168.0.12 <span class="string">&quot;cat - &gt; /data/bak/full.tgz&quot;</span>  <span class="comment"># 推送到 192.168.0.12 服务器上</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="MySQL数据迁移"><a href="#MySQL数据迁移" class="headerlink" title="MySQL数据迁移"></a>MySQL数据迁移</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1. 换主机</span><br><span class="line">    在线使用mysqldump和xtrabackup备份，传输到目标主机</span><br><span class="line">    追加所有备份后的日志</span><br><span class="line">    申请停机</span><br><span class="line">    剩余部分使用binlog继续恢复(使用主从的方式替代)</span><br><span class="line">    校验数据进行业务割接</span><br><span class="line"></span><br><span class="line">2. 换版本升级</span><br><span class="line">    5.6 ---&gt; 5.7</span><br><span class="line">    5.7 mysqld_safe mysql_upgrade</span><br><span class="line">    </span><br><span class="line">		建议使用mysqldump 逻辑备份方式，按业务库进行分别备份，排除掉information_schema,performance_schema.sys</span><br><span class="line">		恢复完成后，升级数据字典</span><br><span class="line"></span><br><span class="line">3. 异构迁移 ---&gt; 系统不一样</span><br><span class="line">4. 异构迁移 ---&gt; 数据库产品不同</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/2386d3bc.html" rel="prev" title="MySQL日志管理">
+                  <i class="fa fa-chevron-left"></i> MySQL日志管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/c813917a.html" rel="next" title="MySQL主从复制">
+                  MySQL主从复制 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

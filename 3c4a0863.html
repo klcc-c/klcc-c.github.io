@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="C&#x2F;S模型介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL体系结构">
+<meta property="og:url" content="https://klcc.cc/3c4a0863.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="C&#x2F;S模型介绍">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/AuYdO0.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/kfNBL7.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/ZQGxzu.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/aZsnpd.jpg">
+<meta property="article:published_time" content="2021-12-28T07:12:40.124Z">
+<meta property="article:modified_time" content="2021-12-28T07:47:17.957Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/AuYdO0.jpg">
+
+
+<link rel="canonical" href="https://klcc.cc/3c4a0863.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/3c4a0863.html","path":"3c4a0863.html","title":"MySQL体系结构"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL体系结构 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">49</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-S%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">C&#x2F;S模型介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">MySQL程序运行原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">逻辑结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">物理存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB%E6%AE%B5%E3%80%81%E5%8C%BA%E3%80%81%E9%A1%B5"><span class="nav-number">5.</span> <span class="nav-text">InnoDB段、区、页</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/3c4a0863.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL体系结构
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-12-28 15:12:40 / 修改时间：15:47:17" itemprop="dateCreated datePublished" datetime="2021-12-28T15:12:40+08:00">2021-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="C-S模型介绍"><a href="#C-S模型介绍" class="headerlink" title="C/S模型介绍"></a>C/S模型介绍</h3><span id="more"></span>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/AuYdO0.jpg" alt="AuYdO0"></p>
+<ul>
+<li><p>连接方式</p>
+<ul>
+<li><p>TCP/IP方式(远程、本地)</p>
+<p><code>mysql -uroot -p1 -h 192.168.0.11 -P3306</code></p>
+</li>
+<li><p>Socket方式(仅本地)</p>
+<p><code>mysql -uroot -p1 -S /tmp/mysql.sock</code></p>
+</li>
+</ul>
+</li>
+<li><p>实例介绍</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">实例=mysqld后台守护进程+Master Thread +干活的Thread+预分配的内存</span><br><span class="line">公司=老板+经理+员工+办公室</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="MySQL程序运行原理"><a href="#MySQL程序运行原理" class="headerlink" title="MySQL程序运行原理"></a>MySQL程序运行原理</h3><ul>
+<li><p>MySQL程序结构</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/kfNBL7.jpg" alt="kfNBL7"></p>
+<p>​    </p>
+</li>
+<li><p>一条SQL语句的执行过程</p>
+<ul>
+<li><p>连接层</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">（1）提供连接协议：TCP/IP 、SOCKET</span><br><span class="line">（2）提供验证：用户、密码，IP，SOCKET</span><br><span class="line">（3）提供专用连接线程：接收用户SQL，返回结果</span><br><span class="line">通过以下语句可以查看到连接线程基本情况</span><br><span class="line">show processlist;</span><br></pre></td></tr></table></figure></li>
+<li><p>SQL层</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">（1）接收上层传送的SQL语句</span><br><span class="line">（2）语法验证模块：验证语句语法,是否满足SQL_MODE</span><br><span class="line">（3）语义检查：判断SQL语句的类型</span><br><span class="line">    DDL ：数据定义语言</span><br><span class="line">    DCL ：数据控制语言</span><br><span class="line">    DML ：数据操作语言</span><br><span class="line">    DQL： 数据查询语言</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">（4）权限检查：用户对库表有没有权限</span><br><span class="line">（5）解析器：对语句执行前,进行预处理，生成解析树(执行计划),说白了就是生成多种执行方案.</span><br><span class="line">（6）优化器：根据解析器得出的多种执行计划，进行判断，选择最优的执行计划</span><br><span class="line">        代价模型：资源（CPU IO MEM）的耗损评估性能好坏</span><br><span class="line">（7）执行器：根据最优执行计划，执行SQL语句，产生执行结果</span><br><span class="line">执行结果：在磁盘的xxxx位置上</span><br><span class="line">（8）提供查询缓存（默认是没开启的），会使用redis tair替代查询缓存功能</span><br><span class="line">（9）提供日志记录（日志管理章节）：binlog，默认是没开启的。</span><br></pre></td></tr></table></figure></li>
+<li><p>存储引擎层(类似LInux的文件系统)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">负责根据SQL层执行的结果，从磁盘上拿数据。</span><br><span class="line">将16进制的磁盘数据，交由SQL结构化化成表，</span><br><span class="line">连接层的专用线程返回给用户</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="逻辑结构"><a href="#逻辑结构" class="headerlink" title="逻辑结构"></a>逻辑结构</h3><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/ZQGxzu.jpg" alt="ZQGxzu"></p>
+<h3 id="物理存储结构"><a href="#物理存储结构" class="headerlink" title="物理存储结构"></a>物理存储结构</h3><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/aZsnpd.jpg" alt="aZsnpd"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">表的物理存储结构</span><br><span class="line">MyISAM 引擎（相当于 Linux 的 ext2 文件系统）</span><br><span class="line">user.frm：存储的表结构（列，列属性）</span><br><span class="line">user.MYD：存储的数据记录</span><br><span class="line">user.MYI：存储索引</span><br><span class="line"><span class="comment"># ps: mysql 8.0 版本之后不再支持 MyISAM 引擎</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">InnoDB 引擎（相当于 Linux 的 XFS 文件系统）</span><br><span class="line">time_zone.frm：存储的表结构（列，列属性）</span><br><span class="line">time_zone.ibd：存储的数据记录和索引</span><br></pre></td></tr></table></figure>
+
+<h3 id="InnoDB段、区、页"><a href="#InnoDB段、区、页" class="headerlink" title="InnoDB段、区、页"></a>InnoDB段、区、页</h3><p>InnoDB 存储引擎的逻辑存储结构中所有数据都被逻辑地存放在一个空间 中 ，我们称之为表空间（tablespace），空间又由段（segment）、区（extent）、 页(page）组成 。 </p>
+<p>页： InnoDB 管理存储空间的基本单位，数据页大小默认为 16KB，我们表中记录 都是存放在页中的，官方称这种存放记录的页为索引（INDEX）页。因为这种类 型的页是用来存放表数据的，也可以称为数据页。 </p>
+<p>区： 区是由连续的页组成的空间，无论页的大小怎么变，区的大小默认总是为 1MB。如连续的 64 个 16K 的页就是一个区，连续的 32 个 32K 的页也是一个区。 为了保证区中的页的连续性，InnoDB 存储引擎一次从磁盘申请 4-5 个区，在创 建一个段时就会创建一个默认的区。</p>
+<p> 段： MySQL 的表根据存储需求会分配多个区，多个区构成的表称为段，理论上一 个表就是一个段（非分区表）。 总结： 一般情况下（非分区表） 一个表就是一个段 一个段由多个区构成 一个区在（16k），64 个连续的页，1M 大小</p>
+<p>总结：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">页：最小的存储单元，默认16k</span><br><span class="line">区：64个连续的页，共1M</span><br><span class="line">段：一个表就是一个段，包含一个或多个区</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/318aa70a.html" rel="prev" title="MySQL登录及密码管理">
+                  <i class="fa fa-chevron-left"></i> MySQL登录及密码管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/d7227a45.html" rel="next" title="MySQL基础管理">
+                  MySQL基础管理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

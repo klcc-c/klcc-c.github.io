@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="SQL介绍123结构化查询语言5.7 以后符合SQL92严格模式通过sql_mode参数来控制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL基础应用">
+<meta property="og:url" content="https://klcc.cc/8da0cafb.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="SQL介绍123结构化查询语言5.7 以后符合SQL92严格模式通过sql_mode参数来控制">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/nhK9zp.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/1hM1f0.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/U36oxW.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/va4HxB.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/sfiZ6Y.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/cuanQc.png">
+<meta property="article:published_time" content="2021-12-28T07:21:07.494Z">
+<meta property="article:modified_time" content="2021-12-28T08:15:43.524Z">
+<meta property="article:author" content="klcc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/nhK9zp.jpg">
+
+
+<link rel="canonical" href="https://klcc.cc/8da0cafb.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/8da0cafb.html","path":"8da0cafb.html","title":"MySQL基础应用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL基础应用 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">49</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">SQL介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8SQL%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">常用SQL分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E3%80%81%E8%A1%A8%E5%B1%9E%E6%80%A7%E3%80%81%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">3.</span> <span class="nav-text">数据类型、表属性、字符集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%97%E5%B1%9E%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">列属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">3.3.</span> <span class="nav-text">表属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">3.4.</span> <span class="nav-text">字符集</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDL%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">DDL的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%93%E5%AE%9A%E4%B9%89"><span class="nav-number">4.1.</span> <span class="nav-text">库定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E5%AE%9A%E4%B9%89"><span class="nav-number">4.2.</span> <span class="nav-text">表定义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DCL%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">DCL的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DML%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">DML的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#insert"><span class="nav-number">6.1.</span> <span class="nav-text">insert</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#update"><span class="nav-number">6.2.</span> <span class="nav-text">update</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#delete"><span class="nav-number">6.3.</span> <span class="nav-text">delete</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DQL%E7%9A%84%E5%BA%94%E7%94%A8-select"><span class="nav-number">7.</span> <span class="nav-text">DQL的应用(select)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">7.1.</span> <span class="nav-text">单独使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">7.2.</span> <span class="nav-text">单表查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#select%E8%AF%AD%E6%B3%95%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">7.3.</span> <span class="nav-text">select语法执行顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E8%A1%A8%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">7.4.</span> <span class="nav-text">单表环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#FROM"><span class="nav-number">7.4.1.</span> <span class="nav-text">FROM</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#WHERE"><span class="nav-number">7.4.2.</span> <span class="nav-text">WHERE</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#group-by%E9%85%8D%E5%90%88%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0%E5%BA%94%E7%94%A8"><span class="nav-number">7.4.3.</span> <span class="nav-text">group by配合聚合函数应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#having"><span class="nav-number">7.4.4.</span> <span class="nav-text">having</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#order-by"><span class="nav-number">7.4.5.</span> <span class="nav-text">order by</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#limit"><span class="nav-number">7.4.6.</span> <span class="nav-text">limit</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E8%A1%A8%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="nav-number">7.5.</span> <span class="nav-text">多表连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">7.5.1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E8%BF%9E%E6%8E%A5"><span class="nav-number">7.5.2.</span> <span class="nav-text">内连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%AB%E5%90%8D"><span class="nav-number">7.5.3.</span> <span class="nav-text">别名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%96%E8%BF%9E%E6%8E%A5"><span class="nav-number">7.5.4.</span> <span class="nav-text">外连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#information-schema-tables%E8%A7%86%E5%9B%BE"><span class="nav-number">8.</span> <span class="nav-text">information_schema.tables视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">8.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">8.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CONCAT-%E5%87%BD%E6%95%B0%E4%BD%BF%E7%94%A8"><span class="nav-number">8.3.</span> <span class="nav-text">CONCAT()函数使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E4%BD%BF%E7%94%A8"><span class="nav-number">8.4.</span> <span class="nav-text">相关使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8show%E8%AF%AD%E5%8F%A5"><span class="nav-number">8.5.</span> <span class="nav-text">常用show语句</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/8da0cafb.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL基础应用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-12-28 15:21:07 / 修改时间：16:15:43" itemprop="dateCreated datePublished" datetime="2021-12-28T15:21:07+08:00">2021-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="SQL介绍"><a href="#SQL介绍" class="headerlink" title="SQL介绍"></a>SQL介绍</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">结构化查询语言</span><br><span class="line">5.7 以后符合SQL92严格模式</span><br><span class="line">通过sql_mode参数来控制</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="常用SQL分类"><a href="#常用SQL分类" class="headerlink" title="常用SQL分类"></a>常用SQL分类</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DDL：数据定义语言</span><br><span class="line">DCL：数据控制语言</span><br><span class="line">DML：数据操作语言</span><br><span class="line">DQL：数据的查询语言</span><br></pre></td></tr></table></figure>
+
+<h3 id="数据类型、表属性、字符集"><a href="#数据类型、表属性、字符集" class="headerlink" title="数据类型、表属性、字符集"></a>数据类型、表属性、字符集</h3><h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><ul>
+<li><p>作用</p>
+<p>保证数据的准确性和标准性</p>
+</li>
+<li><p>种类</p>
+<ul>
+<li>数值类型<br><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/nhK9zp.jpg" alt="nhK9zp"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tinyint  ： -128~127</span><br><span class="line">int       ：-2^31~2^31-1</span><br><span class="line">说明：手机号是无法存储到int的。一般是使用char类型来存储手机号</span><br></pre></td></tr></table></figure></li>
+<li>字符类型<br><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/1hM1f0.jpg" alt="1hM1f0"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">char(11) ：</span><br><span class="line">定长 的字符串类型,在存储字符串时，最大字符长度11个，立即分配11个字符长度的存储空间，如果存不满，空格填充。</span><br><span class="line">varchar(11):</span><br><span class="line">变长的字符串类型看，最大字符长度11个。在存储字符串时，自动判断字符长度，按需分配存储空间。</span><br><span class="line">enum(&#x27;bj&#x27;,&#x27;tj&#x27;,&#x27;sh&#x27;)：</span><br><span class="line">枚举类型，比较适合于将来此列的值是固定范围内的特点，可以使用enum,可以很大程度的优化我们的索引结构。</span><br></pre></td></tr></table></figure></li>
+<li>时间类型<br> <img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/U36oxW.jpg" alt="U36oxW"> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">datatime</span><br><span class="line">范围为从 1000-01-01 00:00:00.000000 至 9999-12-31 23:59:59.999999</span><br><span class="line">timestamp</span><br><span class="line">范围为从 1970-01-01 00:00:00.000000 至 2038-01-19 03:14:07.999999</span><br></pre></td></tr></table></figure>
+<ul>
+<li>二进制类型<br><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/va4HxB.jpg" alt="va4HxB"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="列属性"><a href="#列属性" class="headerlink" title="列属性"></a>列属性</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">约束(一般建表时添加):</span><br><span class="line">primary key: 主键约束</span><br><span class="line">设置为主键的列，此列的值必须非空且唯一，主键在一个表中只能有一个</span><br><span class="line"></span><br><span class="line">not null: 非空约束</span><br><span class="line">列值不能为空，也是表设计的规范，尽可能将所有的列设置为非空，可以设置默认值0</span><br><span class="line"></span><br><span class="line">unique key: 唯一键</span><br><span class="line">列值不能重复</span><br><span class="line"></span><br><span class="line">unsigned: 无符号</span><br><span class="line">针对数字列，非负数</span><br><span class="line"></span><br><span class="line"># 其他属性:</span><br><span class="line">key: 索引</span><br><span class="line">可以在某列上建立索引，来优化索引，一般是根据需要后添加</span><br><span class="line"></span><br><span class="line">default: 默认值</span><br><span class="line">列中，没有录入值时，会自动使用default的值填充</span><br><span class="line"></span><br><span class="line">auto_increment: 自增长</span><br><span class="line">针对数字列，顺序的自动填充数据(默认是从1开始，将来可以设置起始点和偏移量)</span><br><span class="line"></span><br><span class="line">comment: 注释</span><br></pre></td></tr></table></figure>
+
+<h4 id="表属性"><a href="#表属性" class="headerlink" title="表属性"></a>表属性</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">存储引擎:</span><br><span class="line">InnoDB（默认的）</span><br><span class="line"></span><br><span class="line">字符集和排序规则:</span><br><span class="line">utf8       </span><br><span class="line">utf8mb4</span><br></pre></td></tr></table></figure>
+
+<h4 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show charset;  # 查看 mysql 支持的所有字符集</span><br><span class="line">utf8: 3 个字节</span><br><span class="line">utf8mb4: 4 个字节，支持 emoji</span><br></pre></td></tr></table></figure>
+
+<h3 id="DDL的应用"><a href="#DDL的应用" class="headerlink" title="DDL的应用"></a>DDL的应用</h3><h4 id="库定义"><a href="#库定义" class="headerlink" title="库定义"></a>库定义</h4><ul>
+<li><p>创建数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">建库规范：</span><br><span class="line">    1.库名不能有大写字母   </span><br><span class="line">    2.建库要加字符集         </span><br><span class="line">    3.库名不能有数字开头</span><br><span class="line">    4. 库名要和业务相关</span><br><span class="line">    </span><br><span class="line">建库标准语句</span><br><span class="line">create database test charset utf8mb4 collate utf8mb4_bin;</span><br></pre></td></tr></table></figure></li>
+<li><p>删除</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 生产中禁止</span><br><span class="line">drop database school;</span><br></pre></td></tr></table></figure></li>
+<li><p>修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 创建一个没有设置字符集的库</span><br><span class="line">create database school;</span><br><span class="line"></span><br><span class="line"># 如果是已经创建好的库的查看建库语句</span><br><span class="line">show create database school;</span><br><span class="line"></span><br><span class="line"># 修改字符集</span><br><span class="line">alter database school charset utf8mb4 collate utf8mb4_bin;</span><br><span class="line"># 注意：修改字符集，修改后的字符集一定是原字符集的严格超集(从小往大，不能从大往小)</span><br></pre></td></tr></table></figure></li>
+<li><p>查询(属于DQL)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 查看所有库</span><br><span class="line">show databases;</span><br><span class="line"></span><br><span class="line"># 查看库的建库语句</span><br><span class="line">show create database test;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="表定义"><a href="#表定义" class="headerlink" title="表定义"></a>表定义</h4><ul>
+<li><p>创建表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">建表规范:</span><br><span class="line">    1. 表名小写</span><br><span class="line">    2. 不能是数字开头</span><br><span class="line">    3. 注意字符集和存储引擎</span><br><span class="line">    4. 表名和业务有关</span><br><span class="line">    5. 选择合适的数据类型</span><br><span class="line">    6. 每个列都要有注释</span><br><span class="line">    7. 每个列设置为非空，无法保证非空，用0来填充</span><br><span class="line">    </span><br><span class="line">格式:</span><br><span class="line">    create table stu(</span><br><span class="line">    列1  属性（数据类型、约束、其他属性） ，</span><br><span class="line">    列2  属性，</span><br><span class="line">    列3  属性</span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">创建一个学生表：</span><br><span class="line">use school;</span><br><span class="line">create table stu(</span><br><span class="line">id        int not null primary key auto_increment comment &#x27;学号&#x27;,</span><br><span class="line">sname     varchar(255) not null comment &#x27;姓名&#x27;,</span><br><span class="line">sage      tinyint unsigned not null default 0 comment &#x27;年龄&#x27;,</span><br><span class="line">sgender   enum(&#x27;m&#x27;,&#x27;f&#x27;,&#x27;n&#x27;) not null default &#x27;n&#x27; comment &#x27;性别&#x27;,</span><br><span class="line">sfz       char(18) not null unique comment &#x27;身份证&#x27;,</span><br><span class="line">intime    timestamp not null default now() comment &#x27;入学时间&#x27;</span><br><span class="line">) engine=innodb charset= utf8mb4 comment &#x27;学生表&#x27;;</span><br><span class="line"></span><br><span class="line">show tables;  # 查看是否创建成功</span><br><span class="line">desc stu;  # 查看表结构信息</span><br><span class="line">show create table stu;  # 查看建表语句</span><br></pre></td></tr></table></figure></li>
+<li><p>修改表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 在stu表中添加qq列</span><br><span class="line">alter table stu add qq varchar(20) not null unique comment &#x27;qq号&#x27;;</span><br><span class="line"></span><br><span class="line"># 在sname后加微信列</span><br><span class="line">alter table stu add wechat varchar(20) not null unique comment &#x27;微信号&#x27; after sname;</span><br><span class="line"></span><br><span class="line"># 在id列前面加一个新列的num</span><br><span class="line">alter table stu add num int not null comment &#x27;数字&#x27; first;</span><br><span class="line"></span><br><span class="line"># 修改sname数据类型</span><br><span class="line">alter table stu modify sname varchar(128) not null;</span><br><span class="line"></span><br><span class="line"># 将sgender该为sex 数据类型改为char类型</span><br><span class="line">alter table stu change sgender sex char(1) not null default &#x27;n&#x27;;</span><br><span class="line"></span><br><span class="line"># 删除刚才添加的列</span><br><span class="line">alter table stu drop num;</span><br><span class="line">alter table stu drop qq;</span><br><span class="line">alter table stu drop wechat;</span><br></pre></td></tr></table></figure></li>
+<li><p>查询表属性(DQL)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use school;</span><br><span class="line">show tables;</span><br><span class="line">desc stu;</span><br><span class="line">show create table stu;</span><br><span class="line">create table test like stu;  # 创建一个和stu表结构一样的test表</span><br></pre></td></tr></table></figure></li>
+<li><p>删除表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop table stu;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="DCL的应用"><a href="#DCL的应用" class="headerlink" title="DCL的应用"></a>DCL的应用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用户的授权和权限的回收</span><br><span class="line">grant</span><br><span class="line">revoke</span><br></pre></td></tr></table></figure>
+
+<h3 id="DML的应用"><a href="#DML的应用" class="headerlink" title="DML的应用"></a>DML的应用</h3><blockquote>
+<p>对表中数据的增删改</p>
+</blockquote>
+<h4 id="insert"><a href="#insert" class="headerlink" title="insert"></a><code>insert</code></h4>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 标准插入语句</span><br><span class="line">insert into stu(id,sname,sage,sex,sfz,intime)</span><br><span class="line">values</span><br><span class="line">(1,&#x27;zhangsan&#x27;,18,&#x27;m&#x27;,&#x27;110101199003070353&#x27;,now());</span><br><span class="line"></span><br><span class="line">select * from stu;  # 查看stu表内数据</span><br><span class="line"></span><br><span class="line"># 省事写法</span><br><span class="line">insert into stu</span><br><span class="line">values</span><br><span class="line">(2,&#x27;lisi&#x27;,19,&#x27;m&#x27;,&#x27;220101145664070363&#x27;,now());</span><br><span class="line"></span><br><span class="line"># 针对性录入数据</span><br><span class="line">insert into stu(sname,sfz)</span><br><span class="line">values(&#x27;wangwu&#x27;,&#x27;33452982337621&#x27;);</span><br><span class="line"></span><br><span class="line"># 同时录入多行数据</span><br><span class="line">insert into stu(sname,sfz)</span><br><span class="line">values</span><br><span class="line">(&#x27;tiansha&#x27;,&#x27;4324654324312&#x27;),</span><br><span class="line">(&#x27;aaa&#x27;,&#x27;321435212354154&#x27;),</span><br><span class="line">(&#x27;lxx&#x27;,&#x27;556652353265326&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="update"><a href="#update" class="headerlink" title="update"></a><code>update</code></h4>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select * from stu;</span><br><span class="line">update stu set sname=&#x27;lxx2&#x27; where id=9;</span><br><span class="line">select * from stu;</span><br><span class="line"></span><br><span class="line"># update语句必须要加where</span><br></pre></td></tr></table></figure>
+
+<h4 id="delete"><a href="#delete" class="headerlink" title="delete"></a><code>delete</code></h4>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">delete from stu where id=9;</span><br><span class="line"></span><br><span class="line"># 全表删除</span><br><span class="line">DELETE FROM stu</span><br><span class="line">truncate table stu;</span><br><span class="line"></span><br><span class="line">区别:</span><br><span class="line">delete: DML操作, 是逻辑性质删除,逐行进行删除,速度慢</span><br><span class="line">truncate: DDL操作,对与表段中的数据页进行清空,速度快</span><br><span class="line"></span><br><span class="line"># 伪删除</span><br><span class="line">	1.添加状态列</span><br><span class="line">  ALTER TABLE stu ADD state TINYINT NOT NULL DEFAULT 1 ;</span><br><span class="line">  SELECT * FROM stu;</span><br><span class="line">  2. UPDATE 替代 DELETE</span><br><span class="line">  UPDATE stu SET state=0 WHERE id=8;</span><br><span class="line">  3. 业务语句查询</span><br><span class="line">  SELECT * FROM stu WHERE state=1;</span><br></pre></td></tr></table></figure>
+
+<h3 id="DQL的应用-select"><a href="#DQL的应用-select" class="headerlink" title="DQL的应用(select)"></a>DQL的应用(<code>select</code>)</h3><blockquote>
+<p>作用: 获取MySQL中的数据行</p>
+</blockquote>
+<h4 id="单独使用"><a href="#单独使用" class="headerlink" title="单独使用"></a>单独使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-- select @@xxx 查看系统参数</span><br><span class="line"></span><br><span class="line">SELECT @@port;  # 查看数据库软件的端口</span><br><span class="line">SELECT @@basedir;  # 查看数据库软件目录</span><br><span class="line">SELECT @@datadir;  # 查看数据库数据目录 </span><br><span class="line">SELECT @@socket;  # 查看数据库socket文件位置</span><br><span class="line">SELECT @@server_id;  # 查看server_id号</span><br><span class="line"></span><br><span class="line">show variables like &#x27;%innodb%&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-- select 函数();</span><br><span class="line"></span><br><span class="line">SELECT NOW();</span><br><span class="line">SELECT DATABASE();</span><br><span class="line">SELECT USER();</span><br><span class="line">SELECT VERSION();</span><br><span class="line">SELECT CONCAT(&quot;hello world&quot;);</span><br><span class="line">SELECT CONCAT(USER,&quot;@&quot;,HOST) FROM mysql.user;</span><br><span class="line">SELECT GROUP_CONCAT(USER,&quot;@&quot;,HOST) FROM mysql.user;</span><br></pre></td></tr></table></figure>
+
+<h4 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h4><p>SQL92标准的使用语法</p>
+<h4 id="select语法执行顺序"><a href="#select语法执行顺序" class="headerlink" title="select语法执行顺序"></a>select语法执行顺序</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select开始 ----&gt; from子句 ----&gt; where子句 ----&gt; group by子句 ----&gt; select后执行条件 ----&gt; having子句 ----&gt; order by子句 ----&gt; limit</span><br></pre></td></tr></table></figure>
+
+<h4 id="单表环境准备"><a href="#单表环境准备" class="headerlink" title="单表环境准备"></a>单表环境准备</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果下面的失效了在该网站下载, https://dev.mysql.com/doc/index-other.html</span></span><br><span class="line">wget https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/sql/world.sql</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql -uroot -p1 &lt; world.sql</span><br><span class="line"></span><br><span class="line">mysql -uroot -p1 -e <span class="string">&#x27;show databases;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看表</span></span><br><span class="line">show tables from world;</span><br><span class="line">city            </span><br><span class="line">country         </span><br><span class="line">countrylanguage </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看表结构</span></span><br><span class="line">desc city;</span><br></pre></td></tr></table></figure>
+
+<h5 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a><code>FROM</code></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use world;</span><br><span class="line">select * from city;  # 适合表数据行较少的，生产中较少使用，会造成数据库压力过大</span><br><span class="line"></span><br><span class="line"># 查询name 和 population的所有值</span><br><span class="line">select name,population from world.city;</span><br></pre></td></tr></table></figure>
+
+<h5 id="WHERE"><a href="#WHERE" class="headerlink" title="WHERE"></a><code>WHERE</code></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># where 配合 等值查询(=)</span><br><span class="line">  # 查询 city 表中,中国城市信息</span><br><span class="line">  select * from world.city where countrycode=&#x27;CHN&#x27;;</span><br><span class="line"></span><br><span class="line"># where 配合 不等值查询(&gt; &gt;= &lt; &lt;= &lt;&gt;)</span><br><span class="line">  # 查询世界人口小于100人的城市</span><br><span class="line">  select * from world.city where population&lt;100;</span><br><span class="line">  </span><br><span class="line">  # 查询世界人口大于10000000的城市</span><br><span class="line">	select * from world.city where population &gt; 10000000;</span><br><span class="line">	</span><br><span class="line"># where 配合 模糊查询(like)</span><br><span class="line">  # 查询国家代号是 C 开头的城市</span><br><span class="line">  select * from world.city where CountryCode like &#x27;C%&#x27;;  # 不要出现 % 在前面的情况, 效率低,不走索引</span><br><span class="line">  </span><br><span class="line"># where 配合 逻辑连接符查询(and or)</span><br><span class="line">  # 查询城市人口在10000到20000之间的城市</span><br><span class="line">  select * from world.city where population &gt;= 10000 and population &lt;= 20000;</span><br><span class="line">  select * from world.city where population between 10000 and 20000;</span><br><span class="line">  </span><br><span class="line">  # 查询中国或美国的城市信息</span><br><span class="line">  select * from world.city where CountryCode=&#x27;CHN&#x27; or CountryCode=&#x27;USA&#x27;;</span><br><span class="line">  select * from world.city where CountryCode in (&#x27;CHN&#x27;, &#x27;USA&#x27;);</span><br><span class="line">  </span><br><span class="line">  # distinct: 去重复</span><br><span class="line">  select countrycode from city;</span><br><span class="line">  select distinct(countrycode) from city;</span><br><span class="line">  </span><br><span class="line">  # 聚合</span><br><span class="line">  union  # 如果结果有重复项会自动去重复</span><br><span class="line">  union all  # 如果有重复项不会去重复</span><br><span class="line">  </span><br><span class="line">  # 这条语句性能比上面两条语句高</span><br><span class="line">  select * from world.city where CountryCode=&#x27;CHN&#x27;</span><br><span class="line">  union all</span><br><span class="line">  select * from world.city where CountryCode=&#x27;USA&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="group-by配合聚合函数应用"><a href="#group-by配合聚合函数应用" class="headerlink" title="group by配合聚合函数应用"></a><code>group by</code>配合聚合函数应用</h5><blockquote>
+<p>根据 by后面的条件进行分组，方便统计，by后面跟一个列或多个列</p>
+</blockquote>
+<ul>
+<li><p>常用聚合函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">max()  # 最大值</span><br><span class="line">min()  # 最小值</span><br><span class="line">avg()  # 平均值</span><br><span class="line">sum()  # 总和</span><br><span class="line">count()  # 个数</span><br><span class="line">group_concat()  # 列转行</span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 统计每个国家的总人口</span><br><span class="line">select CountryCode,sum(population) from world.city group by CountryCode;</span><br><span class="line"></span><br><span class="line"># 统计每个国家 的城市个数</span><br><span class="line">select CountryCode,count(Name) from world.city group by CountryCode;</span><br><span class="line"></span><br><span class="line"># 统计并显示每个国家的省名字列表</span><br><span class="line">select  CountryCode,group_concat(district)  from world.city group by CountryCode;</span><br><span class="line"></span><br><span class="line"># 统计中国每个省的城市列表</span><br><span class="line">select district, group_concat(Name) from world.city where CountryCode=&#x27;CHN&#x27; group by district;</span><br><span class="line"></span><br><span class="line"># 统计中国每个省的总人口数</span><br><span class="line">select district,sum(population) from world.city where CountryCode=&#x27;CHN&#x27; group by district;</span><br></pre></td></tr></table></figure>
+
+<h5 id="having"><a href="#having" class="headerlink" title="having"></a><code>having</code></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 统计中国每个省的总人口数，只打印总人口数小于1000000的省</span><br><span class="line">select district,sum(population) from world.city where CountryCode=&#x27;CHN&#x27; group by district having sum(population) &lt; 1000000;</span><br><span class="line"></span><br><span class="line"># having 后的条件是不走索引的，可以进行一些优化手段处理</span><br></pre></td></tr></table></figure>
+
+<h5 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a><code>order by</code></h5><blockquote>
+<p>实现先排序, by后添加条件列</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 统计中国每个省的总人口数并从小到大排序</span><br><span class="line">select district,sum(population) from world.city where CountryCode=&#x27;CHN&#x27; group by district order by sum(population);</span><br><span class="line"></span><br><span class="line"># 统计中国每个省的总人口数并从大到小排序</span><br><span class="line">select district,sum(population) from world.city where CountryCode=&#x27;CHN&#x27; group by district order by sum(population) desc;</span><br><span class="line"></span><br><span class="line"># 查询中国所有的城市，并以人口数降序排序</span><br><span class="line">select  Name, population from world.city where CountryCode=&#x27;CHN&#x27; order by population desc;</span><br></pre></td></tr></table></figure>
+
+<h5 id="limit"><a href="#limit" class="headerlink" title="limit"></a><code>limit</code></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 统计中国每个省的总人口数并从大到小排序只显示前5个</span><br><span class="line">select district,sum(population) from world.city where CountryCode=&#x27;CHN&#x27; group by district order by sum(population) desc limit 5; </span><br><span class="line"></span><br><span class="line"># 统计中国每个省的总人口数并从大到小排序,显示第6-第10个</span><br><span class="line"># 第一种</span><br><span class="line">select district,sum(population) </span><br><span class="line">from world.city </span><br><span class="line">where CountryCode=&#x27;CHN&#x27; </span><br><span class="line">group by district </span><br><span class="line">order by sum(population) desc </span><br><span class="line">limit 5, 5;  </span><br><span class="line"># 第一个5代表跳过前五行, 第二个5表示再显示5行</span><br><span class="line"></span><br><span class="line"># 第二种</span><br><span class="line">select district,sum(population) </span><br><span class="line">from world.city </span><br><span class="line">where CountryCode=&#x27;CHN&#x27; </span><br><span class="line">group by district </span><br><span class="line">order by sum(population) desc </span><br><span class="line">limit 5 offset 5;  </span><br><span class="line"># 第一个5代表显示5行, offset代表偏移五行,跳过前五行</span><br></pre></td></tr></table></figure>
+
+<h4 id="多表连接查询"><a href="#多表连接查询" class="headerlink" title="多表连接查询"></a>多表连接查询</h4><blockquote>
+<p>将来要查询的数据,是来自于多张表时,可以用多表连接</p>
+</blockquote>
+<h5 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">表结构:</span><br><span class="line">use school</span><br><span class="line">student ：学生表</span><br><span class="line">sno：    学号</span><br><span class="line">sname：学生姓名</span><br><span class="line">sage： 学生年龄</span><br><span class="line">ssex： 学生性别</span><br><span class="line"></span><br><span class="line">teacher ：教师表</span><br><span class="line">tno：     教师编号</span><br><span class="line">tname：教师名字</span><br><span class="line"></span><br><span class="line">course ：课程表</span><br><span class="line">cno：  课程编号</span><br><span class="line">cname：课程名字</span><br><span class="line">tno：  教师编号</span><br><span class="line"></span><br><span class="line">score  ：成绩表</span><br><span class="line">sno：  学号</span><br><span class="line">cno：  课程编号</span><br><span class="line">score：成绩</span><br><span class="line"></span><br><span class="line"># 构建表</span><br><span class="line">create database school charset utf8mb4;</span><br><span class="line">use school;</span><br><span class="line"></span><br><span class="line">create table student(</span><br><span class="line">sno int not null primary key auto_increment comment &#x27;学号&#x27;,</span><br><span class="line">sname varchar(20) not null comment &#x27;姓名&#x27;,</span><br><span class="line">sage tinyint unsigned not null comment &#x27;年龄&#x27;,</span><br><span class="line">ssex enum(&#x27;f&#x27;,&#x27;m&#x27;) not null default &#x27;m&#x27; comment &#x27;性别&#x27;</span><br><span class="line">) engine=innodb charset=utf8;</span><br><span class="line"></span><br><span class="line">create table teacher(</span><br><span class="line">tno int not null primary key comment &#x27;教师编号&#x27;,</span><br><span class="line">tname varchar(20) not null comment &#x27;教师姓名&#x27;</span><br><span class="line">) engine=innodb charset=utf8;</span><br><span class="line"></span><br><span class="line">create table course(</span><br><span class="line">cno int not null comment &#x27;课程编号&#x27;,</span><br><span class="line">cname varchar(20) not null comment &#x27;课程名字&#x27;,</span><br><span class="line">tno int not null comment &#x27;教师编号&#x27;</span><br><span class="line">) engine=innodb charset=utf8;</span><br><span class="line"></span><br><span class="line">create table sc(</span><br><span class="line">sno int not null comment &#x27;学号&#x27;,</span><br><span class="line">cno int not null comment &#x27;课程编号&#x27;,</span><br><span class="line">score int not null comment &#x27;成绩&#x27;</span><br><span class="line">) engine=innodb charset=utf8;</span><br><span class="line"></span><br><span class="line"># 插入数据</span><br><span class="line">INSERT INTO student(sno,sname,sage,ssex)</span><br><span class="line">VALUES (1,&#x27;zhang3&#x27;,18,&#x27;m&#x27;);</span><br><span class="line"></span><br><span class="line">INSERT INTO student(sno,sname,sage,ssex)</span><br><span class="line">VALUES</span><br><span class="line">(2,&#x27;zhang4&#x27;,18,&#x27;m&#x27;),</span><br><span class="line">(3,&#x27;li4&#x27;,18,&#x27;m&#x27;),</span><br><span class="line">(4,&#x27;wang5&#x27;,19,&#x27;f&#x27;);</span><br><span class="line"></span><br><span class="line">INSERT INTO student</span><br><span class="line">VALUES</span><br><span class="line">(5,&#x27;zh4&#x27;,18,&#x27;m&#x27;),</span><br><span class="line">(6,&#x27;zhao4&#x27;,18,&#x27;m&#x27;),</span><br><span class="line">(7,&#x27;ma6&#x27;,19,&#x27;f&#x27;);</span><br><span class="line"></span><br><span class="line">INSERT INTO student(sname,sage,ssex)</span><br><span class="line">VALUES</span><br><span class="line">(&#x27;oldboy&#x27;,20,&#x27;m&#x27;),</span><br><span class="line">(&#x27;oldgirl&#x27;,20,&#x27;f&#x27;),</span><br><span class="line">(&#x27;oldp&#x27;,25,&#x27;m&#x27;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INSERT INTO teacher(tno,tname) VALUES</span><br><span class="line">(101,&#x27;oldboy&#x27;),</span><br><span class="line">(102,&#x27;hesw&#x27;),</span><br><span class="line">(103,&#x27;oldguo&#x27;);</span><br><span class="line"></span><br><span class="line">DESC course;</span><br><span class="line">INSERT INTO course(cno,cname,tno)</span><br><span class="line">VALUES</span><br><span class="line">(1001,&#x27;linux&#x27;,101),</span><br><span class="line">(1002,&#x27;python&#x27;,102),</span><br><span class="line">(1003,&#x27;mysql&#x27;,103);</span><br><span class="line"></span><br><span class="line">DESC sc;</span><br><span class="line">INSERT INTO sc(sno,cno,score)</span><br><span class="line">VALUES</span><br><span class="line">(1,1001,80),</span><br><span class="line">(1,1002,59),</span><br><span class="line">(2,1002,90),</span><br><span class="line">(2,1003,100),</span><br><span class="line">(3,1001,99),</span><br><span class="line">(3,1003,40),</span><br><span class="line">(4,1001,79),</span><br><span class="line">(4,1002,61),</span><br><span class="line">(4,1003,99),</span><br><span class="line">(5,1003,40),</span><br><span class="line">(6,1001,89),</span><br><span class="line">(6,1003,77),</span><br><span class="line">(7,1001,67),</span><br><span class="line">(7,1003,82),</span><br><span class="line">(8,1001,70),</span><br><span class="line">(9,1003,80),</span><br><span class="line">(10,1003,96);</span><br><span class="line"></span><br><span class="line">SELECT * FROM student;</span><br><span class="line">SELECT * FROM teacher;</span><br><span class="line">SELECT * FROM course;</span><br><span class="line">SELECT * FROM sc;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>表之间的关系<br><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/sfiZ6Y.png" alt="sfiZ6Y"></li>
+</ul>
+<h5 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># 查询人口数量小于100人的国家名,城市名,国土面积</span><br><span class="line">select country.name,city.name,country.surfacearea</span><br><span class="line">from</span><br><span class="line">city join country</span><br><span class="line">on city.countrycode=country.code</span><br><span class="line">where city.population &lt; 100;</span><br><span class="line"></span><br><span class="line"># 查询oldguo老师和他教的课程名称</span><br><span class="line">select teacher.tname,course.cname</span><br><span class="line">from</span><br><span class="line">teacher join course</span><br><span class="line">on teacher.tno=course.tno</span><br><span class="line">where teacher.tname=&#x27;oldguo&#x27;;</span><br><span class="line"></span><br><span class="line"># 统计一下每门课程的总成绩</span><br><span class="line">select course.cname,sum(sc.score)</span><br><span class="line">from</span><br><span class="line">course join sc</span><br><span class="line">on course.cno=sc.cno</span><br><span class="line">group by course.cname,course.cno;</span><br><span class="line"></span><br><span class="line"># only_full_group_by错误</span><br><span class="line">1.在select后面出现的列，不是分组条件，并且没有函数中出现</span><br><span class="line">2.如果group by 后是主键列或者是唯一条件列</span><br><span class="line"></span><br><span class="line">select course.cno,course.cname,sum(sc.score)</span><br><span class="line">from</span><br><span class="line">course join sc</span><br><span class="line">on course.cno=sc.cno</span><br><span class="line">group by course.cname;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/cuanQc.png" alt="cuanQc"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"># 查询oldguo老师教的学生姓名列表</span><br><span class="line">select teacher.tname,group_concat(student.sname)</span><br><span class="line">from</span><br><span class="line">teacher join course</span><br><span class="line">on teacher.tno=course.tno</span><br><span class="line">join sc</span><br><span class="line">on course.cno=sc.cno</span><br><span class="line">join student</span><br><span class="line">on sc.sno=student.sno</span><br><span class="line">where teacher.tname=&#x27;oldguo&#x27;;</span><br><span class="line"></span><br><span class="line"># 查询每个老师教的学生姓名列表</span><br><span class="line">select teacher.tname,group_concat(student.sname)</span><br><span class="line">from </span><br><span class="line">teacher join course</span><br><span class="line">on teacher.tno=course.tno</span><br><span class="line">join sc</span><br><span class="line">on course.cno=sc.cno</span><br><span class="line">join student</span><br><span class="line">on sc.sno=student.sno</span><br><span class="line">group by teacher.tname;</span><br><span class="line"></span><br><span class="line"># 查询oldguo老师教的不及格的学生姓名</span><br><span class="line">select student.sname</span><br><span class="line">from</span><br><span class="line">teacher join course</span><br><span class="line">on teacher.tno=course.tno</span><br><span class="line">join sc</span><br><span class="line">on course.cno=sc.cno</span><br><span class="line">join student</span><br><span class="line">on sc.sno=student.sno</span><br><span class="line">where teacher.tname=&#x27;oldguo&#x27; and sc.score &lt; 60;</span><br><span class="line"></span><br><span class="line"># 统计zhang3 学习了几门课</span><br><span class="line">select student.sname,count(sc.cno)</span><br><span class="line">from student</span><br><span class="line">join sc</span><br><span class="line">on student.sno=sc.sno</span><br><span class="line">where student.sname=&#x27;zhang3&#x27;;</span><br><span class="line"></span><br><span class="line"># 查询zhang3 学习的课程名称有哪些</span><br><span class="line">select student.sname , group_concat(course.cname)</span><br><span class="line">from student</span><br><span class="line">join sc</span><br><span class="line">on student.sno=sc.sno</span><br><span class="line">join course</span><br><span class="line">on sc.cno=course.cno</span><br><span class="line">where student.sname=&#x27;zhang3&#x27;;</span><br><span class="line">    </span><br><span class="line"># 查询oldguo 所教课程的平均分数</span><br><span class="line">select teacher.tname,avg(sc.score)</span><br><span class="line">from teacher</span><br><span class="line">JOIN course</span><br><span class="line">ON teacher.tno=course.tno</span><br><span class="line">JOIN sc</span><br><span class="line">ON course.cno=sc.cno</span><br><span class="line">WHERE teacher.tname=&#x27;oldguo&#x27;;</span><br><span class="line"></span><br><span class="line"># 每位老师所教课程的平均分 并按平均分排序</span><br><span class="line">select teacher.tname,course.cname, avg(sc.score)</span><br><span class="line">from</span><br><span class="line">teacher join course</span><br><span class="line">on teacher.tno=course.tno</span><br><span class="line">join sc</span><br><span class="line">on course.cno=sc.cno</span><br><span class="line">join student</span><br><span class="line">on sc.sno=student.sno</span><br><span class="line">group by teacher.tname,course.cname</span><br><span class="line">order by avg(sc.score) desc;</span><br><span class="line"></span><br><span class="line"># 查询所有老师所教学生不及格的信息</span><br><span class="line">select student.sname,course.cname,sc.score</span><br><span class="line">from</span><br><span class="line">teacher join course</span><br><span class="line">on teacher.tno=course.tno</span><br><span class="line">join sc</span><br><span class="line">on course.cno=sc.cno</span><br><span class="line">join student</span><br><span class="line">on sc.sno=student.sno</span><br><span class="line">where sc.score &lt; 60;</span><br></pre></td></tr></table></figure>
+
+<h5 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 表别名设置</span><br><span class="line"># 查询所有老师所教学生不及格的信息</span><br><span class="line">select d.sname,b.cname,c.score</span><br><span class="line">from</span><br><span class="line">teacher as a</span><br><span class="line">join course as b</span><br><span class="line">on a.tno=b.tno</span><br><span class="line">join sc as c</span><br><span class="line">on b.cno=c.cno</span><br><span class="line">join student as d</span><br><span class="line">on c.sno=d.sno</span><br><span class="line">where c.score &lt; 60;</span><br><span class="line"></span><br><span class="line"># 列别名</span><br><span class="line">select count(distinct(name)) from world.city;</span><br><span class="line">select count(distinct(name)) as a from world.city;</span><br></pre></td></tr></table></figure>
+
+<h5 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h5><blockquote>
+<p>左外连接和右外连接</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 内连接</span><br><span class="line">select a.name,b.name, b.surfacearea</span><br><span class="line">from world.city as a</span><br><span class="line">join world.country as b</span><br><span class="line">on a.countrycode=b.code</span><br><span class="line">where a.population &lt; 100;</span><br><span class="line"></span><br><span class="line"># 左外连接</span><br><span class="line">select a.name,b.name, b.surfacearea</span><br><span class="line">from world.city as a</span><br><span class="line">left join world.country as b</span><br><span class="line">on a.countrycode=b.code</span><br><span class="line">and a.population &lt; 100;</span><br><span class="line"># a.name的值全部出来了, b.name和b.surfacearea不满足的会用NULL填充</span><br><span class="line"></span><br><span class="line">select a.name,b.name, b.surfacearea</span><br><span class="line">from world.city as a</span><br><span class="line">left join world.country as b</span><br><span class="line">on a.countrycode=b.code</span><br><span class="line">where a.population &lt; 100;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 右外连接</span><br><span class="line">select a.name,b.name, b.surfacearea</span><br><span class="line">from world.city as a</span><br><span class="line">right join world.country as b</span><br><span class="line">on a.countrycode=b.code</span><br><span class="line">and a.population &lt; 100;</span><br></pre></td></tr></table></figure>
+
+<h3 id="information-schema-tables视图"><a href="#information-schema-tables视图" class="headerlink" title="information_schema.tables视图"></a><code>information_schema.tables</code>视图</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.虚拟库</span><br><span class="line">2.开启数据库时产生的</span><br><span class="line">3.不能被删除和修改</span><br><span class="line">4.库中存储的是视图</span><br><span class="line">5.此库中的视图也是不能被删除和修改的,只能select查询</span><br></pre></td></tr></table></figure>
+
+<h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">此库中的视图是用来,间接的查询数据库的&quot;元数据&quot;(&quot;基表&quot;数据)</span><br><span class="line">基表:数据是通过自动统计收集而来的.</span><br><span class="line">基表:是不允许人为直接增\删\改\查的</span><br><span class="line">必须通过:专用的DDL,DCL实现增\删\改,show语句和information_schema可以做查询</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 记录了:整个MySQL数据库中,所有的表的详细属性信息</span><br><span class="line">desc information_schema.tables;</span><br><span class="line">TABLE_SCHEMA    ----&gt;库名</span><br><span class="line">TABLE_NAME      ----&gt;表名</span><br><span class="line">ENGINE          ----&gt;引擎</span><br><span class="line">TABLE_ROWS      ----&gt;表的行数</span><br><span class="line">AVG_ROW_LENGTH  ----&gt;表中行的平均行（字节）</span><br><span class="line">INDEX_LENGTH    ----&gt;索引的占用空间大小（字节）</span><br></pre></td></tr></table></figure>
+
+<h4 id="CONCAT-函数使用"><a href="#CONCAT-函数使用" class="headerlink" title="CONCAT()函数使用"></a><code>CONCAT()</code>函数使用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 简单使用</span><br><span class="line">select user, host from mysql.user;</span><br><span class="line"></span><br><span class="line">select concat(user,&quot;@&quot;,host) from mysql.user;</span><br><span class="line"></span><br><span class="line"># 生产需求，下例子批量备份语句</span><br></pre></td></tr></table></figure>
+
+<h4 id="相关使用"><a href="#相关使用" class="headerlink" title="相关使用"></a>相关使用</h4><ul>
+<li><p>查询整个数据库中所有库和所对应的表信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select table_schema,group_concat(table_name)</span><br><span class="line">from information_schema.tables</span><br><span class="line">group by table_schema;</span><br></pre></td></tr></table></figure></li>
+<li><p>统计所有库下 的表个数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select table_schema,count(table_name)</span><br><span class="line">from information_schema.tables</span><br><span class="line">group by table_schema;</span><br></pre></td></tr></table></figure></li>
+<li><p>查询所有innodb引擎的表及所在的库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select table_schema,table_name,engine</span><br><span class="line">from information_schema.tables</span><br><span class="line">where engine=&#x27;innodb&#x27;;</span><br></pre></td></tr></table></figure></li>
+<li><p>统计world的数据库下每个表的行数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select table_name,table_rows</span><br><span class="line">from information_schema.tables</span><br><span class="line">where table_schema=&#x27;world&#x27;;</span><br></pre></td></tr></table></figure></li>
+<li><p>统计world数据库下每张表的磁盘空间占用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select table_name,concat((TABLE_ROWS*AVG_ROW_LENGTH+INDEX_LENGTH)/1024,&quot; KB&quot;) as size_KB</span><br><span class="line">from information_schema.tables </span><br><span class="line">where table_schema=&#x27;world&#x27;;</span><br></pre></td></tr></table></figure></li>
+<li><p>统计所有数据库的总磁盘空间占用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select table_schema,concat(sum(TABLE_ROWS*AVG_ROW_LENGTH+INDEX_LENGTH)/1024,&quot; KB&quot;) as Total_KB</span><br><span class="line">from information_schema.tables</span><br><span class="line">group by table_schema;</span><br><span class="line"></span><br><span class="line">mysql -uroot -p1 -e &#x27;select table_schema,concat(sum(TABLE_ROWS*AVG_ROW_LENGTH+INDEX_LENGTH)/1024,&quot; KB&quot;) as Total_KB from information_schema.tables group by table_schema;&#x27;</span><br></pre></td></tr></table></figure></li>
+<li><p>生成整个数据库下的所有表的单独备份语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/my.cnf</span><br><span class="line">secure-file-priv=/tmp  # 在mysqld 标签下添加</span><br><span class="line">systemctl restart mysqld.service  # 重启数据库</span><br><span class="line"></span><br><span class="line">模板语句：</span><br><span class="line">mysqldump -uroot -p123 world city &gt;/tmp/world_city.sql</span><br><span class="line"></span><br><span class="line">批量生成整个数据库的所有表的备份语句:</span><br><span class="line">select concat(&quot;mysqldump -uroot -p1 &quot;,table_schema,&quot; &quot;,table_name,&quot;  &gt; /bak/&quot;,table_schema,&quot;_&quot;,table_name,&quot;.sql&quot;) from information_schema.tables;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="常用show语句"><a href="#常用show语句" class="headerlink" title="常用show语句"></a>常用show语句</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">show databases;                      # 查看所有数据库</span><br><span class="line">show tables;                         # 查看当前库下的表</span><br><span class="line">show tables from xxx;                # 查看指定库下的表</span><br><span class="line">show create database xxx;            # 查看建库语句</span><br><span class="line">show create table;                   # 查看建表语句</span><br><span class="line">show grants for root@&#x27;localhost&#x27;;    # 查看用户权限信息</span><br><span class="line">show charset;                        # 查看所有字符集</span><br><span class="line">show collation;                      # 校对规则</span><br><span class="line">show engines;                        # 查看存储引擎支持情况</span><br><span class="line">show status;                         # 看数据库的整体状态</span><br><span class="line">show status like &#x27;%lock%&#x27;            # 模糊查找数据库的状态</span><br><span class="line">show variables;                      # 查看数据库所有变量情况</span><br><span class="line">show variables like &#x27;%log%&#x27;;         # 模糊查找相关数据库的变量情况</span><br><span class="line">show full processlist;               # 看数据库连接线程状态</span><br><span class="line">show engine innodb status \G         # 看innodb存储引擎总状态</span><br><span class="line">show master status;                  # 主从复制中库信息</span><br><span class="line">show slave status \G                 # 主从复制从库状态</span><br><span class="line">show binary logs;                    # 可用的binlog文件名</span><br><span class="line">show binlog events in &#x27;&#x27;;            # binlog日志的事件信息</span><br><span class="line">show relaylog events in &#x27;&#x27;;          # 查看relaylog日志情况</span><br><span class="line"></span><br><span class="line">select @@log_error;                  # 查看某个参数的定义信息</span><br><span class="line">select now();                        # 查看当前时间</span><br><span class="line">select database();                   # 查看当前use到的库</span><br><span class="line">select user();                       # 当前登录的用户</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/37f9f562.html" rel="prev" title="MySQL初始化配置">
+                  <i class="fa fa-chevron-left"></i> MySQL初始化配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/5c917bb6.html" rel="next" title="MySQL索引管理">
+                  MySQL索引管理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

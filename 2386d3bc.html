@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="日志管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL日志管理">
+<meta property="og:url" content="https://klcc.cc/2386d3bc.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="日志管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/f262Yf.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/wzf7nb.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/LBFNQB.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/GzZJIW.png">
+<meta property="article:published_time" content="2021-12-28T07:30:04.182Z">
+<meta property="article:modified_time" content="2021-12-28T07:47:17.961Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/f262Yf.jpg">
+
+
+<link rel="canonical" href="https://klcc.cc/2386d3bc.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/2386d3bc.html","path":"2386d3bc.html","title":"MySQL日志管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL日志管理 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">49</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">日志管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97-log-err"><span class="nav-number">2.</span> <span class="nav-text">错误日志(log_err)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97"><span class="nav-number">2.3.</span> <span class="nav-text">查看日志</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binlog-binary-logs-%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97"><span class="nav-number">3.</span> <span class="nav-text">binlog(binary logs):二进制日志</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8-1"><span class="nav-number">3.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E5%8F%82%E6%95%B0%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.2.</span> <span class="nav-text">基础参数查看</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%BC%80%E5%90%AF%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97"><span class="nav-number">3.3.</span> <span class="nav-text">配置开启二进制日志</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E6%83%85%E5%86%B5"><span class="nav-number">3.4.</span> <span class="nav-text">记录情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6-event"><span class="nav-number">3.5.</span> <span class="nav-text">事件(event)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">3.5.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%84%E6%88%90"><span class="nav-number">3.5.2.</span> <span class="nav-text">组成</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%9A%84%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.6.</span> <span class="nav-text">日志文件的查看</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.6.1.</span> <span class="nav-text">简单查看</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E6%9F%A5%E7%9C%8Bbinlog%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-number">3.7.</span> <span class="nav-text">内容查看binlog文件内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#binlog%E6%96%87%E4%BB%B6%E8%AF%A6%E7%BB%86%E6%9F%A5%E7%9C%8B"><span class="nav-number">3.7.1.</span> <span class="nav-text">binlog文件详细查看</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D"><span class="nav-number">3.8.</span> <span class="nav-text">基于二进制日志数据恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8C%89%E9%9C%80%E6%88%AA%E5%8F%96%E6%97%A5%E5%BF%97"><span class="nav-number">3.8.1.</span> <span class="nav-text">按需截取日志</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GTID%E5%8A%9F%E8%83%BD%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97"><span class="nav-number">3.8.2.</span> <span class="nav-text">GTID功能的二进制日志</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C"><span class="nav-number">3.9.</span> <span class="nav-text">二进制日志其他操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E5%85%B3%E9%97%AD"><span class="nav-number">3.9.1.</span> <span class="nav-text">临时关闭</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E6%B8%85%E7%90%86"><span class="nav-number">3.9.2.</span> <span class="nav-text">自动清理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%89%8B%E5%B7%A5%E6%B8%85%E7%90%86"><span class="nav-number">3.9.3.</span> <span class="nav-text">手工清理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%A5%E5%BF%97%E6%BB%9A%E5%8A%A8"><span class="nav-number">3.9.4.</span> <span class="nav-text">日志滚动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#slow-log%E6%85%A2%E6%97%A5%E5%BF%97"><span class="nav-number">4.</span> <span class="nav-text">slow_log慢日志</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8-2"><span class="nav-number">4.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E6%85%A2%E6%97%A5%E5%BF%97"><span class="nav-number">4.2.</span> <span class="nav-text">开启慢日志</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%85%A2%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="nav-number">4.3.</span> <span class="nav-text">慢日志分析</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/2386d3bc.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL日志管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-12-28 15:30:04 / 修改时间：15:47:17" itemprop="dateCreated datePublished" datetime="2021-12-28T15:30:04+08:00">2021-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a>日志管理</h3><span id="more"></span>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/f262Yf.jpg" alt="f262Yf"></p>
+<h3 id="错误日志-log-err"><a href="#错误日志-log-err" class="headerlink" title="错误日志(log_err)"></a>错误日志(<code>log_err</code>)</h3><ul>
+<li><h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">记录启动、关闭、日常运行过程中的状态信、警告、错误 </span><br></pre></td></tr></table></figure></li>
+<li><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">默认开启的，默认位置在 /数据路径下/hostname.err</span><br><span class="line"></span><br><span class="line"># 自定义配置</span><br><span class="line">vim /etc/my.cnf</span><br><span class="line">[mysqld]</span><br><span class="line">...</span><br><span class="line">log_error=/data/mysql/data/mysql.log</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"># 重启生效</span><br><span class="line"></span><br><span class="line"># 数据库内查看错误日志文件位置</span><br><span class="line">select @@log_error;</span><br></pre></td></tr></table></figure></li>
+<li><h4 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">主要关注[ERROR],看上下文</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="binlog-binary-logs-二进制日志"><a href="#binlog-binary-logs-二进制日志" class="headerlink" title="binlog(binary logs):二进制日志"></a><code>binlog(binary logs):</code>二进制日志</h3><h4 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h4>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.备份恢复必须依赖二进制日志</span><br><span class="line">2.主从环境必须依赖二进制日志</span><br></pre></td></tr></table></figure>
+
+<h4 id="基础参数查看"><a href="#基础参数查看" class="headerlink" title="基础参数查看"></a>基础参数查看</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select @@log_bin;  # 开关</span><br><span class="line">select @@log_bin_basename;  # 日志路径及名字</span><br><span class="line">select @@server_id;  # 服务ID号</span><br><span class="line">select @@binlog_format;  # 二进制日志格式</span><br><span class="line">select @@sync_binlog;  # 双一标准之二</span><br><span class="line">show variables like &#x27;%log_bin%&#x27;; # mysql内查看二进制日志情况</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置开启二进制日志"><a href="#配置开启二进制日志" class="headerlink" title="配置开启二进制日志"></a>配置开启二进制日志</h4>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># MySQL默认是没有开启二进制日志的</span><br><span class="line"></span><br><span class="line"># 配置</span><br><span class="line">log_bin:    开关以及设置存放位置</span><br><span class="line">server_id:  5.6中不需要，5.7中必须加</span><br><span class="line"></span><br><span class="line">mkdir /data/binlog</span><br><span class="line">vim /etc/my.cnf</span><br><span class="line">...</span><br><span class="line">server_id=6</span><br><span class="line">log_bin=/data/binlog/mysql-bin</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">chown -R mysql.mysql /data/</span><br><span class="line">systemctl restart mysqld</span><br><span class="line"></span><br><span class="line">ls /data/binlog/</span><br><span class="line">-rw-r----- 1 mysql mysql 154 12月 24 15:10 mysql-bin.000001</span><br><span class="line">-rw-r----- 1 mysql mysql  30 12月 24 15:10 mysql-bin.index</span><br><span class="line"></span><br><span class="line"># 注意: 日志和数据分开存放(物理磁盘)</span><br></pre></td></tr></table></figure>
+
+<h4 id="记录情况"><a href="#记录情况" class="headerlink" title="记录情况"></a>记录情况</h4>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">binlog是SQL层的功能。记录的是变更SQL语句，不记录查询语句</span><br><span class="line"></span><br><span class="line">DDL ：原封不动的记录当前DDL(statement)。</span><br><span class="line">DCL ：原封不动的记录当前DCL(statement)。</span><br><span class="line">DML ：只记录已经提交的事务DML</span><br><span class="line">三种记录方式：受binlog_format（binlog的记录格式）参数影响</span><br><span class="line"></span><br><span class="line">1. STATEMENT (5.6默认)   SBR  ：语句模式原封不动的记录当前DML            ---&gt; 行记录模式，记录行的变化</span><br><span class="line">2. ROW       (5.7默认值)	RBR  ：记录数据行的变化(用户看不懂，需要工具分析)  ---&gt; 语句记录模式，记录操作语句本身</span><br><span class="line">3. MIXED     (混合)模式  MBR  ：以上两种模式的混合                      ---&gt; 混合记录模式</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">SBR与RBR模式的对比</span><br><span class="line">STATEMENT(SBR)：只记录语句本身，可读性较高，日志量少，但是不够严谨，对于函数类的操作，将来恢复时会造成错误</span><br><span class="line">ROW(RBR)      ：逐行记录日志，可读性很低，日志量大，足够严谨，不会出现记录错误</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">5.7默认是RBR模式，企业建议模式</span><br><span class="line"></span><br><span class="line"># 查看模式</span><br><span class="line">mysql&gt;select @@binlog_format;</span><br><span class="line"></span><br><span class="line"># 配置文件中可更改</span><br><span class="line">vim /etc/my.cnf</span><br><span class="line">[mysqld]</span><br><span class="line">...</span><br><span class="line">binlog_format=row</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h4 id="事件-event"><a href="#事件-event" class="headerlink" title="事件(event)"></a>事件(<code>event</code>)</h4><ul>
+<li><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">二进制日志的最小记录单元</span><br><span class="line">对于DDL,DCL,一个语句就是一个event</span><br><span class="line">对于DML语句来讲:只记录已提交的事务</span><br><span class="line">例如以下列子,就被分为了4个event</span><br><span class="line"></span><br><span class="line">            position号码(字节偏移量，截取日志用)</span><br><span class="line">begin;      120  - 340</span><br><span class="line">DML1        340  - 460</span><br><span class="line">DML2        460  - 550</span><br><span class="line">commit;     550  - 760</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">三部分构成:</span><br><span class="line">(1) 事件的开始标识</span><br><span class="line">(2) 事件内容</span><br><span class="line">(3) 事件的结束标识</span><br><span class="line"></span><br><span class="line">Position:</span><br><span class="line">开始标识: at 194</span><br><span class="line">结束标识: end_log_pos 254</span><br><span class="line"></span><br><span class="line">194? 254?</span><br><span class="line">某个事件在binlog中的相对位置号</span><br><span class="line">位置号的作用是为了方便我们截取事件</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="日志文件的查看"><a href="#日志文件的查看" class="headerlink" title="日志文件的查看"></a>日志文件的查看</h4><ul>
+<li><h5 id="简单查看"><a href="#简单查看" class="headerlink" title="简单查看"></a>简单查看</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># 查看二进制日志位置</span><br><span class="line">show variables like &#x27;%log_bin%&#x27;;</span><br><span class="line"></span><br><span class="line">ll /data/binlog/</span><br><span class="line">-rw-r----- 1 mysql mysql 154 12月 24 15:10 mysql-bin.000001</span><br><span class="line">-rw-r----- 1 mysql mysql  30 12月 24 15:10 mysql-bin.index</span><br><span class="line"></span><br><span class="line"># 查看正在使用的二进制</span><br><span class="line">show binary logs;</span><br><span class="line">+------------------+-----------+</span><br><span class="line">| Log_name         | File_size |</span><br><span class="line">+------------------+-----------+</span><br><span class="line">| mysql-bin.000001 |       154 |</span><br><span class="line">+------------------+-----------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">Log_name: 目前MySQL存在的二进制日志名字</span><br><span class="line">File_size: 目前MySQL用到哪个Position号，使用的是最后一个文件</span><br><span class="line">Position：最后一个事件的结束位置号</span><br><span class="line"></span><br><span class="line"># 二进制文件会增加一个</span><br><span class="line">flush logs;</span><br><span class="line"></span><br><span class="line"># 查看正在使用的二进制文件</span><br><span class="line">show master status;</span><br><span class="line">+------------------+----------+--------------+------------------+------------------------------------------+</span><br><span class="line">| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set                        |</span><br><span class="line">+------------------+----------+--------------+------------------+------------------------------------------+</span><br><span class="line">| mysql-bin.000003 |      154 |              |                  | 269f1ac3-8d95-11e9-8dc4-000c297969b7:1-7 |</span><br><span class="line">+------------------+----------+--------------+------------------+------------------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></li>
+<li><h4 id="内容查看binlog文件内容"><a href="#内容查看binlog文件内容" class="headerlink" title="内容查看binlog文件内容"></a>内容查看<code>binlog</code>文件内容</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"># 查看二进制日志文件</span><br><span class="line"># 先查看正在使用的二进制文件</span><br><span class="line">show master status;</span><br><span class="line">+------------------+----------+--------------+------------------+------------------------------------------+</span><br><span class="line">| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set                        |</span><br><span class="line">+------------------+----------+--------------+------------------+------------------------------------------+</span><br><span class="line">| mysql-bin.000003 |      154 |              |                  | 269f1ac3-8d95-11e9-8dc4-000c297969b7:1-7 |</span><br><span class="line">+------------------+----------+--------------+------------------+------------------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 根据当前使用的二进制日志再查看当前的event</span><br><span class="line">show binlog events in &#x27;mysql-bin.000003&#x27;;</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">| Log_name         | Pos | Event_type     | Server_id | End_log_pos | Info                                  |</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">| mysql-bin.000003 |   4 | Format_desc    |         6 |         123 | Server ver: 5.7.31-log, Binlog ver: 4 |</span><br><span class="line">| mysql-bin.000003 | 123 | Previous_gtids |         6 |         154 |                                       |</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 查看最开始的日志文件及说明</span><br><span class="line">show binlog events in &#x27;mysql-bin.000001&#x27;;</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">| Log_name         | Pos | Event_type     | Server_id | End_log_pos | Info                                  |</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">| mysql-bin.000001 |   4 | Format_desc    |         6 |         123 | Server ver: 5.7.31-log, Binlog ver: 4 |</span><br><span class="line">| mysql-bin.000001 | 123 | Previous_gtids |         6 |         154 |                                       |</span><br><span class="line">| mysql-bin.000001 | 154 | Rotate         |         6 |         201 | mysql-bin.000002;pos=4                |</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">3 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">Pos 4 是保留字段</span><br><span class="line">Pos 154 是日志文件头格式信息(5.7版本是154个字节，5.6版本是前120个字节)  </span><br><span class="line">每一行都是一个事件</span><br><span class="line"></span><br><span class="line"># 说明</span><br><span class="line">Log_name    : 日志名    </span><br><span class="line">Pos         : 事件开始的Position</span><br><span class="line">Event_type  : 事件类型</span><br><span class="line">Server_id   : 发生在哪台机器的事件</span><br><span class="line">End_log_pos : 事件结束的位置</span><br><span class="line">Info        : 事件内容</span><br><span class="line"></span><br><span class="line"># 录入信息查看事件信息</span><br><span class="line"># 没录入信息之前</span><br><span class="line">show binlog events in &#x27;mysql-bin.000003&#x27;;</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">| Log_name         | Pos | Event_type     | Server_id | End_log_pos | Info                                  |</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">| mysql-bin.000003 |   4 | Format_desc    |         6 |         123 | Server ver: 5.7.31-log, Binlog ver: 4 |</span><br><span class="line">| mysql-bin.000003 | 123 | Previous_gtids |         6 |         154 |                                       |</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 创建数据以及插入数据提交</span><br><span class="line">create database testdb;</span><br><span class="line">use testdb;</span><br><span class="line">create table t1(id int);</span><br><span class="line">insert into t1 values(1);</span><br><span class="line">commit;</span><br><span class="line"></span><br><span class="line"># 查看录入数据之后的情况</span><br><span class="line">show binlog events in &#x27;mysql-bin.000003&#x27;;</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">| Log_name         | Pos | Event_type     | Server_id | End_log_pos | Info                                  |</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">| mysql-bin.000003 |   4 | Format_desc    |         6 |         123 | Server ver: 5.7.31-log, Binlog ver: 4 |</span><br><span class="line">| mysql-bin.000003 | 123 | Previous_gtids |         6 |         154 |                                       |</span><br><span class="line">| mysql-bin.000003 | 154 | Anonymous_Gtid |         6 |         219 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;  |</span><br><span class="line">| mysql-bin.000003 | 219 | Query          |         6 |         319 | create database testdb                |</span><br><span class="line">| mysql-bin.000003 | 319 | Anonymous_Gtid |         6 |         384 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;  |</span><br><span class="line">| mysql-bin.000003 | 384 | Query          |         6 |         485 | use `testdb`; create table t1(id int) |</span><br><span class="line">| mysql-bin.000003 | 485 | Anonymous_Gtid |         6 |         550 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;  |</span><br><span class="line">| mysql-bin.000003 | 550 | Query          |         6 |         624 | BEGIN                                 |</span><br><span class="line">| mysql-bin.000003 | 624 | Table_map      |         6 |         671 | table_id: 108 (testdb.t1)             |</span><br><span class="line">| mysql-bin.000003 | 671 | Write_rows     |         6 |         711 | table_id: 108 flags: STMT_END_F       |</span><br><span class="line">| mysql-bin.000003 | 711 | Xid            |         6 |         742 | COMMIT /* xid=38 */                   |</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">11 rows in set (0.00 sec)</span><br><span class="line"># 这些可读性不强</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="binlog文件详细查看"><a href="#binlog文件详细查看" class="headerlink" title="binlog文件详细查看"></a><code>binlog</code>文件详细查看</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 命令行上执行</span></span><br><span class="line">cd /data/binlog/</span><br><span class="line">mysqlbinlog mysql-bin.000003</span><br><span class="line"></span><br><span class="line">mysqlbinlog mysql-bin.000003  |grep -v &#x27;SET&#x27;  # 这条命令得到也看不懂 有注释时间等</span><br><span class="line"></span><br><span class="line">mysqlbinlog --base64-output=decode-rows  -vvvv mysql-bin.000003</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/wzf7nb.png" alt="wzf7nb"></p>
+</li>
+</ul>
+<h4 id="基于二进制日志数据恢复"><a href="#基于二进制日志数据恢复" class="headerlink" title="基于二进制日志数据恢复"></a>基于二进制日志数据恢复</h4><ul>
+<li><h5 id="按需截取日志"><a href="#按需截取日志" class="headerlink" title="按需截取日志"></a>按需截取日志</h5><blockquote>
+<p>截取二进制日志的核心在于找起点和终点</p>
+</blockquote>
+<ul>
+<li><p>基于<code>position</code>号截取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"># mysqlbinlog 命令参数截取</span><br><span class="line">--start-position=</span><br><span class="line">--stop-position=</span><br><span class="line"></span><br><span class="line"># sql语句查到建库的position号</span><br><span class="line"> show binlog events in &#x27;mysql-bin.000003&#x27;;</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">| Log_name         | Pos | Event_type     | Server_id | End_log_pos | Info                                  |</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">| mysql-bin.000003 |   4 | Format_desc    |         6 |         123 | Server ver: 5.7.31-log, Binlog ver: 4 |</span><br><span class="line">| mysql-bin.000003 | 123 | Previous_gtids |         6 |         154 |                                       |</span><br><span class="line">| mysql-bin.000003 | 154 | Anonymous_Gtid |         6 |         219 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;  |</span><br><span class="line">| mysql-bin.000003 | 219 | Query          |         6 |         319 | create database testdb                |</span><br><span class="line">| mysql-bin.000003 | 319 | Anonymous_Gtid |         6 |         384 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;  |</span><br><span class="line">| mysql-bin.000003 | 384 | Query          |         6 |         485 | use `testdb`; create table t1(id int) |</span><br><span class="line">| mysql-bin.000003 | 485 | Anonymous_Gtid |         6 |         550 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;  |</span><br><span class="line">| mysql-bin.000003 | 550 | Query          |         6 |         624 | BEGIN                                 |</span><br><span class="line">| mysql-bin.000003 | 624 | Table_map      |         6 |         671 | table_id: 108 (testdb.t1)             |</span><br><span class="line">| mysql-bin.000003 | 671 | Write_rows     |         6 |         711 | table_id: 108 flags: STMT_END_F       |</span><br><span class="line">| mysql-bin.000003 | 711 | Xid            |         6 |         742 | COMMIT /* xid=38 */                   |</span><br><span class="line">+------------------+-----+----------------+-----------+-------------+---------------------------------------+</span><br><span class="line">11 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 截取事件导出sql语句(命令行)</span><br><span class="line">mysqlbinlog --start-position=219 --stop-position=319 /data/binlog/mysql-bin.000003 &gt; /tmp/bin.sql</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 恢复(sql语句)</span><br><span class="line"># 模拟删除(不代表生产)</span><br><span class="line">show databases;</span><br><span class="line">drop database testdb;</span><br><span class="line">show databases;</span><br><span class="line"></span><br><span class="line"># 临时关闭当前查看二进制日志记录开关</span><br><span class="line"># 因为已经有了二进制日志做恢复，再次恢复的时候会再次记录恢复的二进制日志，所以要先短暂关闭二进制记录，避免IO损耗</span><br><span class="line">set sql_log_bin=0;  </span><br><span class="line"></span><br><span class="line"># 恢复命令</span><br><span class="line">source /tmp/bin.sql;</span><br><span class="line"></span><br><span class="line"># 检查</span><br><span class="line">show databases;</span><br><span class="line"></span><br><span class="line">set sql_log_bin=1;</span><br><span class="line"># 恢复完成后需要退出当前窗口，当前窗口binlog二进制没有记录</span><br></pre></td></tr></table></figure>
+
+
+
+<p>下图是根据<code>position</code>号截取的日志信息</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/LBFNQB.png" alt="LBFNQB"></p>
+</li>
+<li><p>基于时间截取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--start-datetime</span><br><span class="line">--stop-datetime</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>案例恢复</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"># 使用binlog日志进行恢复</span><br><span class="line">#模拟删库</span><br><span class="line">create database binlog charset utf8mb4;</span><br><span class="line"></span><br><span class="line">use binlog;</span><br><span class="line">create table t1(id int);</span><br><span class="line">insert into t1 values(1);</span><br><span class="line">commit;</span><br><span class="line">insert into t1 values(2);</span><br><span class="line">commit;</span><br><span class="line">insert into t1 values(3);</span><br><span class="line">commit;</span><br><span class="line"></span><br><span class="line">drop database binlog;</span><br><span class="line"></span><br><span class="line"># 恢复 </span><br><span class="line"># 查看当前的二进制日志文件是哪一个</span><br><span class="line">show master status;</span><br><span class="line"></span><br><span class="line"># 查看事件找到起点和终点</span><br><span class="line">show binlog events in &#x27;mysql-bin.000003&#x27;;</span><br><span class="line">......</span><br><span class="line">| mysql-bin.000003 |  905 | Anonymous_Gtid |         6 |         970 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;   |</span><br><span class="line">| mysql-bin.000003 |  970 | Query          |         6 |        1086 | create database binlog charset utf8mb4 |</span><br><span class="line">| mysql-bin.000003 | 1086 | Anonymous_Gtid |         6 |        1151 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;   |</span><br><span class="line">| mysql-bin.000003 | 1151 | Query          |         6 |        1252 | use `binlog`; create table t1(id int)  |</span><br><span class="line">| mysql-bin.000003 | 1252 | Anonymous_Gtid |         6 |        1317 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;   |</span><br><span class="line">| mysql-bin.000003 | 1317 | Query          |         6 |        1391 | BEGIN                                  |</span><br><span class="line">| mysql-bin.000003 | 1391 | Table_map      |         6 |        1438 | table_id: 110 (binlog.t1)              |</span><br><span class="line">| mysql-bin.000003 | 1438 | Write_rows     |         6 |        1478 | table_id: 110 flags: STMT_END_F        |</span><br><span class="line">| mysql-bin.000003 | 1478 | Xid            |         6 |        1509 | COMMIT /* xid=87 */                    |</span><br><span class="line">| mysql-bin.000003 | 1509 | Anonymous_Gtid |         6 |        1574 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;   |</span><br><span class="line">| mysql-bin.000003 | 1574 | Query          |         6 |        1648 | BEGIN                                  |</span><br><span class="line">| mysql-bin.000003 | 1648 | Table_map      |         6 |        1695 | table_id: 110 (binlog.t1)              |</span><br><span class="line">| mysql-bin.000003 | 1695 | Write_rows     |         6 |        1735 | table_id: 110 flags: STMT_END_F        |</span><br><span class="line">| mysql-bin.000003 | 1735 | Xid            |         6 |        1766 | COMMIT /* xid=89 */                    |</span><br><span class="line">| mysql-bin.000003 | 1766 | Anonymous_Gtid |         6 |        1831 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;   |</span><br><span class="line">| mysql-bin.000003 | 1831 | Query          |         6 |        1905 | BEGIN                                  |</span><br><span class="line">| mysql-bin.000003 | 1905 | Table_map      |         6 |        1952 | table_id: 110 (binlog.t1)              |</span><br><span class="line">| mysql-bin.000003 | 1952 | Write_rows     |         6 |        1992 | table_id: 110 flags: STMT_END_F        |</span><br><span class="line">| mysql-bin.000003 | 1992 | Xid            |         6 |        2023 | COMMIT /* xid=91 */                    |</span><br><span class="line">| mysql-bin.000003 | 2023 | Anonymous_Gtid |         6 |        2088 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;   |</span><br><span class="line">| mysql-bin.000003 | 2088 | Query          |         6 |        2186 | drop database binlog                   |</span><br><span class="line">+------------------+------+----------------+-----------+-------------+----------------------------------------+</span><br><span class="line"></span><br><span class="line">起点: 970</span><br><span class="line">终点: 2088(2186是删库语句，否则无意义)</span><br><span class="line"></span><br><span class="line"># 根据起点和终点截取需要的二进制日志(命令行操作)</span><br><span class="line">mysqlbinlog --start-position=970 --stop-position=2088 /data/binlog/mysql-bin.000003 &gt; /tmp/databse-binlog.sql</span><br><span class="line"></span><br><span class="line"># 恢复</span><br><span class="line">set sql_log_bin=0;</span><br><span class="line">source /tmp/databse-binlog.sql;</span><br><span class="line"></span><br><span class="line"># 验证结果</span><br><span class="line">show databases;</span><br><span class="line">select * from t1;</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="GTID功能的二进制日志"><a href="#GTID功能的二进制日志" class="headerlink" title="GTID功能的二进制日志"></a><code>GTID</code>功能的二进制日志</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">create database binlog charset utf8mb4;</span><br><span class="line">use binlog;</span><br><span class="line">create table t1(id int);</span><br><span class="line">insert into t1 values(1);</span><br><span class="line">commit;</span><br><span class="line">insert into t1 values(2);</span><br><span class="line">commit;</span><br><span class="line">truncate table t1;  # 这条是误操作,不能恢复这条语句</span><br><span class="line">insert into t1 values(3);</span><br><span class="line">commit;</span><br><span class="line">drop database binlog;</span><br><span class="line"># 截取position号就比较麻烦 ，需要多次截取恢复，不方便</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>GTID</code>介绍</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">GTID(全局事务编号)</span><br><span class="line">是对于一个已提交事务的编号，并且是一个全局唯一的编号。</span><br><span class="line">它的官方定义如下：</span><br><span class="line">GTID = source_id ：transaction_id</span><br><span class="line">7E11FA47-31CA-19E1-9E56-C43AA21293967:29</span><br><span class="line"></span><br><span class="line">说明:</span><br><span class="line">DDL DCL，一条语句(事件)就是一个事务，占一个GTID号</span><br><span class="line">DML，一个完整的事务(begin ---&gt; commit)，是一个事务，占一个GTID号</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">5.6 版本新加的特性,5.7中做了加强</span><br><span class="line">5.6 中不开启,没有这个功能.</span><br><span class="line">5.7 中的GTID,即使不开也会有自动生成</span><br><span class="line">SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>GTID</code>配置及截取使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"># 修改GTID相关的配置文件</span><br><span class="line">vim /etc/my.cnf</span><br><span class="line">[mysqld]</span><br><span class="line">...</span><br><span class="line">gtid-mode=on</span><br><span class="line">enforce-gtid-consistency=true</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"># 重启数据库</span><br><span class="line">systemctl restart mysql</span><br><span class="line"></span><br><span class="line"># GTID的前段</span><br><span class="line">cat /data/mysql/data/auto.cnf</span><br><span class="line">[auto]</span><br><span class="line">server-uuid=b25a4cc7-609b-11ec-afea-525400aaf73e</span><br><span class="line"></span><br><span class="line"># 查看GTID</span><br><span class="line"> show master status;  # Executed_Gtid_Set信息</span><br><span class="line"> </span><br><span class="line"># 创建数据查看GTID情况</span><br><span class="line"> create database testdb2 charset utf8mb4;</span><br><span class="line"> use testdb2;</span><br><span class="line"> create table t1 (id int);</span><br><span class="line"> insert into t1 values(1);</span><br><span class="line"> commit;</span><br><span class="line"> insert into t1 values(2);</span><br><span class="line"> commit;</span><br><span class="line"> insert into t1 values(3);</span><br><span class="line"> commit;</span><br><span class="line"> </span><br><span class="line"> show master status;</span><br><span class="line"> show binlog events in &#x27;mysql-bin.000004&#x27;;</span><br><span class="line"> </span><br><span class="line"> # 看到下图多了右边的编号，此时模拟执行数据库丢失</span><br><span class="line"> drop database testdb2;</span><br><span class="line"> </span><br><span class="line">show binlog events in &#x27;mysql-bin.000004&#x27;;  # 此时多了一条删库的编号</span><br><span class="line"></span><br><span class="line"># 基于GTID截取日志</span><br><span class="line"># 参数</span><br><span class="line">--include-gtids</span><br><span class="line">--exclude-gtids</span><br><span class="line">--skip-gtids</span><br><span class="line"></span><br><span class="line"># 错误的截取命令(命令行)</span><br><span class="line">mysqlbinlog --include-gtids=&#x27;b25a4cc7-609b-11ec-afea-525400aaf73e:1-5&#x27; /data/binlog/mysql-bin.000004 &gt; /tmp/testdb2.sql</span><br><span class="line"># 以上截取出来的日志不能直接恢复使用</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/GzZJIW.png" alt="GzZJIW"></p>
+</li>
+<li><p><code>GTID</code>幂等性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">开启GTID后,MySQL恢复Binlog时,重复GTID的事务不会再执行了</span><br><span class="line">show master status;  # 因为这条命令中出现的 Executed_Gtid_set信息 已经有了，表示不会再做了，检查幂等性</span><br><span class="line"></span><br><span class="line"># 恢复</span><br><span class="line"># 正确的截取日志命令(命令行)</span><br><span class="line">mysqlbinlog --skip-gtids --include-gtids=&#x27;b25a4cc7-609b-11ec-afea-525400aaf73e:1-5&#x27; /data/binlog/mysql-bin.000004 &gt; /tmp/testdb2.sql</span><br><span class="line"></span><br><span class="line"># sql语句恢复</span><br><span class="line">set sql_log_bin=0;</span><br><span class="line">source /tmp/testdb2.sql</span><br><span class="line">set sql_log_bin=1;</span><br><span class="line"></span><br><span class="line"># 检查</span><br><span class="line">show databases;</span><br><span class="line">select * from testdb2.t1;</span><br><span class="line"></span><br><span class="line"># 跳过某些GTID不截取</span><br><span class="line">mysqlbinlog --skip-gtids --include-gtids=&#x27;b25a4cc7-609b-11ec-afea-525400aaf73e:1-5&#x27; \</span><br><span class="line">--exclude-gtids=&#x27;b25a4cc7-609b-11ec-afea-525400aaf73e:6&#x27; \</span><br><span class="line">/data/binlog/mysql-bin.000004 &gt; /tmp/testdb2.sql</span><br><span class="line"></span><br><span class="line">单个: &#x27;b25a4cc7-609b-11ec-afea-525400aaf73e:6&#x27;</span><br><span class="line">连续个: &#x27;b25a4cc7-609b-11ec-afea-525400aaf73e:1-6&#x27;</span><br><span class="line">多个不连续: &#x27;b25a4cc7-609b-11ec-afea-525400aaf73e:2&#x27;,&#x27;b25a4cc7-609b-11ec-afea-525400aaf73e:3&#x27;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h4 id="二进制日志其他操作"><a href="#二进制日志其他操作" class="headerlink" title="二进制日志其他操作"></a>二进制日志其他操作</h4><ul>
+<li><h5 id="临时关闭"><a href="#临时关闭" class="headerlink" title="临时关闭"></a>临时关闭</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 临时关闭二进制日志，退出mysql窗口就可以恢复，做数据恢复之前使用</span><br><span class="line">set sql_log_bin=0;</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="自动清理"><a href="#自动清理" class="headerlink" title="自动清理"></a>自动清理</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 窗口自动清理周期</span><br><span class="line">select @@expire_logs_days;</span><br><span class="line">show variables like &#x27;%expire%&#x27;;</span><br><span class="line"></span><br><span class="line"># 自动清理时间,是要按照全备周期+1</span><br><span class="line"># 企业建议,至少保留两个全备周期+1的binlog</span><br><span class="line">set global expire_logs_days=8;</span><br><span class="line"></span><br><span class="line"># 永久生效</span><br><span class="line">vim /etc/my.cnf</span><br><span class="line">[mysqld]</span><br><span class="line">...</span><br><span class="line">expire_logs_days=15;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="手工清理"><a href="#手工清理" class="headerlink" title="手工清理"></a>手工清理</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 三天之前到现在的</span><br><span class="line">PURGE BINARY LOGS BEFORE now() - INTERVAL 3 day;</span><br><span class="line">PURGE BINARY LOGS TO &#x27;mysql-bin.000010&#x27;;</span><br><span class="line"></span><br><span class="line"># 查看binlog日志信息</span><br><span class="line">show binary logs;</span><br><span class="line"></span><br><span class="line"># 删除到哪个二进制日志为止</span><br><span class="line">PURGE BINARY LOGS TO &#x27;mysql-bin.000004&#x27;;</span><br><span class="line"></span><br><span class="line"># 注意:不要手工 rm binlog文件，如果 rm 删除了如下恢复</span><br><span class="line">1. my.cnf binlog关闭掉,启动数据库</span><br><span class="line">2.把数据库关闭,开启binlog,启动数据库</span><br><span class="line">删除所有binlog,并从000001开始重新记录日志</span><br><span class="line"></span><br><span class="line"># 重新计数二进制日志，主从关系中，主库执行此操作，主从环境必崩</span><br><span class="line">reset master;</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="日志滚动"><a href="#日志滚动" class="headerlink" title="日志滚动"></a>日志滚动</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 重启mysql也会自动滚动一个新的</span><br><span class="line"># 产生一个新的日志sql命令</span><br><span class="line">flush logs;</span><br><span class="line"></span><br><span class="line"># 默认日志文件大小1G，达到这个大小也回生成全新的，一般会设置小一点，避免分析的时候打不开</span><br><span class="line">show variables like &#x27;%max_binlog_size%&#x27;;</span><br><span class="line">+-----------------+------------+</span><br><span class="line">| Variable_name   | Value      |</span><br><span class="line">+-----------------+------------+</span><br><span class="line">| max_binlog_size | 1073741824 |</span><br><span class="line">+-----------------+------------+</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="slow-log慢日志"><a href="#slow-log慢日志" class="headerlink" title="slow_log慢日志"></a><code>slow_log</code>慢日志</h3><h4 id="作用-2"><a href="#作用-2" class="headerlink" title="作用"></a>作用</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">记录慢SQL语句的日志,定位低效SQL语句的工具日志</span><br></pre></td></tr></table></figure>
+
+<h4 id="开启慢日志"><a href="#开启慢日志" class="headerlink" title="开启慢日志"></a>开启慢日志</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 查看是否开启</span><br><span class="line">select @@slow_query_log;</span><br><span class="line"></span><br><span class="line"># 查看慢日志位置</span><br><span class="line">select @@slow_query_log_file;</span><br><span class="line"></span><br><span class="line"># 查看慢查询时间</span><br><span class="line">select @@long_query_time;</span><br><span class="line">select @@log_queries_not_using_indexes ;</span><br><span class="line"></span><br><span class="line"># 设置慢日志配置文件</span><br><span class="line">vim /etc/my.cnf</span><br><span class="line">slow_query_log=1                               # 开关</span><br><span class="line">slow_query_log_file=/data/mysql/data/slow.log  # 文件位置及名字 </span><br><span class="line">long_query_time=0.1                            # 设定慢查询时间</span><br><span class="line">log_queries_not_using_indexes                  # 没走索引的语句也记录</span><br><span class="line"></span><br><span class="line"># 重启mysql</span><br><span class="line">systemctl restart mysqld</span><br></pre></td></tr></table></figure>
+
+<h4 id="慢日志分析"><a href="#慢日志分析" class="headerlink" title="慢日志分析"></a>慢日志分析</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># 模拟慢日志，多执行几次</span><br><span class="line">select * from t100w where k1=&quot;aa&quot; limit 1000,2000;</span><br><span class="line"></span><br><span class="line"># mysqldumpslow 分析慢日志</span><br><span class="line">mysqldumpslow -s c -t 10 /data/mysql/data/slow.log</span><br><span class="line"></span><br><span class="line"># 命令擦参数说明</span><br><span class="line">-s  # 以...排序</span><br><span class="line">c   # 执行次数</span><br><span class="line">-t  # top 10</span><br><span class="line"></span><br><span class="line"># 第三方工具</span><br><span class="line"># 下载地址 https://www.percona.com/downloads/percona-toolkit/LATEST/</span><br><span class="line"># wget https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/sql/percona-toolkit-3.2.1-1.el7.x86_64.rpm</span><br><span class="line">wget https://downloads.percona.com/downloads/percona-toolkit/3.3.1/binary/redhat/7/x86_64/percona-toolkit-3.3.1-1.el7.x86_64.rpm</span><br><span class="line">yum -y install perl-DBI perl-DBD-MySQL perl-Time-HiRes perl-IO-Socket-SSL perl-Digest-MD5</span><br><span class="line">yum -y localinstall percona-toolkit-3.3.1-1.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line"># toolkit工具包中的命令</span><br><span class="line">pt-query-diagest  /data/mysql/data/slow.log</span><br><span class="line"></span><br><span class="line"># 图形化的第三方工具</span><br><span class="line">Anemometer基于pt-query-digest将MySQL慢查询可视化</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/ff3d77ac.html" rel="prev" title="MySQL存储引擎(InnoDB)">
+                  <i class="fa fa-chevron-left"></i> MySQL存储引擎(InnoDB)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/2c2a11ca.html" rel="next" title="MySQL备份恢复与迁移">
+                  MySQL备份恢复与迁移 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

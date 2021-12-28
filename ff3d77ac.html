@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="存储引擎介绍 类似于Linux系统中的文件系统  功能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL存储引擎(InnoDB)">
+<meta property="og:url" content="https://klcc.cc/ff3d77ac.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="存储引擎介绍 类似于Linux系统中的文件系统  功能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/KssDvX.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/jYSnqG.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/yMjqBO.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/GhQN3e.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/TsmCEP.jpg">
+<meta property="article:published_time" content="2021-12-28T07:25:10.503Z">
+<meta property="article:modified_time" content="2021-12-28T07:47:17.960Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/KssDvX.jpg">
+
+
+<link rel="canonical" href="https://klcc.cc/ff3d77ac.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/ff3d77ac.html","path":"ff3d77ac.html","title":"MySQL存储引擎(InnoDB)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL存储引擎(InnoDB) | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">49</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">存储引擎介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%8D%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.</span> <span class="nav-text">InnoDB存储引擎介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">4.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%9F%A5%E7%9C%8B"><span class="nav-number">4.2.</span> <span class="nav-text">存储引擎查看</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8select%E7%A1%AE%E8%AE%A4%E4%BC%9A%E8%AF%9D%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">4.2.1.</span> <span class="nav-text">使用select确认会话存储引擎</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.2.2.</span> <span class="nav-text">默认存储引擎设置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">4.2.3.</span> <span class="nav-text">查看表的存储引擎</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%80%E4%B8%AA%E8%A1%A8%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-%E7%A2%8E%E7%89%87%E6%95%B4%E7%90%86"><span class="nav-number">4.2.4.</span> <span class="nav-text">修改一个表的存储引擎(碎片整理)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB%E7%89%A9%E7%90%86%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">InnoDB物理存储结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E7%9B%B4%E8%A7%82%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">5.1.</span> <span class="nav-text">最直观的存储方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">5.2.</span> <span class="nav-text">表空间</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">5.2.1.</span> <span class="nav-text">共享表空间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%8B%AC%E7%AB%8B%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">5.2.2.</span> <span class="nav-text">独立表空间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%81%E7%A7%BB%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">5.2.3.</span> <span class="nav-text">迁移表空间</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1"><span class="nav-number">6.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1ACID%E7%89%B9%E6%80%A7"><span class="nav-number">6.1.</span> <span class="nav-text">事务ACID特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">6.2.</span> <span class="nav-text">事务的生命周期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#InnoDB%E4%BA%8B%E5%8A%A1%E7%9A%84ACID%E6%98%AF%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%9A%84"><span class="nav-number">6.3.</span> <span class="nav-text">InnoDB事务的ACID是如何保证的</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">6.3.1.</span> <span class="nav-text">基础概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#redo-log"><span class="nav-number">6.3.2.</span> <span class="nav-text">redo log</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSR%E5%89%8D%E6%BB%9A"><span class="nav-number">6.3.3.</span> <span class="nav-text">CSR前滚</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#undo%E5%9B%9E%E6%BB%9A%E6%97%A5%E5%BF%97"><span class="nav-number">6.3.4.</span> <span class="nav-text">undo回滚日志</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%94%81"><span class="nav-number">6.3.5.</span> <span class="nav-text">锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">6.3.6.</span> <span class="nav-text">事务的隔离级别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B9%BB%E8%AF%BB"><span class="nav-number">6.3.7.</span> <span class="nav-text">幻读</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#InnoDB%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0"><span class="nav-number">6.4.</span> <span class="nav-text">InnoDB核心参数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%8C%E4%B8%80%E6%A0%87%E5%87%86%E4%B9%8B%E4%B8%80-innodb-flush-log-at-trx-commit"><span class="nav-number">6.4.1.</span> <span class="nav-text">双一标准之一(innodb_flush_log_at_trx_commit)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Innodb-flush-method"><span class="nav-number">6.4.2.</span> <span class="nav-text">Innodb_flush_method</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#redo%E6%97%A5%E5%BF%97%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE"><span class="nav-number">6.4.3.</span> <span class="nav-text">redo日志参数设置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#innodb-buffer-pool-size"><span class="nav-number">6.4.4.</span> <span class="nav-text">innodb_buffer_pool_size</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/ff3d77ac.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL存储引擎(InnoDB)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-12-28 15:25:10 / 修改时间：15:47:17" itemprop="dateCreated datePublished" datetime="2021-12-28T15:25:10+08:00">2021-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="存储引擎介绍"><a href="#存储引擎介绍" class="headerlink" title="存储引擎介绍"></a>存储引擎介绍</h3><blockquote>
+<p>类似于Linux系统中的文件系统</p>
+</blockquote>
+<h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">数据读写</span><br><span class="line">数据安全和一致性</span><br><span class="line">提高性能</span><br><span class="line">热备份</span><br><span class="line">自动故障恢复</span><br><span class="line">高可用方面支持</span><br></pre></td></tr></table></figure>
+
+<h3 id="种类"><a href="#种类" class="headerlink" title="种类"></a>种类</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">InnoDB</span><br><span class="line">MyISAM</span><br><span class="line">MEMORY</span><br><span class="line">ARCHIVE</span><br><span class="line">FEDERATED</span><br><span class="line">EXAMPLE</span><br><span class="line">BLACKHOLE</span><br><span class="line">MERGE</span><br><span class="line">NDBCLUSTER</span><br><span class="line">CSV</span><br><span class="line"></span><br><span class="line"># 引擎种类查看</span><br><span class="line">show engines;</span><br><span class="line"></span><br><span class="line">存储引擎是作用在表上的，也就意味着，不同的表可以有不同的存储引擎类型。</span><br><span class="line">PerconaDB:默认是XtraDB</span><br><span class="line">MariaDB:默认是InnoDB</span><br><span class="line">其他的存储引擎支持:</span><br><span class="line">TokuDB</span><br><span class="line">RocksDB</span><br><span class="line">MyRocks</span><br><span class="line">以上三种存储引擎的共同点:压缩比较高,数据插入性能极高</span><br><span class="line">现在很多的NewSQL,使用比较多的功能特性.</span><br></pre></td></tr></table></figure>
+
+<h3 id="InnoDB存储引擎介绍"><a href="#InnoDB存储引擎介绍" class="headerlink" title="InnoDB存储引擎介绍"></a>InnoDB存储引擎介绍</h3><blockquote>
+<p>在MySQL5.5版本之后，默认的存储引擎，提供高可用性和高性能</p>
+</blockquote>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/KssDvX.jpg" alt="KssDvX"></p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、事务（Transaction）</span><br><span class="line"><span class="number">2</span>、MVCC（Multi-Version Concurrency Control多版本并发控制）</span><br><span class="line"><span class="number">3</span>、行级锁(Row-level Lock)</span><br><span class="line"><span class="number">4</span>、ACSR（Auto Crash Safey Recovery）自动的故障安全恢复</span><br><span class="line"><span class="number">5</span>、支持热备份(Hot Backup)</span><br><span class="line"><span class="number">6</span>、Replication: Group Commit , GTID (<span class="keyword">Global</span> Transaction ID) ,多线程(Multi-Threads-SQL ) </span><br></pre></td></tr></table></figure>
+
+<h4 id="存储引擎查看"><a href="#存储引擎查看" class="headerlink" title="存储引擎查看"></a>存储引擎查看</h4><ul>
+<li><h5 id="使用select确认会话存储引擎"><a href="#使用select确认会话存储引擎" class="headerlink" title="使用select确认会话存储引擎"></a>使用select确认会话存储引擎</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select @@default_storage_engine;</span><br><span class="line">show variables like &#x27;%engine%&#x27;;</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="默认存储引擎设置"><a href="#默认存储引擎设置" class="headerlink" title="默认存储引擎设置"></a>默认存储引擎设置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 不会在生产中操作</span><br><span class="line">会话级别</span><br><span class="line">set default_storage_engine=myisam;</span><br><span class="line"></span><br><span class="line">全局级别(仅影响新会话)</span><br><span class="line">set global default_storage_engine=myisam;</span><br><span class="line">重启之后，所有参数均失效</span><br><span class="line"></span><br><span class="line"># 放入配置文件永久生效</span><br><span class="line">vim /etc/my.cnf</span><br><span class="line">[mysqld]</span><br><span class="line">default_storage_engine=myisam</span><br><span class="line"></span><br><span class="line">存储引擎是表级别的，每个表创建时可以指定不同的存储引擎，但是建议统一为Innodb</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="查看表的存储引擎"><a href="#查看表的存储引擎" class="headerlink" title="查看表的存储引擎"></a>查看表的存储引擎</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 查看单表的存储引擎</span><br><span class="line">show create table world.city\G</span><br><span class="line"></span><br><span class="line">use world;</span><br><span class="line">show table status like &#x27;countrylanguage&#x27;\G</span><br><span class="line"></span><br><span class="line"># 查看每个表的存储引擎</span><br><span class="line">select table_schema,table_name ,engine from information_schema.tables where table_schema not in (&#x27;sys&#x27;,&#x27;mysql&#x27;,&#x27;information_schema&#x27;,&#x27;performance_schema&#x27;);</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="修改一个表的存储引擎-碎片整理"><a href="#修改一个表的存储引擎-碎片整理" class="headerlink" title="修改一个表的存储引擎(碎片整理)"></a>修改一个表的存储引擎(碎片整理)</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">alter table world.city engine innodb;</span><br><span class="line"># 这条命令还可以进行innodb表的碎片化整理</span><br><span class="line"></span><br><span class="line"># 将test数据库下的所有1000表，存储引擎从MyISAM替换为innodb </span><br><span class="line">select concat(&quot;alter table &quot;,table_name,&quot; engine innodb;&quot;)</span><br><span class="line">from information_schema.tables </span><br><span class="line">where table_schema=&#x27;test&#x27;</span><br><span class="line">into outfile &#x27;/tmp/alter.sql&#x27;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="InnoDB物理存储结构"><a href="#InnoDB物理存储结构" class="headerlink" title="InnoDB物理存储结构"></a>InnoDB物理存储结构</h3><h4 id="最直观的存储方式"><a href="#最直观的存储方式" class="headerlink" title="最直观的存储方式"></a>最直观的存储方式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 数据目录 /data/mysql/data</span><br><span class="line">ibdata1：系统数据字典信息(统计信息)，UNDO（回滚）表空间等数据</span><br><span class="line">ib_logfile0 ~ ib_logfile1: REDO（重做日志）日志文件，事务日志文件</span><br><span class="line">ib_buffer_pool: 缓冲池(5.7) 上次关机之前的热数据会保存在这，下次启动后会加载这些数据</span><br><span class="line">ibtmp1： 临时表空间磁盘位置，存储临时表</span><br><span class="line">frm：存储表的列信息</span><br><span class="line">ibd：表的数据行和索引</span><br></pre></td></tr></table></figure>
+
+<h4 id="表空间"><a href="#表空间" class="headerlink" title="表空间"></a>表空间</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">需要将所有数据存储到同一个表空间中 ，管理比较混乱</span><br><span class="line">5.5版本出现的管理模式，也是默认的管理模式。（数据字典，undo，临时表，索引，表数据）</span><br><span class="line">5.6版本，共享表空间保留，只用来存储:数据字典信息,undo,临时表。</span><br><span class="line">5.7版本,临时表被独立出来了</span><br><span class="line">8.0版本,undo也被独立出去了</span><br><span class="line"></span><br><span class="line">具体变化参考官方文档:</span><br><span class="line">https://dev.mysql.com/doc/refman/5.6/en/innodb-architecture.html</span><br><span class="line">https://dev.mysql.com/doc/refman/5.7/en/innodb-architecture.html</span><br><span class="line">https://dev.mysql.com/doc/refman/5.8/en/innodb-architecture.html</span><br></pre></td></tr></table></figure>
+
+<h5 id="共享表空间"><a href="#共享表空间" class="headerlink" title="共享表空间"></a>共享表空间</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># 共享表空间 ibdata1</span><br><span class="line">select @@innodb_file_per_table;  # 默认是 1 ，代表当前独立表空间模式，代表每个表一个idb文件</span><br><span class="line">    # 当前 innodb_file_per_table 参数为 1 时创建表查看数据目录情况</span><br><span class="line">    mysql&gt;use world;</span><br><span class="line">    mysql&gt;create table tab(id int);</span><br><span class="line">    </span><br><span class="line">		# 此时在 /data/mysql/data/world 数据目录下会存在下面两个文件，记录表数据和索引</span><br><span class="line">    [root@db1 world]# ll</span><br><span class="line">    -rw-r----- 1 mysql mysql   8556 12月 23 09:52 tab.frm</span><br><span class="line">    -rw-r----- 1 mysql mysql  98304 12月 23 09:52 tab.ibd</span><br><span class="line"></span><br><span class="line">    # 临时设置 innodb_file_per_table 参数为 0 时创建表查看数据目录情况</span><br><span class="line">    set global innodb_file_per_table=0;</span><br><span class="line">    select @@innodb_file_per_table;</span><br><span class="line">    create table bb(id int);</span><br><span class="line">    </span><br><span class="line">    [root@db1 world]# ll</span><br><span class="line">    ...  # 此时没有bb.frm和bb.ibd 两个文件了，此时bb表数据和索引存放在了/data/mysql/ibdata1 文件里了</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line"># 共享表空间设置(在搭建MySQL时，初始化数据之前设置到参数文件中)</span><br><span class="line">select @@innodb_data_file_path;  # 查看ibdata1的信息</span><br><span class="line">+-------------------------+</span><br><span class="line">| @@innodb_data_file_path |</span><br><span class="line">+-------------------------+</span><br><span class="line">| ibdata1:12M:autoextend  |</span><br><span class="line">+-------------------------+</span><br><span class="line"># 默认设置为12M ，autoextend自增长，不够之后每次自增长64兆</span><br><span class="line"></span><br><span class="line">show variables like &#x27;%extend%&#x27;;  # 查看自增长大小，可设置</span><br><span class="line"></span><br><span class="line"># 初始化数据之前设置到参数文件中</span><br><span class="line">innodb_data_file_path=ibdata1:512M:ibdata2:512M:autoextend</span><br><span class="line">innodb_autoextend_increment=64</span><br></pre></td></tr></table></figure>
+
+<h5 id="独立表空间"><a href="#独立表空间" class="headerlink" title="独立表空间"></a>独立表空间</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">从5.6，默认表空间不再使用共享表空间，替换为独立表空间。</span><br><span class="line">主要存储的是用户数据</span><br><span class="line">存储特点为：一个表一个ibd文件，存储数据行和索引信息</span><br><span class="line"></span><br><span class="line">基本表结构元数据存储：</span><br><span class="line">xxx.frm</span><br><span class="line">最终结论：</span><br><span class="line">      元数据            数据行+索引</span><br><span class="line">mysql表数据    =（ibdataX+frm）+ibd(段、区、页)</span><br><span class="line">        DDL             DML+DQL</span><br><span class="line"></span><br><span class="line">MySQL的存储引擎日志：</span><br><span class="line">Redo Log: ib_logfile0  ib_logfile1，重做日志</span><br><span class="line">Undo Log: ibdata1 ibdata2(存储在共享表空间中)，回滚日志</span><br><span class="line">临时表:ibtmp1，在做join union操作产生临时数据，用完就自动</span><br><span class="line"></span><br><span class="line"># 独立表空间设置(在上面例子中)</span><br></pre></td></tr></table></figure>
+
+<h5 id="迁移表空间"><a href="#迁移表空间" class="headerlink" title="迁移表空间"></a>迁移表空间</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># 迁移表空间功能，导入和导出表空间</span><br><span class="line">alter table city discard tablespace;  # 删除city表空间  </span><br><span class="line">alter table city import tablespace;  # 导入city表空间</span><br><span class="line"></span><br><span class="line"># 小测试</span><br><span class="line"># 先备份ibd文件</span><br><span class="line">cd /data/mysql/data/school/</span><br><span class="line">cp teacher.ibd /opt/</span><br><span class="line"></span><br><span class="line"># 删除表空间</span><br><span class="line">use school;</span><br><span class="line">alter table teacher discard tablespace;</span><br><span class="line"></span><br><span class="line">ll /data/mysql/data/school/  # 该目录下teacher.ibd文件就mysql删除了</span><br><span class="line"></span><br><span class="line"># 表还在但是无法正常读取,ibdata不识别,统计信息等不存在</span><br><span class="line">show tables;</span><br><span class="line">select * from teacher;  # ERROR 1814 (HY000): Tablespace has been discarded for table &#x27;teacher&#x27;</span><br><span class="line"></span><br><span class="line"># 将备份的ibd文件恢复回位置</span><br><span class="line">cp /opt/teacher.ibd /data/mysql/data/school/</span><br><span class="line">chown -R mysql.mysql /data/mysql/data/school/</span><br><span class="line"></span><br><span class="line">select * from teacher;  # 拷贝回ibd文件之后还是不能查询,ibdata不识别,统计信息等不存在</span><br><span class="line">alter table teacher import tablespace;</span><br><span class="line">select * from teacher;  # 导入表空间之后正常了</span><br><span class="line"></span><br><span class="line"># 批量导入表空间</span><br><span class="line">select concat(&quot;alter table &quot;,table_schema,&quot;.&quot;,table_name,&quot; import tablespace;&quot;) from information_schema.tables where table_schema=&#x27;world&#x27; into outfile &#x27;/tmp/import.sql&#x27;;</span><br><span class="line"></span><br><span class="line"># 批量删除表空间</span><br><span class="line">select concat(&quot;alter table &quot;,table_schema,&quot;.&quot;,table_name,&quot; discard tablespace;&quot;) from information_schema.tables where table_schema=&#x27;world&#x27; into outfile &#x27;/tmp/discad.sql&#x27;;</span><br><span class="line"></span><br><span class="line"># 导入表空间时可能会报错,可以跳过外键检查</span><br><span class="line">set foreign_key_checks=0</span><br></pre></td></tr></table></figure>
+
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><h4 id="事务ACID特性"><a href="#事务ACID特性" class="headerlink" title="事务ACID特性"></a>事务<code>ACID</code>特性</h4><blockquote>
+<p>影响DML语句(<code>insert</code>、<code>update</code>、<code>delete</code>和一部分<code>select</code>)</p>
+</blockquote>
+<p><code>Atomic</code>原子性</p>
+<blockquote>
+<p>所有语句作为一个单元全部成功执行或全部取消，不能出现中间状态</p>
+</blockquote>
+<p><code>Consistent</code>一致性</p>
+<blockquote>
+<p>如果数据库在事务开始时处于一致状态，则在执行该事务期间将保留一致状态</p>
+</blockquote>
+<p><code>Isolated</code>隔离性</p>
+<blockquote>
+<p>事务之间不相互影响</p>
+</blockquote>
+<p><code>Durable</code>持久性</p>
+<blockquote>
+<p>事务成功完成后，所做的所有更改都会准确地记录在数据库中，所做的更改不会丢失。</p>
+</blockquote>
+<h4 id="事务的生命周期"><a href="#事务的生命周期" class="headerlink" title="事务的生命周期"></a>事务的生命周期</h4><ul>
+<li><p>事务的开始</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">begin;</span><br><span class="line">start transaction;</span><br><span class="line"># 在5.5 以上的版本，不需要手工begin，只要你执行的是一个DML，会自动在前面加一个begin命令。</span><br></pre></td></tr></table></figure></li>
+<li><p>事务的结束</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">commit;</span><br><span class="line">完成一个事务，一旦事务提交成功，，就说明具备ACID特性了</span><br><span class="line"></span><br><span class="line">rollback; </span><br><span class="line">回滚事务</span><br><span class="line">将内存中已执行过的操作回滚回去</span><br></pre></td></tr></table></figure></li>
+<li><p>例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># mysql 窗口一</span><br><span class="line">user world;</span><br><span class="line">begin;</span><br><span class="line">delete from city where id &gt; 3000;</span><br><span class="line">delete from city where id &gt; 2000;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># mysql 窗口二</span><br><span class="line">use world;</span><br><span class="line">select * from city;  # 此时查询的数据还是4079条数据，并没有被删除</span><br><span class="line">begin;</span><br><span class="line">delete from city where id &gt; 1800;  </span><br><span class="line"># 此时会卡主，因为在等上一个事务，隔离性</span><br><span class="line"># 操作相同的语句会等上一个事务结束之后才会继续</span><br><span class="line"># 过了超时时间就会报 ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction</span><br><span class="line"></span><br><span class="line"># mysql 窗口一</span><br><span class="line">commit;  # 此时提交</span><br><span class="line"></span><br><span class="line"># mysql 窗口二</span><br><span class="line">delete from city where id &gt; 1800;  # 这个窗口就可以执行操作了</span><br><span class="line">commit;</span><br><span class="line"></span><br><span class="line"># 回滚事务</span><br><span class="line">begin;</span><br><span class="line">delete from city where id=100;</span><br><span class="line">select * from city where id=100;</span><br><span class="line">rollback;  # 对上面的sql操作语句进行回滚，如果commit了，就不能回滚</span><br><span class="line">select * from city where id=100;</span><br><span class="line">commit;</span><br></pre></td></tr></table></figure></li>
+<li><p>自动提交策略(<code>autocommit</code>)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">默认执行DML语句的时候会自动的在语句前加 begin 和 commit，针对需要使用事务功能的语句 begin 或者直接全部使用事务功能</span><br><span class="line"></span><br><span class="line">select @@autocommit;  # 默认开启的 1 为开启</span><br><span class="line"></span><br><span class="line">set autocommit=0;  # 关闭自动提交策略</span><br><span class="line">set global autocommit=0;  # 全局关闭自动提交策略</span><br><span class="line"></span><br><span class="line"># 永久关闭自动提交策略</span><br><span class="line">vim /etc/my.cnf</span><br><span class="line">[mysqld]</span><br><span class="line">...</span><br><span class="line">autocommit=0</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">自动提交是否打开，一般在有事务需求的MySQL中，将其关闭</span><br><span class="line">不管有没有事务需求，我们一般也都建议设置为0，可以很大程度上提高数据库性能</span><br></pre></td></tr></table></figure></li>
+<li><p>事务的隐式控制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"># 隐式回滚</span><br><span class="line">  1. 关闭窗口的时候会自动回滚</span><br><span class="line">    # 已经永久关闭了自动提交策略</span><br><span class="line"></span><br><span class="line">  2. 删除会话ID</span><br><span class="line">    show processlist;</span><br><span class="line">    kill 3;</span><br><span class="line">  </span><br><span class="line"># 隐式提交</span><br><span class="line">  begin;</span><br><span class="line">  a</span><br><span class="line">  b</span><br><span class="line">  begin;  # 此时上面的事务自动提交了</span><br><span class="line"></span><br><span class="line">  begin;</span><br><span class="line">  a</span><br><span class="line">  b</span><br><span class="line">  set autocommit=1;  # 此时上面的事务也自动提交了</span><br><span class="line">  </span><br><span class="line"># 导致提交的非事务语句</span><br><span class="line">DDL语句: (ALTER、CREATE 和 DROP)</span><br><span class="line">DCL语句: (GRANT、REVOKE 和 SET PASSWORD)</span><br><span class="line">锁定语句: (LOCK TABLES 和 UNLOCK TABLES)</span><br><span class="line">导致隐式提交的语句示例：</span><br><span class="line">TRUNCATE TABLE</span><br><span class="line">LOAD DATA INFILE</span><br><span class="line">SELECT FOR UPDATE</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="InnoDB事务的ACID是如何保证的"><a href="#InnoDB事务的ACID是如何保证的" class="headerlink" title="InnoDB事务的ACID是如何保证的"></a>InnoDB事务的ACID是如何保证的</h4><ul>
+<li><h5 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">redo log          ---&gt; 重做日志 ib_logfile0~1  50M ,轮询使用</span><br><span class="line">redo log buffer   ---&gt; redo内存区域</span><br><span class="line">t1.ibd            ---&gt; 存储 数据行和索引 </span><br><span class="line">buffer pool       ---&gt; 数据缓冲区池,数据和索引的缓冲</span><br><span class="line"></span><br><span class="line">LSN : 日志序列号 </span><br><span class="line">磁盘数据页,redo文件,buffer pool,redo buffer</span><br><span class="line">MySQL 每次数据库启动,都会比较磁盘数据页和redolog的LSN,必须要求两者LSN一致数据库才能正常启动</span><br><span class="line"></span><br><span class="line">WAL : write ahead log 日志优先写的方式实现持久化</span><br><span class="line">脏页:  内存脏页,内存中发生了修改,没写入到磁盘之前,我们把内存页称之为脏页</span><br><span class="line">CKPT: Checkpoint,检查点,就是将脏页刷写到磁盘的动作</span><br><span class="line">TXID: 事务号,InnoDB会为每一个事务生成一个事务号,伴随着整个事务</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/jYSnqG.jpg" alt="jYSnqG"></p>
+</li>
+<li><h5 id="redo-log"><a href="#redo-log" class="headerlink" title="redo log"></a><code>redo log</code></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># Redo是什么</span><br><span class="line">redo,顾名思义“重做日志”，是事务日志的一种。</span><br><span class="line"></span><br><span class="line"># 作用是什么</span><br><span class="line">在事务ACID过程中，实现的是“D”持久化的作用。对于AC也有相应的作用</span><br><span class="line"></span><br><span class="line"># redo日志位置</span><br><span class="line">redo的日志文件：iblogfile0 iblogfile1</span><br><span class="line"></span><br><span class="line"># redo buffer</span><br><span class="line">redo的buffer:数据页的变化信息+数据页当时的LSN号</span><br><span class="line">LSN：日志序列号  磁盘数据页、内存数据页、redo buffer、redolog</span><br><span class="line"></span><br><span class="line"># redo的刷新策略</span><br><span class="line">commit;</span><br><span class="line">刷新当前事务的redo buffer到磁盘</span><br><span class="line">还会顺便将一部分redo buffer中没有提交的事务日志也刷新到磁盘</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="CSR前滚"><a href="#CSR前滚" class="headerlink" title="CSR前滚"></a>CSR前滚</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">MySQL : 在启动时,必须保证redo日志文件和数据文件LSN必须一致, 如果不一致就会触发CSR,最终保证一致</span><br><span class="line">情况一:</span><br><span class="line">我们做了一个事务,begin;update;commit.</span><br><span class="line">1.在begin ,会立即分配一个TXID=tx_01.</span><br><span class="line">2.update时,会将需要修改的数据页(dp_01,LSN=101),加载到data buffer中</span><br><span class="line">3.DBWR线程,会进行dp_01数据页修改更新,并更新LSN=102</span><br><span class="line">4.LOGBWR日志写线程,会将dp_01数据页的变化+LSN+TXID存储到redobuffer</span><br><span class="line">5. 执行commit时,LGWR日志写线程会将redobuffer信息写入redolog日志文件中,基于WAL原则,</span><br><span class="line">在日志完全写入磁盘后,commit命令才执行成功,(会将此日志打上commit标记)</span><br><span class="line">6.假如此时宕机,内存脏页没有来得及写入磁盘,内存数据全部丢失</span><br><span class="line">7.MySQL再次重启时,必须要redolog和磁盘数据页的LSN是一致的.但是,此时dp_01,TXID=tx_01磁盘是LSN=101,dp_01,TXID=tx_01,redolog中LSN=102</span><br><span class="line">MySQL此时无法正常启动,MySQL触发CSR.在内存追平LSN号,触发ckpt,将内存数据页更新到磁盘,从而保证磁盘数据页和redolog LSN一值.这时MySQL正长启动</span><br><span class="line">以上的工作过程,我们把它称之为基于REDO的&quot;前滚操作&quot;</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="undo回滚日志"><a href="#undo回滚日志" class="headerlink" title="undo回滚日志"></a><code>undo</code>回滚日志</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># undo是什么</span><br><span class="line">undo,顾名思义“回滚日志”</span><br><span class="line"></span><br><span class="line"># 作用是什么</span><br><span class="line">在事务ACID过程中，实现的是“A” 原子性的作用</span><br><span class="line">另外CI也依赖于Undo</span><br><span class="line">在rolback时,将数据恢复到修改之前的状态</span><br><span class="line">在CSR实现的是,将redo当中记录的未提交的时候进行回滚.</span><br><span class="line">undo提供快照技术,保存事务修改之前的数据状态.保证了MVCC,隔离性,mysqldump的热备</span><br><span class="line"></span><br><span class="line"># 概念性的东西</span><br><span class="line">redo怎么应用的</span><br><span class="line">undo怎么应用的</span><br><span class="line">CSR(自动故障恢复)过程</span><br><span class="line">LSN :日志序列号</span><br><span class="line">TXID:事务ID</span><br><span class="line">CKPT(Checkpoint)</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 锁介绍</span><br><span class="line">锁顾名思义就是锁定的意思，提供的是隔离的方面的功能，需要配合 undo+隔离级别一起来实现</span><br><span class="line"></span><br><span class="line"># InnoDB锁级别</span><br><span class="line">行级锁，修改这一行就会持有这行的锁，默认情况是排他锁(悲观锁)</span><br><span class="line">悲观锁:行级锁定(行锁)</span><br><span class="line">谁先操作某个数据行,就会持有&lt;这行&gt;的(X)锁.</span><br><span class="line">乐观锁: 没有锁</span><br><span class="line"></span><br><span class="line"># 死锁</span><br><span class="line">  # mysql窗口一</span><br><span class="line">  begin;</span><br><span class="line">  update city set countrycode=&#x27;CHN&#x27; where id=1;</span><br><span class="line">  update city set countrycode=&#x27;CHN&#x27; where id=2;</span><br><span class="line">  # mysql窗口二</span><br><span class="line">  begin;</span><br><span class="line">  update city set countrycode=&#x27;USA&#x27; where id=2;</span><br><span class="line">  update city set countrycode=&#x27;USA&#x27; where id=1;</span><br><span class="line">	</span><br><span class="line">	# 业务逻辑有问题，开发中不能出现</span><br><span class="line">	# ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction</span><br><span class="line"></span><br><span class="line"># 锁的作用</span><br><span class="line">在事务ACID过程中，“锁”和“隔离级别”一起来实现“I”隔离性和&quot;C&quot; 一致性 (redo也有参与)</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">作用: 影响到数据的读取</span><br><span class="line">默认的级别是 RR模式</span><br><span class="line">transaction_isolation   隔离级别(参数)</span><br><span class="line">  # 查看隔离级别</span><br><span class="line">  select @@tx_isolation;</span><br><span class="line">  show variables like &#x27;%iso%&#x27;;</span><br><span class="line">  </span><br><span class="line">  # RR模式</span><br><span class="line">    # 创建表环境</span><br><span class="line">    use world;</span><br><span class="line">    begin;</span><br><span class="line">    create table t1 (id int not null , ticker int null);</span><br><span class="line">    desc t1;</span><br><span class="line">    insert into t1 values (1,1);</span><br><span class="line">    commit;</span><br><span class="line">    select * from t1;</span><br><span class="line"></span><br><span class="line">    # mysql窗口一</span><br><span class="line">    use world;</span><br><span class="line">    begin;</span><br><span class="line">    select * from t1;  # 这一步窗口二也开始查询</span><br><span class="line">    update t1 set ticker=0 where id=1;</span><br><span class="line">    select * from t1;</span><br><span class="line">    commit;</span><br><span class="line"></span><br><span class="line">    # mysql窗口二</span><br><span class="line">    use world;</span><br><span class="line">    select * from t1;  # 和窗口一的第一次查询时间同步</span><br><span class="line">    select * from t1;  # 当窗口一已经提交了事务之后再查询发现并没有改变</span><br><span class="line">    # 这个现象就是可重复读现象，如果想在窗口二看到改变后的情况，先commit一下</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 修改隔离级别</span><br><span class="line">    set global transaction_isolation=&#x27;read-committed&#x27;;  # 此时是RC模式  需要退出窗口后重新进入生效</span><br><span class="line">    # 测试，设置之后重新打开mysql窗口</span><br><span class="line"></span><br><span class="line">    # mysql窗口一</span><br><span class="line">    select @@tx_isolation;  # 查看隔离级别</span><br><span class="line">    use world;</span><br><span class="line">    begin;</span><br><span class="line">    select * from t1;  # # 这一步窗口二也开始查询</span><br><span class="line">    update t1 set ticker=1 where id=1;</span><br><span class="line">    select * from t1;</span><br><span class="line">    commit;</span><br><span class="line">    select * from t1;</span><br><span class="line"></span><br><span class="line">    # mysql窗口二</span><br><span class="line">    selet @@tx_isolation;  # 查看隔离级别</span><br><span class="line">    use world;</span><br><span class="line">    select * from t1;  # 和窗口一的第一次查询时间同步</span><br><span class="line">    select * from t1;  # 当窗口一提交了事务之后再查询发现此时已经改变了</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">隔离级别负责的是,MVCC,读一致性问题</span><br><span class="line">RU  : 读未提交,可脏读,一般部议叙出现</span><br><span class="line">RC  : 读已提交,可能出现幻读,可以防止脏读.</span><br><span class="line">RR  : 解决了不可重复读,功能是防止&quot;幻读&quot;现象 ,利用的是undo的快照技术+GAP(间隙锁)+NextLock(下键锁)</span><br><span class="line">SR  : 可串行化,可以防止死锁,但是并发事务性能较差</span><br><span class="line"></span><br><span class="line">幻读现象是由MVCC+GAP+Next-Lock解决</span><br><span class="line"></span><br><span class="line">补充: 在RC级别下,可以减轻GAP+NextLock锁的问题,但是会出现幻读现象,一般在为了读一致性会在正常select后添加for update语句.但是,请记住执行完一定要commit 否则容易出现所等待比较严重.</span><br><span class="line">例如:</span><br><span class="line">[world]&gt;select * from city where id=999 for update;</span><br><span class="line">[world]&gt;commit;</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="幻读"><a href="#幻读" class="headerlink" title="幻读"></a>幻读</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"># 环境准备</span><br><span class="line">select @@tx_isolation;  # RC模式</span><br><span class="line">select @@autocommit;  # 0</span><br><span class="line"></span><br><span class="line"># 建库建表</span><br><span class="line">create database test charset utf8mb4;</span><br><span class="line">use test;</span><br><span class="line">create table t1(id int not null primary key auto_increment, num int not null);</span><br><span class="line">insert into t1(num) values (1),(3),(5);</span><br><span class="line">commit;</span><br><span class="line"></span><br><span class="line"># mysql 窗口一</span><br><span class="line">begin;</span><br><span class="line">update t1 set num=10 where num&gt;=3;</span><br><span class="line">commit;</span><br><span class="line"># 上面的更新语句和窗口二的插入语句两个事务同时进行</span><br><span class="line"></span><br><span class="line">select * from t1;  # 此时发现会多一条 num 为 7 的列，这种现象就是幻读</span><br><span class="line"></span><br><span class="line"># mysql 窗口二</span><br><span class="line">begin;</span><br><span class="line">insert into t1(num) values(7);</span><br><span class="line">commit;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># RR 模式下</span><br><span class="line">    # 环境准备</span><br><span class="line">    set global transaction_isolation=&#x27;repeatable-read&#x27;;  # 需要退出窗口后重新进入</span><br><span class="line">    select @@tx_isolation;  # RR级别</span><br><span class="line">    select @@autocommit;  # 0</span><br><span class="line"></span><br><span class="line">    # 创建表</span><br><span class="line">    use test;</span><br><span class="line">    create table t2(id int not null primary key auto_increment, num int not null);</span><br><span class="line">    insert into t2(num) values (1),(3),(5);</span><br><span class="line">    alter table t2 add index idx(num); </span><br><span class="line">    commit;</span><br><span class="line"></span><br><span class="line">		# mysql 窗口一</span><br><span class="line">    begin;</span><br><span class="line">    update t2 set num=10 where num&gt;=3;  # 更新表之后开始窗口二</span><br><span class="line"></span><br><span class="line">    # mysql 窗口二</span><br><span class="line">    begin;</span><br><span class="line">    insert into t1(num) values(7);  </span><br><span class="line">    # 当窗口一更新之后此时再插入发现夯住 </span><br><span class="line">    # ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction</span><br><span class="line">    # 防止幻读</span><br><span class="line">    # 辅助索引+Next-Lock</span><br></pre></td></tr></table></figure>
+<p>幻读<br><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/yMjqBO.png" alt="yMjqBO"></p>
+<p>不可幻读<br><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/GhQN3e.png" alt="GhQN3e"></p>
+</li>
+</ul>
+<h4 id="InnoDB核心参数"><a href="#InnoDB核心参数" class="headerlink" title="InnoDB核心参数"></a>InnoDB核心参数</h4><h5 id="双一标准之一-innodb-flush-log-at-trx-commit"><a href="#双一标准之一-innodb-flush-log-at-trx-commit" class="headerlink" title="双一标准之一(innodb_flush_log_at_trx_commit)"></a>双一标准之一(<code>innodb_flush_log_at_trx_commit</code>)</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 参数</span><br><span class="line">innodb_flush_log_at_trx_commit=1</span><br><span class="line"></span><br><span class="line"># 作用</span><br><span class="line">控制了redo buffer 刷写策略，是一个安全参数，是一个5.6版本的以上默认的参数</span><br><span class="line">redo buffer ---&gt; ib_logfileo~N</span><br><span class="line"></span><br><span class="line"># 查看参数</span><br><span class="line">select @@innodb_flush_log_at_trx_commit;</span><br><span class="line"></span><br><span class="line"># 参数说明</span><br><span class="line">1: 每次事务提交，都会立即刷下redo到磁盘(redo buffer --每事务--&gt;os buffer --每事务--&gt; 磁盘)</span><br><span class="line">0: 表示当事务提交时，不立即做日志写入操作(redo buffer --每秒--&gt;os buffer --每秒--&gt; 磁盘)</span><br><span class="line">2: 每次事务提交时写入文件缓存(redo buffer --每事务--&gt;os buffer --每秒--&gt; 磁盘)</span><br></pre></td></tr></table></figure>
+
+<h5 id="Innodb-flush-method"><a href="#Innodb-flush-method" class="headerlink" title="Innodb_flush_method"></a><code>Innodb_flush_method</code></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 作用 </span><br><span class="line">	控制了redo buffer 和 data buffer 刷写磁盘的时候是否经过文件系统缓存</span><br><span class="line"> </span><br><span class="line"># 查看</span><br><span class="line">  show variables like &#x27;%innodb_flush%&#x27;;</span><br><span class="line"> </span><br><span class="line"># 参数值说明</span><br><span class="line">  O_DIRECT  :数据缓冲区写磁盘,不走OS buffer </span><br><span class="line">  fsync     :日志和数据缓冲区写磁盘,都走OS buffer </span><br><span class="line">  O_DSYNC   :日志缓冲区写磁盘,不走 OS buffer</span><br><span class="line"> </span><br><span class="line"># 使用建议 </span><br><span class="line">  最高安全模式</span><br><span class="line">  innodb_flush_log_at_trx_commit=1</span><br><span class="line">  innodb_flush_method=O_DIRECT</span><br><span class="line">  最高性能:</span><br><span class="line">  innodb_flush_log_at_trx_commit=0</span><br><span class="line">  innodb_flush_method=fsync</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/TsmCEP.jpg" alt="TsmCEP"></p>
+<h5 id="redo日志参数设置"><a href="#redo日志参数设置" class="headerlink" title="redo日志参数设置"></a><code>redo</code>日志参数设置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">innodb_log_buffer_size=16777216  # 调大并发的数量会越多，128M起，结合业务调整，这边单位是字节</span><br><span class="line">innodb_log_file_size=50331648  # 一般是log_buffer 1-2倍</span><br><span class="line">innodb_log_files_in_group = 3  # 3-4组</span><br></pre></td></tr></table></figure>
+
+<h5 id="innodb-buffer-pool-size"><a href="#innodb-buffer-pool-size" class="headerlink" title="innodb_buffer_pool_size"></a><code>innodb_buffer_pool_size</code></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 一般调整为物理内存的50%-80%(系统中只有一个mysql实例)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/5c917bb6.html" rel="prev" title="MySQL索引管理">
+                  <i class="fa fa-chevron-left"></i> MySQL索引管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/2386d3bc.html" rel="next" title="MySQL日志管理">
+                  MySQL日志管理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

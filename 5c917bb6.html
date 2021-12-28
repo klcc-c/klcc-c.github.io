@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="索引的作用1提供了类似书中目录的作用，目的是为了优化查询">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL索引管理">
+<meta property="og:url" content="https://klcc.cc/5c917bb6.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="索引的作用1提供了类似书中目录的作用，目的是为了优化查询">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/yMfE8O.jpg">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/b+tree.JPG">
+<meta property="article:published_time" content="2021-12-28T07:23:28.691Z">
+<meta property="article:modified_time" content="2021-12-28T08:04:13.550Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/yMfE8O.jpg">
+
+
+<link rel="canonical" href="https://klcc.cc/5c917bb6.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/5c917bb6.html","path":"5c917bb6.html","title":"MySQL索引管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL索引管理 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">49</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">索引的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">索引的种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B%E6%A0%91%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">B树算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%85%E5%8A%A9%E7%B4%A2%E5%BC%95%E5%92%8C%E8%81%9A%E9%9B%86%E7%B4%A2%E5%BC%95"><span class="nav-number">4.</span> <span class="nav-text">辅助索引和聚集索引</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BE%85%E5%8A%A9%E7%B4%A2%E5%BC%95-S-%E6%80%8E%E4%B9%88%E6%9E%84%E5%BB%BAB%E6%A0%91%E7%BB%93%E6%9E%84"><span class="nav-number">4.0.1.</span> <span class="nav-text">辅助索引(S)怎么构建B树结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%81%9A%E9%9B%86%E7%B4%A2%E5%BC%95-C-%E6%80%8E%E4%B9%88%E6%9E%84%E5%BB%BAB%E6%A0%91%E7%BB%93%E6%9E%84"><span class="nav-number">4.0.2.</span> <span class="nav-text">聚集索引(C)怎么构建B树结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%81%9A%E9%9B%86%E7%B4%A2%E5%BC%95%E5%92%8C%E8%BE%85%E5%8A%A9%E7%B4%A2%E5%BC%95%E6%9E%84%E6%88%90%E5%8C%BA%E5%88%AB%E6%80%BB%E7%BB%93"><span class="nav-number">4.0.3.</span> <span class="nav-text">聚集索引和辅助索引构成区别总结</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BE%85%E5%8A%A9%E7%B4%A2%E5%BC%95%E7%BB%86%E5%88%86"><span class="nav-number">4.0.4.</span> <span class="nav-text">辅助索引细分</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BD%B1%E5%93%8D%E7%B4%A2%E5%BC%95%E6%A0%91%E9%AB%98%E5%BA%A6"><span class="nav-number">4.0.5.</span> <span class="nav-text">影响索引树高度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E6%B5%8B"><span class="nav-number">5.</span> <span class="nav-text">压测</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%A7%E7%94%9F%E6%95%B0%E6%8D%AE"><span class="nav-number">5.0.1.</span> <span class="nav-text">产生数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%E8%AF%AD%E5%8F%A5"><span class="nav-number">5.0.2.</span> <span class="nav-text">压力测试语句</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%AE%A1%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">索引管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84%E8%AF%B4%E6%98%8E"><span class="nav-number">6.0.1.</span> <span class="nav-text">表结构说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">6.0.2.</span> <span class="nav-text">索引的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BE%85%E5%8A%A9%E7%B4%A2%E5%BC%95"><span class="nav-number">6.0.2.1.</span> <span class="nav-text">辅助索引</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95"><span class="nav-number">6.0.2.2.</span> <span class="nav-text">唯一索引</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%89%8D%E7%BC%80%E7%B4%A2%E5%BC%95"><span class="nav-number">6.0.2.3.</span> <span class="nav-text">前缀索引</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95"><span class="nav-number">6.0.2.4.</span> <span class="nav-text">联合索引</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95"><span class="nav-number">6.0.2.5.</span> <span class="nav-text">查看删除索引</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E5%BA%94%E7%94%A8%E8%A7%84%E8%8C%83"><span class="nav-number">7.</span> <span class="nav-text">索引应用规范</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8E%9F%E5%88%99-DBA%E8%BF%90%E7%BB%B4%E8%A7%84%E8%8C%83"><span class="nav-number">7.0.1.</span> <span class="nav-text">建立索引的原则(DBA运维规范)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8D%E8%B5%B0%E7%B4%A2%E5%BC%95%E7%9A%84%E6%83%85%E5%86%B5-%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="nav-number">7.0.2.</span> <span class="nav-text">不走索引的情况(开发规范)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92"><span class="nav-number">8.</span> <span class="nav-text">执行计划</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">8.0.1.</span> <span class="nav-text">作用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92%E8%8E%B7%E5%8F%96"><span class="nav-number">8.0.1.1.</span> <span class="nav-text">执行计划获取</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%BA%A7%E5%88%ABtype%E8%AF%A6%E8%A7%A3"><span class="nav-number">8.0.1.2.</span> <span class="nav-text">应用级别type详解</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Extra%E9%A2%9D%E5%A4%96%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">8.0.1.3.</span> <span class="nav-text">Extra额外的信息</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">8.0.1.4.</span> <span class="nav-text">面试题</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/5c917bb6.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/avatar.gif">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL索引管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-12-28 15:23:28 / 修改时间：16:04:13" itemprop="dateCreated datePublished" datetime="2021-12-28T15:23:28+08:00">2021-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="索引的作用"><a href="#索引的作用" class="headerlink" title="索引的作用"></a>索引的作用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提供了类似书中目录的作用，目的是为了优化查询</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="索引的种类"><a href="#索引的种类" class="headerlink" title="索引的种类"></a>索引的种类</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">B树索引  # 默认使用的索引类型</span><br><span class="line">Hash索引</span><br><span class="line">R树索引</span><br><span class="line">Full text</span><br><span class="line">GIS</span><br></pre></td></tr></table></figure>
+
+<h3 id="B树算法"><a href="#B树算法" class="headerlink" title="B树算法"></a>B树算法</h3><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/yMfE8O.jpg" alt="yMfE8O"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/b+tree.JPG" alt="b+tree"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">B-tree</span><br><span class="line">B+Tree  # 在范围查询方面提供了更好的性能(&gt; &lt; &gt;= &lt;= like)  页子节点有双向指针</span><br><span class="line">B*Tree  # 枝节点有双向指针</span><br></pre></td></tr></table></figure>
+
+<h3 id="辅助索引和聚集索引"><a href="#辅助索引和聚集索引" class="headerlink" title="辅助索引和聚集索引"></a>辅助索引和聚集索引</h3><h5 id="辅助索引-S-怎么构建B树结构"><a href="#辅助索引-S-怎么构建B树结构" class="headerlink" title="辅助索引(S)怎么构建B树结构"></a>辅助索引(S)怎么构建B树结构</h5>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. 辅助索引是基于表的列进行生成的</span><br><span class="line">2. 取出索引列的所有值(取出所有键值)</span><br><span class="line">3. 进行所有键值的排序</span><br><span class="line">4. 将所有的键值按顺序落到BTree索引的叶子节点上(16K)</span><br><span class="line">5. 然后生成此索引键值所对应得后端数据页的指针</span><br><span class="line">6. 进而生成枝节点和根节点</span><br><span class="line">7. 叶子节点除了存储键值之外，还存储了相邻叶子节点的指针，另外还会保存原表数据的指针</span><br><span class="line"></span><br><span class="line">id  name  age  gender</span><br><span class="line">select  *  from  t1 where id=10;</span><br><span class="line">问题: 基于索引键做where查询,对于id列是顺序IO,但是对于其他列的查询,可能是随机IO.</span><br></pre></td></tr></table></figure>
+<h5 id="聚集索引-C-怎么构建B树结构"><a href="#聚集索引-C-怎么构建B树结构" class="headerlink" title="聚集索引(C)怎么构建B树结构"></a>聚集索引(C)怎么构建B树结构</h5>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 建表时有主键列</span><br><span class="line">2. 表中进行数据存储时，会按照ID列的顺序，有序的存储一行一行的数据到数据页上(聚集索引组织表)</span><br><span class="line">3. 表中的数据页被作为聚集索引的叶子节点</span><br><span class="line">4. 把叶子节点的主键值生成上层枝节点和根节点</span><br></pre></td></tr></table></figure>
+<h5 id="聚集索引和辅助索引构成区别总结"><a href="#聚集索引和辅助索引构成区别总结" class="headerlink" title="聚集索引和辅助索引构成区别总结"></a>聚集索引和辅助索引构成区别总结</h5>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 聚集索引只能有一个，非空唯一，一般是主键</span><br><span class="line">2. 辅助索引可以有多个，是配合聚集索引使用</span><br><span class="line">3. 聚集索引叶子节点，就是磁盘的数据行存储的数据页</span><br><span class="line">4. MySQL是根据聚集索引，组织存储数据，数据存储时就是安装聚集索引的顺序进行存储数据</span><br><span class="line">5. 辅助索引只会提取索引键值，进行自动排序生成B树结构</span><br></pre></td></tr></table></figure>
+<h5 id="辅助索引细分"><a href="#辅助索引细分" class="headerlink" title="辅助索引细分"></a>辅助索引细分</h5>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">单列的辅助索引</span><br><span class="line">联合多列辅助索引(覆盖索引)</span><br><span class="line">唯一索引</span><br></pre></td></tr></table></figure>
+<h5 id="影响索引树高度"><a href="#影响索引树高度" class="headerlink" title="影响索引树高度"></a>影响索引树高度</h5>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">数据行多  # 使用分表</span><br><span class="line">索引列字符长度  # 前缀索引</span><br><span class="line">数据类型 char varchar  # 优化表设计</span><br><span class="line">enum 优化索引高度  # 尽量使用</span><br></pre></td></tr></table></figure>
+
+<h3 id="压测"><a href="#压测" class="headerlink" title="压测"></a>压测</h3><h5 id="产生数据"><a href="#产生数据" class="headerlink" title="产生数据"></a>产生数据</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"># 方式一 使用sql语句产生数据</span><br><span class="line">    create database d100w charset utf8mb4 collate utf8mb4_bin;</span><br><span class="line">    use d100w;</span><br><span class="line">    create table t100w (id int,num int,</span><br><span class="line">    k1 char(2),</span><br><span class="line">    k2 char(4),</span><br><span class="line">    dt timestamp) charset utf8mb4 collate utf8mb4_bin;</span><br><span class="line">    delimiter //</span><br><span class="line">    create  procedure rand_data(in num int)</span><br><span class="line">    begin</span><br><span class="line">    declare str char(62) default &#x27;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&#x27;;</span><br><span class="line">    declare str2 char(2);</span><br><span class="line">    declare str4 char(4);</span><br><span class="line">    declare i int default 0;</span><br><span class="line">    while i&lt;num do</span><br><span class="line">    set str2=concat(substring(str,1+floor(rand()*61),1),substring(str,1+floor(rand()*61),1));</span><br><span class="line">    set str4=concat(substring(str,1+floor(rand()*61),2),substring(str,1+floor(rand()*61),2));</span><br><span class="line">    set i=i+1;</span><br><span class="line">    insert into t100w values (i,floor(rand()*num),str2,str4,now());</span><br><span class="line">    end while;</span><br><span class="line">    end;</span><br><span class="line">    //</span><br><span class="line">    delimiter ;</span><br><span class="line"></span><br><span class="line">    # 插入100w条数据：</span><br><span class="line">    call rand_data(1000000);</span><br><span class="line">    commit;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 方式二 直接导入测试表(可以会出现链接失效的情况)</span><br><span class="line">    cd /tmp</span><br><span class="line">    wget https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/sql/100w.sql.zip </span><br><span class="line">    unzip 100w.sql.zip</span><br><span class="line">    mysql -uroot -p</span><br><span class="line"></span><br><span class="line">    create database test charset utf8mb4 collate utf8mb4_bin;</span><br><span class="line">    use test;</span><br><span class="line">    source /tmp/100w.sql</span><br></pre></td></tr></table></figure>
+<h5 id="压力测试语句"><a href="#压力测试语句" class="headerlink" title="压力测试语句"></a>压力测试语句</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 没有创建索引之前</span><br><span class="line">    mysqlslap --defaults-file=/etc/my.cnf \</span><br><span class="line">    --concurrency=100 --iterations=1 --create-schema=&#x27;test&#x27; \</span><br><span class="line">    --query=&quot;select * from test.t100w where k2=&#x27;BC56&#x27;&quot; engine=innodb \</span><br><span class="line">    --number-of-queries=2000 -uroot -p1 -verbose</span><br><span class="line">    # 4c8g 运行了400多秒</span><br><span class="line"></span><br><span class="line"># 创建索引之后</span><br><span class="line">    # sql语句</span><br><span class="line">    alter table t100w add index idx_k2(k2);</span><br><span class="line">    </span><br><span class="line">    # 命令行</span><br><span class="line">    mysqlslap --defaults-file=/etc/my.cnf \</span><br><span class="line">    --concurrency=100 --iterations=1 --create-schema=&#x27;test&#x27; \</span><br><span class="line">    --query=&quot;select * from test.t100w where k2=&#x27;BC56&#x27;&quot; engine=innodb \</span><br><span class="line">    --number-of-queries=2000 -uroot -p1 -verbose</span><br><span class="line">    # 4c8g 此时只需要1秒不到</span><br></pre></td></tr></table></figure>
+
+<h3 id="索引管理"><a href="#索引管理" class="headerlink" title="索引管理"></a>索引管理</h3><h5 id="表结构说明"><a href="#表结构说明" class="headerlink" title="表结构说明"></a>表结构说明</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">desc world.city;</span><br><span class="line">+-------------+----------+------+-----+---------+----------------+</span><br><span class="line">| Field       | Type     | Null | Key | Default | Extra          |</span><br><span class="line">+-------------+----------+------+-----+---------+----------------+</span><br><span class="line">| ID          | int(11)  | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| Name        | char(35) | NO   |     |         |                |</span><br><span class="line">| CountryCode | char(3)  | NO   | MUL |         |                |</span><br><span class="line">| District    | char(20) | NO   |     |         |                |</span><br><span class="line">| Population  | int(11)  | NO   |     | 0       |                |</span><br><span class="line">+-------------+----------+------+-----+---------+----------------+</span><br><span class="line"></span><br><span class="line">Field :列名字</span><br><span class="line">key  :有没有索引,索引类型</span><br><span class="line">PRI: 主键索引</span><br><span class="line">UNI: 唯一索引</span><br><span class="line">MUL: 辅助索引(单列,联和,前缀)</span><br></pre></td></tr></table></figure>
+
+<h5 id="索引的创建"><a href="#索引的创建" class="headerlink" title="索引的创建"></a>索引的创建</h5><h6 id="辅助索引"><a href="#辅助索引" class="headerlink" title="辅助索引"></a>辅助索引</h6>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 创建索引的时候会短暂的锁表，业务不忙的时候操作</span><br><span class="line">alter table t100w add index idx_k2(k2);</span><br><span class="line"></span><br><span class="line"># 查看索引情况</span><br><span class="line">    use test;</span><br><span class="line">    desc t100w;</span><br><span class="line">    # 此时 k2 这一行中的 Key 值为 MUL, 为辅助索引 </span><br><span class="line"></span><br><span class="line">    show index from t100w\G</span><br></pre></td></tr></table></figure>
+
+<h6 id="唯一索引"><a href="#唯一索引" class="headerlink" title="唯一索引"></a>唯一索引</h6>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 建立唯一索的列不能有重复值</span><br><span class="line"></span><br><span class="line"># 查看k1列不重复情况,如果有重复值就不能创建唯一索引</span><br><span class="line">select count(distinct k1) from t100w;</span><br><span class="line">select k1,count(k1) from t100w group by k1 having count(k1)  &gt;1;</span><br><span class="line"></span><br><span class="line"># 当有重复值的时候创建唯一索引时会报错</span><br><span class="line">alter table t100w add unique index idx_k1(k1);</span><br></pre></td></tr></table></figure>
+
+<h6 id="前缀索引"><a href="#前缀索引" class="headerlink" title="前缀索引"></a>前缀索引</h6>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 只能用于字符串类型的列上</span><br><span class="line">desc world.city;</span><br><span class="line"></span><br><span class="line">alter table world.city add index indx_name(name(5));  # 用name列的前5个字符</span><br><span class="line"></span><br><span class="line">desc world.city;</span><br></pre></td></tr></table></figure>
+
+<h6 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h6>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table world.city add index idx_co_po(countrycode,population);</span><br></pre></td></tr></table></figure>
+
+<h6 id="查看删除索引"><a href="#查看删除索引" class="headerlink" title="查看删除索引"></a>查看删除索引</h6>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 查看索引</span><br><span class="line">show index from world.city;</span><br><span class="line"></span><br><span class="line"># 删除索引</span><br><span class="line">alter table world.city drop index idx_co_po;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="索引应用规范"><a href="#索引应用规范" class="headerlink" title="索引应用规范"></a>索引应用规范</h3><h5 id="建立索引的原则-DBA运维规范"><a href="#建立索引的原则-DBA运维规范" class="headerlink" title="建立索引的原则(DBA运维规范)"></a>建立索引的原则(DBA运维规范)</h5><blockquote>
+<p>为了使索引的使用效率更高，在创建索引时，必须考虑在哪些字段上创建索引和创建什么类型的索引。那么索引设计原则又是怎样的<br>建表时一定要有主键，一般是个无关列</p>
+</blockquote>
+<ul>
+<li><p>选择唯一索引</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">唯一性索引的值是唯一的，可以更快速的通过该索引来确定某条记录。</span><br><span class="line">例如，学生表中学号是具有唯一性的字段。为该字段建立唯一性索引可以很快的确定某个学生的信息。</span><br><span class="line">如果使用姓名的话，可能存在同名现象，从而降低查询速度。</span><br><span class="line"></span><br><span class="line">优化方案:</span><br><span class="line">(1) 如果非得使用重复值较多的列作为查询条件(例如:男女),可以将表逻辑拆分</span><br><span class="line">(2) 可以将此列和其他的查询类,做联和索引</span><br><span class="line">select count(*) from world.city;</span><br><span class="line">select count(distinct countrycode) from world.city;</span><br><span class="line">select count(distinct countrycode,population ) from world.city;</span><br></pre></td></tr></table></figure></li>
+<li><p>经常作为where条件列，<code>order by</code>、<code>group by</code>、<code>join on</code>、<code>distinct</code>的条件</p>
+</li>
+<li><p>列值长度较长的索引，建议使用前缀索引</p>
+</li>
+<li><p>降低索引条目，一方面不要创建没用索引，不常使用的索引清理，<code>percon-toolkit</code>有工具可以分析索引是否有用</p>
+</li>
+<li><p>大表建索引时，要在业务不繁忙期间操作</p>
+</li>
+<li><p>尽量少在经常更新值的列上建索引</p>
+</li>
+</ul>
+<h5 id="不走索引的情况-开发规范"><a href="#不走索引的情况-开发规范" class="headerlink" title="不走索引的情况(开发规范)"></a>不走索引的情况(开发规范)</h5><ul>
+<li>没有查询条件，或者查询条件没有建立索引</li>
+<li>查询结果集是原表中的大部分数据，应该是25％以上</li>
+<li>索引本身失效，统计数据不真实</li>
+<li>查询条件使用函数在索引列上，或者对索引列进行运算，运算包括<code>(+，-，*，/，! </code>)</li>
+<li>隐式转换导致索引失效.这一点应当引起重视.也是开发中经常会犯的错误</li>
+<li><code>&lt;&gt;</code> ，<code>not in</code> 不走索引（辅助索引）</li>
+<li><code>like &quot;%_&quot;</code> 百分号在最前面不走</li>
+</ul>
+<h3 id="执行计划"><a href="#执行计划" class="headerlink" title="执行计划"></a>执行计划</h3><h5 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h5>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 上线新的查询语句之前，进行提前预估语句的性能</span><br><span class="line">2. 在出现性能问题时，找到合理的解决思路</span><br></pre></td></tr></table></figure>
+
+<h6 id="执行计划获取"><a href="#执行计划获取" class="headerlink" title="执行计划获取"></a>执行计划获取</h6>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># 一般是针对 select 语句获取执行计划</span><br><span class="line"></span><br><span class="line"># 查看语句的执行计划</span><br><span class="line">desc select * from test.t100w where k2=&#x27;BC56&#x27;;</span><br><span class="line">explain select * from test.t100w where k2=&#x27;BC56&#x27;\G</span><br><span class="line"></span><br><span class="line"># 结果</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">           id: 1</span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        table: t100w</span><br><span class="line">   partitions: NULL</span><br><span class="line">         type: ref</span><br><span class="line">possible_keys: idx_k2</span><br><span class="line">          key: idx_k2</span><br><span class="line">      key_len: 17</span><br><span class="line">          ref: const</span><br><span class="line">         rows: 406</span><br><span class="line">     filtered: 100.00</span><br><span class="line">        Extra: NULL</span><br><span class="line">1 row in set, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line"># 参数说明</span><br><span class="line">table: t100w  # 表名,多表查询的时候关注</span><br><span class="line">type: ref  # 索引的应用级别     </span><br><span class="line">possible_keys: idx_k2  # 可能会使用到的索引</span><br><span class="line">key: idx_k2  # 实际上使用的索引</span><br><span class="line">key_len: 17  # 联合索引覆盖长度</span><br><span class="line">rows: 406  # 查询的行数(越少越好)</span><br><span class="line">Extra: NULL  # 额外的信息</span><br></pre></td></tr></table></figure>
+
+<h6 id="应用级别type详解"><a href="#应用级别type详解" class="headerlink" title="应用级别type详解"></a>应用级别<code>type</code>详解</h6>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># type的级别如下,从上到下性能越好,至少优化到range以上</span><br><span class="line">1. ALL: 全表扫描,不走索引</span><br><span class="line">    desc select * from t100w;  # 没有条件能走索引的</span><br><span class="line">     </span><br><span class="line">    没建立索引  </span><br><span class="line">    建立索引不走</span><br><span class="line">    desc select * from t100w where k1=&#x27;aa&#x27;;  # 上面例子中创建的索引时针对k2列的,k1列并没有创建索引</span><br><span class="line">    desc select * from t100w where k2!=&#x27;aaaa&#x27;;  # 不等于的条件也是不走索引的</span><br><span class="line">    desc select * from t100w where k2 like &#x27;%xt%&#x27;;  # 模糊查询时当%在前面时不走索引  或者not in也不走索引</span><br><span class="line"></span><br><span class="line">2. index: 全索引扫描,将整个索引树全部扫描一遍才能达到效果</span><br><span class="line">    desc select k2 from t100w;</span><br><span class="line"></span><br><span class="line">3. range: 索引范围扫描,扫描索引树的一部分</span><br><span class="line">    辅助索引 &gt; &lt; &gt;= &lt;= like in or  # 这些语句会走范围扫描,尽量避免 in or</span><br><span class="line">    主键 !=</span><br><span class="line">    desc select * from world.city where id &gt; 1000;</span><br><span class="line">    desc select * from world.city where id != 1000;</span><br><span class="line">    desc select * from world.city where countrycode like &#x27;C%&#x27;;</span><br><span class="line">		</span><br><span class="line">    desc select * from world.city where countrycode in (&#x27;CHN&#x27;,&#x27;USA&#x27;);  # 可以改写为下面的语句</span><br><span class="line">		</span><br><span class="line">    desc </span><br><span class="line">    select * from world.city where countrycode=&#x27;CHN&#x27; </span><br><span class="line">    union all </span><br><span class="line">    select * from world.city where countrycode=&#x27;USA&#x27;;</span><br><span class="line">    # 此时可以看到type级别为ref</span><br><span class="line">	</span><br><span class="line">4. ref: 辅助索引等值查询</span><br><span class="line">    desc select * from world.city where countrycode=&#x27;CHN&#x27;;</span><br><span class="line"></span><br><span class="line">5. eq_ref: 在多表连接查询时 on 的条件列时唯一索引或主键</span><br><span class="line">    desc </span><br><span class="line">    select a.name,b.name,b.surfacearea </span><br><span class="line">    from world.city as a </span><br><span class="line">    join world.country as b </span><br><span class="line">    on a.countrycode=b.code </span><br><span class="line">    where a.population &lt; 100;</span><br><span class="line"></span><br><span class="line">6. const,system: 主键或唯一键等值查询</span><br><span class="line">    desc select * from world.city where id=10;</span><br><span class="line">    </span><br><span class="line">7. null: 查不到数据的时候</span><br></pre></td></tr></table></figure>
+
+<h6 id="Extra额外的信息"><a href="#Extra额外的信息" class="headerlink" title="Extra额外的信息"></a><code>Extra</code>额外的信息</h6><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 当出现 using filesort 时说明索引设计不合理, 使用了文件排序</span><br><span class="line">desc select * from world.city where countrycode=&#x27;CHN&#x27; order by population;</span><br><span class="line"></span><br><span class="line"># 没见索引之前</span><br><span class="line">desc select * from world.city where countrycode=&#x27;CHN&#x27; order by population limit 10;</span><br><span class="line"></span><br><span class="line"># 建立联合索引</span><br><span class="line">alter table world.city add index idx_co_po(countrycode,population);</span><br><span class="line">desc select * from world.city where countrycode=&#x27;CHN&#x27; order by population limit 10;</span><br><span class="line"></span><br><span class="line">结论: </span><br><span class="line">1.当我们看到执行计划extra位置出现filesort,说明由文件排序出现</span><br><span class="line">2.观察需要排序(ORDER BY,GROUP BY ,DISTINCT )的条件,有没有索引</span><br><span class="line">3. 根据子句的执行顺序,去创建联合索引</span><br></pre></td></tr></table></figure>
+</code></pre>
+<h6 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h6><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">explain(desc)使用场景</span><br><span class="line">题目意思:  我们公司业务慢,请你从数据库的角度分析原因</span><br><span class="line">1.mysql出现性能问题,我总结有两种情况:</span><br><span class="line">（1）应急性的慢：突然夯住</span><br><span class="line">      应急情况:数据库hang(卡了,资源耗尽)</span><br><span class="line">      处理过程:</span><br><span class="line">      1.show processlist;  获取到导致数据库hang的语句</span><br><span class="line">      2. explain 分析SQL的执行计划,有没有走索引,索引的类型情况</span><br><span class="line">      3. 建索引,改语句</span><br><span class="line">（2）一段时间慢(持续性的):</span><br><span class="line">      (1)记录慢日志slowlog,分析slowlog</span><br><span class="line">      (2)explain 分析SQL的执行计划,有没有走索引,索引的类型情况</span><br><span class="line">      (3)建索引,改语句</span><br></pre></td></tr></table></figure>
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/8da0cafb.html" rel="prev" title="MySQL基础应用">
+                  <i class="fa fa-chevron-left"></i> MySQL基础应用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/ff3d77ac.html" rel="next" title="MySQL存储引擎(InnoDB)">
+                  MySQL存储引擎(InnoDB) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
