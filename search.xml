@@ -13,9 +13,9 @@
       </tags>
   </entry>
   <entry>
-    <title>MySQL数据库从入门到放弃</title>
+    <title>MySQL从入门到放弃</title>
     <url>/klcc-c.github.io/77f70f41.html</url>
-    <content><![CDATA[<h4 id="MySQL目录"><a href="#MySQL目录" class="headerlink" title="MySQL目录"></a>MySQL目录</h4><span id="more"></span>
+    <content><![CDATA[<h4 id="MySQL基础"><a href="#MySQL基础" class="headerlink" title="MySQL基础"></a>MySQL基础</h4><span id="more"></span>
 <h5 id="二进制安装"><a href="#二进制安装" class="headerlink" title="二进制安装"></a><a href="https://klcc.cc/f88e38d3.html">二进制安装</a></h5><h5 id="登录及密码管理"><a href="#登录及密码管理" class="headerlink" title="登录及密码管理"></a><a href="https://klcc.cc/318aa70a.html">登录及密码管理</a></h5><h5 id="体系结构介绍"><a href="#体系结构介绍" class="headerlink" title="体系结构介绍"></a><a href="https://klcc.cc/3c4a0863.html">体系结构介绍</a></h5><h5 id="用户权限等基础管理"><a href="#用户权限等基础管理" class="headerlink" title="用户权限等基础管理"></a><a href="https://klcc.cc/d7227a45.html">用户权限等基础管理</a></h5><h5 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a><a href="https://klcc.cc/37f9f562.html">初始化配置</a></h5><h5 id="SQL基础应用"><a href="#SQL基础应用" class="headerlink" title="SQL基础应用"></a><a href="https://klcc.cc/8da0cafb.html">SQL基础应用</a></h5><h5 id="索引管理"><a href="#索引管理" class="headerlink" title="索引管理"></a><a href="https://klcc.cc/5c917bb6.html">索引管理</a></h5><h5 id="InnoDB存储引擎"><a href="#InnoDB存储引擎" class="headerlink" title="InnoDB存储引擎"></a><a href="https://klcc.cc/ff3d77ac">InnoDB存储引擎</a></h5><h5 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a><a href="https://klcc.cc/2386d3bc.html">日志管理</a></h5><h5 id="备份恢复与迁移"><a href="#备份恢复与迁移" class="headerlink" title="备份恢复与迁移"></a><a href="https://klcc.cc/2c2a11ca.html">备份恢复与迁移</a></h5><h5 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a><a href="https://klcc.cc/c813917a.html">主从复制</a></h5><h5 id="基本优化"><a href="#基本优化" class="headerlink" title="基本优化"></a><a href="https://klcc.cc/2c9a5c07.html">基本优化</a></h5>]]></content>
       <categories>
         <category>MySQL</category>
