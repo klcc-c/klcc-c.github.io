@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="虚拟专用网络VPN(全称：Virtual Private Network)虚拟专用网络，是依靠ISP和其他的NSP，在公共网络中建立专用的数据通信的网络技术，可以为企业之间或者个人与企业之间提供安全的数据传输隧道服务。在VPN中任意两点之间的链接并没有传统专网所需的端到端的物理链路，而是利用公共网络资源动态组成的，可以理解为通过私有的隧道技术在公共数据网络上模拟出来的和专网有同样功能的点到点的专线">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VPN搭建使用">
+<meta property="og:url" content="https://klcc.cc/7efc43b.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="虚拟专用网络VPN(全称：Virtual Private Network)虚拟专用网络，是依靠ISP和其他的NSP，在公共网络中建立专用的数据通信的网络技术，可以为企业之间或者个人与企业之间提供安全的数据传输隧道服务。在VPN中任意两点之间的链接并没有传统专网所需的端到端的物理链路，而是利用公共网络资源动态组成的，可以理解为通过私有的隧道技术在公共数据网络上模拟出来的和专网有同样功能的点到点的专线">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/dasdasdas.jpg">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211230150939829.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211230151130162.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211230151403052.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211230151730831.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211230151600943.png">
+<meta property="article:published_time" content="2021-12-30T07:37:52.000Z">
+<meta property="article:modified_time" content="2021-12-31T01:16:20.350Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/gengff/blogimage/raw/master/images/dasdasdas.jpg">
+
+
+<link rel="canonical" href="https://klcc.cc/7efc43b.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/7efc43b.html","path":"7efc43b.html","title":"VPN搭建使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>VPN搭建使用 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">67</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E4%B8%93%E7%94%A8%E7%BD%91%E7%BB%9C"><span class="nav-number">1.</span> <span class="nav-text">虚拟专用网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VPN%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">VPN的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VPN%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">VPN的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AEVPN%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">远程访问VPN服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%81%E4%B8%9A%E5%86%85%E9%83%A8%E7%BD%91%E7%BB%9C%E4%BA%92%E8%81%94"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">企业内部网络互联</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E5%90%84%E5%9C%B0%E5%9F%9F%E6%9C%BA%E6%88%BF%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BA%92%E8%81%94"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">互联网各地域机房之间的互联</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%81%E4%B8%9A%E5%A4%96%E9%83%A8%E7%9A%84VPN%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">企业外部的VPN服务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E9%9A%A7%E9%81%93%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.3.</span> <span class="nav-text">常见的隧道协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PPTP"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">PPTP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#L2TP"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">L2TP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IPSec"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">IPSec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL-VPN"><span class="nav-number">1.3.0.4.</span> <span class="nav-text">SSL VPN</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84VPN%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.4.</span> <span class="nav-text">常见的VPN软件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PPTP-VPN"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">PPTP VPN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL-VPN-1"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">SSL VPN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IPSec-VPN"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">IPSec VPN</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenVPN"><span class="nav-number">2.</span> <span class="nav-text">OpenVPN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenVPN%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.1.</span> <span class="nav-text">OpenVPN介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OpenVPN%E4%BE%9D%E8%B5%96%E7%9A%84SSL%E4%B8%8ETLS%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">OpenVPN依赖的SSL与TLS协议介绍</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2OpenVPN"><span class="nav-number">2.2.</span> <span class="nav-text">部署OpenVPN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E8%A7%84%E5%88%92"><span class="nav-number">2.2.1.</span> <span class="nav-text">环境规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-number">2.2.2.</span> <span class="nav-text">服务端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%AE%89%E8%A3%85OpenVPN%E5%92%8C%E8%AF%81%E4%B9%A6%E5%B7%A5%E5%85%B7%EF%BC%8C%E5%87%86%E5%A4%87%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">1、安装OpenVPN和证书工具，准备相关配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96PKI%E5%92%8CCA%E7%AD%BE%E5%8F%91%E6%9C%BA%E6%9E%84%E7%8E%AF%E5%A2%83"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">2、初始化PKI和CA签发机构环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E5%88%9B%E5%BB%BA-Diffie-Hellman-%E5%AF%86%E9%92%A5"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">3、创建 Diffie-Hellman 密钥</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">2.2.3.</span> <span class="nav-text">客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%81%E4%B9%A6%E7%8E%AF%E5%A2%83"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">1、客户端证书环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%88%9B%E5%BB%BA%E9%93%BE%E6%8E%A5%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">2、创建链接配置文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="nav-number">2.3.</span> <span class="nav-text">服务器端配置文件说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mac%E8%BF%9E%E6%8E%A5OpenVPN"><span class="nav-number">2.4.</span> <span class="nav-text">mac连接OpenVPN</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/klcc-c.github.io/images/head.jpeg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/7efc43b.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/head.jpeg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VPN搭建使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-30 15:37:52" itemprop="dateCreated datePublished" datetime="2021-12-30T15:37:52+08:00">2021-12-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-31 09:16:20" itemprop="dateModified" datetime="2021-12-31T09:16:20+08:00">2021-12-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>12k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="虚拟专用网络"><a href="#虚拟专用网络" class="headerlink" title="虚拟专用网络"></a>虚拟专用网络</h1><p>VPN(全称：Virtual Private Network)虚拟专用网络，是依靠ISP和其他的NSP，在公共网络中建立专用的数据通信的网络技术，可以为企业之间或者个人与企业之间提供安全的数据传输隧道服务。在VPN中任意两点之间的链接并没有传统专网所需的端到端的物理链路，而是利用公共网络资源动态组成的，可以理解为通过私有的隧道技术在公共数据网络上模拟出来的和专网有同样功能的点到点的专线技术，所谓虚拟是指不需要去拉实际的长途物理线路，而是借用了公共Internet网络实现的。</p>
+<span id="more"></span>
+<h2 id="VPN的作用"><a href="#VPN的作用" class="headerlink" title="VPN的作用"></a>VPN的作用</h2><p>VPN的功能是帮助公司里的远程用户（出差，在家）、公司的分支机构、商业合作伙伴及供应商等公司和自己的公司内部网络之间建立可信的安全连接或者是局域网连接，确保数据的加密安全传输和业务访问，对于运维工程师来说，还可以连接不同的机房为局域网来处理相关事宜。</p>
+<h2 id="VPN的分类"><a href="#VPN的分类" class="headerlink" title="VPN的分类"></a>VPN的分类</h2><ul>
+<li>根据常用的使用场景来分类。</li>
+</ul>
+<h4 id="远程访问VPN服务"><a href="#远程访问VPN服务" class="headerlink" title="远程访问VPN服务"></a>远程访问VPN服务</h4><ul>
+<li><p>通过个人电脑远程拨号到企业办公网络。</p>
+<p>1、一般为企业内部员工出差、休假或特殊情况下载原理办公室的时候，又有需求访问公司的内部网络获取相关资源，就可以通过VPN拨号到公司内部。此时远程拨号的员工和办公室内的员工以及其他拨号的员工之间都相当于在一个局域网内。例如：访问内部的域控、文件服务器、OA系统等局域网应用。</p>
+<p>2、对于运维人员来说就是需要个人电脑远程拨号到企业网站的服务器机房，远程维护机房中的（无外网IP的）服务器。</p>
+<p>这种形式的VPN一般在运维人员在工作中会经常遇到。</p>
+</li>
+</ul>
+<h4 id="企业内部网络互联"><a href="#企业内部网络互联" class="headerlink" title="企业内部网络互联"></a>企业内部网络互联</h4><ul>
+<li>一般是建立一个网络隧道，多个机房之间互联。</li>
+</ul>
+<p>在公司的分支机构的局域网和公司总部LAN之间的VPN链接。通过公网Internet建立VPN将公司在各地的分支机构的LAN链接到公司总部的LAN。例如：各大银行之间的资金结算业务。</p>
+<p>这是由于各个地域的原因产生的VPN的需求，通过VPN让不同地域的机器可以实现内网互联。例如远程协同办公，机房互联数据同步及业务访问。</p>
+<h4 id="互联网各地域机房之间的互联"><a href="#互联网各地域机房之间的互联" class="headerlink" title="互联网各地域机房之间的互联"></a>互联网各地域机房之间的互联</h4><ul>
+<li>主要是用于不同机房之间的内网互通。</li>
+</ul>
+<h4 id="企业外部的VPN服务"><a href="#企业外部的VPN服务" class="headerlink" title="企业外部的VPN服务"></a>企业外部的VPN服务</h4><ul>
+<li>主要是提供给合作伙伴共享企业内网数据的VPN服务。</li>
+</ul>
+<h2 id="常见的隧道协议"><a href="#常见的隧道协议" class="headerlink" title="常见的隧道协议"></a>常见的隧道协议</h2><ul>
+<li>这里列举常见的隧道协议</li>
+</ul>
+<h4 id="PPTP"><a href="#PPTP" class="headerlink" title="PPTP"></a>PPTP</h4><p>点对点协议（PPTP）是由包括微软和3Com等公司组成的PPTP论坛开发的一种点对点隧道协议，基于拨号使用的PPP协议，使用PAP或CHAP之类的加密算法，或者使用Microsoft的点对点加密算法MPPE。其通过跨越基于TCP/IP的数据网络创建VPN实现了从远程客户端到专用企业服务器之间数据的安全传输。PPTP支持通过公共网络建立按需的、多协议的、虚拟专用网络。PPTP允许加密IP通讯，然后在跨域公司IP网络或公共IP网络发送的IP头中对其进行封装。典型的Linux平台的开源软件为PPTP。PPTP属于点对点应用，比较合适远程的企业用户拨号到企业进行办公等应用。</p>
+<h4 id="L2TP"><a href="#L2TP" class="headerlink" title="L2TP"></a>L2TP</h4><p>L2TP第2等隧道协议（L2TP）是IETF基于L2F（Cisco的第二层转发协议）开的的PPTP的后续版本。是一种工业标准Internet隧道协议，其可以为跨越面向数据包的媒体发送点到点的协议（PPP）框架提供封装。PPTP和L2TP都使用PPP协议对数据进行封装，然后添加附加爆头用于数据在互联网上传输。PPTP只能在两端点间建立单一隧道。L2TP支持在两端点间使用多隧道，用户可以针对不同的服务质量创建不同隧道。L2TP可以提供隧道验证，而PPTP则不支持隧道验证。但是当L2TP或PPTP与IPSEC共同使用时，可以由IPSEC提供隧道验证，不需要在第二层协议上验证隧道使用L2TP。PPTP要求互联网络为IP网络。L2TP只要求隧道媒介提供面向数据包的点对点的链接，L2TP可以在IP（使用UDP），祯中继续永久虚拟电路（PVCs）,X.25虚拟电路（VCs）或ATM VCS网络上使用。</p>
+<h4 id="IPSec"><a href="#IPSec" class="headerlink" title="IPSec"></a>IPSec</h4><p>IP安全协议实际上是一套协议包而不是一个单独的协议。从1995年开始IPSec的研究以来，IETF IPSec工作组在它的主页上发布了几十个Internet草案文献和12个RFC文件。其中比较重要的有RFC2409IKE（互联网秘钥交换）、RFC2401 IPSec协议、RFC2402AH验证包头、RFC2406ESP加密数据等文件。</p>
+<p>IPSec隧道模式隧道是封装、路由与解封的整个过程。隧道将原始数据包隐藏（或封装）在新的数据包内部。该新的数据包可能会有新的寻址与路由信息，从而使其能够通过网络传输。隧道与数据保密性结合使用时，在网络上窃听通讯的人将无法获取原始数据包数据（以及原始的源和目标）。封装的数据包到达目的地后，会删除封装，原始数据包头用于将数据包路由到最终目的地。</p>
+<p>隧道本身是封装数据经过的逻辑数据路径，对原始的源和目的的端，隧道是不可见的，而只能看到网络路径中的点对点连接。将隧道和数据保密性结合使用时，可用于提供VPN。</p>
+<p>封装的数据包在网络中的隧道内部传输。再次示例中，该网络是Internet。网关可以是外部Internet与专用网络之间的周边网关。周界网关可以是路由器、防火墙、代理服务器或其他安全网关。另外，在专用网络内部可以使用两个网关来保护网络中不信任的通讯。</p>
+<p>当以隧道模式使用IPSEC时，其只为IP通讯提供封装。使用IPSec隧道模式主要是为了与其他不支持IPSec上的L2TP或PPTP VPN隧道技术的路由器、网关或终端系统之间的相互操作。</p>
+<h4 id="SSL-VPN"><a href="#SSL-VPN" class="headerlink" title="SSL VPN"></a>SSL VPN</h4><p>SSL协议提供了数据私密性、端点验证、信息完整性等特性。SSL协议由许多子协议组成，其中两个主要的子协议是握手协议和记录协议。握手协议允许服务器和客户端在应用协议传输第一个数据字节以前，彼此确认，协商一种加密算法和密码钥匙。在数据传输期间，记录协议利用握手协议生成的秘钥加密和解密后来交换的数据。</p>
+<p>SSL独立应用，因此任何一个应用程序都可以享受它的安全性而不必理会执行细节。SSL置身于网络结构体系的传输层和应用层之间。此外，SSL本身就被几乎所有的WEB浏览器支持。这意味着客户端不需要为了支持SSL链接安装额外的软件。这两个特征就是SSL能应用于VPN的关键点。</p>
+<p>典型的SSL VPN应用：Open VPN，这是一个比较好的开源软件。Open VPN允许参与建立VPN的单点使用预设的私钥，第三方证书，或者用户名/密码来进行身份验证。它大量使用了OpenSSL加密库，以及SSLv3/TLSv1协议。OpenVPN能在Linux、xBSD、MacOS 上运行。它并不是一个基于Web的VPN软件，也不能与IPSec及其他VPN软件包兼容。</p>
+<h2 id="常见的VPN软件"><a href="#常见的VPN软件" class="headerlink" title="常见的VPN软件"></a>常见的VPN软件</h2><h4 id="PPTP-VPN"><a href="#PPTP-VPN" class="headerlink" title="PPTP VPN"></a>PPTP VPN</h4><p>使用PPTP VPN的最大优势在于，无需在Windows客户端独立安装客户端软件，Windows默认就知道PPTP VPN拨号连接功能。另外，PPTP VPN属于点对点方式的应用，比较适合远程的企业用户拨号到企业进行办公等应用。</p>
+<h4 id="SSL-VPN-1"><a href="#SSL-VPN-1" class="headerlink" title="SSL VPN"></a>SSL VPN</h4><p>PPTP主要为那些经常外出移动办公或家庭办公的用户考虑，而OpenVPN不但使用于PPTP的应用场景，还适合针对企业异地两地总分公司之间的VPN不间断按需链接，例如：OA，及时通讯工具等在企业中的应用。</p>
+<h4 id="IPSec-VPN"><a href="#IPSec-VPN" class="headerlink" title="IPSec VPN"></a>IPSec VPN</h4><p>IPSecVPN也适用针对企业异地办公或多个IDC机房之间VPN不间断按需链接，并且在部署使用上更简单方便。</p>
+<h1 id="OpenVPN"><a href="#OpenVPN" class="headerlink" title="OpenVPN"></a>OpenVPN</h1><h2 id="OpenVPN介绍"><a href="#OpenVPN介绍" class="headerlink" title="OpenVPN介绍"></a>OpenVPN介绍</h2><p>专用网：专用网就是在两个网络（例如，北京和广州）之间架设一条专用线路，但是它并不需要真正地去铺设光缆之类的物理线路。虽然没有亲自去铺设，但是需要向电信运营商申请租用专线，在这条专用的线路上只传输自己的信息,所以安全稳定,同时也费用高昂</p>
+<p>在众多的VPN产品中，OpenVPN无疑是Linux下开源VPN的经典产品，他提供了良好的访问性能和友好的用户GUI。</p>
+<p>Open VPN是一个用于创建虚拟专用网络加密通道的软件包，最早由James Yonan编写。一个实现VPN的开源软件，OpenVPN 是一个健壮的、高度灵活的 VPN 守护进程。它支持SSL/TLS 安全、Ethernet bridging、经由代理的 TCP 或 UDP 隧道和 NAT。另外，它也支持动态 IP 地址以及DHCP，可伸缩性足以支持数百或数千用户的使用场景，同时可移植至大多数主流操作系统平台上。</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://openvpn.net/">https://openvpn.net</a></p>
+<p>GitHub地址：<a target="_blank" rel="noopener" href="https://github.com/OpenVPN/openvpn">https://github.com/OpenVPN/openvpn</a></p>
+<h4 id="OpenVPN依赖的SSL与TLS协议介绍"><a href="#OpenVPN依赖的SSL与TLS协议介绍" class="headerlink" title="OpenVPN依赖的SSL与TLS协议介绍"></a>OpenVPN依赖的SSL与TLS协议介绍</h4><p>众所周知，真正的通信实际上是两台主机之间的进程在交换数据，而运输层作为整个网络最关键的从层次之一，扮演沿着向上层（应用层）提供通信服务的角色。想要剖析运输层的数据安全传输策略就一定无法绕开三个至关重要的协议，它们分别是HTTPS协议、SSL协议、TSL协议。SSL（Secure Sockets Layer）协议既安全套接字层协议，TLS（Transport Layer Security）协议即<code>安全传输层协议</code>。</p>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/dasdasdas.jpg"></p>
+<h2 id="部署OpenVPN"><a href="#部署OpenVPN" class="headerlink" title="部署OpenVPN"></a>部署OpenVPN</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OpenVPN 分为客户端和服务端</span><br></pre></td></tr></table></figure>
+
+<h3 id="环境规划"><a href="#环境规划" class="headerlink" title="环境规划"></a>环境规划</h3><table>
+<thead>
+<tr>
+<th>公网IP</th>
+<th>内网IP</th>
+<th>主机名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>192.168.15.110</td>
+<td>172.16.1.0</td>
+<td>openvpn</td>
+</tr>
+</tbody></table>
+<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><h4 id="1、安装OpenVPN和证书工具，准备相关配置文件"><a href="#1、安装OpenVPN和证书工具，准备相关配置文件" class="headerlink" title="1、安装OpenVPN和证书工具，准备相关配置文件"></a>1、安装OpenVPN和证书工具，准备相关配置文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装openvpn和证书工具</span></span><br><span class="line">[root@m01 ~]<span class="comment"># yum -y install openvpn easy-rsa</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成服务器配置文件</span></span><br><span class="line">[root@m01 ~]<span class="comment"># cp /usr/share/doc/openvpn-2.4.11/sample/sample-config-files/server.conf /etc/openvpn/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备证书签发相关文件</span></span><br><span class="line">[root@m01 ~]<span class="comment"># cp -r /usr/share/easy-rsa/ /etc/openvpn/easy-rsa-server</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备签发证书相关变量的配置文件</span></span><br><span class="line">[root@m01 ~]<span class="comment"># cp /usr/share/doc/easy-rsa-3.0.8/vars.example /etc/openvpn/easy-rsa-server/3/vars</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#建议修改给CA和OpenVPN服务器颁发的证书的有效期,可适当加长（可忽略）</span></span><br><span class="line">[root@m01 ~]<span class="comment"># vim /etc/openvpn/easy-rsa-server/3/vars</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#CA的证书有效期默为为10年,可以适当延长,比如:36500天</span></span><br><span class="line"><span class="comment">#set_var EASYRSA_CA_EXPIRE     3650</span></span><br><span class="line">set_var EASYRSA_CA_EXPIRE      36500</span><br><span class="line"></span><br><span class="line"><span class="comment">#服务器证书默为为825天,可适当加长,比如:3650天</span></span><br><span class="line"><span class="comment">#set_var EASYRSA_CERT_EXPIRE   825 </span></span><br><span class="line"><span class="comment">#将上面行修改为下面</span></span><br><span class="line">set_var EASYRSA_CERT_EXPIRE    3650</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看配置文件目录结构</span></span><br><span class="line">[root@m01 ~]<span class="comment"># tree /etc/openvpn/</span></span><br><span class="line">/etc/openvpn/</span><br><span class="line">├── client</span><br><span class="line">├── easy-rsa-server</span><br><span class="line">│   ├── 3 -&gt; 3.0.8</span><br><span class="line">│   ├── 3.0 -&gt; 3.0.8</span><br><span class="line">│   └── 3.0.8</span><br><span class="line">│       ├── easyrsa</span><br><span class="line">│       ├── openssl-easyrsa.cnf</span><br><span class="line">│       ├── vars</span><br><span class="line">│       └── x509-types</span><br><span class="line">│           ├── ca</span><br><span class="line">│           ├── client</span><br><span class="line">│           ├── code-signing</span><br><span class="line">│           ├── COMMON</span><br><span class="line">│           ├── email</span><br><span class="line">│           ├── kdc</span><br><span class="line">│           ├── server</span><br><span class="line">│           └── serverClient</span><br><span class="line">├── server</span><br><span class="line">└── server.conf</span><br><span class="line"></span><br><span class="line">7 directories, 12 files</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、初始化PKI和CA签发机构环境"><a href="#2、初始化PKI和CA签发机构环境" class="headerlink" title="2、初始化PKI和CA签发机构环境"></a>2、初始化PKI和CA签发机构环境</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化PKI生成PKI相关目录和文件</span></span><br><span class="line">[root@m01 3]<span class="comment"># cd /etc/openvpn/easy-rsa-server/3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化数据,在当前目录下生成pki目录及相关文件</span></span><br><span class="line">[root@m01 3]<span class="comment"># ./easyrsa init-pki</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建CA机构必须在该目录下</span></span><br><span class="line">[root@m01 3]<span class="comment"># pwd</span></span><br><span class="line">/etc/openvpn/easy-rsa-server/3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建CA机构,回车</span></span><br><span class="line">[root@m01 3]<span class="comment"># ./easyrsa build-ca nopass </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证CA证书</span></span><br><span class="line">[root@m01 3]<span class="comment"># openssl x509 -in pki/ca.crt -noout -text</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建服务端证书申请</span></span><br><span class="line">[root@m01 3]<span class="comment"># ./easyrsa gen-req server nopass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 签发证书，输入yes回车</span></span><br><span class="line">[root@m01 3]<span class="comment"># ./easyrsa sign server server</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证证书，删除 BF97ECFB46EFB13E5A684AEF07DE4CD8.pem 该内容按tab键进行验证</span></span><br><span class="line">[root@m01 3]<span class="comment"># diff pki/certs_by_serial/BF97ECFB46EFB13E5A684AEF07DE4CD8.pem  pki/issued/server.crt</span></span><br><span class="line"><span class="comment"># 没有结果则为验证成功</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3、创建-Diffie-Hellman-密钥"><a href="#3、创建-Diffie-Hellman-密钥" class="headerlink" title="3、创建 Diffie-Hellman 密钥"></a>3、创建 Diffie-Hellman 密钥</h4><p>Diffie-Hellman 密钥交换方法，由惠特菲尔德·迪菲（Bailey Whitfield Diffie）、马丁·赫尔曼（Martin Edward Hellman）于1976年发表。它是一种安全协议，让双方在完全没有对方任何预先信息的条件下通过不安全信道建立起一个密钥，这个密钥一般作为“对称加密”的密钥而被双方在后续数据传输中使用。DH数学原理是base离散对数问题。做类似功能的还有非对称加密类算法，如：RSA。其应用非常广泛，在SSH、VPN、Https等都有应用。</p>
+<p>wiki参考链接: <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange">https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">方式一：</span><br><span class="line"> [root@m01 3]<span class="comment"># ./easyrsa gen-dh</span></span><br><span class="line"> <span class="comment">#查看生成的文件</span></span><br><span class="line"> [root@m01 3]<span class="comment"># ll pki/dh.pem</span></span><br><span class="line"> [root@m01 3]<span class="comment"># cat pki/dh.pem</span></span><br><span class="line"></span><br><span class="line">方式二：</span><br><span class="line"> [root@m01 3]<span class="comment"># openssl dhparam -out /etc/openvpn/dh2048.pem 2048</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><h4 id="1、客户端证书环境"><a href="#1、客户端证书环境" class="headerlink" title="1、客户端证书环境"></a>1、客户端证书环境</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[root@m01 3]<span class="comment"># cp -r /usr/share/easy-rsa/ /etc/openvpn/easy-rsa-client</span></span><br><span class="line">[root@m01 3]<span class="comment"># cp /usr/share/doc/easy-rsa-3.0.8/vars.example /etc/openvpn/easy-rsa-client/3/vars</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到客户端目录</span></span><br><span class="line">[root@m01 3]<span class="comment"># cd /etc/openvpn/easy-rsa-client/3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化证书目录</span></span><br><span class="line">[root@m01 3]<span class="comment"># ./easyrsa init-pki</span></span><br><span class="line"></span><br><span class="line">[root@m01 3]<span class="comment"># pwd</span></span><br><span class="line">/etc/openvpn/easy-rsa-client/3</span><br><span class="line">[root@m01 3]<span class="comment"># ls</span></span><br><span class="line">easyrsa  openssl-easyrsa.cnf  varsa  x509-types</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成客户端证书，回车</span></span><br><span class="line">[root@m01 3]<span class="comment"># ./easyrsa gen-req gengfeng nopass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将客户端证书请求文件复制到CA的工作目录</span></span><br><span class="line">[root@m01 3]<span class="comment"># cd /etc/openvpn/easy-rsa-server/3</span></span><br><span class="line">[root@m01 3]<span class="comment"># ./easyrsa import-req /etc/openvpn/easy-rsa-client/3/pki/reqs/gengfeng.req gengfeng</span></span><br><span class="line"><span class="comment"># 签发客户端证书，yes</span></span><br><span class="line">[root@m01 3]<span class="comment"># pwd</span></span><br><span class="line"> /etc/openvpn/easy-rsa-server/3</span><br><span class="line">[root@m01 3]<span class="comment"># ./easyrsa sign client gengfeng </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证，对比一下</span></span><br><span class="line">[root@m01 3]<span class="comment"># cat pki/index.txt</span></span><br><span class="line"> V 240401022739Z  ADBFFB9F45E5CEF861E7F642BA6C447E  unknown /CN=server</span><br><span class="line"> V 240401023724Z  47765AD8225E12A13FB1EEBAC769B999  unknown /CN=gengfeng</span><br><span class="line"><span class="comment"># 查看是否和上面一致</span></span><br><span class="line">[root@m01 3]<span class="comment"># ll pki/certs_by_serial/</span></span><br><span class="line">total 16</span><br><span class="line"> -rw------- 1 root root 4438 Dec 28 10:37 47765AD8225E12A13FB1EEBAC769B999.pem</span><br><span class="line"> -rw------- 1 root root 4552 Dec 28 10:27 ADBFFB9F45E5CEF861E7F642BA6C447E.pem</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、创建链接配置文件"><a href="#2、创建链接配置文件" class="headerlink" title="2、创建链接配置文件"></a>2、创建链接配置文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">1、修改openvpn配置文件</span><br><span class="line">[root@m01 3]<span class="comment"># &gt;/etc/openvpn/server.conf  #清空文件</span></span><br><span class="line">[root@m01 3]<span class="comment"># vim /etc/openvpn/server.conf</span></span><br><span class="line"></span><br><span class="line">cat &gt; /etc/openvpn/server.conf &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">port 1194</span></span><br><span class="line"><span class="string">proto tcp</span></span><br><span class="line"><span class="string">dev tun</span></span><br><span class="line"><span class="string">ca  /etc/openvpn/certs/ca.crt</span></span><br><span class="line"><span class="string">cert  /etc/openvpn/certs/server.crt</span></span><br><span class="line"><span class="string">key  /etc/openvpn/certs/server.key</span></span><br><span class="line"><span class="string">dh  /etc/openvpn/certs/dh.pem</span></span><br><span class="line"><span class="string">server 10.8.0.0 255.255.255.0</span></span><br><span class="line"><span class="string">push &quot;route 172.16.1.0 255.255.255.0&quot;  #必须更改为自己的网卡地址</span></span><br><span class="line"><span class="string">keepalive 10 120</span></span><br><span class="line"><span class="string">cipher AES-256-CBC</span></span><br><span class="line"><span class="string">compress lz4-v2</span></span><br><span class="line"><span class="string">push &quot;compress lz4-v2&quot;</span></span><br><span class="line"><span class="string">max-clients 2048</span></span><br><span class="line"><span class="string">user openvpn</span></span><br><span class="line"><span class="string">group openvpn</span></span><br><span class="line"><span class="string">status  /var/log/openvpn/openvpn-status.log</span></span><br><span class="line"><span class="string">log-append   /var/log/openvpn/openvpn.log</span></span><br><span class="line"><span class="string">verb 3</span></span><br><span class="line"><span class="string">mute 20</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建日志文件目录</span></span><br><span class="line">[root@m01 3]<span class="comment"># mkdir -p /var/log/openvpn</span></span><br><span class="line"><span class="comment"># 创建权限</span></span><br><span class="line">[root@m01 ~]<span class="comment"># chown openvpn.openvpn /var/log/openvpn</span></span><br><span class="line"><span class="comment"># 创建存放证书目录</span></span><br><span class="line">[root@m01 ~]<span class="comment"># mkdir -p /etc/openvpn/certs</span></span><br><span class="line"><span class="comment"># 复制证书</span></span><br><span class="line">[root@m01 ~]<span class="comment"># cp /etc/openvpn/easy-rsa-server/3/pki/dh.pem /etc/openvpn/certs/</span></span><br><span class="line">[root@m01 ~]<span class="comment"># cp /etc/openvpn/easy-rsa-server/3/pki/ca.crt /etc/openvpn/certs/</span></span><br><span class="line">[root@m01 ~]<span class="comment"># cp /etc/openvpn/easy-rsa-server/3/pki/private/server.key /etc/openvpn/certs/</span></span><br><span class="line">[root@m01 ~]<span class="comment"># cp /etc/openvpn/easy-rsa-server/3/pki/issued/server.crt /etc/openvpn/certs/</span></span><br><span class="line">[root@m01 ~]<span class="comment"># ll /etc/openvpn/certs/</span></span><br><span class="line">total 20</span><br><span class="line"> -rw------- 1 root root 1172 Dec 28 10:54 ca.crt</span><br><span class="line"> -rw------- 1 root root  424 Dec 28 10:54 dh.pem</span><br><span class="line"> -rw------- 1 root root 4552 Dec 28 10:54 server.crt</span><br><span class="line"> -rw------- 1 root root 1704 Dec 28 10:54 server.key</span><br><span class="line"></span><br><span class="line">2、启动OpenVPN</span><br><span class="line"><span class="comment"># 开启系统内核网络转发功能(该功能默认为关闭状态)</span></span><br><span class="line">[root@m01 ~]<span class="comment"># echo net.ipv4.ip_forward = 1 &gt;&gt; /etc/sysctl.conf</span></span><br><span class="line">[root@m01 ~]<span class="comment"># sysctl -p</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装防火墙</span></span><br><span class="line">[root@m01 ~]<span class="comment"># yum install iptables-services -y</span></span><br><span class="line">[root@m01 ~]<span class="comment"># systemctl disable --now firewalld</span></span><br><span class="line">[root@m01 ~]<span class="comment"># systemctl start iptables</span></span><br><span class="line">[root@m01 ~]<span class="comment"># iptables -F</span></span><br><span class="line">[root@m01 ~]<span class="comment"># iptables -F -t nat</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加iptables规则</span></span><br><span class="line">[root@m01 ~]<span class="comment"># iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -j MASQUERADE</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 永久保存Iptables规则</span></span><br><span class="line">[root@m01 ~]<span class="comment"># service iptables save</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动OpenVPN</span></span><br><span class="line">[root@m01 ~]<span class="comment"># systemctl enable --now openvpn@server</span></span><br><span class="line"></span><br><span class="line">3、创建链接文件</span><br><span class="line"></span><br><span class="line">[root@m01 ~]<span class="comment"># mkdir -p /etc/openvpn/client/gengfeng/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备证书</span></span><br><span class="line">[root@m01 gengfeng]<span class="comment"># cp /etc/openvpn/easy-rsa-server/3/pki/ca.crt /etc/openvpn/client/gengfeng/</span></span><br><span class="line">[root@m01 gengfeng]<span class="comment"># cp /etc/openvpn/easy-rsa-server/3/pki/issued/gengfeng.crt /etc/openvpn/client/gengfeng/</span></span><br><span class="line">[root@m01 gengfeng]<span class="comment"># cp /etc/openvpn/easy-rsa-client/3/pki/private/gengfeng.key /etc/openvpn/client/gengfeng/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备链接文件</span></span><br><span class="line">[root@m01 ~]<span class="comment"># vim /etc/openvpn/client/gengfeng/client.ovpn </span></span><br><span class="line">client</span><br><span class="line">dev tun</span><br><span class="line">proto tcp</span><br><span class="line">remote 192.168.15.110 1194</span><br><span class="line">resolv-retry infinite</span><br><span class="line">nobind</span><br><span class="line">ca ca.crt</span><br><span class="line">cert gengfeng.crt</span><br><span class="line">key gengfeng.key</span><br><span class="line">remote-cert-tls server</span><br><span class="line">cipher AES-256-CBC</span><br><span class="line">verb 3</span><br><span class="line">compress lz4-v2</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务器端配置文件说明"><a href="#服务器端配置文件说明" class="headerlink" title="服务器端配置文件说明"></a>服务器端配置文件说明</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#server.conf文件中以#或;开头的行都为注释</span></span><br><span class="line">[root@instance-gvpb80ao ~]<span class="comment"># grep -Ev &quot;^#|^$&quot; /etc/openvpn/server.conf</span></span><br><span class="line">;<span class="built_in">local</span> a.b.c.d  <span class="comment">#本机监听IP,默认为本机所有IP</span></span><br><span class="line">port 1194   <span class="comment">#端口</span></span><br><span class="line">;proto tcp  <span class="comment">#协议,生产推荐使用TCP</span></span><br><span class="line">proto udp <span class="comment">#默认协议</span></span><br><span class="line">;dev tap  <span class="comment">#创建一个以太网隧道，以太网使用tap,一个tap设备允许完整的以太网帧通过Openvpn隧道，可提供非ip协议的支持，比如IPX协议和AppleTalk协议,tap等同于一个以太网设备，它操作第二层数据包如以太网数据帧。</span></span><br><span class="line">dev tun  <span class="comment">#创建一个路由IP隧道，生产推存使用tun.互联网使用tun,一个tun设备大多时候，被用于基于IP协议的通讯。tun模拟了网络层设备，操作第三层数据包比如IP数据封包。</span></span><br><span class="line">;dev-node MyTap  <span class="comment">#TAP-Win32适配器。非windows不需要配置</span></span><br><span class="line">ca ca.crt   <span class="comment">#ca证书文件</span></span><br><span class="line">cert server.crt  <span class="comment">#服务器证书文件</span></span><br><span class="line">key server.key  <span class="comment">#服务器私钥文件</span></span><br><span class="line">dh dh2048.pem   <span class="comment">#dh参数文件</span></span><br><span class="line">;topology subnet</span><br><span class="line">server 10.8.0.0 255.255.255.0 <span class="comment">#客户端连接后分配IP的地址池，服务器默认会占用第一个IP 10.8.0.1将做为客户端的网关</span></span><br><span class="line">ifconfig-pool-persist ipp.txt <span class="comment">#为客户端分配固定IP，不需要配置,建议注释</span></span><br><span class="line">;server-bridge 10.8.0.4 255.255.255.0 10.8.0.50 10.8.0.100 <span class="comment">#配置网桥模式，不需要配置,建议注释</span></span><br><span class="line">;server-bridge</span><br><span class="line">;push <span class="string">&quot;route 192.168.10.0 255.255.255.0&quot;</span> <span class="comment">#给客户端生成的到达服务器后面网段的静态路由，下一跳为openvpn服务器的10.8.0.1</span></span><br><span class="line">;push <span class="string">&quot;route 192.168.20.0 255.255.255.0&quot;</span> <span class="comment">#推送路由信息到客户端，以允许客户端能够连接到服务器背后的其它私有子网</span></span><br><span class="line">;client-config-dir ccd <span class="comment">#为指定的客户端添加路由，此路由通常是客户端后面的内网网段而不是服务端的，也不需要设置</span></span><br><span class="line">;route 192.168.40.128 255.255.255.248 </span><br><span class="line">;client-config-dir ccd </span><br><span class="line">;route 10.9.0.0 255.255.255.252</span><br><span class="line">;learn-address ./script   <span class="comment">#运行外部脚本，创建不同组的iptables规则，无需配置</span></span><br><span class="line">;push <span class="string">&quot;redirect-gateway def1 bypass-dhcp&quot;</span> <span class="comment">#启用后，客户端所有流量都将通过VPN服务器，因此生产一般无需配置此项</span></span><br><span class="line">;push <span class="string">&quot;dhcp-option DNS 208.67.222.222&quot;</span> <span class="comment">#推送DNS服务器，不需要配置</span></span><br><span class="line">;push <span class="string">&quot;dhcp-option DNS 208.67.220.220&quot;</span></span><br><span class="line">;client-to-client  <span class="comment">#允许不同的client直接通信,不安全,生产环境一般无需要配置</span></span><br><span class="line">;duplicate-cn     <span class="comment">#多个用户共用一个证书，一般用于测试环境，生产环境都是一个用户一个证书,无需开启</span></span><br><span class="line">keepalive 10 120  <span class="comment">#设置服务端检测的间隔和超时时间，默认为每10秒ping一次，如果 120 秒没有回应则认为对方已经down</span></span><br><span class="line">tls-auth ta.key 0 <span class="comment">#访止DoS等攻击的安全增强配置,可以使用以下命令来生成：openvpn --</span></span><br><span class="line">genkey --secret ta.key <span class="comment">#服务器和每个客户端都需要拥有该密钥的一个拷贝。第二个参数在服务器端应该为’0’，在客户端应该为’1’</span></span><br><span class="line">cipher AES-256-CBC <span class="comment">#加密算法</span></span><br><span class="line">;compress lz4-v2  <span class="comment">#启用Openvpn2.4.X新版压缩算法</span></span><br><span class="line">;push <span class="string">&quot;compress lz4-v2&quot;</span> <span class="comment">#推送客户端使用新版压缩算法,和下面的comp-lzo不要同时使用</span></span><br><span class="line">;comp-lzo  <span class="comment">#旧户端兼容的压缩配置，需要客户端配置开启压缩,openvpn2.4.X等新版可以不用开启</span></span><br><span class="line">;max-clients 100  <span class="comment">#最大客户端数</span></span><br><span class="line">;user nobody  <span class="comment">#运行openvpn服务的用户和组</span></span><br><span class="line">;group nobody</span><br><span class="line">persist-key  <span class="comment">#重启VPN服务时默认会重新读取key文件，开启此配置后保留使用第一次的key文件,生产环境无需开启</span></span><br><span class="line">persist-tun  <span class="comment">#启用此配置后,当重启vpn服务时，一直保持tun或者tap设备是up的，否则会先down然后再up,生产环境无需开启</span></span><br><span class="line">status openvpn-status.log <span class="comment">#openVPN状态记录文件，每分钟会记录一次</span></span><br><span class="line">;<span class="built_in">log</span>  openvpn.log  <span class="comment">#第一种日志记录方式,并指定日志路径，log会在openvpn启动的时候清空日志文件,不建议使用</span></span><br><span class="line">;log-append openvpn.log <span class="comment">#第二种日志记录方式,并指定日志路径，重启openvpn后在之前的日志后面追加新的日志,生产环境建议使用</span></span><br><span class="line">verb 3   <span class="comment">#设置日志级别，0-9，级别越高记录的内容越详细,0 表示静默运行，只记录致命错误,4 表示合理的常规用法,5 和 6 可以帮助调试连接错误。9 表示极度冗余，输出非常详细的日志信息</span></span><br><span class="line">;mute 20  <span class="comment">#相同类别的信息只有前20条会输出到日志文件中</span></span><br><span class="line">explicit-exit-notify 1  <span class="comment">#通知客户端，在服务端重启后自动重新连接，仅能用于udp模式，tcp模式不需要配置即可实现断开重新连接,且开启此项后tcp配置后将导致openvpn服务无法启动,所以tcp时必须不能开启此项</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="mac连接OpenVPN"><a href="#mac连接OpenVPN" class="headerlink" title="mac连接OpenVPN"></a>mac连接OpenVPN</h2><p>安装OpenVPN软件包</p>
+<p>Windows下载：OpenVPN <a target="_blank" rel="noopener" href="https://openvpn.net/">https://openvpn.net</a></p>
+<p>Mac下载：Tunnelblick <a target="_blank" rel="noopener" href="https://tunnelblick.en.softonic.com/mac">https://tunnelblick.en.softonic.com/mac</a></p>
+<p>打开FinalShell找到/etc/openvpn/client/目标文件夹</p>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211230150939829.png" alt="image-20211230150939829"></p>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211230151130162.png" alt="image-20211230151130162"></p>
+<p>必须将文件夹重新命名，以.tblk结尾，文件名字必须和之前的配置一样</p>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211230151403052.png" alt="image-20211230151403052"></p>
+<p>最后打开Tunnelblick连接即可</p>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211230151730831.png" alt="image-20211230151730831"></p>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211230151600943.png" alt="image-20211230151600943"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/f9ef965d.html" rel="prev" title="Linux磁盘挂载分区">
+                  <i class="fa fa-chevron-left"></i> Linux磁盘挂载分区
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/2efe136b.html" rel="next" title="Linux防火墙iptables">
+                  Linux防火墙iptables <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">365k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:32</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

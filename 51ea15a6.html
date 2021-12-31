@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="帮助相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux命令总结">
+<meta property="og:url" content="https://klcc.cc/51ea15a6.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="帮助相关">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-21T16:36:05.000Z">
+<meta property="article:modified_time" content="2021-12-31T01:16:20.349Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/51ea15a6.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/51ea15a6.html","path":"51ea15a6.html","title":"Linux命令总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux命令总结 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">67</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%AE%E5%8A%A9%E7%9B%B8%E5%85%B3"><span class="nav-number">1.</span> <span class="nav-text">帮助相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E6%9C%BA%E9%87%8D%E5%90%AF"><span class="nav-number">2.</span> <span class="nav-text">关机重启</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%9B%B8%E5%85%B3"><span class="nav-number">3.</span> <span class="nav-text">目录相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-number">4.</span> <span class="nav-text">文件内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%B8%E5%85%B3"><span class="nav-number">5.</span> <span class="nav-text">文件相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">用户管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3"><span class="nav-number">7.</span> <span class="nav-text">其他相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9"><span class="nav-number">8.</span> <span class="nav-text">打包压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86"><span class="nav-number">9.</span> <span class="nav-text">磁盘管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%89%91%E5%AE%A2"><span class="nav-number">10.</span> <span class="nav-text">三剑客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7"><span class="nav-number">11.</span> <span class="nav-text">文件属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E5%91%BD%E4%BB%A4"><span class="nav-number">12.</span> <span class="nav-text">网络服务命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">13.</span> <span class="nav-text">软件安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4"><span class="nav-number">14.</span> <span class="nav-text">网络命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bash%E5%86%85%E7%BD%AE%E5%91%BD%E4%BB%A4"><span class="nav-number">15.</span> <span class="nav-text">Bash内置命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E6%9C%BA%E5%91%BD%E4%BB%A4"><span class="nav-number">16.</span> <span class="nav-text">主机命令</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/klcc-c.github.io/images/head.jpeg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/51ea15a6.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/head.jpeg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux命令总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-22 00:36:05" itemprop="dateCreated datePublished" datetime="2021-12-22T00:36:05+08:00">2021-12-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-31 09:16:20" itemprop="dateModified" datetime="2021-12-31T09:16:20+08:00">2021-12-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="帮助相关"><a href="#帮助相关" class="headerlink" title="帮助相关"></a>帮助相关</h2><span id="more"></span>
+<ul>
+<li>man  查看普通命令的帮助</li>
+<li>help  查看内置命令的帮助</li>
+<li>info  查看一个命令更多的信息</li>
+</ul>
+<h2 id="关机重启"><a href="#关机重启" class="headerlink" title="关机重启"></a>关机重启</h2><ul>
+<li>shutdown  关机重启<ul>
+<li>-r （reboot）重启</li>
+<li>-h （halt）关机</li>
+</ul>
+</li>
+<li>halt  关机cpu停止工作</li>
+<li>poweroff  关机断电</li>
+<li>init  切换运行级别<ul>
+<li>init 0  关机</li>
+<li>init 6  重启</li>
+</ul>
+</li>
+<li>reboot  重启</li>
+<li>systemctl<ul>
+<li>reboot  重启</li>
+<li>poweroff  关机</li>
+</ul>
+</li>
+<li>sync  把数据从buffer写回磁盘</li>
+</ul>
+<h2 id="目录相关"><a href="#目录相关" class="headerlink" title="目录相关"></a>目录相关</h2><ul>
+<li><p>pwd  打印工作目录</p>
+</li>
+<li><p>cd  切换工作目录</p>
+<ul>
+<li><p>-上一次所在目录</p>
+</li>
+<li><p>.  当前目录</p>
+</li>
+<li><p>..  上级目录d</p>
+</li>
+<li><p>~  用户家目录</p>
+</li>
+</ul>
+</li>
+<li><p>tree  以树形结构显示目录或文件</p>
+<ul>
+<li><p>-L （level）指定层数</p>
+</li>
+<li><p>-d  只显示目录</p>
+</li>
+</ul>
+</li>
+<li><p>mkdir  创建目录</p>
+<ul>
+<li>-p  递归创建目录</li>
+</ul>
+</li>
+<li><p>ls   显示目录下的内容</p>
+<ul>
+<li><p>-l （long）长格式显示文件属性*</p>
+</li>
+<li><p>-a  显示所有文件，包含隐藏文件*</p>
+</li>
+<li><p>-d  只显示目录本身内容*</p>
+</li>
+<li><p>-i  显示inode节点*</p>
+</li>
+<li><p>-h （human）人类可读形式显示</p>
+</li>
+<li><p>-p  目录结尾加斜线，区分目录和文件</p>
+</li>
+<li><p>-F  不同文件结尾加不同标识，目录结尾加斜线</p>
+</li>
+<li><p>–color=auto  显示不同文件的颜色</p>
+</li>
+<li><p>–time-style  显示修改时间的格式</p>
+<ul>
+<li><p>long-iso  年月日时分</p>
+</li>
+<li><p>iso  月日时分</p>
+</li>
+</ul>
+</li>
+<li><p>-r （reverse）反转排序</p>
+</li>
+<li><p>-t  按修改时间排序</p>
+</li>
+</ul>
+</li>
+<li><p>cp  拷贝  -copy  files  and  directories</p>
+<pre><code>            拷贝   文件   和     目录
+</code></pre>
+<ul>
+<li>-r  复制目录</li>
+<li>-p  保持文件或目录属性  (属主，属组，所属用户)</li>
+<li>-a  相当于dpr</li>
+<li>-i  是否覆盖确认</li>
+<li>-d  保持文件中软连接的属性</li>
+</ul>
+</li>
+<li><p>rm  删除文件或目录</p>
+<ul>
+<li>-f  强制删除</li>
+<li>-r  递归删除</li>
+</ul>
+</li>
+<li><p>mv  移动文件或目录或改名</p>
+</li>
+</ul>
+<h2 id="文件内容"><a href="#文件内容" class="headerlink" title="文件内容"></a>文件内容</h2><ul>
+<li>touch  创建文件或更新文件时间戳</li>
+<li>vi/vim  文本编辑器</li>
+<li>echo  显示输出文本内容<ul>
+<li>-n  不换行输出</li>
+<li>-e  支持转义字符输出</li>
+</ul>
+</li>
+<li>printf  格式化打印字符串</li>
+<li>cat  查看文件内容<ul>
+<li>-n  显示行号</li>
+</ul>
+</li>
+<li>tac  按行翻转文件内容</li>
+<li>rev  左右按字符翻转行的内容</li>
+<li>more  分页查看文件内容</li>
+<li>less  分页查看文件内容<ul>
+<li>-N  显示行号</li>
+</ul>
+</li>
+<li>head  显示文件内容头部<ul>
+<li>-n  前n行  n可省</li>
+</ul>
+</li>
+<li>tail  显示文件内容尾部<ul>
+<li>-n  后n行  n可省</li>
+<li>-f  跟踪文件尾部的变化</li>
+</ul>
+</li>
+<li>tr  替换或删除字符</li>
+<li>cut     取列<ul>
+<li>-d  指定分隔符</li>
+<li>-f  指定哪列  连续多列可用-  多列可用，逗号</li>
+<li>-c  按字符取内容</li>
+</ul>
+</li>
+<li>diff  文本比较</li>
+<li>vimdiff  文本图形化比较</li>
+</ul>
+<h2 id="文件相关"><a href="#文件相关" class="headerlink" title="文件相关"></a>文件相关</h2><ul>
+<li>file  查看文件类型    </li>
+<li>ln  创建<ul>
+<li>-s （soft）创建软链接</li>
+</ul>
+</li>
+<li>which  查命令所在的路径</li>
+<li>whereis  查找命令，源码，帮助等路径<ul>
+<li>-b  查二进制命令</li>
+</ul>
+</li>
+<li>locate  查找文件及帮助相关，从updatedb对应的数据库里查</li>
+<li>find  查找目录下的文件<ul>
+<li>-name  按文件名查找</li>
+<li>-type  按类型查找</li>
+<li>-exec  对查找的结果在处理</li>
+<li>-mtime  按修改时间查找</li>
+<li>-perm  查权限</li>
+<li>-size  </li>
+</ul>
+</li>
+<li>xargs  从标准输入执行命令<ul>
+<li>-n  数字，几个东西在一组</li>
+<li>-d  指定分隔符，不指定默认是空格</li>
+<li>-i  把{}当做前面查找的结果</li>
+</ul>
+</li>
+<li>stat  查看文件属性<ul>
+<li>-c  获取指定文件属性的一部分<ul>
+<li>%A  显示字符权限</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><ul>
+<li><p>id  查看用户身份</p>
+</li>
+<li><p>whoami  查看当前登录的用户</p>
+</li>
+<li><p>w  谁登陆了  干什么了</p>
+</li>
+<li><p>last  显示登录过的用户信息列表</p>
+</li>
+<li><p>lastlog  查看最近登录过的用户报告</p>
+</li>
+<li><p>useradd  添加普通用户</p>
+<ul>
+<li>-u  指定UID</li>
+<li>-s  指定登录的SHELL解释器</li>
+<li>-M  不创建家目录</li>
+<li>-g  指定所属的组</li>
+<li>-c  添加用户说明</li>
+<li>-d  指定家目录</li>
+<li>-e  设定登录截止日期</li>
+</ul>
+</li>
+<li><p>userdel  删除用户</p>
+<ul>
+<li><p>-r  递归删除用户目录及下面内容</p>
+<p>​    备份或确认家目录下无有用内容</p>
+</li>
+</ul>
+</li>
+<li><p>usermod修改用户属性</p>
+<ul>
+<li>-u  指定UID</li>
+<li>-s  指定登录的SHELL解释器</li>
+<li>-M  不创建家目录</li>
+<li>-g  指定所属的组</li>
+<li>-c  添加用户说明</li>
+<li>-d  指定家目录</li>
+<li>-e  设定登录截止日期</li>
+</ul>
+</li>
+<li><p>passwd 修改密码</p>
+<ul>
+<li>–stdin  从标准输入接收密码并设置</li>
+</ul>
+</li>
+<li><p>chpasswd  从标准输入批量更改用户密码</p>
+</li>
+<li><p>groupadd 添加用户组</p>
+<ul>
+<li>-g  指定组id</li>
+</ul>
+</li>
+<li><p>groupdel  删除用户组</p>
+</li>
+<li><p>chage  查看和修改密码属性</p>
+<ul>
+<li>-l  list列表显示用户的密码信息</li>
+<li>-E  修改账户过期时间</li>
+</ul>
+</li>
+<li><p>su  用户身份切换</p>
+<ul>
+<li> -携带环境变量登录</li>
+<li> -c  以指定用户身份执行命令</li>
+</ul>
+</li>
+<li><p>sudo  允许指定用户执行某命令期间拥有root角色权限</p>
+<ul>
+<li>-l  查看获得的权限</li>
+</ul>
+</li>
+<li><p>visudo  编辑sudo配置文件的命令</p>
+<ul>
+<li>-c  检查配置文件语法</li>
+</ul>
+</li>
+</ul>
+<h2 id="其他相关"><a href="#其他相关" class="headerlink" title="其他相关"></a>其他相关</h2><ul>
+<li>date  显示系统时间和日期<ul>
+<li>-s  修改时间</li>
+<li>-d  指定过去或未来格式</li>
+</ul>
+</li>
+<li>alias  查看或设置别名</li>
+<li>unalias  取消别名</li>
+<li>runlevel  查看运行级别</li>
+<li>init  切换运行级别</li>
+<li>getenforce  查看selinux状态</li>
+<li>setenforce  设置selinux状态</li>
+<li>md5sum  给文件设置指纹（计算和检查MD5数字信息）</li>
+<li>du  文件或目录大小<ul>
+<li>-s  显示总大小</li>
+<li>-h  人类可读</li>
+</ul>
+</li>
+</ul>
+<h2 id="打包压缩"><a href="#打包压缩" class="headerlink" title="打包压缩"></a>打包压缩</h2><ul>
+<li>tar  打包压缩<ul>
+<li>-z  压缩</li>
+<li>-c  创建</li>
+<li>-v  输出打包过程</li>
+<li>-f  文件</li>
+<li>-t  查看文件</li>
+<li>-C  指定解压的路径</li>
+<li>-x  解压</li>
+<li>-h  跟随软链接</li>
+<li>–exclude  排除不打包的文件</li>
+<li>-X  从文件中排除不打包的文件</li>
+</ul>
+</li>
+</ul>
+<h2 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h2><ul>
+<li>df  查看文件系统<ul>
+<li>-i （inode）信息</li>
+<li>-h  以人类可读形式查看block信息</li>
+<li>-T  查看文件系统</li>
+</ul>
+</li>
+<li>fdisk  MBR磁盘查看和分区工具（小于2T）<ul>
+<li>-l  列表</li>
+</ul>
+</li>
+<li>parted  GPT磁盘分区工具（常用于大于2T）</li>
+<li>dd  创建一个虚拟文件系统</li>
+<li>partprobe  将分区信息通知内核，真正生效</li>
+<li>mkfs  格式化（本质创建文件系统）<ul>
+<li>-t  指定类型 -t ext4（mkfs.ext4）</li>
+<li>-b  指定block大小</li>
+<li>-i  指定inode大小</li>
+</ul>
+</li>
+<li>mount  挂载文件系统<ul>
+<li>-t  type指定文件类型</li>
+<li>-o  挂载的选项 mount -o rw，remount /</li>
+<li>-a  all挂载所有磁盘</li>
+</ul>
+</li>
+<li>umount  卸载文件系统<ul>
+<li>-lf  强制卸载</li>
+</ul>
+</li>
+<li>blkid  查看块设备属性（UUID,FSTYPE）</li>
+<li>dumpe2fs  查看ext文件系统细节</li>
+<li>fsck  检查和修复ext文件系统（好的磁盘不能操作），类似e2fsck<ul>
+<li>-a  修复磁盘</li>
+</ul>
+</li>
+<li>xfs_info (xfs_一堆) 查看xfs文件系统细节</li>
+<li>xfs_repair  检查和修复xfs文件系统</li>
+</ul>
+<h2 id="三剑客"><a href="#三剑客" class="headerlink" title="三剑客"></a>三剑客</h2><ul>
+<li>grep  过滤<ul>
+<li>–color=auto  过滤的内容加色</li>
+<li>-v （invert）取反</li>
+<li>-i （ignore 忽略）不区分大小写</li>
+<li>-n （number 数字）对输出的内容显示在源文件中的行号      显示行号</li>
+<li>-w （word）按单词为单位过滤</li>
+<li>-o  只输出匹配的内容</li>
+<li>-E （extend）扩展的grep，即egrep</li>
+<li>-A （after）显示过滤的字符串和它之后的多少行</li>
+<li>-B （before）显示过滤的字符串和它之前的多少行</li>
+<li>-C （context）显示过滤的字符串和它之前之后的多少行</li>
+<li>-p  用于过滤Perl兼容正则表达式</li>
+</ul>
+</li>
+<li>sed  流编辑器<ul>
+<li>参数<ul>
+<li>-n  取消命令的默认输出</li>
+<li>-i  直接修改文件内容，而不是输出到终端</li>
+<li>-r  支持扩展正则</li>
+</ul>
+</li>
+<li>sed的内置命令字符说明<ul>
+<li>s：替换</li>
+<li>g：全局</li>
+<li>p：打印</li>
+<li>d：删除</li>
+<li>a：追加</li>
+<li>i：插入</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>awk  是命令操作也可以作为编程语言，处理字符串<ul>
+<li>-F  指定分隔符</li>
+<li>列表示：$1第一列 $2第二列  以此类推……</li>
+<li>$0  整行</li>
+<li>$NF  最后一列</li>
+<li>$（NF-1）倒数第二列</li>
+<li>NR  行号</li>
+</ul>
+</li>
+</ul>
+<h2 id="文件属性"><a href="#文件属性" class="headerlink" title="文件属性"></a>文件属性</h2><ul>
+<li>chmod 修改文件权限<ul>
+<li>-R 递归修改</li>
+</ul>
+</li>
+<li>chown 改变文件用户和组<ul>
+<li>-R 递归修改</li>
+</ul>
+</li>
+<li>chgrp 修改用户组</li>
+<li>chattr  设置文件属性<ul>
+<li>+i  锁定文件</li>
+<li>-i  解锁文件</li>
+<li>+a  只能追加不能删除文件和内容</li>
+<li>-a  解锁</li>
+</ul>
+</li>
+<li>lsattr  查看文件属性</li>
+</ul>
+<h2 id="网络服务命令"><a href="#网络服务命令" class="headerlink" title="网络服务命令"></a>网络服务命令</h2><ul>
+<li>定时任务<ul>
+<li>crontab<ul>
+<li>-l 列表</li>
+<li>-e 编辑定时任务</li>
+<li>-u 查看特定用户下的定时任务</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><ul>
+<li>rpm  包管理器<br>安装，卸载，升级，查询和验证<ul>
+<li>-i  安装install</li>
+<li>-v  显示安装过程</li>
+<li>-h  用“#”显示安装进度条</li>
+<li>-U  升级软件包</li>
+<li>-e  卸载软件包</li>
+<li>–nodeps  忽略依赖</li>
+<li>-q  查询</li>
+<li>-a  所有</li>
+<li>-l  显示软件包中的所有文件列表</li>
+<li>-f  查询文件或命令属于哪个软件包</li>
+</ul>
+</li>
+<li>yum  安装rpm包自动解决依赖工具<ul>
+<li>install  安装软件包</li>
+<li>list  获取软件包名</li>
+<li>search 模糊查找软件包名</li>
+<li>groupinstall  安装组包</li>
+<li>grouplist  获取组包名称列表</li>
+<li>list installed  查已安装软件</li>
+<li>provides  根据命令配置查软件包</li>
+<li>remove  移除软件包（禁止使用）</li>
+<li>repolist  列出启用的yum源</li>
+<li>repolist all  列出所有yum，包括禁用的yum源也列出</li>
+</ul>
+</li>
+</ul>
+<h2 id="网络命令"><a href="#网络命令" class="headerlink" title="网络命令"></a>网络命令</h2><ul>
+<li>ifconfig  查看设置IP</li>
+<li>ip  查看和设置网络和IP</li>
+<li>ping  检查网络是否通畅</li>
+<li>traceroute  查看到达主机的网络路由信息<ul>
+<li>-d  不做反向解析</li>
+</ul>
+</li>
+<li>route  查看设置网关、路由</li>
+<li>-host主机路由  -net网络路由  默认网关default gw<ul>
+<li>add  添加</li>
+<li>del  删除</li>
+</ul>
+</li>
+<li>telnet  检测远程端口是否通畅</li>
+<li>lsof<ul>
+<li>-d  </li>
+<li>-i  查看端口</li>
+</ul>
+</li>
+</ul>
+<h2 id="Bash内置命令"><a href="#Bash内置命令" class="headerlink" title="Bash内置命令"></a>Bash内置命令</h2><ul>
+<li>history<ul>
+<li>-c  清所有</li>
+<li>-d  指定数字清</li>
+</ul>
+</li>
+<li>ulimit<ul>
+<li>-n  查文件描述符大小</li>
+</ul>
+</li>
+</ul>
+<h2 id="主机命令"><a href="#主机命令" class="headerlink" title="主机命令"></a>主机命令</h2><ul>
+<li>hostname  查看设置主机名</li>
+<li>hostnamectl  设置主机名（C7）</li>
+<li>hostname  修改主机名</li>
+<li>hostnamectl  CentOS7永久修改主机名</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/c3540fc.html" rel="prev" title="Linux系统优化及定时任务">
+                  <i class="fa fa-chevron-left"></i> Linux系统优化及定时任务
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/47edf33b.html" rel="next" title="Linux文本处理和find命令">
+                  Linux文本处理和find命令 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">365k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:32</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

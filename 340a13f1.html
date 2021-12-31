@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="rsync同步工具 rsync (remote synchronizetion) 一款开源的快速的，多功能的，可实现全量及增量（差异化备份）的本地或远程数据备份的优秀工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rsync使用">
+<meta property="og:url" content="https://klcc.cc/340a13f1.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="rsync同步工具 rsync (remote synchronizetion) 一款开源的快速的，多功能的，可实现全量及增量（差异化备份）的本地或远程数据备份的优秀工具">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/v2-6f26d816c7a3d517e75d8f4187d2c5b5_1440w.jpg">
+<meta property="article:published_time" content="2021-12-30T11:44:24.000Z">
+<meta property="article:modified_time" content="2021-12-31T01:16:20.351Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/gengff/blogimage/raw/master/images/v2-6f26d816c7a3d517e75d8f4187d2c5b5_1440w.jpg">
+
+
+<link rel="canonical" href="https://klcc.cc/340a13f1.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/340a13f1.html","path":"340a13f1.html","title":"Rsync使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Rsync使用 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">67</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#rsync%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7"><span class="nav-number">1.</span> <span class="nav-text">rsync同步工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rsync%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">rsync介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsync%E7%89%B9%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">rsync特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsync%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.3.</span> <span class="nav-text">rsync应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsync%E7%9A%84%E4%BC%A0%E8%BE%93%E6%96%B9%E5%BC%8F"><span class="nav-number">1.4.</span> <span class="nav-text">rsync的传输方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsync%E4%BC%A0%E8%BE%93%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">rsync传输模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsync%E4%BD%BF%E7%94%A8"><span class="nav-number">1.6.</span> <span class="nav-text">rsync使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsync%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.7.</span> <span class="nav-text">rsync守护进程模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-number">1.7.0.1.</span> <span class="nav-text">1、服务端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.7.0.2.</span> <span class="nav-text">2、客户端</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsync%E5%AE%9E%E6%97%B6%E5%90%8C%E6%AD%A5"><span class="nav-number">1.8.</span> <span class="nav-text">rsync实时同步</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/klcc-c.github.io/images/head.jpeg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/340a13f1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/head.jpeg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Rsync使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-30 19:44:24" itemprop="dateCreated datePublished" datetime="2021-12-30T19:44:24+08:00">2021-12-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-31 09:16:20" itemprop="dateModified" datetime="2021-12-31T09:16:20+08:00">2021-12-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="rsync同步工具"><a href="#rsync同步工具" class="headerlink" title="rsync同步工具"></a>rsync同步工具</h1><ul>
+<li>rsync (remote synchronizetion) 一款开源的快速的，多功能的，可实现全量及增量（差异化备份）的本地或远程数据备份的优秀工具<span id="more"></span>
+<img src="https://gitee.com/gengff/blogimage/raw/master/images/v2-6f26d816c7a3d517e75d8f4187d2c5b5_1440w.jpg" alt="v2-6f26d816c7a3d517e75d8f4187d2c5b5_1440w"></li>
+</ul>
+<h2 id="rsync介绍"><a href="#rsync介绍" class="headerlink" title="rsync介绍"></a>rsync介绍</h2><ul>
+<li>rsync，从软件的名称就可以看出来，rsync具有可使本地和远程两台主机之间的数据快速复制同步镜像、远程备份的功能，这个功能类似于ssh带的scp命令，但是又优于scp命令的功能，scp每次都是全量拷贝，而rsync可以增量拷贝。当然，rsync还可以在本地主机的不同分区或目录之间全量及增量的复制数据，这又类似cp命令。但是同样也优于cp命令，cp每次都是全量拷贝，而rsync可以增量拷贝。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rsync官方地址：https://rsync.samba.org/</span><br><span class="line">rsync监听端口：873</span><br><span class="line">rsync运行模式：C/S   client/server</span><br><span class="line"></span><br><span class="line">rsync简称叫做远程同步，可以实现不同主机之间的数据同步，还支持全量和增量</span><br></pre></td></tr></table></figure>
+
+<h2 id="rsync特性"><a href="#rsync特性" class="headerlink" title="rsync特性"></a>rsync特性</h2><ul>
+<li>1)支持拷贝特殊文件，如链接文件、设备等。</li>
+<li>2)可以有排除指定文件或目录同步的功能，相当于打包命令tar的排除功能。</li>
+<li>3)可以做到保持原文件或目录的权限、时间、软硬链接、属主、组等所有属性均不改变 –p。</li>
+<li>4)可以实现增量同步，既只同步发生变化的数据，因此数据传输效率很高（tar-N）。</li>
+<li>5)可以使用rcp、rsh、ssh等方式来配合传输文件（rsync本身不对数据加密）。</li>
+<li>6)可以通过socket（进程方式）传输文件和数据（服务端和客户端）。</li>
+<li>7)支持匿名的活认证（无需系统用户）的进程模式传输，可以实现方便安全的进行数据备份和镜像。</li>
+</ul>
+<h2 id="rsync应用场景"><a href="#rsync应用场景" class="headerlink" title="rsync应用场景"></a>rsync应用场景</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">全量备份</span><br><span class="line">增量备份</span><br><span class="line"></span><br><span class="line">两台服务器之间数据同步。</span><br><span class="line">把所有客户服务器数据同步到备份服务器，生产场景集群架构服务器备份方案。</span><br><span class="line">rsync结合inotify的功能做实时的数据同步。</span><br></pre></td></tr></table></figure>
+
+<h2 id="rsync的传输方式"><a href="#rsync的传输方式" class="headerlink" title="rsync的传输方式"></a>rsync的传输方式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">push 推：</span><br><span class="line">  客户端将数据从本地推送至服务端(rsync服务器主动推送数据给其他主机。服务器开销大，适合后端服务器少的情况)</span><br><span class="line"> </span><br><span class="line">pull 拉：</span><br><span class="line">  客户端将数据从服务端拉取到本地(客户端主动向rsync服务器拉取数据)</span><br></pre></td></tr></table></figure>
+
+<h2 id="rsync传输模式"><a href="#rsync传输模式" class="headerlink" title="rsync传输模式"></a>rsync传输模式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.本地方式（类似于cp，不支持推送和拉取，只是单纯的复制）</span><br><span class="line">2.远程方式（类似于scp，又不同于scp），scp只支持全量备份，rsync支持增量备份和差异备份</span><br><span class="line">3.守护进程（socket）方式（客户端和服务端）</span><br></pre></td></tr></table></figure>
+
+<h2 id="rsync使用"><a href="#rsync使用" class="headerlink" title="rsync使用"></a>rsync使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">-a   <span class="comment">#归档模式传输, 等于-tropgDl    -t -r -o -p -g -D -l</span></span><br><span class="line">-v   <span class="comment">#详细模式输出, 打印速率, 文件数量等</span></span><br><span class="line">	[root@m01 ~]<span class="comment"># rsync -v ./2.txt  root@172.16.1.41:/opt/</span></span><br><span class="line">-z   <span class="comment">#传输时进行压缩以提高效率</span></span><br><span class="line">	[root@m01 ~]<span class="comment"># rsync -vz ./2.txt  root@172.16.1.41:/opt/</span></span><br><span class="line">-r   <span class="comment">#递归传输目录及子目录，即目录下得所有目录都同样传输。</span></span><br><span class="line">	[root@m01 ~]<span class="comment"># rsync -vzr ./a  root@172.16.1.41:/opt/</span></span><br><span class="line">-t   <span class="comment">#保持文件时间信息</span></span><br><span class="line">	[root@m01 ~]<span class="comment"># rsync -vzrt ./a/b/c/2.txt  root@172.16.1.41:/opt/</span></span><br><span class="line">-o   <span class="comment">#保持文件属主信息</span></span><br><span class="line">-g   <span class="comment">#保持文件属组信息</span></span><br><span class="line">	[root@m01 ~]<span class="comment"># rsync -vzrtgo  ./a/b/c/2.txt  root@172.16.1.41:/opt/</span></span><br><span class="line">-p   <span class="comment">#保持文件权限</span></span><br><span class="line">	[root@m01 ~]<span class="comment"># rsync -vzrtgop  ./a/b/c/2.txt  root@172.16.1.41:/opt/</span></span><br><span class="line">-l   <span class="comment">#保留软连接</span></span><br><span class="line">	[root@m01 ~]<span class="comment"># rsync -vzrtgopl  ./*  root@172.16.1.41:/opt/</span></span><br><span class="line">-P   <span class="comment">#显示同步的过程及传输时的进度等信息</span></span><br><span class="line">	[root@m01 ~]<span class="comment"># rsync -vzrtgoplP  ./*  root@172.16.1.41:/opt/</span></span><br><span class="line">-D   <span class="comment">#保持设备文件信息</span></span><br><span class="line">	[root@m01 dev]<span class="comment"># rsync -vzrtgDopl /dev/tty1   root@172.16.1.41:/opt/</span></span><br><span class="line">-L   <span class="comment">#保留软连接指向的目标文件</span></span><br><span class="line">-e   <span class="comment">#使用的信道协议,指定替代rsh的shell程序</span></span><br><span class="line"></span><br><span class="line">--append          <span class="comment"># 指定文件接着上次传输中断处继续传输</span></span><br><span class="line">--append-verify   <span class="comment"># 使用参数续传（在断点续传之后，验证一下文件，如果不同，修复文件）</span></span><br><span class="line"></span><br><span class="line">--exclude=PATTERN   <span class="comment"># 指定排除不需要传输的文件</span></span><br><span class="line">	[root@m01 ~]<span class="comment"># rsync -avzP --append-verify --exclude=2.txt  ./* root@172.16.1.41:/opt/</span></span><br><span class="line"></span><br><span class="line">--exclude-from=file <span class="comment"># 按照文件指定内容排除</span></span><br><span class="line">	[root@m01 ~]<span class="comment"># rsync -avzP --append-verify --exclude-from=/tmp/exclude.txt  ./* root@172.16.1.41:/opt/</span></span><br><span class="line"></span><br><span class="line">--bwlimit=100       <span class="comment"># 限速传输（单位：MB）</span></span><br><span class="line">	[root@m01 ~]<span class="comment"># rsync -avzP --append-verify --bwlimit=10  ./* root@172.16.1.41:/opt/</span></span><br><span class="line"></span><br><span class="line">--delete            <span class="comment"># 让目标目录和源目录数据保持一致</span></span><br><span class="line"></span><br><span class="line">--password-file=xxx <span class="comment"># 使用密码文件</span></span><br><span class="line"></span><br><span class="line">--port              <span class="comment"># 指定端口传输</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="rsync守护进程模式"><a href="#rsync守护进程模式" class="headerlink" title="rsync守护进程模式"></a>rsync守护进程模式</h2><h4 id="1、服务端"><a href="#1、服务端" class="headerlink" title="1、服务端"></a>1、服务端</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">1、安装</span><br><span class="line"> [root@backup ~]<span class="comment"># yum install -y rsync</span></span><br><span class="line"></span><br><span class="line">2、修改配置文件</span><br><span class="line"> [root@m01 ~]<span class="comment"># vim /etc/rsyncd.conf </span></span><br><span class="line">  uid = rsync</span><br><span class="line">  gid = rsync</span><br><span class="line">  port = 873</span><br><span class="line">  fake super = yes</span><br><span class="line">  use chroot = no</span><br><span class="line">  max connections = 200</span><br><span class="line">  timeout = 600</span><br><span class="line">  ignore errors</span><br><span class="line">  <span class="built_in">read</span> only = <span class="literal">false</span></span><br><span class="line">  list = <span class="literal">false</span></span><br><span class="line">  auth users = rsync_backup</span><br><span class="line">  secrets file = /etc/rsync.passwd</span><br><span class="line">  <span class="built_in">log</span> file = /var/<span class="built_in">log</span>/rsyncd.log</span><br><span class="line">  <span class="comment">#####################################</span></span><br><span class="line">  [backup]</span><br><span class="line">  comment = welcome to backup!</span><br><span class="line">  path = /backup</span><br><span class="line">  [linux]</span><br><span class="line">  comment = welcome to linux!</span><br><span class="line">  path=/tmp/linux</span><br><span class="line"></span><br><span class="line">3、创建系统用户</span><br><span class="line"> [root@backup opt]<span class="comment"># groupadd rsync -g 666</span></span><br><span class="line"> [root@backup opt]<span class="comment"># useradd rsync -u 666 -g 666 -M -s /sbin/nologin -r</span></span><br><span class="line"></span><br><span class="line">4、创建密码文件</span><br><span class="line"> [root@backup opt]<span class="comment"># echo &quot;rsync_backup:123456&quot; &gt; /etc/rsync.passwd</span></span><br><span class="line"></span><br><span class="line">5、授权（必须授权为600）</span><br><span class="line"> [root@backup opt]<span class="comment"># chmod 600 /etc/rsync.passwd</span></span><br><span class="line"></span><br><span class="line">6、创建备份目录</span><br><span class="line"> [root@backup opt]<span class="comment"># mkdir /backup</span></span><br><span class="line"> [root@backup opt]<span class="comment"># mkdir /tmp/linux</span></span><br><span class="line"></span><br><span class="line">7、目录授权</span><br><span class="line"> [root@backup opt]<span class="comment"># chown rsync.rsync /backup/</span></span><br><span class="line"> [root@backup opt]<span class="comment"># chown rsync.rsync /tmp/linux/</span></span><br><span class="line"></span><br><span class="line">8、关闭防火墙和selinux</span><br><span class="line"> [root@backup opt]<span class="comment"># systemctl disabel --now firewalld</span></span><br><span class="line"> [root@backup opt]<span class="comment"># setenforce 0</span></span><br><span class="line"></span><br><span class="line">9、启动rsyncd服务</span><br><span class="line"> [root@backup opt]<span class="comment"># systemctl start rsyncd</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2、客户端"><a href="#2、客户端" class="headerlink" title="2、客户端"></a>2、客户端</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">方法一：自己输入密码</span><br><span class="line">  [root@m01 ~]<span class="comment"># rsync -avzP ./* rsync_backup@172.16.1.41::backup</span></span><br><span class="line">	</span><br><span class="line">   rsync_backup ： 虚拟用户，只在数据传输时使用</span><br><span class="line">   172.16.1.41  ： backup服务端的IP</span><br><span class="line">   backup       ： 模块名称</span><br><span class="line">	</span><br><span class="line">方法二：设置密码文件，运行时读取</span><br><span class="line"></span><br><span class="line">	1、编写密码文件</span><br><span class="line">   [root@backup opt]<span class="comment"># echo &quot;123456&quot; &gt; /etc/rsync.passwd</span></span><br><span class="line"></span><br><span class="line">	2、授权</span><br><span class="line">   [root@m01 ~]<span class="comment"># chmod 600 /etc/rsync.passwd</span></span><br><span class="line"></span><br><span class="line">	3、连接</span><br><span class="line">   [root@m01 ~]<span class="comment"># rsync -avzP --password-file=/etc/rsync.passwd  ./* rsync_backup@172.16.1.41::linux</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">方法三：添加环境变量</span><br><span class="line">	1、定义环境变量</span><br><span class="line">   <span class="built_in">export</span> RSYNC_PASSWORD=123456</span><br><span class="line">	</span><br><span class="line">	2、同步</span><br><span class="line">   [root@m01 ~]<span class="comment"># rsync -avzP  ./* rsync_backup@172.16.1.41::linux</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="rsync实时同步"><a href="#rsync实时同步" class="headerlink" title="rsync实时同步"></a>rsync实时同步</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">rsync是不支持实时同步的，通常我们借助于inotify这个软件来实时监控文件变化，一旦inotify监控到文件变，则立即调用rsync进行同步。</span><br><span class="line"></span><br><span class="line">1、安装inotify(装在客户端)</span><br><span class="line">[root@web01 ~]<span class="comment"># yum -y install inotify-tools</span></span><br><span class="line"></span><br><span class="line">2、inotify参数介绍</span><br><span class="line">-m 持续监控</span><br><span class="line">-r 递归</span><br><span class="line">-q 静默，仅打印时间信息</span><br><span class="line">--timefmt 指定输出时间格式</span><br><span class="line">--format 指定事件输出格式</span><br><span class="line">    %Xe 事件</span><br><span class="line">    %w 目录</span><br><span class="line">    %f 文件</span><br><span class="line">-e 指定监控的事件</span><br><span class="line">    access 访问</span><br><span class="line">    modify 内容修改</span><br><span class="line">    attrib 属性修改</span><br><span class="line">    close_write 修改真实文件内容</span><br><span class="line">    open 打开</span><br><span class="line">    create 创建</span><br><span class="line">    delete 删除</span><br><span class="line">    umount 卸载</span><br><span class="line">    </span><br><span class="line">3、开始监控</span><br><span class="line">[root@m01 ~]<span class="comment"># /usr/bin/inotifywait  -mrq  --format &#x27;%Xe  %w  %f&#x27; -e create,modify,delete,attrib,close_write  /root</span></span><br><span class="line"></span><br><span class="line">4、实时监控并同步</span><br><span class="line">[root@m01 ~]<span class="comment"># /usr/bin/inotifywait  -mrq  --format &#x27;%Xe  %w  %f&#x27; -e create,modify,delete,attrib,close_write  /root | while read line;do</span></span><br><span class="line">  <span class="built_in">cd</span>  /root</span><br><span class="line">  rsync -avzP --delete --password-file=/etc/rsyncd.passwd ./* rsync_backup@172.16.1.41::backup</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/2efe136b.html" rel="prev" title="Linux防火墙iptables">
+                  <i class="fa fa-chevron-left"></i> Linux防火墙iptables
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/e15f268d.html" rel="next" title="NFS搭建使用">
+                  NFS搭建使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">365k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:32</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

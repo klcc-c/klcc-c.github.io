@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="系统安全优化关闭 selinux 安全服务 selinux（Security-Enhanced Linux）是美国国家安全局（NSA）对于强制访问控制的实现，这个功能让系统管理员又爱又恨，这里我们还是把它给关闭了吧，至于安全问题，后面通过其他手段来解决，这也是大多数生产环境的做法，如果非要开启也是可以的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux系统优化及定时任务">
+<meta property="og:url" content="https://klcc.cc/c3540fc.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="系统安全优化关闭 selinux 安全服务 selinux（Security-Enhanced Linux）是美国国家安全局（NSA）对于强制访问控制的实现，这个功能让系统管理员又爱又恨，这里我们还是把它给关闭了吧，至于安全问题，后面通过其他手段来解决，这也是大多数生产环境的做法，如果非要开启也是可以的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211221164241000.png">
+<meta property="article:published_time" content="2021-12-21T16:35:35.000Z">
+<meta property="article:modified_time" content="2021-12-31T01:16:20.346Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211221164241000.png">
+
+
+<link rel="canonical" href="https://klcc.cc/c3540fc.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/c3540fc.html","path":"c3540fc.html","title":"Linux系统优化及定时任务"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux系统优化及定时任务 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">67</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">系统安全优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD-selinux-%E5%AE%89%E5%85%A8%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.</span> <span class="nav-text">关闭 selinux 安全服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD-firewalld-%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">1.2.</span> <span class="nav-text">关闭 firewalld 防火墙</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B2%E6%AD%A2%E7%B3%BB%E7%BB%9F%E4%B9%B1%E7%A0%81%E4%BC%98%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">防止系统乱码优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">定时任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E5%9F%BA%E6%9C%AC%E6%A6%82%E8%BF%B0"><span class="nav-number">3.1.</span> <span class="nav-text">计划任务基本概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFcrond"><span class="nav-number">3.1.0.1.</span> <span class="nav-text">1.什么是crond</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8crond"><span class="nav-number">3.1.0.2.</span> <span class="nav-text">2.为什么要使用crond</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E4%B8%BB%E8%A6%81%E5%88%86%E4%B8%BA%E4%BB%A5%E4%B8%8B%E4%B8%A4%E7%A7%8D%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5"><span class="nav-number">3.1.0.3.</span> <span class="nav-text">3.计划任务主要分为以下两种使用情况:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">计划任务时间管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Crontab%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%B0%E5%BD%95%E4%BA%86%E6%97%B6%E9%97%B4%E5%91%A8%E6%9C%9F%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-number">3.2.0.1.</span> <span class="nav-text">1.Crontab配置文件记录了时间周期的含义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BA%86%E8%A7%A3crontab%E7%9A%84%E6%97%B6%E9%97%B4%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83"><span class="nav-number">3.2.0.2.</span> <span class="nav-text">2.了解crontab的时间编写规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8crontab%E7%BC%96%E5%86%99cron%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.2.0.3.</span> <span class="nav-text">3.使用crontab编写cron定时任务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E7%BC%96%E5%86%99%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.3.</span> <span class="nav-text">计划任务编写实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8root%E7%94%A8%E6%88%B7%E6%AF%8F5%E5%88%86%E9%92%9F%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">1.使用root用户每5分钟执行一次时间同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%AF%8F%E5%A4%A9%E7%9A%84%E4%B8%8B%E5%8D%883-5%E7%82%B9%EF%BC%8C%E6%AF%8F%E9%9A%94%E5%8D%8A%E5%B0%8F%E6%97%B6%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1sync%E5%91%BD%E4%BB%A4"><span class="nav-number">3.3.0.2.</span> <span class="nav-text">2.每天的下午3,5点，每隔半小时执行一次sync命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%A1%88%E4%BE%8B%EF%BC%9A%E6%AF%8F%E5%A4%A9%E5%87%8C%E6%99%A83%E7%82%B9%E5%81%9A%E4%B8%80%E6%AC%A1%E5%A4%87%E4%BB%BD%EF%BC%9F%E5%A4%87%E4%BB%BD-etc-%E7%9B%AE%E5%BD%95%E5%88%B0-backup%E4%B8%8B%E9%9D%A2"><span class="nav-number">3.3.0.3.</span> <span class="nav-text">3.案例：每天凌晨3点做一次备份？备份&#x2F;etc&#x2F;目录到&#x2F;backup下面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-crond%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E9%A1%B9"><span class="nav-number">3.3.0.4.</span> <span class="nav-text">4.crond注意的事项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-crond%E5%A6%82%E4%BD%95%E5%A4%87%E4%BB%BD"><span class="nav-number">3.3.0.5.</span> <span class="nav-text">5.crond如何备份</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-crond%E5%A6%82%E4%BD%95%E6%8B%92%E7%BB%9D%E6%9F%90%E4%B8%AA%E7%94%A8%E6%88%B7%E4%BD%BF%E7%94%A8"><span class="nav-number">3.3.0.6.</span> <span class="nav-text">6.crond如何拒绝某个用户使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E5%A6%82%E4%BD%95%E8%B0%83%E8%AF%95"><span class="nav-number">3.4.</span> <span class="nav-text">计划任务如何调试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-crond%E8%B0%83%E8%AF%95"><span class="nav-number">3.4.0.1.</span> <span class="nav-text">1.crond调试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-crond%E7%BC%96%E5%86%99%E6%80%9D%E8%B7%AF"><span class="nav-number">3.4.0.2.</span> <span class="nav-text">2.crond编写思路</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/klcc-c.github.io/images/head.jpeg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/c3540fc.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/head.jpeg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux系统优化及定时任务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-22 00:35:35" itemprop="dateCreated datePublished" datetime="2021-12-22T00:35:35+08:00">2021-12-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-31 09:16:20" itemprop="dateModified" datetime="2021-12-31T09:16:20+08:00">2021-12-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="系统安全优化"><a href="#系统安全优化" class="headerlink" title="系统安全优化"></a>系统安全优化</h1><h2 id="关闭-selinux-安全服务"><a href="#关闭-selinux-安全服务" class="headerlink" title="关闭 selinux 安全服务"></a>关闭 selinux 安全服务</h2><p> selinux（Security-Enhanced Linux）是美国国家安全局（NSA）对于强制访问控制的实现，这个功能让系统管理员又爱又恨，这里我们还是把它给关闭了吧，至于安全问题，后面通过其他手段来解决，这也是大多数生产环境的做法，如果非要开启也是可以的。</p>
+<span id="more"></span>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#临时关闭</span></span><br><span class="line">[root@localhost ~]<span class="comment"># setenforce  0</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#永久关闭,修改完配置后重启主机</span></span><br><span class="line">[root@localhost ~]<span class="comment"># sed &#x27;s#SELINUX=enforcing#SELINUX=disabled#g&#x27; /etc/selinux/config</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#检查结果</span></span><br><span class="line">[root@localhost ~]<span class="comment"># grep &quot;disabled&quot; /etc/selinux/config</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭-firewalld-防火墙"><a href="#关闭-firewalld-防火墙" class="headerlink" title="关闭 firewalld 防火墙"></a>关闭 firewalld 防火墙</h2><p>  关闭防火墙的目的是为了让初学者学习更方便，将来在学了firewalld技术后可再统一开启。 在企业环境中，<br>  一般只有配置外网IP的linux服务器才需要开启防火墙，但即使是有外网IP，对于高并发高流量的业务服务器<br>  仍是不能开的，因为会有较大性能损失，导致网站访问很慢，这种情况下只能在前端加更好的硬件防火墙了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 临时关闭</span></span><br><span class="line">[root@egon ~]<span class="comment"># systemctl stop firewalld</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 设置开机不启动</span></span><br><span class="line">[root@egon ~]<span class="comment"># systemctl disable firewalld</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">系统优化脚本命令：</span><br><span class="line">yum install wget -y &amp;&amp; wget https://daima.baim0.xyz/init.sh &amp;&amp; chmod +x init.sh &amp;&amp; ./init.sh</span><br><span class="line"></span><br><span class="line">脚本优化内容：</span><br><span class="line"></span><br><span class="line">  删除初始源</span><br><span class="line">  阿里centos7源</span><br><span class="line">  阿里epel源</span><br><span class="line">  nginx官方stable源</span><br><span class="line">  清除缓存</span><br><span class="line">  建立新缓存</span><br><span class="line">  更新软件</span><br><span class="line">  安装常用软件</span><br><span class="line">  关闭selinux</span><br><span class="line">  关闭防火墙</span><br><span class="line">  系统参数优化</span><br><span class="line">  ssh优化</span><br><span class="line">  关闭不常用的东西</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211221164241000.png" alt="image-20211221164241000"></p>
+<h1 id="防止系统乱码优化"><a href="#防止系统乱码优化" class="headerlink" title="防止系统乱码优化"></a>防止系统乱码优化</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">en_US.UTF-8		: 美式英文，utf-8</span><br><span class="line">zh_CN.UTF-8</span><br><span class="line">zh_HK.UTF-8</span><br><span class="line"><span class="comment"># 查看当前使用的系统语言</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># echo $LANG</span></span><br><span class="line">  zh_CN.UTF-8</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看安装的语言包</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># locale</span></span><br><span class="line">  LANG=zh_CN.UTF-8</span><br><span class="line"></span><br><span class="line"><span class="comment"># 临时优化</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># export LANG=zh_CN.UTF-8  #设置编码</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 永久优化</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># vim /etc/locale.conf </span></span><br><span class="line">  LANG=<span class="string">&quot;zh_CN.UTF-8&quot;</span>  <span class="comment">#将原来的配置内容修改，注销或重启后，中文的语言环境。</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h1><h2 id="计划任务基本概述"><a href="#计划任务基本概述" class="headerlink" title="计划任务基本概述"></a>计划任务基本概述</h2><h4 id="1-什么是crond"><a href="#1-什么是crond" class="headerlink" title="1.什么是crond"></a>1.什么是crond</h4><ul>
+<li>crond就是计划任务，类似于我们平时生活中的闹钟。定点执行。</li>
+</ul>
+<h4 id="2-为什么要使用crond"><a href="#2-为什么要使用crond" class="headerlink" title="2.为什么要使用crond"></a>2.为什么要使用crond</h4><ul>
+<li>crond主要是做一些周期性的任务，比如: 凌晨3点定时备份数据。比如：11点开启网站抢购接口，12点关闭网站抢购接口。</li>
+</ul>
+<h4 id="3-计划任务主要分为以下两种使用情况"><a href="#3-计划任务主要分为以下两种使用情况" class="headerlink" title="3.计划任务主要分为以下两种使用情况:"></a>3.计划任务主要分为以下两种使用情况:</h4><ul>
+<li>1.系统级别的定时任务： 临时文件清理、系统信息采集、日志文件切割</li>
+<li>2.用户级别的定时任务： 定时向互联网同步时间、定时备份系统配置文件、定时备份数据库的数据</li>
+</ul>
+<h2 id="计划任务时间管理"><a href="#计划任务时间管理" class="headerlink" title="计划任务时间管理"></a>计划任务时间管理</h2><h4 id="1-Crontab配置文件记录了时间周期的含义"><a href="#1-Crontab配置文件记录了时间周期的含义" class="headerlink" title="1.Crontab配置文件记录了时间周期的含义"></a>1.Crontab配置文件记录了时间周期的含义</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># vim /etc/crontab</span></span><br><span class="line">SHELL=/bin/bash                     <span class="comment">#执行命令的解释器</span></span><br><span class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin  <span class="comment">#环境变量</span></span><br><span class="line">MAILTO=root                         <span class="comment">#邮件发给谁</span></span><br><span class="line"><span class="comment"># Example of job definition:</span></span><br><span class="line"><span class="comment"># .---------------- minute (0 - 59) #分钟</span></span><br><span class="line"><span class="comment"># |  .------------- hour (0 - 23)   #小时</span></span><br><span class="line"><span class="comment"># |  |  .---------- day of month (1 - 31)   #日期</span></span><br><span class="line"><span class="comment"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr #月份</span></span><br><span class="line"><span class="comment"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat  #星期</span></span><br><span class="line"><span class="comment"># |  |  |  |  |</span></span><br><span class="line"><span class="comment"># *  *  *  *  *   command to be executed</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># *  表示任意的(分、时、日、月、周)时间都执行</span></span><br><span class="line"><span class="comment"># -  表示一个时间范围段, 如5-7点</span></span><br><span class="line"><span class="comment"># ,  表示分隔时段, 如6,0,4表示周六、日、四</span></span><br><span class="line"><span class="comment"># /1 表示每隔n单位时间, 如*/10 每10分钟</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-了解crontab的时间编写规范"><a href="#2-了解crontab的时间编写规范" class="headerlink" title="2.了解crontab的时间编写规范"></a>2.了解crontab的时间编写规范</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">00 02 * * * ls      <span class="comment">#每天的凌晨2点整执行</span></span><br><span class="line">00 02 1 * * ls      <span class="comment">#每月的1日的凌晨2点整执行</span></span><br><span class="line">00 02 14 2 * ls     <span class="comment">#每年的2月14日凌晨2点执行</span></span><br><span class="line">00 02 * * 7 ls      <span class="comment">#每周天的凌晨2点整执行</span></span><br><span class="line">00 02 * 6 5 ls      <span class="comment">#每年的6月周五凌晨2点执行</span></span><br><span class="line">00 02 14 * 7 ls     <span class="comment">#每月14日或每周日的凌晨2点都执行</span></span><br><span class="line">00 02 14 2 7 ls     <span class="comment">#每年的2月14日或每年2月的周天的凌晨2点执行   </span></span><br><span class="line">*/10  02 * * * ls   <span class="comment">#每天凌晨2点，每隔10分钟执行一次</span></span><br><span class="line">* * * * *  ls       <span class="comment">#每分钟都执行</span></span><br><span class="line">00 00 14 2 *  ls    <span class="comment">#每年2月14日的凌晨执行命令 </span></span><br><span class="line">*/5 * * * *  ls     <span class="comment">#每隔5分钟执行一次</span></span><br><span class="line">00 02 * 1,5,8 * ls  <span class="comment">#每年的1月5月8月凌晨2点执行</span></span><br><span class="line">00 02 1-8 * *  ls    <span class="comment">#每月1号到8号凌晨2点执行</span></span><br><span class="line">0 21 * * * ls       <span class="comment">#每天晚上21:00执行</span></span><br><span class="line">45 4 1,10,22 * * ls <span class="comment">#每月1、10、22日的4:45执行</span></span><br><span class="line">45 4 1-10 * * l     <span class="comment">#每月1到10日的4:45执行</span></span><br><span class="line">3,15 8-11 */2 * * ls <span class="comment">#每隔两天的上午8点到11点的第3和第15分钟执行</span></span><br><span class="line">0 23-7/1 * * * ls   <span class="comment">#晚上11点到早上7点之间，每隔一小时执行</span></span><br><span class="line">15 21 * * 1-5 ls    <span class="comment">#周一到周五每天晚上21:15执行</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-使用crontab编写cron定时任务"><a href="#3-使用crontab编写cron定时任务" class="headerlink" title="3.使用crontab编写cron定时任务"></a>3.使用crontab编写cron定时任务</h4><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-e</td>
+<td align="left">编辑定时任务</td>
+</tr>
+<tr>
+<td align="left">-l</td>
+<td align="left">查看定时任务</td>
+</tr>
+<tr>
+<td align="left">-r</td>
+<td align="left">删除定时任务</td>
+</tr>
+<tr>
+<td align="left">-u</td>
+<td align="left">指定其他用户</td>
+</tr>
+</tbody></table>
+<h2 id="计划任务编写实践"><a href="#计划任务编写实践" class="headerlink" title="计划任务编写实践"></a>计划任务编写实践</h2><h4 id="1-使用root用户每5分钟执行一次时间同步"><a href="#1-使用root用户每5分钟执行一次时间同步" class="headerlink" title="1.使用root用户每5分钟执行一次时间同步"></a>1.使用root用户每5分钟执行一次时间同步</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.如何同步时间</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ntpdate time.windows.com &amp;&gt;/dev/null</span></span><br><span class="line"><span class="comment">#2.配置定时任务</span></span><br><span class="line">[root@localhost ~]<span class="comment"># crontab -e -u root</span></span><br><span class="line">[root@localhost ~]<span class="comment">#  crontab -l -u root</span></span><br><span class="line">*/5 * * * * ntpdate time.windows.com &amp;&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-每天的下午3-5点，每隔半小时执行一次sync命令"><a href="#2-每天的下午3-5点，每隔半小时执行一次sync命令" class="headerlink" title="2.每天的下午3,5点，每隔半小时执行一次sync命令"></a>2.每天的下午3,5点，每隔半小时执行一次sync命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># crontab -l</span></span><br><span class="line">*/30 15,17 * * * sync &amp;&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-案例：每天凌晨3点做一次备份？备份-etc-目录到-backup下面"><a href="#3-案例：每天凌晨3点做一次备份？备份-etc-目录到-backup下面" class="headerlink" title="3.案例：每天凌晨3点做一次备份？备份/etc/目录到/backup下面"></a>3.案例：每天凌晨3点做一次备份？备份/etc/目录到/backup下面</h4><p>\1) 将备份命令写入一个脚本中</p>
+<p>\2) 每天备份文件名要求格式: 2019-05-01_hostname_etc.tar.gz</p>
+<p>\3) 在执行计划任务时，不要输出任务信息</p>
+<p>\4) 存放备份内容的目录要求只保留三天的数据*</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.实现如上备份需求</span></span><br><span class="line">[root@localhost ~]<span class="comment"># mkdir /backup</span></span><br><span class="line">[root@localhost ~]<span class="comment"># tar zcf $(date +%F)_$(hostname)_etc.tar.gz /etc</span></span><br><span class="line">[root@localhost ~]<span class="comment"># find /backup -name “*.tar.gz” -mtime +3 -exec rm -f &#123;&#125;\;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.将命令写入至一个文件中</span></span><br><span class="line">[root@localhost ~]<span class="comment"># vim /root/back.sh</span></span><br><span class="line">mkdir /backup</span><br><span class="line">tar zcf $(date +%F)_$(hostname)_etc.tar.gz /etc</span><br><span class="line">find /backup -name “*.tar.gz” -mtime +3 -<span class="built_in">exec</span> rm -f &#123;&#125;\;</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.配置定时任务</span></span><br><span class="line">[root@localhost ~]<span class="comment"># crontab -l</span></span><br><span class="line">00 03 * * * bash /root/back.sh  &amp;&gt;/dev/null</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.备份脚本</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-crond注意的事项"><a href="#4-crond注意的事项" class="headerlink" title="4.crond注意的事项"></a>4.crond注意的事项</h4><p>\1) 给定时任务注释</p>
+<p>\2) 将需要定期执行的任务写入Shell脚本中，避免直接使用命令无法执行的情况tar date</p>
+<p>\3) 定时任务的结尾一定要有&amp;&gt;/dev/null或者将结果追加重定向&gt;&gt;/tmp/date.log文件</p>
+<p>\4) 注意有些命令是无法成功执行的 echo “123” &gt;&gt;/tmp/test.log &amp;&gt;/dev/null</p>
+<p><strong>如果一定要是用命令，命令必须使用绝对路径</strong></p>
+<h4 id="5-crond如何备份"><a href="#5-crond如何备份" class="headerlink" title="5.crond如何备份"></a>5.crond如何备份</h4><p>\1) 通过查找/var/log/cron中执行的记录，去推算任务执行的时间</p>
+<p>\2) 定时的备份/var/spool/cron/{usernmae}*</p>
+<h4 id="6-crond如何拒绝某个用户使用"><a href="#6-crond如何拒绝某个用户使用" class="headerlink" title="6.crond如何拒绝某个用户使用"></a>6.crond如何拒绝某个用户使用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.使用root将需要拒绝的用户加入/etc/cron.deny</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;xuliangwei&quot; &gt;&gt; /etc/cron.deny</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.登陆该普通用户，测试是否能编写定时任务</span></span><br><span class="line">[<span class="built_in">test</span>@localhost ~]$ crontab -e</span><br><span class="line">You (<span class="built_in">test</span>) are not allowed to use this program (crontab)</span><br><span class="line">See crontab(1) <span class="keyword">for</span> more information</span><br></pre></td></tr></table></figure>
+
+<h2 id="计划任务如何调试"><a href="#计划任务如何调试" class="headerlink" title="计划任务如何调试"></a>计划任务如何调试</h2><h4 id="1-crond调试"><a href="#1-crond调试" class="headerlink" title="1.crond调试"></a>1.crond调试</h4><p>\1) 调整任务每分钟执行的频率, 以便做后续的调试。</p>
+<p>\2) 如果使用cron运行脚本，请将脚本执行的结果写入指定日志文件, 观察日志内容是否正常。</p>
+<p>\3) 命令使用绝对路径, 防止无法找到命令导致定时任务执行产生故障。</p>
+<p>\4) 通过查看/var/log/cron日志，以便检查我们执行的结果，方便进行调试。</p>
+<h4 id="2-crond编写思路"><a href="#2-crond编写思路" class="headerlink" title="2.crond编写思路"></a>2.crond编写思路</h4><ul>
+<li>1.手动执行命令，然后保留执行成功的结果。</li>
+<li>2.编写脚本<ul>
+<li>脚本需要统一路径/scripts</li>
+<li>脚本内容复制执行成功的命令(减少每个环节出错几率)</li>
+<li>脚本内容尽可能的优化, 使用一些变量或使用简单的判断语句</li>
+<li>脚本执行的输出信息可以重定向至其他位置保留或写入/dev/null</li>
+</ul>
+</li>
+<li>3.执行脚本<ul>
+<li>使用bash命令执行, 防止脚本没有增加执行权限(/usr/bin/bash)</li>
+<li>执行脚本成功后，复制该执行的命令，以便写入cron</li>
+</ul>
+</li>
+<li>4.编写计划任务<ul>
+<li>加上必要的注释信息, 人、时间、任务</li>
+<li>设定计划任务执行的周期</li>
+<li>粘贴执行脚本的命令(不要手敲)</li>
+</ul>
+</li>
+<li>5.调试计划任务<ul>
+<li>增加任务频率测试</li>
+<li>检查环境变量问题</li>
+<li>检查crond服务日志</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/891d6bd.html" rel="prev" title="Linux包管理及压缩命令">
+                  <i class="fa fa-chevron-left"></i> Linux包管理及压缩命令
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/51ea15a6.html" rel="next" title="Linux命令总结">
+                  Linux命令总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">365k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:32</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

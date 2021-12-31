@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="磁盘管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux磁盘挂载分区">
+<meta property="og:url" content="https://klcc.cc/f9ef965d.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="磁盘管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/mbr.jpeg">
+<meta property="article:published_time" content="2021-12-29T07:06:16.000Z">
+<meta property="article:modified_time" content="2021-12-31T01:16:20.347Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/gengff/blogimage/raw/master/images/mbr.jpeg">
+
+
+<link rel="canonical" href="https://klcc.cc/f9ef965d.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/f9ef965d.html","path":"f9ef965d.html","title":"Linux磁盘挂载分区"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux磁盘挂载分区 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">67</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">磁盘管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA"><span class="nav-number">1.1.</span> <span class="nav-text">磁盘分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%9F%BA%E6%9C%AC%E5%88%86%E5%8C%BAfdisk"><span class="nav-number">1.1.1.</span> <span class="nav-text">磁盘基本分区fdisk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%88%86%E5%8C%BAGdisk"><span class="nav-number">1.1.2.</span> <span class="nav-text">磁盘的基本分区Gdisk</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD"><span class="nav-number">1.2.</span> <span class="nav-text">磁盘挂载</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/klcc-c.github.io/images/head.jpeg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/f9ef965d.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/head.jpeg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux磁盘挂载分区
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-29 15:06:16" itemprop="dateCreated datePublished" datetime="2021-12-29T15:06:16+08:00">2021-12-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-31 09:16:20" itemprop="dateModified" datetime="2021-12-31T09:16:20+08:00">2021-12-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h1><span id="more"></span>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Linux系统中磁盘管理就是将硬盘通过挂载的方式挂载到linux文件系统中。</span><br><span class="line"></span><br><span class="line">1、挂载磁盘的步骤</span><br><span class="line">	1、磁盘分区</span><br><span class="line">	2、挂载</span><br><span class="line"></span><br><span class="line">2、磁盘分区</span><br><span class="line">	fdisk：分区2TB以下的磁盘，最多可以分4个分区</span><br><span class="line">	gdisk：分区2TB以上的磁盘，最多可以分128个分区</span><br><span class="line"></span><br><span class="line">3、添加一块磁盘</span><br><span class="line">	lsblk   ： 查看本机的磁盘</span><br><span class="line">	df -h   :  查看本机的分区</span><br><span class="line"></span><br><span class="line">4、磁盘分区</span><br><span class="line">	n : 新建分区</span><br><span class="line">	p : 打印分区表</span><br><span class="line">	w : 写入磁盘保存并退出</span><br><span class="line">	q : 不保存退出</span><br><span class="line">	d : 删除分区</span><br><span class="line">	</span><br><span class="line">5、挂载磁盘分区</span><br><span class="line">	1、格式化文件系统</span><br><span class="line">		mkfs.xfs /dev/sdb1 </span><br><span class="line"></span><br><span class="line">6、总结</span><br><span class="line">	1、关机</span><br><span class="line">	2、添加硬盘</span><br><span class="line">	3、创建分区</span><br><span class="line">		fdisk /dev/sdb</span><br><span class="line">		或</span><br><span class="line">		gdisk /dev/sdb</span><br><span class="line">	4、格式化文件系统</span><br><span class="line">		mkfs.xfs /dev/sdb1 </span><br><span class="line">	5、挂载</span><br><span class="line">		mount /dev/sdb1 /mnt</span><br></pre></td></tr></table></figure>
+
+<h2 id="磁盘分区"><a href="#磁盘分区" class="headerlink" title="磁盘分区"></a>磁盘分区</h2><ul>
+<li>逻辑分区属于扩展分区，扩展分区属于主分区</li>
+<li>主分区又叫做引导分区，是可以安装系统的分区</li>
+</ul>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/mbr.jpeg" alt="mbr"></p>
+<p>目前常见的磁盘分区格式有两种，MBR分区和GPT分区：</p>
+<ul>
+<li>MBR 分区，MBR 的意思是 “主引导记录”。MBR 最大支持 2TB 容量，在容量方面存在着极大的瓶颈。</li>
+<li>GPT 分区，GPT 意为 GUID 分区表，它支持的磁盘容量比 MBR 大得多。这是一个正逐渐取代 MBR 的新标准，它是由 UEFI 辅住而形成的，将来 UEFI 用于取代老旧的 BIOS，而 GPT 则取代老旧的 MBR。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 磁盘分区工具</span></span><br><span class="line"></span><br><span class="line">fdisk 工具用于 MBR 格式</span><br><span class="line">gdisk 工具用于 GPT 格式</span><br></pre></td></tr></table></figure>
+
+<h3 id="磁盘基本分区fdisk"><a href="#磁盘基本分区fdisk" class="headerlink" title="磁盘基本分区fdisk"></a>磁盘基本分区fdisk</h3><p><strong>1.添加一块小于2TB的磁盘进行使用，步骤如下:</strong></p>
+<ul>
+<li><p>1.给虚拟机添加一块新的硬盘</p>
+</li>
+<li><p>2.使用fdisk进行分区</p>
+</li>
+<li><p>3.使用mkfs进行格式化</p>
+</li>
+<li><p>4.使用mount进行挂载</p>
+<p>PS: 生产分区建议，如无特殊需求直接使用整个磁盘即可，无需分区。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># fdisk -l</span></span><br><span class="line">[root@localhost ~]<span class="comment"># fdisk  /dev/sdb</span></span><br><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): m         <span class="comment">#输入m列出常用的命令</span></span><br><span class="line">Command action</span><br><span class="line">   a   toggle a bootable flag               <span class="comment">#切换分区启动标记</span></span><br><span class="line">   b   edit bsd disklabel                   <span class="comment">#编辑sdb磁盘标签</span></span><br><span class="line">   c   toggle the dos compatibility flag    <span class="comment">#切换dos兼容模式</span></span><br><span class="line">   d   delete a partition                   <span class="comment">#删除分区</span></span><br><span class="line">   l   list known partition types           <span class="comment">#显示分区类型</span></span><br><span class="line">   m   <span class="built_in">print</span> this menu                      <span class="comment">#显示帮助菜单</span></span><br><span class="line">   n   add a new partition                  <span class="comment">#新建分区</span></span><br><span class="line">   o   create a new empty DOS partition table   <span class="comment">#创建新的空白分区表</span></span><br><span class="line">   p   <span class="built_in">print</span> the partition table            <span class="comment">#显示分区表的信息</span></span><br><span class="line">   q   quit without saving changes          <span class="comment">#不保存退出</span></span><br><span class="line">   s   create a new empty Sun disklabel     <span class="comment">#创建新的Sun磁盘标签</span></span><br><span class="line">   t   change a partitions system id        <span class="comment">#修改分区ID,可以通过l查看id</span></span><br><span class="line">   u   change display/entry units           <span class="comment">#修改容量单位,磁柱或扇区</span></span><br><span class="line">   v   verify the partition table           <span class="comment">#检验分区表</span></span><br><span class="line">   w   write table to disk and <span class="built_in">exit</span>         <span class="comment">#保存退出</span></span><br><span class="line">   x   extra functionality (experts only)   <span class="comment">#拓展功能</span></span><br></pre></td></tr></table></figure>
+
+<p>1). fdisk创建主分区</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): n</span><br><span class="line">Partition <span class="built_in">type</span>:</span><br><span class="line">   p   primary (0 primary, 0 extended, 4 free)  <span class="comment">#主分区</span></span><br><span class="line">   e   extended  <span class="comment">#扩展分区</span></span><br><span class="line">Select (default p): p   <span class="comment">#选择创建主分区</span></span><br><span class="line">Partition number (1-4, default 1):  <span class="comment">#默认创建第一个主分区</span></span><br><span class="line">First sector (2048-2097151, default 2048): <span class="comment">#默认扇区回车</span></span><br><span class="line">Using default value 2048</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G&#125; (2048-2097151, default 2097151): +50M <span class="comment">#分配50MB</span></span><br></pre></td></tr></table></figure>
+
+<p>2). fdisk创建扩展分区</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): n  <span class="comment">#新建分区</span></span><br><span class="line">Partition <span class="built_in">type</span>:</span><br><span class="line">   p   primary (1 primary, 0 extended, 3 free)</span><br><span class="line">   e   extended</span><br><span class="line">Select (default p): e   <span class="comment">#创建扩展分区</span></span><br><span class="line">Partition number (2-4, default 2):</span><br><span class="line">First sector (104448-2097151, default 104448):</span><br><span class="line">Using default value 104448</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G&#125; (104448-2097151, default 2097151): <span class="comment">#空间都给到扩展分区</span></span><br></pre></td></tr></table></figure>
+
+<p>3). fdisk创建逻辑分区</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): n  <span class="comment">#新建分区</span></span><br><span class="line">Partition <span class="built_in">type</span>:</span><br><span class="line">   p   primary (1 primary, 1 extended, 2 free)</span><br><span class="line">   l   logical (numbered from 5)</span><br><span class="line">Select (default p): l   <span class="comment">#创建逻辑分区</span></span><br><span class="line">Adding logical partition 5</span><br><span class="line">First sector (106496-2097151, default 106496):</span><br><span class="line">Using default value 106496</span><br><span class="line">Last sector, +sectors or +size&#123;K,M,G&#125; (106496-2097151, default 2097151): +100M  <span class="comment">#分配100MB空间</span></span><br></pre></td></tr></table></figure>
+
+<p>4). fdisk查看分区情况，并保存</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): p <span class="comment">#查看分区创建</span></span><br><span class="line">Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">/dev/sdb1            2048      104447       51200   83  Linux</span><br><span class="line">/dev/sdb2          104448     2097151      996352    5  Extended</span><br><span class="line">/dev/sdb5          106496      311295      102400   83  Linux</span><br><span class="line"></span><br><span class="line"><span class="comment">#保存分区</span></span><br><span class="line">Command (m <span class="keyword">for</span> <span class="built_in">help</span>): w</span><br><span class="line">The partition table has been altered!</span><br><span class="line">Calling ioctl() to re-read partition table.</span><br><span class="line">Syncing disks.</span><br><span class="line"></span><br><span class="line"><span class="comment">#检查磁盘是否是MBR分区方式</span></span><br><span class="line">[root@localhost ~]<span class="comment"># fdisk /dev/sdb -l|grep type</span></span><br><span class="line">Disk label <span class="built_in">type</span>: dos</span><br><span class="line"></span><br><span class="line"><span class="comment">#安装parted, 刷新内核立即生效,无需重启</span></span><br><span class="line">[root@localhost ~]<span class="comment"># yum -y install parted</span></span><br><span class="line">[root@localhost ~]<span class="comment"># partprobe /dev/sdb</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2.格式化磁盘</strong></p>
+<ul>
+<li>mkfs格式化磁盘，实质创建文件系统，文件系统类似于将房子装修成3室一厅，还是2室一厅。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#选项: </span></span><br><span class="line"><span class="comment"># -b  设定数据区块占用空间大小，目前支持1024、2048、4096 bytes每个块。</span></span><br><span class="line"><span class="comment"># -t  用来指定什么类型的文件系统，可以是ext4, xfs</span></span><br><span class="line"><span class="comment"># -i  设定inode的大小</span></span><br><span class="line"><span class="comment"># -N  设定inode数量，防止Inode数量不够导致磁盘不足</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.格式化整个磁盘</span></span><br><span class="line">[root@localhost ~]<span class="comment"># mkfs.ext4  /dev/sdb </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.格式化磁盘的某个分区</span></span><br><span class="line">[root@localhost ~]<span class="comment"># mkfs.xfs  /dev/sdb1</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>3.使用mount挂载并使用</strong></p>
+<ul>
+<li>如果需要使用该磁盘的空间，需要准备一个空的目录作为挂载点，与该设备进行关联。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># mkdir /data</span></span><br><span class="line">[root@localhost ~]<span class="comment"># mount /dev/sdb1 /data</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="磁盘的基本分区Gdisk"><a href="#磁盘的基本分区Gdisk" class="headerlink" title="磁盘的基本分区Gdisk"></a>磁盘的基本分区Gdisk</h3><p>前面我们已经了解到fdisk分区，但fdisk不支持给高于2TB的磁盘进行分区。如果有单块盘高于2TB，建议使用Gdisk进行分区。</p>
+<p><strong>1.使用gdisk进行磁盘分区</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.安装gdisk分区工具</span></span><br><span class="line">[root@localhost ~]<span class="comment"># yum install gdisk -y</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.创建一个新分区，500MB大小</span></span><br><span class="line">[root@localhost ~]<span class="comment"># gdisk /dev/sdb</span></span><br><span class="line">Command (? <span class="keyword">for</span> <span class="built_in">help</span>): n     <span class="comment">#创建新分区</span></span><br><span class="line">Partition number (1-128, default 1):</span><br><span class="line">First sector (34-2097118, default = 2048) or &#123;+-&#125;size&#123;KMGTP&#125;:</span><br><span class="line">Last sector (2048-2097118, default = 2097118) or &#123;+-&#125;size&#123;KMGTP&#125;: +500M <span class="comment">#分配500M大小</span></span><br><span class="line"></span><br><span class="line">Command (? <span class="keyword">for</span> <span class="built_in">help</span>): p <span class="comment">#打印查看</span></span><br><span class="line">Number  Start (sector)    End (sector)  Size       Code  Name</span><br><span class="line">   1            2048         1026047   500.0 MiB   8300  Linux filesystem</span><br><span class="line"></span><br><span class="line">Command (? <span class="keyword">for</span> <span class="built_in">help</span>): w <span class="comment">#保存分区</span></span><br><span class="line">Do you want to proceed? (Y/N): y    <span class="comment">#确认</span></span><br><span class="line">OK; writing new GUID partition table (GPT) to /dev/sdb.</span><br><span class="line">The operation has completed successfully.</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.创建完成后，可以尝试检查磁盘是否为gpt格式</span></span><br><span class="line">[root@localhost-node1 /]<span class="comment"># fdisk /dev/sdb -l|grep type</span></span><br><span class="line">Disk label <span class="built_in">type</span>: gpt</span><br><span class="line"></span><br><span class="line"><span class="comment">#4.安装parted, 刷新内核立即生效,无需重启</span></span><br><span class="line">[root@localhost ~]<span class="comment"># yum -y install parted</span></span><br><span class="line">[root@localhost ~]<span class="comment"># partprobe /dev/sdb</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2.使用mkfs进行格式化磁盘。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># mkfs.xfs  /dev/sdb</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>3.使用mount命令将某个目录挂载该分区，进行使用。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># mkdir /data_gdisk</span></span><br><span class="line">[root@localhost ~]<span class="comment"># mount /dev/sdb /data_gdisk</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="磁盘挂载"><a href="#磁盘挂载" class="headerlink" title="磁盘挂载"></a>磁盘挂载</h2><p>前面我们已经提到过，如果需要使用磁盘的空间，需要准备一个空的目录作为挂载点，与该设备进行关联。mount主要是为文件系统指定一个访问入口。</p>
+<p><strong>1.通过mount进行挂载，但重启将会失效。我们称为临时生效。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 选项：-t指定文件系统挂载分区 -a 挂载/etc/fstab中的配置文件 -o 指定挂载参数</span></span><br><span class="line"><span class="comment"># 挂载/dev/sdb1至db1目录</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># mkdir /db1</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># mount -t xfs /dev/sdb1  /db1/ </span></span><br><span class="line"></span><br><span class="line">ps：centos7选择xfs格式作为默认文件系统，而且不再使用以前的ext，仍然支持ext4，</span><br><span class="line">xfs专为大数据产生，每个单个文件系统最大可以支持8eb，单个文件可以支持16tb，不仅数据量大，</span><br><span class="line">而且扩展性高。还可以通过xfsdump，xfsrestore来备份和恢复。</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.挂载的磁盘，如果不想使用可以使用umount进行卸载。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#选项： -l 强制卸载</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#1.卸载目录方式</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># umount /db1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.卸载设备方式</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># umount /dev/sdb1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.umount不能卸载的情况</span></span><br><span class="line"> [root@localhost db1]<span class="comment"># umount /db1  </span></span><br><span class="line">  umount: /db1: device is busy.</span><br><span class="line">          (In some cases useful info about processes that use</span><br><span class="line">          the device is found by lsof(8) or fuser(1)</span><br><span class="line"></span><br><span class="line"><span class="comment">#PS: 如上情况解决办法有两种, 1.切换至其他目录 2.使用&#x27;-l&#x27;选项强制卸载    </span></span><br><span class="line"> [root@student db1]<span class="comment"># umount -l /db1</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>3.如果需要实现永久挂载则需要将挂载信息写入/etc/fstab配置文件中实现。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.使用blkid命令获取各设备的UUID</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># blkid |grep &quot;sdb1&quot;</span></span><br><span class="line">  /dev/sdb1: UUID=<span class="string">&quot;e271b5b2-b1ba-4b18-bde5-66e394fb02d9&quot;</span> TYPE=<span class="string">&quot;xfs&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#2.使用UUID挂载磁盘sdb1分区至于db1， 测试挂载</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># mount UUID=&quot;e271b5b2-b1ba-4b18-bde5-66e394fb02d9&quot; /db1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#3.写入/etc/fstab中，实现开机自动挂载</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># tail -1 /etc/fstab    </span></span><br><span class="line">  UUID=e271b5b2-b1ba-4b18-bde5-66e394fb02d9 /db1 xfs  defaults 0  0</span><br><span class="line"></span><br><span class="line"><span class="comment">#4.加载fstab配置文件, 同时检测语法是否有错误</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># mount –a</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>4./etc/fstab配置文件编写格式</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">要挂载的设备</th>
+<th align="left">挂载点(入口)</th>
+<th align="left">文件系统类型</th>
+<th align="left">挂载参数</th>
+<th align="left">是否备份</th>
+<th align="left">是否检查</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">/dev/sdb1</td>
+<td align="left">/db1</td>
+<td align="left">xfs</td>
+<td align="left">defaults</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+</tbody></table>
+<p>第四列：挂载参数</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">async/sync</td>
+<td align="left">是否为同步方式运行。默认async</td>
+</tr>
+<tr>
+<td align="left">user/nouser</td>
+<td align="left">是否允许普通用户使用mount命令挂载。默认nouser</td>
+</tr>
+<tr>
+<td align="left">exec/noexe</td>
+<td align="left">是否允许可执行文件执行。默认exec</td>
+</tr>
+<tr>
+<td align="left">suid/nosuid</td>
+<td align="left">是否允许存在suid属性的文件。默认suid</td>
+</tr>
+<tr>
+<td align="left">auto/noauto</td>
+<td align="left">执行mount -a 命令时，此文件系统是否被主动挂载。默认auto</td>
+</tr>
+<tr>
+<td align="left">rw/ro</td>
+<td align="left">是否以只读或者读写模式进行挂载。默认rw</td>
+</tr>
+<tr>
+<td align="left">default</td>
+<td align="left">具有rw,suid,dev,exec,auto,nouser,async等默认参数的设定</td>
+</tr>
+</tbody></table>
+<p>第五列：是否进行备份。参数的值为0或者1</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">0</td>
+<td align="left">代表不做备份</td>
+</tr>
+<tr>
+<td align="left">1</td>
+<td align="left">代表要每天进行备份操作</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">代表不定日期的进行备份操作</td>
+</tr>
+</tbody></table>
+<p>第六列：是否检验扇区：开机的过程中，系统默认会以fsck检验我们系统是否为完整</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">0</td>
+<td align="left">不要检验磁盘是否有坏道</td>
+</tr>
+<tr>
+<td align="left">1</td>
+<td align="left">检验</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">校验 (当1级别检验完成之后进行2级别检验)</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/2c9a5c07.html" rel="prev" title="MySQL优化">
+                  <i class="fa fa-chevron-left"></i> MySQL优化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/7efc43b.html" rel="next" title="VPN搭建使用">
+                  VPN搭建使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">365k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:32</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

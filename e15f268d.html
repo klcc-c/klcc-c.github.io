@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="NFS 网络存储NFS简介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NFS搭建使用">
+<meta property="og:url" content="https://klcc.cc/e15f268d.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="NFS 网络存储NFS简介">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/2251663-20210419213338770-1524770891.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/nfs%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86-1024x640.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/nfs%E5%8E%9F%E7%90%86-1024x754.png">
+<meta property="article:published_time" content="2021-12-30T14:24:05.000Z">
+<meta property="article:modified_time" content="2021-12-31T01:33:56.268Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/gengff/blogimage/raw/master/images/2251663-20210419213338770-1524770891.png">
+
+
+<link rel="canonical" href="https://klcc.cc/e15f268d.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/e15f268d.html","path":"e15f268d.html","title":"NFS搭建使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>NFS搭建使用 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">67</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NFS-%E7%BD%91%E7%BB%9C%E5%AD%98%E5%82%A8"><span class="nav-number">1.</span> <span class="nav-text">NFS 网络存储</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NFS%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">NFS简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NFS%E5%BA%94%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">NFS应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NFS%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.3.</span> <span class="nav-text">NFS实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">1、服务端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">2、客户端</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NFS%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.4.</span> <span class="nav-text">NFS配置详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E8%80%83%E8%AF%95%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.5.</span> <span class="nav-text">搭建考试系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%90%AD%E5%BB%BAWEB%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">1、搭建WEB服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E9%85%8D%E5%90%88NFS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">2、配合NFS实现文件共享</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/klcc-c.github.io/images/head.jpeg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/e15f268d.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/head.jpeg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NFS搭建使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-30 22:24:05" itemprop="dateCreated datePublished" datetime="2021-12-30T22:24:05+08:00">2021-12-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-31 09:33:56" itemprop="dateModified" datetime="2021-12-31T09:33:56+08:00">2021-12-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="NFS-网络存储"><a href="#NFS-网络存储" class="headerlink" title="NFS 网络存储"></a>NFS 网络存储</h1><h2 id="NFS简介"><a href="#NFS简介" class="headerlink" title="NFS简介"></a>NFS简介</h2><span id="more"></span>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">NFS : 共享存储，文件服务器</span><br><span class="line"></span><br><span class="line">基本概述：</span><br><span class="line">   1.NFS是Network File System的缩写及网络文件系统。NFS主要功能是通过局域网络让不同的主机系统之间可以共享文件或目录。</span><br><span class="line"></span><br><span class="line">   2.NFS系统和Windows网络共享、网络驱动器类似, 只不过windows用于局域网, NFS用于企业集群架构中, 如果是大型网站, 会用到更复杂的分布式文件系统FastDFS，glusterfs，HDFS，ceph</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">为何使用NFS：</span><br><span class="line">  1.实现多台服务器之间数据共享</span><br><span class="line">  2.实现多台服务器之间数据一致</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/2251663-20210419213338770-1524770891.png" alt="2251663-20210419213338770-1524770891"></p>
+<h2 id="NFS应用"><a href="#NFS应用" class="headerlink" title="NFS应用"></a>NFS应用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.用户访问NFS客户端，将请求转化为函数</span><br><span class="line">2.NFS通过TCP/IP连接服务端</span><br><span class="line">3.NFS服务端接收请求，会先调用portmap进程进行端口映射</span><br><span class="line">4.Rpc.nfsd进程用于判断NFS客户端能否连接服务端；</span><br><span class="line">5.Rpc.mount进程用于判断客户端对服务端的操作权限</span><br><span class="line">6.如果通过权限验证，可以对服务端进行操作，修改或读取</span><br></pre></td></tr></table></figure>
+
+<p>nfs运行原理</p>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/nfs%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86-1024x640.png" alt="nfs运行原理-1024x640"></p>
+<h2 id="NFS实践"><a href="#NFS实践" class="headerlink" title="NFS实践"></a>NFS实践</h2><ul>
+<li>为了实现文件共享</li>
+<li>为了多台服务器之间数据一致</li>
+</ul>
+<p>nfs原理</p>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/nfs%E5%8E%9F%E7%90%86-1024x754.png" alt="nfs原理-1024x754"></p>
+<h4 id="1、服务端"><a href="#1、服务端" class="headerlink" title="1、服务端"></a>1、服务端</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">1、安装NFS和rpcbind</span><br><span class="line">[root@nfs ~]<span class="comment"># yum install nfs-utils rpcbind -y</span></span><br><span class="line"></span><br><span class="line">2、创建挂载点</span><br><span class="line">[root@nfs ~]<span class="comment"># mkdir -p /web/nfs&#123;1..9&#125;</span></span><br><span class="line"></span><br><span class="line">3、配置挂载点</span><br><span class="line">[root@nfs ~]<span class="comment"># vim /etc/exports</span></span><br><span class="line">格式：</span><br><span class="line">[挂载点] [可以访问的IP]([权限])<span class="comment">#NFS配置详解参考下方</span></span><br><span class="line">/web/nfs1  172.16.1.0/20(rw,sync,all_squash)</span><br><span class="line"></span><br><span class="line">4、关闭selinux和防火墙</span><br><span class="line">[root@nfs ~]<span class="comment"># setenforce 0</span></span><br><span class="line">[root@nfs ~]<span class="comment"># systemctl disable --now firewalld</span></span><br><span class="line"></span><br><span class="line">5、启动nfs和rpcbind服务</span><br><span class="line">[root@nfs ~]<span class="comment"># systemctl start nfs-server </span></span><br><span class="line">[root@nfs ~]<span class="comment"># systemctl start rpcbind</span></span><br><span class="line"></span><br><span class="line">6、检查服务端是否正常</span><br><span class="line">[root@nfs ~]<span class="comment"># showmount -e [服务端的地址，默认是本机地址]</span></span><br><span class="line"></span><br><span class="line">[root@nfs ~]<span class="comment"># showmount -e</span></span><br><span class="line">Export list <span class="keyword">for</span> nfs:</span><br><span class="line">/web/nfsv1 172.16.1.0/20</span><br><span class="line">[root@nfs ~]<span class="comment"># showmount -e 172.16.1.31</span></span><br><span class="line">Export list <span class="keyword">for</span> 172.16.1.31:</span><br><span class="line">/web/nfsv1 172.16.1.0/20</span><br><span class="line"></span><br><span class="line">[root@nfs ~]<span class="comment"># cat /var/lib/nfs/etab</span></span><br><span class="line"></span><br><span class="line">7、给挂载点授权</span><br><span class="line">[root@nfs ~]<span class="comment"># chown -R nfsnobody.nfsnobody /web</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2、客户端"><a href="#2、客户端" class="headerlink" title="2、客户端"></a>2、客户端</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">1、安装NFS</span><br><span class="line">[root@web01 opt]<span class="comment"># yum install -y nfs-utils</span></span><br><span class="line"></span><br><span class="line">2、创建目录</span><br><span class="line">[root@web01 opt]<span class="comment"># mkdir /opt/nfs/</span></span><br><span class="line"></span><br><span class="line">3、挂载NFS</span><br><span class="line">[root@web01 opt]<span class="comment"># mount -t nfs 172.16.1.31:/web/nfs1  /opt/nfs/</span></span><br><span class="line"></span><br><span class="line">4、测试NFS文件同步功能</span><br><span class="line">[root@web opt]<span class="comment"># touch nfs/&#123;1..9&#125;.txt</span></span><br><span class="line">[root@web opt]<span class="comment"># ll nfs/</span></span><br><span class="line"> 总用量 0</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 2021 1.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 2021 2.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 2021 3.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 2021 4.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 2021 5.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 2021 6.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 2021 7.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 2021 8.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 2021 9.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">########################################################</span></span><br><span class="line"> <span class="comment"># 切换到服务端nfs服务器上查看 </span></span><br><span class="line">[root@nfs ~]<span class="comment"># ll /web/nfs1 #发现已经同步过来了</span></span><br><span class="line"> 总用量 0</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 22:02 1.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 22:02 2.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 22:02 3.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 22:02 4.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 22:02 5.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 22:02 6.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 22:02 7.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 22:02 8.txt</span><br><span class="line"> -rw-r--r-- 1 nfsnobody nfsnobody 0 12月 30 22:02 9.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="NFS配置详解"><a href="#NFS配置详解" class="headerlink" title="NFS配置详解"></a>NFS配置详解</h2><table>
+<thead>
+<tr>
+<th>nfs共享参数</th>
+<th>参数作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>rw</td>
+<td>读写权限 (常用)</td>
+</tr>
+<tr>
+<td>ro</td>
+<td>只读权限 (不常用)</td>
+</tr>
+<tr>
+<td>root_squash</td>
+<td>当NFS客户端以root管理员访问时，映射为NFS服务器的匿名用户 (不常用)</td>
+</tr>
+<tr>
+<td>no_root_squash</td>
+<td>当NFS客户端以root管理员访问时，映射为NFS服务器的root管理员 (不常用)</td>
+</tr>
+<tr>
+<td>all_squash</td>
+<td>无论NFS客户端使用什么账户访问，均映射为NFS服务器的匿名用户 (常用)</td>
+</tr>
+<tr>
+<td>no_all_squash</td>
+<td>无论NFS客户端使用什么账户访问，都不进行压缩 (不常用)</td>
+</tr>
+<tr>
+<td>sync</td>
+<td>同时将数据写入到内存与硬盘中，保证不丢失数据 (常用)</td>
+</tr>
+<tr>
+<td>async</td>
+<td>优先将数据保存到内存，然后再写入硬盘；这样效率更高，但可能会丢失数据 (不常用)</td>
+</tr>
+<tr>
+<td>anonuid</td>
+<td>配置all_squash使用,指定NFS的用户UID,必须存在系统 (常用)</td>
+</tr>
+<tr>
+<td>anongid</td>
+<td>配置all_squash使用,指定NFS的用户GID,必须存在系统 (常用)</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">1、控制读写</span><br><span class="line">  rw  <span class="comment">#可读可写</span></span><br><span class="line">  ro  <span class="comment">#只读</span></span><br><span class="line"></span><br><span class="line">2、控制文件权限</span><br><span class="line">root_squash  </span><br><span class="line">no_root_squash</span><br><span class="line">all_squash</span><br><span class="line">no_all_squash</span><br><span class="line"></span><br><span class="line">3、控制写模式</span><br><span class="line">sync  <span class="comment">#同步写</span></span><br><span class="line">async <span class="comment">#异步写</span></span><br><span class="line"></span><br><span class="line">4、控制用户</span><br><span class="line">anonuid</span><br><span class="line">anongid</span><br><span class="line"></span><br><span class="line">统一用户：</span><br><span class="line"></span><br><span class="line">1、创建用户</span><br><span class="line">[root@nfs nfs1]<span class="comment"># groupadd www -g 666</span></span><br><span class="line">[root@nfs nfs1]<span class="comment"># useradd www -u 666 -g 666 -M -r -s /sbin/nologin </span></span><br><span class="line"></span><br><span class="line">2、修改配置挂载点</span><br><span class="line">[root@nfs nfs1]<span class="comment"># vim /etc/exports</span></span><br><span class="line"> /web/nfs1  172.16.1.0/20(rw,sync,all_squash，anonuid=666，anongid=666)</span><br><span class="line"><span class="comment"># 修改后重启</span></span><br><span class="line">[root@nfs nfs1]<span class="comment"># systemctl restart nfs-server rpcbind</span></span><br><span class="line"> </span><br><span class="line">3、修改挂载点权限</span><br><span class="line">[root@nfs nfs1]<span class="comment"># chown -R www.www /web/</span></span><br><span class="line"></span><br><span class="line">3、使用</span><br><span class="line"><span class="comment"># 先卸载再重新挂载</span></span><br><span class="line">[root@nfs nfs1]<span class="comment">#umount /opt/nfs/</span></span><br><span class="line">[root@nfs nfs1]<span class="comment">#mount -t nfs 172.16.1.31:/web/nfs1 /opt/nfs/</span></span><br><span class="line"><span class="comment"># 写入文件</span></span><br><span class="line">[root@nfs nfs1]<span class="comment"># touch nfs/10.txt</span></span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line">[root@nfs nfs1]<span class="comment"># ll nfs/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="搭建考试系统"><a href="#搭建考试系统" class="headerlink" title="搭建考试系统"></a>搭建考试系统</h2><h4 id="1、搭建WEB服务"><a href="#1、搭建WEB服务" class="headerlink" title="1、搭建WEB服务"></a>1、搭建WEB服务</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">1、安装web软件</span><br><span class="line">[root@web01 opt]<span class="comment"># yum install httpd php php-devel -y</span></span><br><span class="line"></span><br><span class="line">2、将代码放置于网站的根目录</span><br><span class="line">[root@web01 opt]<span class="comment"># cd /var/www/html/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传代码</span></span><br><span class="line"></span><br><span class="line">3、授权</span><br><span class="line">[root@web01 html]<span class="comment"># chown -R www.www /var/www/html</span></span><br><span class="line"></span><br><span class="line">4、关闭selinux和防火墙</span><br><span class="line">[root@nfs ~]<span class="comment"># setenforce 0</span></span><br><span class="line">[root@nfs ~]<span class="comment"># systemctl disable --now firewalld</span></span><br><span class="line"></span><br><span class="line">5、修改web软件的用户</span><br><span class="line">[root@web01 html]<span class="comment"># vim /etc/httpd/conf/httpd.conf</span></span><br><span class="line">User www</span><br><span class="line">Group www</span><br><span class="line"></span><br><span class="line">6、启动web软件</span><br><span class="line">[root@web01 html]<span class="comment"># systemctl start httpd</span></span><br><span class="line"></span><br><span class="line">7、测试</span><br><span class="line"></span><br><span class="line">	1、上传</span><br><span class="line">	</span><br><span class="line">	2、访问</span><br><span class="line">    http://172.16.1.7/upload/1_linux.jpg</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、配合NFS实现文件共享"><a href="#2、配合NFS实现文件共享" class="headerlink" title="2、配合NFS实现文件共享"></a>2、配合NFS实现文件共享</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1、修改NFS配置文件</span><br><span class="line">[root@nfs nfs1]<span class="comment"># vim /etc/exports</span></span><br><span class="line">/web/upload  172.16.1.0/20(rw,sync,all_squash,anonuid=666,anongid=666)</span><br><span class="line"></span><br><span class="line">2、创建挂载点</span><br><span class="line">[root@nfs nfs1]<span class="comment"># mkdir /web/upload</span></span><br><span class="line">[root@nfs nfs1]<span class="comment"># chown www.www /web/upload</span></span><br><span class="line"></span><br><span class="line">3、重启NFS</span><br><span class="line">[root@nfs nfs1]<span class="comment"># systemctl restart nfs-server rpcbind</span></span><br><span class="line"></span><br><span class="line">4、客户端安装NFS软件</span><br><span class="line">[root@web01 html]<span class="comment"># yum install nfs-utils -y</span></span><br><span class="line">[root@web02 html]<span class="comment"># yum install nfs-utils -y</span></span><br><span class="line">[root@web03 html]<span class="comment"># yum install nfs-utils -y</span></span><br><span class="line"></span><br><span class="line">5、挂载</span><br><span class="line">[root@web01 html]<span class="comment"># mount -t nfs 172.16.1.31:/web/upload /var/www/html/upload</span></span><br><span class="line">[root@web02 html]<span class="comment"># mount -t nfs 172.16.1.31:/web/upload /var/www/html/upload</span></span><br><span class="line">[root@web03 html]<span class="comment"># mount -t nfs 172.16.1.31:/web/upload /var/www/html/upload</span></span><br><span class="line"></span><br><span class="line">6、测试</span><br><span class="line"><span class="comment"># 用web2上传，web3查看</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line">sed -i <span class="string">&#x27;s/.100/$1/g&#x27;</span> /etc/sysconfig/network-scripts/ifcfg-eth[10]</span><br><span class="line">hostnamectl set-hostname <span class="variable">$2</span></span><br><span class="line">systemctl restart network</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/340a13f1.html" rel="prev" title="Rsync使用">
+                  <i class="fa fa-chevron-left"></i> Rsync使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/a4a81253.html" rel="next" title="Linux基础">
+                  Linux基础 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">365k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:32</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

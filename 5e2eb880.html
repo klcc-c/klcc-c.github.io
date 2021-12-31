@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="虚拟机快照1、拍摄快照">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux目录结构">
+<meta property="og:url" content="https://klcc.cc/5e2eb880.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="虚拟机快照1、拍摄快照">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211209204224924.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211209204345586.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211209204613798.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211213184825727.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/xitongmulu.jpg">
+<meta property="article:published_time" content="2021-12-28T01:29:24.000Z">
+<meta property="article:modified_time" content="2021-12-31T01:16:20.339Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20211209204224924.png">
+
+
+<link rel="canonical" href="https://klcc.cc/5e2eb880.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/5e2eb880.html","path":"5e2eb880.html","title":"Linux目录结构"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux目录结构 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">67</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%BF%AB%E7%85%A7"><span class="nav-number">1.</span> <span class="nav-text">虚拟机快照</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%8B%8D%E6%91%84%E5%BF%AB%E7%85%A7"><span class="nav-number">1.0.1.</span> <span class="nav-text">1、拍摄快照</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%81%A2%E5%A4%8D%E5%BF%AB%E7%85%A7"><span class="nav-number">1.0.2.</span> <span class="nav-text">2、恢复快照</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bash%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">bash概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text">系统命令行介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E8%AF%AD%E6%B3%95%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">系统命令语法格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">5.</span> <span class="nav-text">系统运行命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%85%B3%E6%9C%BA"><span class="nav-number">5.1.</span> <span class="nav-text">1、关机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E9%87%8D%E5%90%AF"><span class="nav-number">5.2.</span> <span class="nav-text">2、重启</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E6%B3%A8%E9%94%80"><span class="nav-number">5.3.</span> <span class="nav-text">3、注销</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E5%B8%AE%E5%8A%A9"><span class="nav-number">6.</span> <span class="nav-text">查看系统命令帮助</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%88%AB%E5%90%8D"><span class="nav-number">7.</span> <span class="nav-text">设置别名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B7%AF%E5%BE%84%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">8.</span> <span class="nav-text">系统路径的类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">9.</span> <span class="nav-text">系统目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E6%8C%82%E8%BD%BD%E5%88%9D%E8%AF%86"><span class="nav-number">9.0.0.1.</span> <span class="nav-text">目录挂载初识</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/klcc-c.github.io/images/head.jpeg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/5e2eb880.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/head.jpeg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux目录结构
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-28 09:29:24" itemprop="dateCreated datePublished" datetime="2021-12-28T09:29:24+08:00">2021-12-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-31 09:16:20" itemprop="dateModified" datetime="2021-12-31T09:16:20+08:00">2021-12-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="虚拟机快照"><a href="#虚拟机快照" class="headerlink" title="虚拟机快照"></a>虚拟机快照</h1><h3 id="1、拍摄快照"><a href="#1、拍摄快照" class="headerlink" title="1、拍摄快照"></a>1、拍摄快照</h3><p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211209204224924.png" alt="image-20211209204224924"></p>
+<span id="more"></span>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211209204345586.png" alt="image-20211209204345586"></p>
+<h3 id="2、恢复快照"><a href="#2、恢复快照" class="headerlink" title="2、恢复快照"></a>2、恢复快照</h3><p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211209204613798.png" alt="image-20211209204613798"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>、克隆主机</span><br><span class="line">		 管理 ---&gt; 克隆</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、改ip</span><br><span class="line"></span><br><span class="line">	最后一位<span class="number">3</span> - <span class="number">254</span></span><br><span class="line">    <span class="comment"># 查看网卡名称，或者查看本机IP</span></span><br><span class="line">    [root@localhost ~]<span class="comment"># ip a</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 修改网卡</span></span><br><span class="line">    [root@localhost ~]<span class="comment"># </span></span><br><span class="line">    </span><br><span class="line">    [root@localhost ~]<span class="comment"># sed -i &#x27;s#.100#.101#g&#x27; /etc/sysconfig/network-scripts/ifcfg-eth[01]-</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 重启系统网络</span></span><br><span class="line">    [root@localhost ~]<span class="comment"># systemctl restart network</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="bash概述"><a href="#bash概述" class="headerlink" title="bash概述"></a>bash概述</h1><p>bash（壳）是一个命令解释器，负责跟系统的内核进行交互，在操作系统的最外层</p>
+<p> bash可以干什么？针对于操作系统做了一些操作</p>
+<ul>
+<li><p>文件管理</p>
+</li>
+<li><p>目录管理</p>
+</li>
+<li><p>权限管理</p>
+</li>
+<li><p>用户管理</p>
+</li>
+<li><p>应用管理</p>
+</li>
+<li><p>软件管理</p>
+</li>
+<li><p>磁盘管理</p>
+</li>
+<li><p>等等</p>
+<p>执行方式 操作简单 针对简单的管理操作</p>
+<p>脚本script 操作复杂 操作一些复杂性较大的操作</p>
+</li>
+</ul>
+<h1 id="系统命令行介绍"><a href="#系统命令行介绍" class="headerlink" title="系统命令行介绍"></a>系统命令行介绍</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">1、ping</span><br><span class="line">	格式：</span><br><span class="line">    	ping [网址]</span><br><span class="line"></span><br><span class="line">2、主机登录用户信息</span><br><span class="line">	[root@localhost ~]<span class="comment">#   :  #表示超级用户管理员命令提示符，注释	</span></span><br><span class="line">	[<span class="built_in">test</span>@localhost ~]		:  $普通用户命令提示符</span><br><span class="line">	</span><br><span class="line">    root  		:  登录当前系统的用户名</span><br><span class="line">    @     		:  表示分隔符，没有特殊含义</span><br><span class="line">    localhost :  表示当前系统的主机名</span><br><span class="line">    ~     		:  表示当前所在的目录（~ 代表的是当前的家目录， /root）</span><br><span class="line">    []	 	    :  表示括号，没有其他的作用</span><br><span class="line">    <span class="comment">#			    :  没有实际含义</span></span><br><span class="line">    </span><br><span class="line">3、自定义系统登录用户信息</span><br><span class="line">	PS1 环境变量</span><br><span class="line">	</span><br><span class="line">	[root@localhost ~]<span class="comment"># echo $PS1</span></span><br><span class="line">  [\u@\h \W]\$</span><br><span class="line">  [root@localhost ~]<span class="comment"># PS1=&#x27;[\u@\h --- \W]\$&#x27;</span></span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">知识储备：</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;Hello World&#x27;</span>)</span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;Hello World!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="系统命令语法格式"><a href="#系统命令语法格式" class="headerlink" title="系统命令语法格式"></a>系统命令语法格式</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">通常系统命令语法格式：</span><br><span class="line">一条完整命令</span><br><span class="line">	命令      [参数] 				[选项] 			[路径]</span><br><span class="line">	</span><br><span class="line"><span class="built_in">command</span>		[arguments]  [options]	</span><br><span class="line"></span><br><span class="line">1、中括号内的内容是可有可无的，选项和参数不是必须的</span><br><span class="line">2、命令是指令的主体，是必须存在的</span><br><span class="line">3、选项是用于调节命令的某个功能</span><br><span class="line">		引导短格式（单个字符）	以短横杠表示‘-’	例如	-l</span><br><span class="line">		引导长格式（多个字符）	多个字符表示一定的含义	以‘--’表示		--all</span><br><span class="line">		多个短格式（多个字符）	每个字符都有一定的功能，‘-’	-al</span><br><span class="line">4、参数是命令操作的对象，文件或者目录</span><br><span class="line">5、指令、选项、参数两两之间必须要有一个空格</span><br><span class="line">6、完整的命令、选项、参数之间不能有空格</span><br><span class="line">7、命令的位置是在最前面的，是不能改变位置的</span><br><span class="line">8、选项和参数的位置是可以发生改变的</span><br></pre></td></tr></table></figure>
+
+<h1 id="系统运行命令"><a href="#系统运行命令" class="headerlink" title="系统运行命令"></a>系统运行命令</h1><h2 id="1、关机"><a href="#1、关机" class="headerlink" title="1、关机"></a>1、关机</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">同步时间：</span><br><span class="line">yun install -y ntpdate</span><br><span class="line">ntpdate ntp.aliyun.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">shutdown	：关机或重启</span><br><span class="line">			参数：-h : 指定关机的延时时间</span><br><span class="line">			   	 -c : 取消关机</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  关机/取消：			   </span><br><span class="line">    shutdown -h 10	<span class="comment"># 10是以分钟为节点的	</span></span><br><span class="line">    shutdown -h 11:00	<span class="comment"># 定时关机</span></span><br><span class="line">    shutdown -c	<span class="comment"># 取消你的关机操作			   </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  立即关机:</span><br><span class="line">    shutdown -h now  <span class="comment"># 立刻关机</span></span><br><span class="line">    shutdown -h 0  <span class="comment"># 立刻关机</span></span><br><span class="line">		</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">halt		:  禁用CPU资源</span><br><span class="line">halt -p <span class="comment"># 立刻关机，不加-p只关闭系统</span></span><br><span class="line">	</span><br><span class="line">poweroff	： 立即关闭电源</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">init	：设置系统启动模式</span><br><span class="line">	参数： 0 ： 立刻关机</span><br><span class="line">        1 ： 单用户模式</span><br><span class="line">        2 ： 多用户无网络模式</span><br><span class="line">        3 ： 多用户模式</span><br><span class="line">        4 ： 待定</span><br><span class="line">        5 ： 桌面模式</span><br><span class="line">        6 ： 重启</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、重启"><a href="#2、重启" class="headerlink" title="2、重启"></a>2、重启</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">shutdown</span><br><span class="line">		参数：</span><br><span class="line">			-r : 指定重启的延时时间</span><br><span class="line">			</span><br><span class="line">    shutdown -r 10 <span class="comment"># 10分钟后立刻重启</span></span><br><span class="line">    shutdown -r 0	 <span class="comment"># 立即重启</span></span><br><span class="line">    shutdown -r now	<span class="comment"># 立即重启</span></span><br><span class="line">    shutdown -r 11:00	<span class="comment"># 11:00重启			</span></span><br><span class="line">		</span><br><span class="line">reboot</span><br><span class="line">		reboot	<span class="comment"># 系统推荐的重启操作</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3、注销"><a href="#3、注销" class="headerlink" title="3、注销"></a>3、注销</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">logout</span>	: 退出当前登录的用户	只能退出登录式shell，不能退出非登陆式shell</span><br><span class="line"></span><br><span class="line">ctrl+d	: 快捷键	退出当前登录的用户</span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span>	  :  退出当前登录的用户	能退出登录式shell，也能退出非登陆式shell，主要用于脚本退出</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="查看系统命令帮助"><a href="#查看系统命令帮助" class="headerlink" title="查看系统命令帮助"></a>查看系统命令帮助</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">格式：</span><br><span class="line">	man [需要查看帮助的命令]    ：详细的显示一个命令的使用方法</span><br><span class="line">	</span><br><span class="line">		命令解释说明信息：NAME</span><br><span class="line">		命令语法说明信息：SYNOPSIS</span><br><span class="line">		命令描述详细说明：DESCRIPTION</span><br><span class="line">		命令参数详细说明：OPTIONS</span><br><span class="line"></span><br><span class="line">	q : 退出</span><br><span class="line">	/[搜索内容] ： 搜索内容</span><br><span class="line">	</span><br><span class="line">	推荐网址：https://www.linuxcool.com/</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="设置别名"><a href="#设置别名" class="headerlink" title="设置别名"></a>设置别名</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span></span><br><span class="line"><span class="comment"># 格式：</span></span><br><span class="line">[root@localhost ~]<span class="comment"># alias alias net_test = &#x27;ping baidu.com&#x27;   #设置别名</span></span><br><span class="line">	</span><br><span class="line">[root@localhost ~]<span class="comment"># alias  #查看系统别名是否设置成功</span></span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># net_test  #测试别名</span></span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># unalias net_test  #取消别名</span></span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># alias rm=&#x27;xxx&#x27;   #设置系统别名</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 不使用别名，就在命令之前增加\，\代表转义</span></span><br><span class="line">	[root@localhost ~]<span class="comment"># \rm 1.txt</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="系统路径的类型"><a href="#系统路径的类型" class="headerlink" title="系统路径的类型"></a>系统路径的类型</h1><ul>
+<li>绝对路径：参照物是根（/）路径，凡是以/开始的路径就是绝对路径    或者以~为开头的路径也是绝对路径</li>
+<li>相对路径：参照物是当前路径，不是以/开头的路径就是相对路径    针对当前路径而言的</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 包含整个文件名称及文件的位置	这样的定位称之为路径</span></span><br><span class="line"><span class="comment"># 路径就是对于文件的定位的一种方式</span></span><br><span class="line"><span class="comment"># 每个目录下都有一个.和..</span></span><br><span class="line"></span><br><span class="line">.	    <span class="comment"># 表示的是当前所在的目录</span></span><br><span class="line">..	  <span class="comment"># 当前目录的上一级目录</span></span><br><span class="line">./	  <span class="comment"># 用于表示当前目录</span></span><br><span class="line">../	  <span class="comment"># 从当前目录的上一级目录开始</span></span><br><span class="line">~     <span class="comment"># 家目录</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="系统目录结构"><a href="#系统目录结构" class="headerlink" title="系统目录结构"></a>系统目录结构</h1><p><strong>在Linux中，所有的文件或者目录的起点或者顶点都是以(/)开始。</strong></p>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211213184825727.png"></p>
+<p><strong>Linux的目录结构拥有层次，就像是一个倒挂的树形结构</strong></p>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/xitongmulu.jpg" alt="xitongmulu"></p>
+<p>Linux<strong>系统中的目录需要挂载使用</strong></p>
+<h4 id="目录挂载初识"><a href="#目录挂载初识" class="headerlink" title="目录挂载初识"></a>目录挂载初识</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">挂载的命令：mount</span><br><span class="line">   mount [磁盘路径] [挂载的路径]</span><br><span class="line">	</span><br><span class="line">查看本机挂载的命令</span><br><span class="line">   [root@localhost dev]<span class="comment"># df -h</span></span><br><span class="line">	</span><br><span class="line">卸载挂载的磁盘</span><br><span class="line">   [root@localhost dev]<span class="comment"># umount /mnt/</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>必知必会的目录及文件</strong></p>
+<ul>
+<li><p><strong>/bin</strong><br>bin 是 Binaries (二进制文件) 的缩写, 这个目录存放着最经常使用的命令。</p>
+</li>
+<li><p><strong>/sbin：</strong>存放系统命令的目录 需要管理员权限才可以执行的命令</p>
+</li>
+<li><p><strong>/boot</strong><br>这里存放的是启动 Linux 时使用的一些核心文件，包括一些连接文件以及镜像文件。</p>
+</li>
+<li><p><strong>/dev</strong><br>dev 是 Device(设备) 的缩写, 该目录下存放的是 Linux 的外部设备，在 Linux 中访问设备的方式和访问文件的方式是相同的。</p>
+<ul>
+<li><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/dev/cdrom	#光盘镜像</span><br><span class="line">/dev/null	#黑洞设备	将一些不用的数据导入到黑洞设备</span><br><span class="line">/dev/zero	#字符设备	会源源不断的产生数据，字符</span><br><span class="line">/dev/random	#产生随机数的设备</span><br><span class="line"></span><br><span class="line">#磁盘设备及分区</span><br><span class="line">/dev/sda</span><br><span class="line">/dev/sda1</span><br><span class="line">/dev/sda2</span><br><span class="line">/dev/sda3</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>/etc</strong><br>etc 是 Etcetera(等等) 的缩写,这个目录用来存放所有的系统管理所需要的配置文件和子目录。</p>
+<ul>
+<li><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/etc/sysconfig/network-scripts/ifcfg-*	#查看网卡配置文件</span><br><span class="line">/etc/hosts#	本地域名解析文件	#记录ip地址与主机名的对应映射关系</span><br><span class="line">/etc/resolv.conf	#本地DNS配置文件</span><br><span class="line">/etc/fstab	#挂载设备目录配置文件	开机自启动挂载列表</span><br><span class="line">/etc/hostname	#主机名字配置文件</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>/home</strong><br>用户的主目录，在 Linux 中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的，如上图中的 alice、bob 和 eve。</p>
+</li>
+<li><p><strong>/lib</strong><br>lib 是 Library(库) 的缩写这个目录里存放着系统最基本的动态连接共享库，其作用类似于 Windows 里的 DLL 文件。几乎所有的应用程序都需要用到这些共享库。</p>
+<ul>
+<li>/lib #库文件目录 32位库文件<br>/lib64 #库文件目录 64位库文件</li>
+</ul>
+</li>
+<li><p><strong>/lost+found</strong><br>这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件。</p>
+</li>
+<li><p><strong>/media</strong><br>linux 系统会自动识别一些设备，例如U盘、光驱等等，当识别后，Linux 会把识别的设备挂载到这个目录下。</p>
+</li>
+<li><p><strong>/mnt</strong><br>系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在 /mnt/ 上，然后进入该目录就可以查看光驱里的内容了。</p>
+</li>
+<li><p><strong>/opt</strong><br>opt 是 optional(可选) 的缩写，这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。</p>
+</li>
+<li><p><strong>/proc</strong></p>
+<p>虚拟可变的目录 记录了系统的实时状态–&gt;类似于汽车的仪表盘</p>
+</li>
+<li><p><strong>/root</strong><br>该目录为系统管理员，也称作超级权限者的用户主目录。</p>
+</li>
+<li><p><strong>/sbin</strong><br>s 就是 Super User 的意思，是 Superuser Binaries (超级用户的二进制文件) 的缩写，这里存放的是系统管理员使用的系统管理程序。</p>
+</li>
+<li><p><strong>/selinux</strong><br>这个目录是 Redhat/CentOS 所特有的目录，Selinux 是一个安全机制，类似于 windows 的防火墙，但是这套机制比较复杂，这个目录就是存放selinux相关的文件的。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">关闭selinux</span><br><span class="line">   临时关闭</span><br><span class="line">    [root@localhost ~]<span class="comment"># setenforce 0</span></span><br><span class="line">   永久关闭</span><br><span class="line">    [root@localhost ~]<span class="comment"># vim /etc/selinux/config</span></span><br><span class="line">    SELINUX=disabled  <span class="comment">#编辑改成永久关闭</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>/srv</strong><br>物理设备所产生的一些文件</p>
+</li>
+<li><p><strong>/sys</strong></p>
+<p>物理设备的驱动信息文件</p>
+<p>这是 Linux2.6 内核的一个很大的变化。该目录下安装了 2.6 内核中新出现的一个文件系统 sysfs 。</p>
+<p>sysfs 文件系统集成了下面3种文件系统的信息：针对进程信息的 proc 文件系统、针对设备的 devfs 文件系统以及针对伪终端的 devpts 文件系统。</p>
+<p>该文件系统是内核设备树的一个直观反映。</p>
+<p>当一个内核对象被创建的时候，对应的文件和目录也在内核对象子系统中被创建。</p>
+</li>
+<li><p><strong>/tmp</strong><br>公共临时目录 公共场所 只能针对自己的文件进行操作 系统会定时的删除这个目录下长时间没有访问的文件</p>
+</li>
+<li><p><strong>/usr</strong></p>
+<p>/usr #系统目录 系统文件目录 跟windows目录一样<br>/userlocal #系统软件安装目录 跟windows的一样</p>
+</li>
+<li><p>**/usr/bin<br>系统用户使用的应用程序。</p>
+</li>
+<li><p>**/usr/sbin<br>超级用户使用的比较高级的管理程序和系统守护程序。</p>
+</li>
+<li><p>**/usr/src<br>内核源代码默认的放置目录。</p>
+</li>
+<li><p><strong>/var</strong></p>
+<p>这是一个非常重要的目录，系统上跑了很多程序，那么每个程序都会有相应的日志产生，而这些日志就被记录到这个目录下，具体在 /var/log 目录下，另外 mail 的预设放置也是在这里。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/var/log	#系统日志存放目录</span><br><span class="line">/var/log/messages	#系统级别日志</span><br><span class="line">/var/log/secure	#用户登录日志</span><br><span class="line">/var/tmp	#程序运行时所产生的一些进程文件</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>/run</strong><br>是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。如果你的系统上有 /var/run 目录，应该让它指向 run。</p>
+</li>
+</ul>
+<p>在 Linux 系统中，有几个目录是比较重要的，平时需要注意不要误删除或者随意更改内部文件。</p>
+<p><strong>/etc</strong>： 上边也提到了，这个是系统中的配置文件，如果你更改了该目录下的某个文件可能会导致系统不能启动。</p>
+<p><strong>/bin, /sbin, /usr/bin, /usr/sbin</strong>: 这是系统预设的执行文件的放置目录，比如 ls 就是在 /bin/ls 目录下的。</p>
+<p>值得提出的是，/bin, /usr/bin 是给系统用户使用的指令（除root外的通用户），而/sbin, /usr/sbin 则是给 root 使用的指令。</p>
+<ul>
+<li><strong>stderr -&gt; /proc/self/fd/2 #错误输出2&gt;</strong><br><strong>stdin -&gt; /proc/self/fd/0 #标准输入&lt;**<br>**stdout -&gt; /proc/self/fd/1 #标准输出&gt;</strong></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/20cf8e98.html" rel="prev" title="Linux安装、远程连接">
+                  <i class="fa fa-chevron-left"></i> Linux安装、远程连接
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/77f70f41.html" rel="next" title="数据库从入门到放弃">
+                  数据库从入门到放弃 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">365k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:32</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

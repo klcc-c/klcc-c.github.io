@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="Linux中安装软件的三种方式与windows类似，在Linux系统上也可以安装各种应用程序，或称之为软件包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux包管理及压缩命令">
+<meta property="og:url" content="https://klcc.cc/891d6bd.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="Linux中安装软件的三种方式与windows类似，在Linux系统上也可以安装各种应用程序，或称之为软件包">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B.png">
+<meta property="article:published_time" content="2021-12-21T16:32:17.000Z">
+<meta property="article:modified_time" content="2021-12-31T01:16:20.345Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/gengff/blogimage/raw/master/images/%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B.png">
+
+
+<link rel="canonical" href="https://klcc.cc/891d6bd.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/891d6bd.html","path":"891d6bd.html","title":"Linux包管理及压缩命令"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux包管理及压缩命令 | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">67</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%AD%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">Linux中安装软件的三种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">镜像文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81RPM%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">1、RPM安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81yum%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.</span> <span class="nav-text">2、yum安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0-amp-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E6%90%AD%E5%BB%BA"><span class="nav-number">1.3.1.</span> <span class="nav-text">本地&amp;远程仓库搭建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E6%BA%90%E7%A0%81%E5%8C%85%E5%AE%89%E8%A3%85%EF%BC%88%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">3、源码包安装（编译安装）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%89%93%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">压缩打包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81-%E4%BB%80%E4%B9%88%E6%98%AF%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">1、 什么是打包压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E2%BD%A4%E5%8E%8B%E7%BC%A9%E5%8C%85"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">2、为什么使⽤压缩包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81Windows%E7%9A%84%E5%8E%8B%E7%BC%A9%E5%92%8CLinux%E7%9A%84%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">3、Windows的压缩和Linux的有什么不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81Linux%E4%B8%8B%E5%B8%B8%E2%BB%85%E7%9A%84%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.0.0.4.</span> <span class="nav-text">4、Linux下常⻅的压缩包类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gzip%E6%89%93%E5%8C%85%E4%B8%8E%E5%8E%8B%E7%BC%A9"><span class="nav-number">2.1.</span> <span class="nav-text">gzip打包与压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bzip2%E6%89%93%E5%8C%85%E4%B8%8E%E5%8E%8B%E7%BC%A9"><span class="nav-number">2.2.</span> <span class="nav-text">bzip2打包与压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tar%E6%89%93%E5%8C%85%E4%B8%8E%E5%8E%8B%E7%BC%A9"><span class="nav-number">2.3.</span> <span class="nav-text">tar打包与压缩</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/klcc-c.github.io/images/head.jpeg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/891d6bd.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/head.jpeg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux包管理及压缩命令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-22 00:32:17" itemprop="dateCreated datePublished" datetime="2021-12-22T00:32:17+08:00">2021-12-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-31 09:16:20" itemprop="dateModified" datetime="2021-12-31T09:16:20+08:00">2021-12-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Linux中安装软件的三种方式"><a href="#Linux中安装软件的三种方式" class="headerlink" title="Linux中安装软件的三种方式"></a>Linux中安装软件的三种方式</h1><p>与windows类似，在Linux系统上也可以安装各种应用程序，或称之为软件包</p>
+<span id="more"></span>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1.rpm安装</span><br><span class="line">   rpm安装预先编译打包，安装简单，下载下来之后直接安装。</span><br><span class="line">   优点：已经制作好的安装程序</span><br><span class="line">	 缺点：不能自己解决依赖</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">2.yum安装</span><br><span class="line">   yum安装基于rpm安装</span><br><span class="line">   优点：增加了自动解决依赖的功能。</span><br><span class="line">	</span><br><span class="line">  </span><br><span class="line">3.源代码编译安装</span><br><span class="line">   源代码安装通过编译源代码，得到软件包。</span><br><span class="line">   优点：可以自定制软件包。</span><br><span class="line">   缺点：比较复杂   </span><br></pre></td></tr></table></figure>
+
+<h2 id="镜像文件"><a href="#镜像文件" class="headerlink" title="镜像文件"></a>镜像文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 挂载：</span></span><br><span class="line">  mount /dev/sr0 /opt/</span><br><span class="line">  或</span><br><span class="line">  mount /dev/cdrom /munt/</span><br><span class="line">	</span><br><span class="line"><span class="comment"># 卸载：</span></span><br><span class="line">  umount /dev/sr0  <span class="comment">#挂载源</span></span><br><span class="line">  或</span><br><span class="line">  umount /opt  <span class="comment">#挂载点</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制卸载：</span></span><br><span class="line">  umount -l  [挂载源或挂载点]</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 查看挂载信息</span></span><br><span class="line">  df</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看/操作设备内容需要先挂载</span></span><br><span class="line">[root@localhost dev]<span class="comment"># mount /dev/sr0 /opt/</span></span><br><span class="line"> mount: /dev/sr0 写保护，将以只读方式挂载</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 查看是否挂载成功</span></span><br><span class="line">[root@localhost ~]<span class="comment"># df</span></span><br><span class="line"> 文件系统     1K-块    已用     可用 已用% 挂载点</span><br><span class="line"> /dev/sr0   4480476  4480476   0  100% /opt</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 浏览光盘内容</span></span><br><span class="line">[root@localhost dev]<span class="comment"># ls /opt/  </span></span><br><span class="line"> CentOS_BuildTag  EULA  images    LiveOS repodata     RPM-GPG-KEY-CentOS-Testing-7</span><br><span class="line"> EFI              GPL   isolinux  Packages  RPM-GPG-KEY-CentOS-7  TRANS.TBL</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 查看光盘上的安装包。格式都是以.rpm结尾的</span></span><br><span class="line">[root@localhost dev]<span class="comment"># ls /opt/Packages/</span></span><br><span class="line"> ......</span><br><span class="line"> zlib-1.2.7-18.el7.x86_64.rpm</span><br><span class="line"> zlib-devel-1.2.7-18.el7.x86_64.rpm</span><br><span class="line"> zsh-5.0.2-31.el7.x86_64.rpm</span><br><span class="line"> zziplib-0.13.62-9.el7.x86_64.rpm</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 查看自己当前平台</span></span><br><span class="line">[root@localhost ~]<span class="comment"># uname -m</span></span><br><span class="line"> x86_64</span><br><span class="line"><span class="comment"># 查看系统内核信息</span></span><br><span class="line">[root@localhost ~]<span class="comment"># uname -r</span></span><br><span class="line"> 3.10.0-1160.49.1.el7.x86_64</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="1、RPM安装"><a href="#1、RPM安装" class="headerlink" title="1、RPM安装"></a>1、RPM安装</h2><ul>
+<li>rpm包来源 <ul>
+<li>1、来源网络下载 </li>
+<li>2、来源本地：自己的镜像自带的rpm包</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装：rpm -ivh [软件包名称]</span></span><br><span class="line">   -v  <span class="comment">#显示安装过程</span></span><br><span class="line">   -i  <span class="comment">#显示安装包的详细信息</span></span><br><span class="line">   -h  <span class="comment">#安装包哈希标记</span></span><br><span class="line">	</span><br><span class="line"><span class="comment"># 卸载：rpm -e [软件包名称]</span></span><br><span class="line"><span class="comment"># 升级：rpm -Uvh [软件包名称]</span></span><br><span class="line"></span><br><span class="line"> 1、下载安装包</span><br><span class="line">		</span><br><span class="line"> 2、安装</span><br><span class="line">  [root@localhost ~]<span class="comment"># rpm -qip /opt/Packages/zsh-5.0.2-34.el7_8.2.x86_64.rpm  #本地镜像</span></span><br><span class="line">  或</span><br><span class="line">  [root@localhost ~]<span class="comment"># rpm -ivh zsh-5.0.2-34.el7_8.2.x86_64.rpm </span></span><br><span class="line">  Preparing...                    <span class="comment">################################# [100%]</span></span><br><span class="line">  Updating / installing...</span><br><span class="line">  1:zsh-5.0.2-34.el7_8.2          <span class="comment">################################# [100%]</span></span><br><span class="line">	 </span><br><span class="line">	</span><br><span class="line"> 3、卸载</span><br><span class="line">	[root@localhost ~]<span class="comment"># rpm -e zsh</span></span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"> 4、更新</span><br><span class="line">  [root@localhost ~]<span class="comment"># rpm -Uvh zsh-5.0.2-34.el7_8.2.x86_64.rpm </span></span><br><span class="line">  Preparing...                   <span class="comment">################################# [100%]</span></span><br><span class="line">  Updating / installing...</span><br><span class="line">  1:zsh-5.0.2-34.el7_8.2         <span class="comment">################################# [100%]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> 5、软件包名称</span><br><span class="line">  zsh-5.0.2-34.el7_8.2.x86_64.rpm </span><br><span class="line">   zsh    <span class="comment">#软件包名称</span></span><br><span class="line">   5.0.2  <span class="comment">#版本号</span></span><br><span class="line">   34     <span class="comment">#第多少次编译</span></span><br><span class="line">   el7_8（CentOS 7）<span class="comment">#适用的平台</span></span><br><span class="line">   x86_64 <span class="comment">#适用的系统位数</span></span><br><span class="line">   rpm    <span class="comment">#扩展名</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> 6、查看已安装软件包的使用配置文件</span><br><span class="line">   [root@localhost ~]<span class="comment"># rpm -qc  zsh</span></span><br><span class="line">	</span><br><span class="line"> 7、查看已安装包的描述信息	</span><br><span class="line">   [root@localhost ~]<span class="comment"># rpm -qi zsh</span></span><br><span class="line"></span><br><span class="line"> 8、查看是否安装某软件</span><br><span class="line">   [root@localhost ~]<span class="comment"># rpm -q zsh</span></span><br><span class="line"></span><br><span class="line"> 9、查看当前系统安装了哪些rpm软件</span><br><span class="line">   [root@localhost ~]<span class="comment"># rpm -qa</span></span><br><span class="line">		</span><br><span class="line"> 10、查看软件的安装路径，查看安装了哪些东西</span><br><span class="line">   [root@localhost ~]<span class="comment"># rpm -ql zsh</span></span><br><span class="line"></span><br><span class="line"> 上传与下载：yum install lrzsz -y </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">扩展：</span><br><span class="line"> 1、查看未安装包的软件信息</span><br><span class="line">   [root@localhost ~]<span class="comment"># rpm -qip /opt/Packages/snappy-1.1.0-3.el7.x86_64.rpm </span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="2、yum安装"><a href="#2、yum安装" class="headerlink" title="2、yum安装"></a>2、yum安装</h2><ul>
+<li>yum是CentOS的软件包管理工具，自动为我们解决软件依赖问题。yum包管理工具必须使用yum源指定软件下载地址去下载需要安装的软件包。<ul>
+<li>配置的路径是：/etc/yum.repos.d</li>
+</ul>
+</li>
+<li>要成功的使用 YUM 工具安装更新软件或系统，就需要有一个包含各种 rpm 软件包的repository（软件仓库），这个软件仓库我们习惯称为 yum 源。(可以是本地源、网络源)</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">基于rpm安装，自动解决依赖。</span><br><span class="line"><span class="comment"># yum源命令:</span></span><br><span class="line">   <span class="comment"># 查看yum配置文件</span></span><br><span class="line">   [root@localhost ~]<span class="comment"># ls /etc/yum.repos.d</span></span><br><span class="line"></span><br><span class="line">   <span class="comment"># 查看当前的有哪些仓库地址</span></span><br><span class="line">   [root@localhost ~]<span class="comment"># yum repolist </span></span><br><span class="line">    </span><br><span class="line">   <span class="comment"># 查看包括启用或禁用的所有yum仓库</span></span><br><span class="line">   [root@localhost ~]<span class="comment"># yum repolist all</span></span><br><span class="line">    </span><br><span class="line">   <span class="comment"># 清空yum缓存</span></span><br><span class="line">   [root@localhost ~]<span class="comment"># yum clean all </span></span><br><span class="line">      </span><br><span class="line">   <span class="comment"># 生成yum缓存</span></span><br><span class="line">	 [root@localhost ~]<span class="comment">#yum makecache</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment"># yum常用的基础命令： </span></span><br><span class="line"></span><br><span class="line"> <span class="comment"># 1、安装软件包的命令</span></span><br><span class="line">   yum install [软件包的名称] 	</span><br><span class="line">   参数：</span><br><span class="line">    -y : 免交互安装</span><br><span class="line">    --nogpgcheck : 忽略公钥认证</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment"># 2、卸载软件（直接将软件的依赖包一起删除）</span></span><br><span class="line">   yum remove [软件包名称] </span><br><span class="line">   参数：</span><br><span class="line">    -y : 免交互移除</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment"># 3、更新软件</span></span><br><span class="line">   yum update [软件包名称]   </span><br><span class="line">   参数：</span><br><span class="line">    -y : 免交互更新</span><br><span class="line">	</span><br><span class="line"> ps：如果跟具体的软件包名称，就会更新指定软件包；如果没有指定，则更新系统所有的需要更新的软件包。</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"> <span class="comment"># 4、查看当前系统需要更新软件</span></span><br><span class="line">   yum check-update	</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line"> <span class="comment"># 5、重装软件</span></span><br><span class="line">   yum reinstall [软件包名称]	</span><br><span class="line">   </span><br><span class="line">	</span><br><span class="line"> <span class="comment"># 6、搜索软件包</span></span><br><span class="line">   yum search [软件包名称]	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">yum安装的生命周期：</span><br><span class="line"> 1、执行yum install zsh -y</span><br><span class="line"> 2、去 /etc/yum.repos.d/ 找以 .repo 结尾的文件</span><br><span class="line"> 3、通过 .repo 文件中的链接，找到对应的软件仓库</span><br><span class="line"> 4、在对应的软件仓库中下载指定的软件包</span><br><span class="line"> 5、缓存至 /var/cache/yum/</span><br><span class="line"> 6、根据缓存，安装软件包</span><br><span class="line"> 7、删除软件包（keepcache 是否保存缓存，0 代表不保存 ， 1 代表保存）</span><br></pre></td></tr></table></figure>
+
+<p>知识储备：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wget:下载文件</span></span><br><span class="line">如果系统中没有wget,执行如下命令：yum install wget -y</span><br><span class="line">  wget url</span><br><span class="line">   参数：</span><br><span class="line">    -O  <span class="comment">#指定下载文件的路径及名称</span></span><br><span class="line">		</span><br><span class="line">    </span><br><span class="line"><span class="comment"># curl:读取文件</span></span><br><span class="line">  curl ：读取文件</span><br><span class="line">   参数:</span><br><span class="line">    -o  <span class="comment">#指定下载文件的路径及名称</span></span><br><span class="line">    -k  <span class="comment">#免证书认证</span></span><br><span class="line">	</span><br><span class="line">curl命令是⼀个利⽤URL规则在命令⾏下⼯作的⽂件传输⼯具。它⽀持⽂件的上传和下载，所以是综合传输⼯具，</span><br><span class="line">但按传统，习惯称curl为下载⼯具。作为⼀款强⼒⼯具，curl⽀持包括HTTP、HTTPS、[ftp]等众多协议，还⽀</span><br><span class="line">持POST、cookies、认证、从指定偏移处下载部分⽂件、⽤户代理字符串、限速、⽂件⼤⼩、进度条等特征。做⽹</span><br><span class="line">⻚处理流程和数据检索⾃动化，curl可以祝⼀臂之⼒。</span><br><span class="line"></span><br><span class="line"> [root@localhost ~]<span class="comment"># curl -o 123.png https://www.xxx.com/img/hello.png</span></span><br><span class="line"> <span class="comment"># ps: 如果遇到下载提示⽆法简历SSL链接，使⽤-k选项或者--insecure</span></span><br><span class="line">  curl -k -o 123.png https://www.xxx.com/img/hello.png</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="comment"># sz下载文件与rz上传文件</span></span><br><span class="line"> ps:  yum install lrzsz -y</span><br><span class="line"></span><br><span class="line">sz : 下载文件（从linux系统下载文件到windows）</span><br><span class="line">系统默认没有该命令，需要下载:yum install lrzsz -y</span><br><span class="line">将服务器上选定的⽂件下载/发送到本机，</span><br><span class="line"></span><br><span class="line"><span class="comment"># rz : 上传文件(将windows文件上传至Linux)</span></span><br><span class="line"></span><br><span class="line">  rz [文件路径]</span><br><span class="line">	<span class="comment"># 系统默认没有该命令，需要下载：yum install lrzsz -y</span></span><br><span class="line">  <span class="comment"># 运⾏该命令会弹出⼀个⽂件选择窗⼝，从本地选择⽂件上传到服务器。</span></span><br><span class="line">  [root@localhost opt]<span class="comment"># rz # 如果⽂件已经存，则上传失败，可以⽤-E选项解决</span></span><br><span class="line">  [root@localhost opt]<span class="comment"># rz -E # -E如果⽬标⽂件名已经存在，则重命名传⼊⽂件。新⽂件名将添加⼀个点和⼀个数字(0..999）</span></span><br><span class="line">        </span><br><span class="line"> rz 回车即可选择上传文件</span><br><span class="line"> 也可以进入都某个路径下将文件直接拖入~ （人性化）  </span><br></pre></td></tr></table></figure>
+
+<h3 id="本地-amp-远程仓库搭建"><a href="#本地-amp-远程仓库搭建" class="headerlink" title="本地&amp;远程仓库搭建"></a>本地&amp;远程仓库搭建</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">本地仓库：</span><br><span class="line">  <span class="comment"># 1、下载安装必须的软件包yum-utils，createrepo</span></span><br><span class="line">    yum install yum-utils createrepo -y</span><br><span class="line">		</span><br><span class="line">  <span class="comment"># 2、创建软件包目录，存放软件包的</span></span><br><span class="line">    mkdir -p /opt/repos</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 3、下载对应的软件</span></span><br><span class="line">    mkdir -p /opt/repos/Packages</span><br><span class="line">			</span><br><span class="line">    把对应的软件包复制到 Packages 目录中</span><br><span class="line">			</span><br><span class="line">  <span class="comment"># 4、初始化软件仓库</span></span><br><span class="line">		 createrepo /opt/repos</span><br><span class="line">	</span><br><span class="line">  <span class="comment"># 5、添加yum源，将软件包复制到yum仓库目录</span></span><br><span class="line">     <span class="built_in">cd</span> /etc/yum.repos.d/</span><br><span class="line">     mkdir backup</span><br><span class="line">     mv *.repo backup/</span><br><span class="line">     [root@localhost ~]<span class="comment"># yum-config-manager --add-repo=file:///opt/repos</span></span><br><span class="line"></span><br><span class="line">     [root@localhost /etc/yum.repos.d]<span class="comment"># cat opt_repos.repo </span></span><br><span class="line"></span><br><span class="line">     [opt_repos]	<span class="comment">#源的名称</span></span><br><span class="line">      name=added from: file:///opt/repos	 <span class="comment">#源的简介</span></span><br><span class="line">      baseurl=file:///opt/repos	<span class="comment">#源的下载地址</span></span><br><span class="line">      enabled=1	<span class="comment">#是否启用：1启用 ，0不启用</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 6、清空yum缓存</span></span><br><span class="line">     yum clean all </span><br><span class="line">      </span><br><span class="line">  <span class="comment"># 7、生成yum缓存</span></span><br><span class="line">     yum makecache</span><br><span class="line">		</span><br><span class="line">  <span class="comment"># 8、测试</span></span><br><span class="line">     yum install zsh</span><br><span class="line">	</span><br><span class="line">	远程仓库</span><br><span class="line">		参考本地版前7步</span><br><span class="line">		</span><br><span class="line">    <span class="comment"># 1、安装远程访问软件（Nginx）</span></span><br><span class="line">      <span class="comment"># ① 配备CentOS-7 源</span></span><br><span class="line">      [root@localhost ~]<span class="comment"># curl -o /etc/yum.repos.d/CentOS-Base.repohttps://repo.huaweicloud.com/repository/conf/CentOS-7-reg.repo</span></span><br><span class="line">			<span class="comment"># ② 配备EPEL源</span></span><br><span class="line">      [root@localhost ~]<span class="comment"># yum-config-manager --add-repo=https://repo.huaweicloud.com/epel/7/x86_64/</span></span><br><span class="line">			<span class="comment"># ③ 安装nginx</span></span><br><span class="line">      [root@localhost ~]<span class="comment"># yum install nginx --nogpgcheck</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2、修改nginx的配置文件</span></span><br><span class="line">      https://nginx.org/en/docs/http/ngx_http_autoindex_module.html</span><br><span class="line">			</span><br><span class="line">      [root@localhost ~]<span class="comment"># vim /etc/nginx/nginx.conf</span></span><br><span class="line">      <span class="comment"># include /etc/nginx/conf.d/*.conf;</span></span><br><span class="line">      root         /opt/repos;</span><br><span class="line">      autoindex on;</span><br><span class="line">			</span><br><span class="line">      <span class="comment"># 测试更改是否成功</span></span><br><span class="line">      [root@localhost ~]<span class="comment"># nginx -t</span></span><br><span class="line">			</span><br><span class="line">      <span class="comment"># 启动nginx</span></span><br><span class="line">      [root@localhost ~]<span class="comment"># systemctl start nginx</span></span><br><span class="line">			</span><br><span class="line">      <span class="comment"># 关闭selinux和firewalld</span></span><br><span class="line">      [root@localhost ~]<span class="comment"># systemctl disable --now firewalld</span></span><br><span class="line">      [root@localhost ~]<span class="comment"># setenforce 0</span></span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">    <span class="comment"># 3、在测试机</span></span><br><span class="line">      [root@localhost yum.repos.d]<span class="comment"># yum install yum-utils -y</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 备份源</span></span><br><span class="line">      [root@localhost yum.repos.d]<span class="comment"># mkdir backup</span></span><br><span class="line">      [root@localhost yum.repos.d]<span class="comment"># mv *.repo backup/</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 添加源</span></span><br><span class="line">      [root@localhost yum.repos.d]<span class="comment"># yum-config-manager --add-repo=http://192.168.15.101/</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 刷新缓存</span></span><br><span class="line">      [root@localhost yum.repos.d]<span class="comment"># yum clean all </span></span><br><span class="line">      [root@localhost yum.repos.d]<span class="comment"># yum makecache</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 4、测试</span></span><br><span class="line">      [root@localhost ~]<span class="comment"># yum install zsh -y</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3、源码包安装（编译安装）"><a href="#3、源码包安装（编译安装）" class="headerlink" title="3、源码包安装（编译安装）"></a>3、源码包安装（编译安装）</h2><ul>
+<li><p><strong>1.源码包是什么</strong></p>
+<ul>
+<li>源码包指的是开发编写好的程序源代码，但并没有将其编译为一个能正常使用的工具。-</li>
+</ul>
+</li>
+<li><p><strong>2.为什么要学习源码包</strong></p>
+<ul>
+<li>1、部分软件官网仅提供源码包，需要自行编译并安装。</li>
+<li>2、部分软件在新版本有一些特性还没来得及制作成rpm包时，可以自行编译软件使用其新特性。</li>
+</ul>
+</li>
+<li><p><strong>3.源码包的优缺点</strong></p>
+<ul>
+<li>优点是：<ul>
+<li>可以自行修改源代码</li>
+<li>可以定制需要的相关功能</li>
+<li>新版软件优先更新源码</li>
+</ul>
+</li>
+<li>缺点是: <ul>
+<li>相对yum安装软件会复杂很多。</li>
+<li>标准化实施困难，自动化就无法落地。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>4.源码包如何获取</strong></p>
+<ul>
+<li>常见的软件包都可以在官网获取源码包，比如 apache、nginx、mysql等等</li>
+</ul>
+</li>
+<li><p><strong>5.将源码包编译为二进制可执行文件步骤如下，简称安装三步曲</strong></p>
+</li>
+</ul>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B.png" alt="编译安装过程"></p>
+<p>注意: 此方法不是百分百通用于所有源码包，建议拿到源码包解压后，进入到目录找相关的README帮助文档</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">编译安装</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1、基础环境准备</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># yum install -y gcc make wget</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、下载源码包</span></span><br><span class="line">	[root@localhost ~]<span class="comment"># wget https://nginx.org/download/nginx-1.20.2.tar.gz</span></span><br><span class="line">		</span><br><span class="line"><span class="comment"># 2、解压源码包, 并进入相应目录</span></span><br><span class="line">	[root@localhost ~]<span class="comment"># tar -xf nginx-1.20.2.tar.gz</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># cd nginx-1.20.2</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 3、配置相关的选项，并生成Makefile</span></span><br><span class="line">  [root@localhost nginx-1.20.2]<span class="comment"># ./configure </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4、将Makefile文件编译可执行二进制程序</span></span><br><span class="line">	[root@localhost nginx-1.20.2]<span class="comment"># make</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5、将二进制文件拷贝至对应的目录中</span></span><br><span class="line">	[root@localhost nginx-1.20.2]<span class="comment"># make install</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 6、启动</span></span><br><span class="line">	[root@localhost ~]<span class="comment"># /usr/local/nginx/sbin/nginx</span></span><br><span class="line">  <span class="comment"># 启动后浏览器访问ip地址即可查看是否安装成功</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 7、关闭</span></span><br><span class="line">	[root@localhost ~]<span class="comment"># /usr/local/nginx/sbin/nginx -s stop</span></span><br><span class="line"></span><br><span class="line">知识储备：</span><br><span class="line">	tar -xf [压缩包名称]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">知识拓展：</span><br><span class="line">  自定制安装，修改源代码包名以 nginx 为例</span><br><span class="line">  <span class="comment"># 1、关闭nginx服务后，删除源代码包，目录</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># rm -rf nginx-1.20.2</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># rm -rf /usr/local/nginx/</span></span><br><span class="line">  <span class="comment"># 2、重新解压源码包, 并进入相应目录</span></span><br><span class="line">	[root@localhost ~]<span class="comment"># tar -xf nginx-1.20.2.tar.gz</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># cd nginx-1.20.2</span></span><br><span class="line">  <span class="comment"># 3、找到对应的版本，版本号</span></span><br><span class="line">  [root@localhost nginx-1.20.2]<span class="comment"># grep -R &#x27;nginx&#x27; ./</span></span><br><span class="line">  [root@localhost nginx-1.20.2]<span class="comment"># grep -R &#x27;1.20.2&#x27; ./</span></span><br><span class="line">    ./src/core/nginx.h:<span class="comment">#define NGINX_VERSION   &quot;1.20.2&quot;  #可以看到版本的路径</span></span><br><span class="line">  <span class="comment"># 修改文件，修改完后:wq退出</span></span><br><span class="line">  [root@localhost nginx-1.20.2]<span class="comment"># vim ./src/core/nginx.h</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;&#x27;</span><span class="string">&#x27;</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">   /*</span></span><br><span class="line"><span class="string">    * Copyright (C) Igor Sysoev</span></span><br><span class="line"><span class="string">    * Copyright (C) Nginx, Inc.</span></span><br><span class="line"><span class="string">    */</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    #ifndef _NGINX_H_INCLUDED_</span></span><br><span class="line"><span class="string">    #define _NGINX_H_INCLUDED_</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    #define nginx_version      1020002</span></span><br><span class="line"><span class="string">    #define NGINX_VERSION      &quot;1.0&quot; # 修改版本</span></span><br><span class="line"><span class="string">    #define NGINX_VER          &quot;GengFeng/&quot; NGINX_VERSION  #修改名称</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    #ifdef NGX_BUILD</span></span><br><span class="line"><span class="string">     &#x27;</span><span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="comment"># 配置相关的选项，并生成Makefile</span></span><br><span class="line">  [root@localhost nginx-1.20.2]<span class="comment"># ./configure </span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 将Makefile文件编译可执行二进制程序</span></span><br><span class="line">  [root@localhost nginx-1.20.2]<span class="comment"># make</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 将二进制文件拷贝至对应的目录中</span></span><br><span class="line">  [root@localhost nginx-1.20.2]<span class="comment"># make install</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 启动</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># /usr/local/nginx/sbin/nginx</span></span><br><span class="line">  <span class="comment"># 启动后浏览器访问ip地址即可查看是否安装成功</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment"># 修改后看到的是已改过的名称和版本，以 http://192.168.15.100/sdasdas 为例</span></span><br><span class="line">     404 Not Found</span><br><span class="line">     GengFeng/1.0</span><br></pre></td></tr></table></figure>
+
+<h1 id="压缩打包"><a href="#压缩打包" class="headerlink" title="压缩打包"></a>压缩打包</h1><h4 id="1、-什么是打包压缩"><a href="#1、-什么是打包压缩" class="headerlink" title="1、 什么是打包压缩"></a><strong>1、</strong> <strong>什么是打包压缩</strong></h4><p>打包指的是将多个⽂件和⽬录合并为⼀个特殊⽂件，然后将该特殊⽂件进⾏压缩，最终得到⼀个压缩包</p>
+<h4 id="2、为什么使⽤压缩包"><a href="#2、为什么使⽤压缩包" class="headerlink" title="2、为什么使⽤压缩包"></a><strong>2、为什么使⽤压缩包</strong></h4><ul>
+<li><p>1.减少占⽤的体积</p>
+</li>
+<li><p>2.加快⽹络的传输</p>
+</li>
+</ul>
+<h4 id="3、Windows的压缩和Linux的有什么不同"><a href="#3、Windows的压缩和Linux的有什么不同" class="headerlink" title="3、Windows的压缩和Linux的有什么不同"></a>3、Windows的压缩和Linux的有什么不同</h4><ul>
+<li><strong>windows: zip rar(linux不⽀持rar)</strong></li>
+<li><strong>linux: zip tar.gz tar.bz2 .gz</strong></li>
+</ul>
+<p>如果希望windows的软件能被linux解压，或者linux的软件包被windows能识别，选择zip.</p>
+<p>PS: 压缩包的后缀不重要，但⼀定要携带.</p>
+<h4 id="4、Linux下常⻅的压缩包类型"><a href="#4、Linux下常⻅的压缩包类型" class="headerlink" title="4、Linux下常⻅的压缩包类型"></a>4、Linux下常⻅的压缩包类型</h4><table>
+<thead>
+<tr>
+<th>格式</th>
+<th>压缩工具</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.zip</code></td>
+<td><strong>zip</strong> 压缩工具</td>
+</tr>
+<tr>
+<td><code>.gz</code></td>
+<td><strong>gzip</strong> 压缩工具，只能压缩文件，会删除源文件（通常配合<strong>tar</strong>使用）</td>
+</tr>
+<tr>
+<td><code>.bz2</code></td>
+<td><strong>bzip2</strong> 压缩工具，只能压缩文件，会删除源文件（通常配合<strong>tar</strong>使用）</td>
+</tr>
+<tr>
+<td><code>.tar.gz</code></td>
+<td>先使用<strong>tar</strong> 命令归档打包，然后使用 <strong>gzip</strong> 压缩</td>
+</tr>
+<tr>
+<td><code>.tar.bz2</code></td>
+<td>先使用<strong>tar</strong> 命令归档打包，然后使用 <strong>bzip</strong> 压缩</td>
+</tr>
+</tbody></table>
+<p>Linux常见的压缩包有哪些？</p>
+<ul>
+<li>gzip</li>
+<li>bzip2</li>
+</ul>
+<h2 id="gzip打包与压缩"><a href="#gzip打包与压缩" class="headerlink" title="gzip打包与压缩"></a>gzip打包与压缩</h2><ul>
+<li>使用gzip方式进行压缩文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 压缩命令：gzip [压缩文件]</span></span><br><span class="line"><span class="comment"># 解压命令：gzip -d [压缩包]</span></span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># gzip file       #对文件进行压缩</span></span><br><span class="line">[root@localhost ~]<span class="comment"># zcat file.gz    #查看gz压缩后的文件</span></span><br><span class="line">[root@localhost ~]<span class="comment"># gzip -d file.gz #解压gzip的压缩包</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用场景:当需要让某个文件不生效时</span></span><br><span class="line">[root@localhost ~]<span class="comment"># gzip CentOS-Vault.repo --&gt; CentOS-Vault.repo.gz</span></span><br><span class="line">[root@localhost ~]<span class="comment"># zcat CentOS-Vault.repo.gz --&gt; 查看不想解压的压缩包文件内容</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="bzip2打包与压缩"><a href="#bzip2打包与压缩" class="headerlink" title="bzip2打包与压缩"></a>bzip2打包与压缩</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 压缩命令：bzip2 [压缩文件]</span></span><br><span class="line"><span class="comment"># 解压命令：bzip2 -d [压缩包]</span></span><br><span class="line"> </span><br><span class="line">[root@localhost ~]<span class="comment"># bzip2 file        #对文件进行压缩</span></span><br><span class="line">[root@localhost ~]<span class="comment"># bzmore file.bz2   #查看bz2压缩后的文件</span></span><br><span class="line">[root@localhost ~]<span class="comment"># bzip2 -d file.bz2 #解压bzip2的压缩包 </span></span><br></pre></td></tr></table></figure>
+
+<h2 id="tar打包与压缩"><a href="#tar打包与压缩" class="headerlink" title="tar打包与压缩"></a>tar打包与压缩</h2><ul>
+<li>tar是linux下最常用的压缩与解压缩, 支持文件和目录的压缩归档</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">tar : 打包的命令</span><br><span class="line">  参数：</span><br><span class="line">    -f  <span class="comment">#指定包文件名称，多参数f写最后</span></span><br><span class="line">    -c  <span class="comment">#打包</span></span><br><span class="line">    -v  <span class="comment">#输出命令的打包或解包的过程</span></span><br><span class="line">    -x  <span class="comment">#解压（解压不需要指定压缩类型）</span></span><br><span class="line">    -t  <span class="comment">#查看压缩包内部的内容</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    -z  <span class="comment">#使用gzip压缩压缩包</span></span><br><span class="line">    -j  <span class="comment">#使用bzip2压缩压缩包</span></span><br><span class="line">    -J  <span class="comment">#使用xz压缩归档后的文件(tar.xz)</span></span><br><span class="line">    -C  <span class="comment">#指定解压目录位置</span></span><br><span class="line">    -P  <span class="comment">#忽略使用绝对路径时报出的错误</span></span><br><span class="line">    -X  <span class="comment">#排除多个文件(写入需要排除的文件名称)</span></span><br><span class="line">    -h  <span class="comment">#打包软链接		</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    --hard-dereference  <span class="comment">#打包硬链接</span></span><br><span class="line">    --exclude   <span class="comment">#在打包的时候写入需要排除文件或目录		</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#常用打包与压缩组合</span></span><br><span class="line">czf    <span class="comment">#打包tar.gz格式</span></span><br><span class="line">cjf    <span class="comment">#打包tar.bz格式</span></span><br><span class="line">cJf    <span class="comment">#打包tar.xz格式</span></span><br><span class="line"></span><br><span class="line">zxf    <span class="comment">#解压tar.gz格式</span></span><br><span class="line">jxf    <span class="comment">#解压tar.bz格式</span></span><br><span class="line">xf     <span class="comment">#自动选择解压模式</span></span><br><span class="line">tf     <span class="comment">#查看压缩包内容    </span></span><br><span class="line">		</span><br><span class="line">  注意：</span><br><span class="line">     1、压缩时是什么路径，解压缩时就是什么路径，所以为了安全不要使用绝对路径压缩。</span><br><span class="line">     2、-f参数后面永远跟压缩包名称</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line"><span class="comment"># tar命令练习     </span></span><br><span class="line">  <span class="comment">#1.环境准备</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># yum install mariadb-server</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># systemctl start mariadb</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># mkdir /backup</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#案例1.mysql备份及恢复</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># tar cJf /backup/mysql.tar.xz /var/lib/mysql</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># tar xf /backup/mysql.tar.xz -C /</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#案例2 mysql备份及恢复</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># cd /var/lib/mysql</span></span><br><span class="line">  [root@localhost mysql]<span class="comment"># tar cJf /backup/mysql.tar.xz *</span></span><br><span class="line">  [root@localhost mysql]<span class="comment"># tar tf /backup/mysql.tar.xz</span></span><br><span class="line">  [root@localhost mysql]<span class="comment"># tar xf /backup/mysql.tar.xz -C /var/lib/mysql     </span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/ef277b25.html" rel="prev" title="Linux用户管理">
+                  <i class="fa fa-chevron-left"></i> Linux用户管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/c3540fc.html" rel="next" title="Linux系统优化及定时任务">
+                  Linux系统优化及定时任务 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">365k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:32</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

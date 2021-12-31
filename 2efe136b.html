@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/klcc-c.github.io/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/klcc-c.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="架构图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux防火墙iptables">
+<meta property="og:url" content="https://klcc.cc/2efe136b.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="架构图">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/6581640856451_.pic_%E5%89%AF%E6%9C%AC.jpg">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/2615753-20211226235009781-222102770.webp">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/image-20210823223210395.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/2615753-20211227000852784-704163914.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/2615753-20211227002046380-1487109655.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/2615753-20211227002203426-1208905019-20211230171628792.png">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/1.jpeg">
+<meta property="article:published_time" content="2021-12-30T09:31:38.000Z">
+<meta property="article:modified_time" content="2021-12-31T01:16:20.350Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/gengff/blogimage/raw/master/images/%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84.png">
+
+
+<link rel="canonical" href="https://klcc.cc/2efe136b.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/2efe136b.html","path":"2efe136b.html","title":"Linux防火墙iptables"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux防火墙iptables | klcc</title>
+  
+
+  <script src="/klcc-c.github.io/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/klcc-c.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">klcc</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/klcc-c.github.io/" rel="section"><i class="home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/klcc-c.github.io/tags/" rel="section"><i class="tags fa-fw"></i>标签<span class="badge">15</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/klcc-c.github.io/categories/" rel="section"><i class="th fa-fw"></i>分类<span class="badge">9</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/klcc-c.github.io/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">67</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">架构图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E7%A7%8D%E7%B1%BB%E5%8F%8A%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">防火墙种类及使用说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Iptables"><span class="nav-number">3.</span> <span class="nav-text">Iptables</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#iptables%E9%98%B2%E7%81%AB%E5%A2%99%E7%BD%91%E8%B7%AF%E5%AE%89%E5%85%A8%E5%89%8D%E8%A8%80%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.0.1.</span> <span class="nav-text">iptables防火墙网路安全前言介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E8%BF%87%E6%BB%A4%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">3.0.2.</span> <span class="nav-text">包过滤防火墙</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E8%A1%A85%E9%93%BE"><span class="nav-number">3.1.</span> <span class="nav-text">4表5链</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E5%85%A5%E6%9C%AC%E6%9C%BA"><span class="nav-number">3.1.0.1.</span> <span class="nav-text">流入本机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E5%87%BA%E6%9C%AC%E6%9C%BA"><span class="nav-number">3.1.0.2.</span> <span class="nav-text">流出本机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%8F%E8%BF%87%E6%9C%AC%E6%9C%BA"><span class="nav-number">3.1.0.3.</span> <span class="nav-text">经过本机</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Iptables%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">3.2.</span> <span class="nav-text">Iptables流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Iptables%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">3.3.</span> <span class="nav-text">Iptables的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#iptables%E5%8A%A8%E4%BD%9C"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">iptables动作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Iptables%E5%9F%BA%E6%9C%AC%E7%9A%84%E6%9D%A1%E4%BB%B6%E5%8C%B9%E9%85%8D"><span class="nav-number">3.3.0.2.</span> <span class="nav-text">Iptables基本的条件匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#s%E3%80%81-d-%E6%BA%90%E5%9C%B0%E5%9D%80%E3%80%81%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80"><span class="nav-number">3.3.0.3.</span> <span class="nav-text">-s、-d  源地址、目标地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%93sport%E6%BA%90%E7%AB%AF%E5%8F%A3%E3%80%81%E2%80%93dport-%E7%9B%AE%E6%A0%87%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.3.0.4.</span> <span class="nav-text">–sport源端口、–dport 目标端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#i%E3%80%81-o%E3%80%81-m%E3%80%81-j-%E5%8A%A8%E4%BD%9C"><span class="nav-number">3.3.0.5.</span> <span class="nav-text">-i、-o、-m、-j  动作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B"><span class="nav-number">3.4.</span> <span class="nav-text">案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97"><span class="nav-number">3.5.</span> <span class="nav-text">模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="nav-number">3.5.1.</span> <span class="nav-text">案例</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/klcc-c.github.io/images/head.jpeg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/2efe136b.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/klcc-c.github.io/images/head.jpeg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux防火墙iptables
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-30 17:31:38" itemprop="dateCreated datePublished" datetime="2021-12-30T17:31:38+08:00">2021-12-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-12-31 09:16:20" itemprop="dateModified" datetime="2021-12-31T09:16:20+08:00">2021-12-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h1><span id="more"></span>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84.png" alt="项目架构"></p>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/6581640856451_.pic_%E5%89%AF%E6%9C%AC.jpg" alt="6581640856451_.pic_副本"></p>
+<h1 id="防火墙种类及使用说明"><a href="#防火墙种类及使用说明" class="headerlink" title="防火墙种类及使用说明"></a>防火墙种类及使用说明</h1><p><img src="https://gitee.com/gengff/blogimage/raw/master/images/2615753-20211226235009781-222102770.webp" alt="2615753-20211226235009781-222102770"></p>
+<ul>
+<li><p>什么是防火墙</p>
+<ul>
+<li>防火墙一直被认为是保护敏感信息的第一道防线。他们在安全与受控内部网络之间建立了一道屏障，提供低级保护，以及重要的日志记录和审计功能。它能监视传入和传出的流量，并根据一组以定义的安全规则决定是允许还是阻止特定流量。</li>
+</ul>
+</li>
+<li><p>防火墙种类</p>
+<ul>
+<li>硬件防火墙（主机防火墙）<ul>
+<li>三层路由： 华为 H3C(华三)</li>
+<li>深信服</li>
+</ul>
+</li>
+<li>软件防火墙（网络防火墙）<ul>
+<li>iptables</li>
+<li>firewalld</li>
+</ul>
+</li>
+<li>云防火墙<ul>
+<li>阿里云:安全组（默认的是白名单 防火墙默认规则是拒绝）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Iptables"><a href="#Iptables" class="headerlink" title="Iptables"></a>Iptables</h1><p>Netfilter/Iptables（以下简称Iptables）是unix/linux自带的一款优秀且开放源代码的完全自由的基于包过滤的防火墙工具，它的功能十分强大，使用非常灵活，可以对流入和流出服务器的数据包进行很精细的控制。在早期的Linux系统中，默认使用的是iptables防火墙管理服务来配置防火墙。尽管新型的firewalld防火墙管理服务已经被投入使用多年，但是大量的企业在生产环境中依然出于各种原因而继续使用iptables。</p>
+<ul>
+<li>iptables是linux2.4及2.6内核中集成的服务。</li>
+<li>iptables主要工作在OSI七层的二、三、四层，如果重新编译内核，iptables也可以支持7层控制</li>
+</ul>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20210823223210395.png" alt="image-20210823223210395"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户  ---&gt;  调用iptables  ---&gt;  ip_tables内核模块  ---&gt;  Netfilter（系统安全框架） ---&gt;  过滤请求</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="iptables防火墙网路安全前言介绍"><a href="#iptables防火墙网路安全前言介绍" class="headerlink" title="iptables防火墙网路安全前言介绍"></a>iptables防火墙网路安全前言介绍</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">学好iptables的基础：</span><br><span class="line">  1、OSI7层模型以及不同层对应哪些协议？</span><br><span class="line">  2、TCP/IP三次握手，四次断开的过程，TCP HEADER，状态转换</span><br><span class="line">  3、常用的服务端口要非常清楚了解。</span><br><span class="line">  4、常用服务协议原理http协议，icmp协议。</span><br><span class="line"></span><br><span class="line">企业中安全配置原则：</span><br><span class="line">  1、尽可能不给服务器配置外网IP，可以通过代理转发或者通过防火墙映射。</span><br><span class="line">  2、并发不是特别大情况有外网IP，可以开启防火墙服务。</span><br><span class="line">  3、大并发的情况，不能开iptables，影响性能，利用硬件防火墙提升架构安全。Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<h3 id="包过滤防火墙"><a href="#包过滤防火墙" class="headerlink" title="包过滤防火墙"></a>包过滤防火墙</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">1、什么是包</span><br><span class="line">	在数据传输过程，并不是一次性传输完成的；而是将数据分成若干个数据包，一点一点的传输。</span><br><span class="line"></span><br><span class="line">2、 什么是包过滤防火墙</span><br><span class="line">	过滤数据包的防火墙。</span><br><span class="line"></span><br><span class="line">4、包过滤防火墙如何实现</span><br><span class="line">  通过系统安全框架，过滤数据包。</span><br><span class="line">  </span><br><span class="line">5、防火墙使用时名词概念理解  </span><br><span class="line">容器：装东西的器皿，docker容器技术，将镜像装在了一个系统中，这个系统就称为容器</span><br><span class="line">iptables称为一个容器---装着防火墙的表</span><br><span class="line">防火墙的表又是一个容器---装着防火墙的链</span><br><span class="line">防火墙的链也是一个容器---装着防火墙的规则</span><br><span class="line">iptables---表---链---规则</span><br><span class="line">  </span><br><span class="line">规则：防火墙一条一条安全策略</span><br><span class="line">防火墙匹配规则流程：</span><br><span class="line">  1. 防火墙是层层过滤的，实际是按照配置规则的顺序从上到下，从前到后进行过滤的。</span><br><span class="line">  2. 如果匹配上规则，即明确表示是阻止还是通过，数据包就不再向下匹配新的规则。</span><br><span class="line">  3. 如果规则中没有明确表明是阻止还是通过的，也就是没有匹配规则，向下进行匹配，直到匹配默认规则得到明确的阻止还是通过。</span><br><span class="line">  4. 防火墙的默认规则是所有规则执行完才执行的。Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<h2 id="4表5链"><a href="#4表5链" class="headerlink" title="4表5链"></a>4表5链</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">1、四个表，有哪些作用</span><br><span class="line">   具备某种功能的集合叫做表。</span><br><span class="line"></span><br><span class="line">   filter：负责做过滤功能呢	  INPUT、OUTPUT、FORWARD</span><br><span class="line">   nat：	  网络地址转换	     PREROUTING、INPUT、OUTPUT、POSTROUTING</span><br><span class="line">   mangle：负责修改数据包内容  PREROUTING、INPUT、OUTPUT、POSTROUTING、FORWARD</span><br><span class="line">   raw：   负责数据包跟踪      PREROUTING、OUTPUT</span><br><span class="line"></span><br><span class="line">2、五条链，运行在那些地方</span><br><span class="line"></span><br><span class="line">   PREROUTING、INPUT、OUTPUT、FORWARD、POSTROUTING</span><br><span class="line"></span><br><span class="line">  1）PREROUTING: 主机外报文进入位置，允许的表mangle, nat（目标地址转换，把本机地址转换为真正的目标机地址，通常指响应报文）</span><br><span class="line">  2）INPUT：报文进入本机用户空间位置，允许的表filter, mangle</span><br><span class="line">  3）OUTPUT：报文从本机用户空间出去的位置，允许filter, mangle, nat</span><br><span class="line">  4）FOWARD：报文经过路由并且发觉不是本机决定转发但还不知道从哪个网卡出去，允许filter, mangle</span><br><span class="line">  5）POSTROUTING：报文经过路由被转发出去，允许mangle，nat（源地址转换，把原始地址转换为转发主机出口网卡地址）</span><br><span class="line"></span><br><span class="line">   流入本机：PREROUTING  --&gt;  INPUT  --&gt; PROCESS(进程)</span><br><span class="line">   流出本机：PROCESS(进程) --&gt;  OUTPUT --&gt; POSTROUTING</span><br><span class="line">   经过本机：PREROUTING  --&gt; FORWARD --&gt; POSTROUTING</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="流入本机"><a href="#流入本机" class="headerlink" title="流入本机"></a>流入本机</h4><ul>
+<li>当外部的数据进入时通过网卡进入本机后，在网络层时会经过PREROUTING（主机外报文进入位置）链继续前进到达用户层之前会经过INPUT链。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">数据进入（通过网线）---&gt; 链接网卡设备 ---&gt; 网络接口层 ---&gt; netfilter ---&gt;</span><br><span class="line">在网络层时会经过PREROUTING（主机外报文进入的位置）链 ---&gt; TCP UDP协议 ---&gt;</span><br><span class="line">进入用户层之前（INPUT）---&gt; 到达用户层</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/2615753-20211227000852784-704163914.png" alt="2615753-20211227000852784-704163914"></p>
+<h4 id="流出本机"><a href="#流出本机" class="headerlink" title="流出本机"></a>流出本机</h4><ul>
+<li>当用户从用户层发出数据之后，会先经过OUTPUT链，在经过了OUTPUT链到达Netfilter防火墙，在经过防火墙到达设备驱动之前，会经过POSTROUTING链，之后在发送出去。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用户操作命令工具(iptables) --&gt; OUTPUT链 --&gt; ip_tables内核模块 --&gt;</span><br><span class="line">Netfilter(防火墙) --&gt; 网络层 --&gt; 网络接口层 --&gt; POSTROUTING链</span><br><span class="line">-- 设备驱动 --&gt; 网络传输出</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/2615753-20211227002046380-1487109655.png" alt="2615753-20211227002046380-1487109655"></p>
+<h4 id="经过本机"><a href="#经过本机" class="headerlink" title="经过本机"></a>经过本机</h4><ul>
+<li>报文经过路由并且发觉目的并不是本机,在经过PREROUTING链进入本机发现最终目的并不是本机时被转到FORWORD链后经过POSTROUING链转发出去。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数据进入 --&gt; PREROUTING --&gt; FORWARD --&gt; POSTROUTING --&gt; 出去</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/2615753-20211227002203426-1208905019-20211230171628792.png" alt="2615753-20211227002203426-1208905019"></p>
+<h2 id="Iptables流程图"><a href="#Iptables流程图" class="headerlink" title="Iptables流程图"></a>Iptables流程图</h2><p><img src="https://gitee.com/gengff/blogimage/raw/master/images/1.jpeg" alt="1"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">流入本机： A  ---&gt;  PREROUTING  ---&gt;  INPUT ---&gt; B</span><br><span class="line">流出本机：OUTPUT  ---&gt;  POSTROUTING  ---&gt; B</span><br><span class="line">经过本机： A ---&gt; OUTPUT ---&gt; POSTROUTING | ---&gt; PREROUTING ---&gt; FORWARD  ---&gt; POSTROUTING ---&gt; C ---&gt; PREROUTING  ---&gt; INPUT ---&gt; B</span><br><span class="line"></span><br><span class="line">filter :  INPUT 、FORWARD、 OUTPUT </span><br><span class="line">nat : PREROUTING 、 INPUT、 OUTPUT、 POSTROUTING</span><br><span class="line">raw : PREROUTING、 OUTPUT</span><br><span class="line">mangle : PREROUTING INPUT FORWARD OUTPUT POSTROUTING</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="Iptables的使用"><a href="#Iptables的使用" class="headerlink" title="Iptables的使用"></a>Iptables的使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">1、安装Iptables</span><br><span class="line">	[root@m01 ~]<span class="comment"># yum install iptables*</span></span><br><span class="line"></span><br><span class="line">2、启动Iptables</span><br><span class="line">	[root@m01 ~]<span class="comment"># systemctl start iptables</span></span><br><span class="line"></span><br><span class="line">3、关闭firewalld</span><br><span class="line">	[root@m01 ~]<span class="comment"># systemctl disable --now firewalld</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">格式：iptables -t 表名 选项 链名称 条件  动作</span><br><span class="line"></span><br><span class="line">-t            <span class="comment">#指定操作的表</span></span><br><span class="line">-L, --list    <span class="comment">#以列表形式显示当前的规则</span></span><br><span class="line">-v            <span class="comment">#显示数据包和数据包大小</span></span><br><span class="line">-n            <span class="comment">#不反解地址</span></span><br><span class="line">-A, --append  <span class="comment">#追加一条规则到指定链中</span></span><br><span class="line">-I, --insert  <span class="comment">#插入一条规则，插入到顶部</span></span><br><span class="line">-F, --flush   <span class="comment">#清除防火墙默认规则</span></span><br><span class="line">-Z, --zero    <span class="comment">#清空计数器（包数量 、包大小）</span></span><br><span class="line">-D, --delete  <span class="comment">#删除链中的规则</span></span><br><span class="line">-R, --replace <span class="comment">#修改</span></span><br><span class="line">-S, --list-rules   <span class="comment">#列出所有的规则</span></span><br><span class="line">-N, --new-chain    <span class="comment">#创建一个自定义 链</span></span><br><span class="line">-X, --delete-chain <span class="comment">#删除防火墙自定义链</span></span><br><span class="line">-P, --policy       <span class="comment">#指定链的默认策略  </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="iptables动作"><a href="#iptables动作" class="headerlink" title="iptables动作"></a>iptables动作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ACCEPT   <span class="comment">#将数据包放行，进行完此处理动作后，将不再比对其它规则，直接跳往下一个规则链。</span></span><br><span class="line">REJECT   <span class="comment">#拦阻该数据包，并传送数据包通知对方。</span></span><br><span class="line">DROP     <span class="comment">#丢弃包不予处理，进行完此处理动作后，将不再比对其它规则，直接中断过滤程序。</span></span><br><span class="line">REDIRECT <span class="comment">#将包重新导向到另一个端口，进行完此处理动作后，将会继续比对其它规则。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Iptables基本的条件匹配"><a href="#Iptables基本的条件匹配" class="headerlink" title="Iptables基本的条件匹配"></a>Iptables基本的条件匹配</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TCP(http)</span><br><span class="line">UDP</span><br><span class="line">ICMP(ping)</span><br><span class="line">ALL</span><br></pre></td></tr></table></figure>
+
+<h4 id="s、-d-源地址、目标地址"><a href="#s、-d-源地址、目标地址" class="headerlink" title="-s、-d  源地址、目标地址"></a>-s、-d  源地址、目标地址</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-s  <span class="comment">#源地址：发送请求的地址（指定匹配的源地址网段信息，或者匹配的主机信息）</span></span><br><span class="line"></span><br><span class="line">-d  <span class="comment">#目标地址：访问的地址（指定匹配的目标地址网段信息，或者匹配的主机信息）</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="–sport源端口、–dport-目标端口"><a href="#–sport源端口、–dport-目标端口" class="headerlink" title="–sport源端口、–dport 目标端口"></a>–sport源端口、–dport 目标端口</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">--sport  <span class="comment">#源端口：发送请求的端口（表示指定源端口号信息）</span></span><br><span class="line"></span><br><span class="line">--dport  <span class="comment">#目标端口：访问的端口（表示指定目标端口信息）</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="i、-o、-m、-j-动作"><a href="#i、-o、-m、-j-动作" class="headerlink" title="-i、-o、-m、-j  动作"></a>-i、-o、-m、-j  动作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-i  <span class="comment">#进来的网卡（指定匹配的进入流量接口信息 只能配置在INPUT链上）</span></span><br><span class="line">-o  <span class="comment">#出去的网卡（指定匹配的发出流量接口信息 只能配置在OUTPUT链上）</span></span><br><span class="line">-m  <span class="comment">#指定应用扩展模块参数</span></span><br><span class="line">-p  <span class="comment">#指定相应服务协议信息（tcp udp icmp all）</span></span><br><span class="line">-j  <span class="comment">#转发动作，指定对相应匹配规则执行什么操作（ACCEPT DROP REJECT REDIRECT）</span></span><br><span class="line">    ACCEPT 允许通过</span><br><span class="line">    DROP 直接拒绝 </span><br><span class="line">    REJECT 委婉拒绝</span><br><span class="line">    REDIRECT 重定向</span><br><span class="line">    MASQUERADE 地址伪装</span><br><span class="line">    SNAT 如果内网主机访问外网而经过路由时，源IP会发生改变，这种变更行为就是SNAT</span><br><span class="line">    DNAT 当外网的数据经过路由发往内网主机时，数据包中的目的IP (路由器上的公网IP) 将修改为内网IP，这种变更行为就是DNAT</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">案例1：只允许22端口可以访问，其他端口全部无法访问。 </span><br><span class="line">iptables -t filter -A INPUT -p TCP --dport 22  -j ACCEPT</span><br><span class="line">iptables -t filter -A INPUT -p TCP -j DROP</span><br><span class="line"></span><br><span class="line">案例2：只允许22，80，443端口可以访问，其他端口全部无法访问。 </span><br><span class="line">iptables -t filter -A INPUT -p TCP --dport 22  -j ACCEPT</span><br><span class="line">iptables -t filter -A INPUT -p TCP --dport 80  -j ACCEPT</span><br><span class="line">iptables -t filter -A INPUT -p TCP --dport 443  -j ACCEPT</span><br><span class="line">iptables -t filter -A INPUT -p TCP -j DROP</span><br><span class="line"></span><br><span class="line">案例3：只允许22，80，443端口可以访问，其他端口全部无法访问，但是本机可以访问百度。 </span><br><span class="line"></span><br><span class="line">案例4：要求使用192.168.15.81能够通过22端口链接，但是其他的不行</span><br><span class="line">iptables -t filter -A INPUT -p TCP -d 192.168.15.81 --dport 22  -j ACCEPT</span><br><span class="line">iptables -t filter -A INPUT -p TCP -j DROP</span><br><span class="line"></span><br><span class="line">案例5：只允许192.168.15.71能够通过22端口链接，其他的不行。</span><br><span class="line">iptables -t filter -A INPUT -p  TCP -s 192.168.15.71  -d 192.168.15.81 --dport 22 -j ACCEPT</span><br><span class="line">iptables -t filter -A INPUT -p TCP -j DROP</span><br><span class="line"></span><br><span class="line">案例6：要求192.168.15.71对外部不可见</span><br><span class="line">iptables -t filter -A INPUT -p TCP -d 192.168.15.71 -j DROP</span><br><span class="line"></span><br><span class="line">案例7：要求使用eth0网卡的所有请求全部拒绝</span><br><span class="line">iptables -t filter -A INPUT -p TCP -i etho -j DROP</span><br><span class="line"></span><br><span class="line">使用172.16.1.71登录进来的窗口，不允许访问百度。</span><br><span class="line">iptables -t filter -I OUTPUT -p TCP -o eth1 -j DROP</span><br><span class="line"></span><br><span class="line">案例8：要求访问服务器的8080端口转发至80端口</span><br><span class="line">iptables -t nat -A PREROUTING -p TCP --dport 8080 -j REDIRECT --to-port 80</span><br><span class="line"></span><br><span class="line">案例9：要求只允许windows通过ssh连接192.168.15.81，其他的拒绝</span><br><span class="line">iptables -t filter -I INPUT -p TCP -s 192.168.15.1 -d 192.168.15.81 --dport 22 -j ACCEPT</span><br><span class="line">iptables -t filter -I INPUT -p TCP --dport 22 -j DROP</span><br><span class="line"></span><br><span class="line">知识储备：</span><br><span class="line">	查看本机端口占用的命令：	</span><br><span class="line">		netstat -nutlp</span><br></pre></td></tr></table></figure>
+
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">拓展iptables的功能的。</span><br><span class="line"></span><br><span class="line">-m : 指定模块</span><br><span class="line"></span><br><span class="line">1、连续匹配多个端口（multiport）</span><br><span class="line"></span><br><span class="line">	--dports  : 指定多个端口(不同端口之间以逗号分割，连续的端口使用冒号分割)。</span><br><span class="line">	</span><br><span class="line">2、指定一段连续的ip地址范围(iprange)</span><br><span class="line">    --src-range from[-to]:	源地址范围</span><br><span class="line">    --dst-range from[-to]	目标地址范围</span><br><span class="line"></span><br><span class="line">3、匹配指定字符串(string)</span><br><span class="line">    --string pattern	<span class="comment"># 指定要匹配的字符串</span></span><br><span class="line">    --algo &#123;bm|kmp&#125;		<span class="comment"># 匹配的查询算法</span></span><br><span class="line">    </span><br><span class="line">4、根据时间段匹配报文(time)</span><br><span class="line">    --timestart hh:mm[:ss]		<span class="comment"># 开始时间</span></span><br><span class="line">    --timestop hh:mm[:ss]		<span class="comment"># 结束时间</span></span><br><span class="line">    --monthdays day[,day...]	<span class="comment"># 指定一个月的某一天</span></span><br><span class="line">    --weekdays day[,day...]		<span class="comment"># 指定周 还是  周天 </span></span><br><span class="line"></span><br><span class="line">5、禁ping, 默认本机无法ping别人 、别人无法ping自己</span><br><span class="line">	--icmp-type &#123;<span class="built_in">type</span>[/code]|typename&#125;</span><br><span class="line">		echo-request  (8) 请求 </span><br><span class="line">		echo-reply    (0) 回应</span><br><span class="line"></span><br><span class="line">6、限制链接数，并发连接数（connlimit）</span><br><span class="line">    --connlimit-upto n		<span class="comment">#  如果现有连接数小于或等于  n  则 匹配</span></span><br><span class="line">    --connlimit-above n		<span class="comment">#  如果现有连接数大于n 则匹配</span></span><br><span class="line"></span><br><span class="line">7、针对 报文速率 进行限制。 秒、分钟、小时、天。</span><br><span class="line"></span><br><span class="line">	--<span class="built_in">limit</span> rate[/second|/minute|/hour|/day] <span class="comment"># 报文数量 </span></span><br><span class="line">     --limit-burst number  <span class="comment"># 报文数量（默认：5）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">1、要求将22,80,443以及30000-50000之间所有的端口向外暴露，其他端口拒绝</span><br><span class="line"></span><br><span class="line">	iptables -t filter -A INPUT -p TCP -m multiport --dports 22,80,443,30000:50000 -j ACCEPT</span><br><span class="line">	iptables -f filter -A INPUT -p TCP -j DROP</span><br><span class="line"></span><br><span class="line">2、要求访问数据包中包含HelloWorld的数据不允许通过。</span><br><span class="line">	iptables -t filter -A INPUT -p TCP -m string --string <span class="string">&quot;HelloWorld&quot;</span> --algo kmp -j DROP</span><br><span class="line"></span><br><span class="line">3、要求192.168.15.1 - 192.168.15.10之间的所有IP能够连接192.168.15.81，其他拒绝</span><br><span class="line">	iptables -t filter -A INPUT -p TCP -m iprange --src-range 192.168.15.1-192.168.15.10 -j ACCEPT </span><br><span class="line">	iptables -f filter -A INPUT -p TCP -j DROP</span><br><span class="line"></span><br><span class="line">4、要求每天的12到13之间，不允许访问</span><br><span class="line">	iptables -t filter -A INPUT -p TCP -m time  --timestart 4:00   --timestop 5:00 -j DROP</span><br><span class="line">	</span><br><span class="line">	必须使用UTC时间</span><br><span class="line"></span><br><span class="line">5、要求别人不能ping本机，但是本机可以ping别人</span><br><span class="line">	iptables -t filter -A INPUT -p TCP -m icmp --icmp-type <span class="string">&quot;echo-request&quot;</span> -j DROP</span><br><span class="line">	</span><br><span class="line">6、要求主机连接最多有2个</span><br><span class="line">	iptables -t filter -A INPUT -p TCP --dport 22 -m connlimit --connlimit-above 2 -j DROP</span><br><span class="line">	</span><br><span class="line">7、要求限制速率在500k/s左右</span><br><span class="line">	iptables -t filter -A INPUT -p TCP -m <span class="built_in">limit</span> 333/s -j ACCEPT</span><br><span class="line">	iptables -t filter -A INPUT -p TCP -j DROP</span><br><span class="line">	</span><br><span class="line">8、只允许windows连接本机的iptables规则</span><br><span class="line">iptables -t filter -A INPUT -p tcp -s 192.168.15.1 --dport 22 -j ACCEPT</span><br><span class="line">iptables -t filter -A INPUT -p tcp --dport 22 -j DROP</span><br><span class="line"></span><br><span class="line">9、只允许192.168.15.0网段的IP连接本机，用两种方式实现。</span><br><span class="line">iptables -t filter -A INPUT -p tcp -m iprange  --src-range 192.168.15.1-192.168.15.254 -j ACCEPT</span><br><span class="line">iptables -t filter -A INPUT -p tcp --dport 22 -j DROP</span><br><span class="line"></span><br><span class="line">iptables -t filter -A INPUT -p tcp -i eth0 --dport 22 -j ACCEPT</span><br><span class="line">iptables -t filter -A INPUT -p tcp --dport 22 -j DROP</span><br><span class="line"></span><br><span class="line">10、要求本机流出的数据中包含“元旦快乐”</span><br><span class="line">iptables -t filter -A OUTPUT -p tcp --dport 80 -m string  --string <span class="string">&quot;元旦快乐&quot;</span> --algo kmp -j ACCEPT</span><br><span class="line">iptables -t filter -A OUTPUT -p tcp --dport 80 -j DROP</span><br><span class="line"></span><br><span class="line">11、要求每天的九点到17点之间可以正常访问</span><br><span class="line">iptables -t filetr -A INPUT -p tcp -m time  --timestart 1:00 --timestop 9:00 -j ACCEPT</span><br><span class="line">iptables -t filter -A INPUT -p tcp -j DROP</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/klcc-c.github.io/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/7efc43b.html" rel="prev" title="VPN搭建使用">
+                  <i class="fa fa-chevron-left"></i> VPN搭建使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/340a13f1.html" rel="next" title="Rsync使用">
+                  Rsync使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">365k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:32</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
