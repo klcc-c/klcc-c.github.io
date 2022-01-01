@@ -2,9 +2,11 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/klcc-c.github.io/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/klcc-c.github.io/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/klcc-c.github.io/images/favicon-16x16-next.png">
@@ -13,14 +15,12 @@
 <link rel="stylesheet" href="/klcc-c.github.io/css/main.css">
 
 
-<link rel="stylesheet" href="/klcc-c.github.io/lib/font-awesome/css/all.min.css">
 
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"klcc.cc","root":"/klcc-c.github.io/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
-  </script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-  <meta name="description" content="1. while循环1.1 continue">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/klcc-c.github.io/","images":"/klcc-c.github.io/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/klcc-c.github.io/js/config.js"></script>
+<meta name="description" content="1. while循环1.1 continue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="for循环及内置方法">
 <meta property="og:url" content="https://klcc.cc/5bfa71b5.html">
@@ -35,72 +35,42 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/uVzeKa.png">
 
+
 <link rel="canonical" href="https://klcc.cc/5bfa71b5.html">
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-CN'
-  };
-</script>
 
-  <title>for循环及内置方法 | klcc</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/5bfa71b5.html","path":"5bfa71b5.html","title":"for循环及内置方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>for循环及内置方法 | klcc</title>
   
 
 
 
 
-
-
   <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/klcc-c.github.io/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/klcc-c.github.io/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">klcc</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
     </a>
   </div>
 
@@ -113,46 +83,96 @@
 
 
 
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/klcc-c.github.io/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/klcc-c.github.io/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-  </ul>
-</nav>
-
 
 
 
 </div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-while%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.</span> <span class="nav-text">1. while循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-continue"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 continue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-else"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E6%AD%BB%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 死循环</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-for%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.</span> <span class="nav-text">2. for循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-range"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 range</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-break"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 break</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-continue"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 continue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-else"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-%E5%B5%8C%E5%A5%97"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 嵌套</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">3. 数据类型内置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E6%95%B4%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 整型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 浮点型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-1-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2str"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 类型转换str()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-2-%E7%B4%A2%E5%BC%95%E5%8F%96%E5%80%BC"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.2 索引取值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-3-%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C"><span class="nav-number">3.3.3.</span> <span class="nav-text">3.3.3 切片操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-4-%E6%AD%A5%E9%95%BF%E6%93%8D%E4%BD%9C"><span class="nav-number">3.3.4.</span> <span class="nav-text">3.3.4 步长操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-5-len"><span class="nav-number">3.3.5.</span> <span class="nav-text">3.3.5 len()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-6-strip"><span class="nav-number">3.3.6.</span> <span class="nav-text">3.3.6 strip()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-7-split"><span class="nav-number">3.3.7.</span> <span class="nav-text">3.3.7 split()</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/klcc-c.github.io/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/klcc-c.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/klcc-c.github.io/tags/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button" aria-label="返回顶部">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
 
-          <div class="content post posts-expand">
-            
+    <div class="main-inner post posts-expand">
 
-    
+
+  
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://klcc.cc/5bfa71b5.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -169,41 +189,44 @@
           for循环及内置方法
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
 
-              <time title="创建时间：2021-11-05 14:47:51 / 修改时间：18:22:08" itemprop="dateCreated datePublished" datetime="2021-11-05T14:47:51+08:00">2021-11-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2021-11-05 14:47:51 / 修改时间：18:22:08" itemprop="dateCreated datePublished" datetime="2021-11-05T14:47:51+08:00">2021-11-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/klcc-c.github.io/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
 
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -212,8 +235,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
         <h3 id="1-while循环"><a href="#1-while循环" class="headerlink" title="1. while循环"></a>1. while循环</h3><h4 id="1-1-continue"><a href="#1-1-continue" class="headerlink" title="1.1 continue"></a>1.1 continue</h4><span id="more"></span>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">contiue可以让循环体代码直接回到条件判断处重新判断,相当于跳出本次循环</span><br><span class="line">eg:</span><br><span class="line">  <span class="comment"># 使用while循环打印0-10但是不打印4</span></span><br><span class="line">  num = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span> num &lt; <span class="number">11</span>:</span><br><span class="line">      <span class="keyword">if</span> num == <span class="number">4</span>:</span><br><span class="line">          num += <span class="number">1</span>  <span class="comment"># 跳出的时候将num加1到num为5,好继续下次的循环,否则会卡在4一直循环</span></span><br><span class="line">          <span class="keyword">continue</span>  <span class="comment"># 当num为4时跳出本次循环</span></span><br><span class="line">      <span class="built_in">print</span>(num)</span><br><span class="line">      num += <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
@@ -273,180 +294,75 @@
     
     
 
-      <footer class="post-footer">
+    <footer class="post-footer">
           <div class="post-tags">
               <a href="/klcc-c.github.io/tags/python/" rel="tag"># python</a>
           </div>
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/klcc-c.github.io/60b500c7.html" rel="prev" title="Kubernetes安装">
-      <i class="fa fa-chevron-left"></i> Kubernetes安装
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/klcc-c.github.io/d645d15c.html" rel="next" title="python-内置方法(二)">
-      python-内置方法(二) <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/60b500c7.html" rel="prev" title="Kubernetes安装">
+                  <i class="fa fa-chevron-left"></i> Kubernetes安装
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/klcc-c.github.io/d645d15c.html" rel="next" title="python-内置方法(二)">
+                  python-内置方法(二) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-while%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.</span> <span class="nav-text">1. while循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-continue"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 continue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-else"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E6%AD%BB%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 死循环</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-for%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.</span> <span class="nav-text">2. for循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-range"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 range</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-break"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 break</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-continue"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 continue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-else"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-%E5%B5%8C%E5%A5%97"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 嵌套</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">3. 数据类型内置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E6%95%B4%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 整型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 浮点型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-1-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2str"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 类型转换str()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-2-%E7%B4%A2%E5%BC%95%E5%8F%96%E5%80%BC"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.2 索引取值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-3-%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C"><span class="nav-number">3.3.3.</span> <span class="nav-text">3.3.3 切片操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-4-%E6%AD%A5%E9%95%BF%E6%93%8D%E4%BD%9C"><span class="nav-number">3.3.4.</span> <span class="nav-text">3.3.4 步长操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-5-len"><span class="nav-number">3.3.5.</span> <span class="nav-text">3.3.5 len()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-6-strip"><span class="nav-number">3.3.6.</span> <span class="nav-text">3.3.6 strip()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-7-split"><span class="nav-number">3.3.7.</span> <span class="nav-text">3.3.7 split()</span></a></li></ol></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">klcc</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/klcc-c.github.io/archives/">
-        
-          <span class="site-state-item-count">67</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/klcc-c.github.io/categories/">
-        <span class="site-state-item-count">9</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/klcc-c.github.io/tags/">
-        <span class="site-state-item-count">15</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
+    </footer>
+  </article>
 </div>
 
 
 
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
 
 
-      </div>
-    </main>
 
-    <footer class="footer">
-      <div class="footer-inner">
-        
+</div>
+  </main>
 
-        
+  <footer class="footer">
+    <div class="footer-inner">
+
 
 <div class="copyright">
-  
   &copy; 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">klcc</span>
-    <span class="post-meta-divider">|</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
     <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
+      <i class="fa fa-chart-line"></i>
     </span>
     <span title="站点总字数">365k</span>
-    <span class="post-meta-divider">|</span>
+  </span>
+  <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
     <span title="站点阅读时长">5:32</span>
+  </span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   
-  <script src="/klcc-c.github.io/lib/anime.min.js"></script>
-  <script src="/klcc-c.github.io/lib/velocity/velocity.min.js"></script>
-  <script src="/klcc-c.github.io/lib/velocity/velocity.ui.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/klcc-c.github.io/js/comments.js"></script><script src="/klcc-c.github.io/js/utils.js"></script><script src="/klcc-c.github.io/js/motion.js"></script><script src="/klcc-c.github.io/js/next-boot.js"></script>
 
-<script src="/klcc-c.github.io/js/utils.js"></script>
+  
 
-<script src="/klcc-c.github.io/js/motion.js"></script>
-
-
-<script src="/klcc-c.github.io/js/schemes/muse.js"></script>
-
-
-<script src="/klcc-c.github.io/js/next-boot.js"></script>
 
 
 
@@ -456,20 +372,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 </body>
 </html>
