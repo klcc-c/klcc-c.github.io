@@ -186,7 +186,7 @@ body {
   color: var(--text-color);
   font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 1em;
-  line-height: 2;
+  line-height: 1.8;
   min-height: 100%;
   position: relative;
   transition: padding 0.2s ease-in-out;
@@ -221,7 +221,7 @@ h6 {
   font-size: 0.875em;
 }
 p {
-  margin: 0 0 20px;
+  margin: 0 0 15px;
 }
 a {
   border-bottom: 1px solid #999;
@@ -1633,7 +1633,7 @@ pre code {
 }
 .languages {
   display: inline-block;
-  font-size: 1.125em;
+  font-size: 1em;
   position: relative;
 }
 .languages .lang-select-label span {
@@ -1797,7 +1797,7 @@ pre code {
   }
 }
 .posts-collapse .post-content .collection-title {
-  font-size: 1.125em;
+  font-size: 1em;
   position: relative;
 }
 .posts-collapse .post-content .collection-title::before {
@@ -1893,7 +1893,7 @@ pre code {
 }
 @media (min-width: 1200px) {
   .post-body {
-    font-size: 1.125em;
+    font-size: 1em;
   }
 }
 @media (min-width: 992px) {
@@ -2034,7 +2034,7 @@ pre code {
   margin: 15px 0;
 }
 .posts-expand .post-header {
-  font-size: 1.125em;
+  font-size: 1em;
   margin-bottom: 60px;
   text-align: center;
 }
@@ -2891,4 +2891,16 @@ mark.search-keyword {
   .comments {
     padding: 10px 12px;
   }
+}
+.header-inner {
+  border-radius: 30px 30px 30px 30px;
+  box-shadow: 8px 7px 2px 0 rgba(0,0,0,0.12), 7px 4px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+.sidebar-inner {
+  border-radius: 30px 30px 30px 30px;
+  box-shadow: 8px 7px 2px 0 rgba(0,0,0,0.12), 7px 4px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+.pagination {
+  border-radius: 30px 80px 30px 80px;
+  box-shadow: 8px 7px 2px 0 rgba(0,0,0,0.12), 7px 4px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
 }
