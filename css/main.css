@@ -2893,6 +2893,7 @@ mark.search-keyword {
   }
 }
 .header-inner {
+  background: rgba(255,255,255,0.8);
   border-radius: 30px 30px 30px 30px;
   box-shadow: 8px 7px 2px 0 rgba(0,0,0,0.12), 7px 4px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
 }
@@ -2903,4 +2904,16 @@ mark.search-keyword {
 .pagination {
   border-radius: 30px 80px 30px 80px;
   box-shadow: 8px 7px 2px 0 rgba(0,0,0,0.12), 7px 4px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+.content-wrap {
+  opacity: 0.8;
+}
+.main-inner {
+  opacity: 0.8;
+}
+.sidebar {
+  opacity: 0.8;
+}
+.popup {
+  opacity: 0.8;
 }
