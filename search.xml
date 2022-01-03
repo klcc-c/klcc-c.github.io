@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Python从入门到放弃</title>
-    <url>/klcc-c.github.io/c1ca5201.html</url>
+    <url>/c1ca5201.html</url>
     <content><![CDATA[<h4 id="Python基础"><a href="#Python基础" class="headerlink" title="Python基础"></a>Python基础</h4><span id="more"></span>
 <h6 id="Python解释器与Pycharm"><a href="#Python解释器与Pycharm" class="headerlink" title="Python解释器与Pycharm"></a><a href="https://klcc.cc/c1fd5357.html">Python解释器与Pycharm</a></h6><h6 id="pycharm使用及python变量、命名规范"><a href="#pycharm使用及python变量、命名规范" class="headerlink" title="pycharm使用及python变量、命名规范"></a><a href="https://klcc.cc/daf175dd.html">pycharm使用及python变量、命名规范</a></h6><h6 id="数据类型、输入输出、基本运算符"><a href="#数据类型、输入输出、基本运算符" class="headerlink" title="数据类型、输入输出、基本运算符"></a><a href="https://klcc.cc/43f82467.html">数据类型、输入输出、基本运算符</a></h6><h6 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a><a href="https://klcc.cc/26ba1150.html">流程控制</a></h6><h6 id="for循环及内置方法"><a href="#for循环及内置方法" class="headerlink" title="for循环及内置方法"></a><a href="https://klcc.cc/5bfa71b5.html">for循环及内置方法</a></h6><h6 id="内置方法二"><a href="#内置方法二" class="headerlink" title="内置方法二"></a><a href="https://klcc.cc/d645d15c.html">内置方法二</a></h6><h6 id="内置方法三"><a href="#内置方法三" class="headerlink" title="内置方法三"></a><a href="https://klcc.cc/bb5f959.html">内置方法三</a></h6><h6 id="编码和文件操作"><a href="#编码和文件操作" class="headerlink" title="编码和文件操作"></a><a href="https://klcc.cc/b8f382b7.html">编码和文件操作</a></h6><h6 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a><a href="https://klcc.cc/19603b60.html">文件操作</a></h6><h6 id="文件操作与函数"><a href="#文件操作与函数" class="headerlink" title="文件操作与函数"></a><a href="https://klcc.cc/a7f42e80.html">文件操作与函数</a></h6><h6 id="函数参数"><a href="#函数参数" class="headerlink" title="函数参数"></a><a href="https://klcc.cc/c86b83ee.html">函数参数</a></h6><h6 id="函数使用"><a href="#函数使用" class="headerlink" title="函数使用"></a><a href="https://klcc.cc/abc4492a.html">函数使用</a></h6><h6 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a><a href="https://klcc.cc/3a5cdcf8.html">装饰器</a></h6><h6 id="函数使用和生成式"><a href="#函数使用和生成式" class="headerlink" title="函数使用和生成式"></a><a href="https://klcc.cc/d5376901.html">函数使用和生成式</a></h6><h6 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a><a href="https://klcc.cc/ccf84d2b.html">迭代器</a></h6><h6 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a><a href="https://klcc.cc/ae4233d7.html">生成器</a></h6><h6 id="模块一"><a href="#模块一" class="headerlink" title="模块一"></a><a href="https://klcc.cc/5c1fe23f.html">模块一</a></h6><h6 id="软件目录规范、正则表达式"><a href="#软件目录规范、正则表达式" class="headerlink" title="软件目录规范、正则表达式"></a><a href="https://klcc.cc/26f31071.html">软件目录规范、正则表达式</a></h6><h6 id="模块二"><a href="#模块二" class="headerlink" title="模块二"></a><a href="https://klcc.cc/f32e795d.html">模块二</a></h6><h6 id="模块三"><a href="#模块三" class="headerlink" title="模块三"></a><a href="https://klcc.cc/8ddd5976.html">模块三</a></h6><h6 id="模块四"><a href="#模块四" class="headerlink" title="模块四"></a><a href="https://klcc.cc/779eb679.html">模块四</a></h6><h6 id="面向对象一"><a href="#面向对象一" class="headerlink" title="面向对象一"></a><a href="https://klcc.cc/832cc1e6.html">面向对象一</a></h6><h6 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a><a href="https://klcc.cc/e67db240.html">网络编程</a></h6><h6 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a><a href="https://klcc.cc/59b85335.html">并发编程</a></h6>]]></content>
       <categories>
@@ -14,7 +14,7 @@
   </entry>
   <entry>
     <title>数据库从入门到放弃</title>
-    <url>/klcc-c.github.io/77f70f41.html</url>
+    <url>/77f70f41.html</url>
     <content><![CDATA[<h4 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h4><span id="more"></span>
 <h5 id="二进制安装"><a href="#二进制安装" class="headerlink" title="二进制安装"></a><a href="https://klcc.cc/f88e38d3.html">二进制安装</a></h5><h5 id="登录及密码管理"><a href="#登录及密码管理" class="headerlink" title="登录及密码管理"></a><a href="https://klcc.cc/318aa70a.html">登录及密码管理</a></h5><h5 id="体系结构介绍"><a href="#体系结构介绍" class="headerlink" title="体系结构介绍"></a><a href="https://klcc.cc/3c4a0863.html">体系结构介绍</a></h5><h5 id="用户权限等基础管理"><a href="#用户权限等基础管理" class="headerlink" title="用户权限等基础管理"></a><a href="https://klcc.cc/d7227a45.html">用户权限等基础管理</a></h5><h5 id="初始化配置"><a href="#初始化配置" class="headerlink" title="初始化配置"></a><a href="https://klcc.cc/37f9f562.html">初始化配置</a></h5><h5 id="SQL基础应用"><a href="#SQL基础应用" class="headerlink" title="SQL基础应用"></a><a href="https://klcc.cc/8da0cafb.html">SQL基础应用</a></h5><h5 id="索引管理"><a href="#索引管理" class="headerlink" title="索引管理"></a><a href="https://klcc.cc/5c917bb6.html">索引管理</a></h5><h5 id="InnoDB存储引擎"><a href="#InnoDB存储引擎" class="headerlink" title="InnoDB存储引擎"></a><a href="https://klcc.cc/ff3d77ac">InnoDB存储引擎</a></h5><h5 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a><a href="https://klcc.cc/2386d3bc.html">日志管理</a></h5><h5 id="备份恢复与迁移"><a href="#备份恢复与迁移" class="headerlink" title="备份恢复与迁移"></a><a href="https://klcc.cc/2c2a11ca.html">备份恢复与迁移</a></h5><h5 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a><a href="https://klcc.cc/c813917a.html">主从复制</a></h5><h5 id="基本优化"><a href="#基本优化" class="headerlink" title="基本优化"></a><a href="https://klcc.cc/2c9a5c07.html">基本优化</a></h5><h4 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h4><h4 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h4><h4 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h4>]]></content>
       <categories>
@@ -26,7 +26,7 @@
   </entry>
   <entry>
     <title>Linux从运维到背锅</title>
-    <url>/klcc-c.github.io/a4a81253.html</url>
+    <url>/a4a81253.html</url>
     <content><![CDATA[<h4 id="Linux基础"><a href="#Linux基础" class="headerlink" title="Linux基础"></a>Linux基础</h4><span id="more"></span>
 <h5 id="Linux安装、远程连接"><a href="#Linux安装、远程连接" class="headerlink" title="Linux安装、远程连接"></a><a href="https://klcc.cc/20cf8e98.html">Linux安装、远程连接</a></h5><h5 id="Linux目录结构"><a href="#Linux目录结构" class="headerlink" title="Linux目录结构"></a><a href="https://klcc.cc/5e2eb880.html">Linux目录结构</a></h5><h5 id="vim的使用"><a href="#vim的使用" class="headerlink" title="vim的使用"></a><a href="https://klcc.cc/627226e0.html">vim的使用</a></h5><h5 id="Linux系统目录结构"><a href="#Linux系统目录结构" class="headerlink" title="Linux系统目录结构"></a><a href="https://klcc.cc/684b776b.html">Linux系统目录结构</a></h5><h5 id="Linux文件管理"><a href="#Linux文件管理" class="headerlink" title="Linux文件管理"></a><a href="https://klcc.cc/117ba17a.html">Linux文件管理</a></h5><h5 id="Linux用户管理"><a href="#Linux用户管理" class="headerlink" title="Linux用户管理"></a><a href="https://klcc.cc/ef277b25.html">Linux用户管理</a></h5><h5 id="Linux文件权限管理"><a href="#Linux文件权限管理" class="headerlink" title="Linux文件权限管理"></a><a href="https://klcc.cc/ad5612ad.html">Linux文件权限管理</a></h5><h5 id="Linux包管理及压缩命令"><a href="#Linux包管理及压缩命令" class="headerlink" title="Linux包管理及压缩命令"></a><a href="https://klcc.cc/891d6bd.html">Linux包管理及压缩命令</a></h5><h5 id="Linux系统优化及定时任务"><a href="#Linux系统优化及定时任务" class="headerlink" title="Linux系统优化及定时任务"></a><a href="https://klcc.cc/c3540fc.html">Linux系统优化及定时任务</a></h5><h5 id="Linux文本处理和find命令"><a href="#Linux文本处理和find命令" class="headerlink" title="Linux文本处理和find命令"></a><a href="https://klcc.cc/47edf33b.html">Linux文本处理和find命令</a></h5><h5 id="Linux三剑客"><a href="#Linux三剑客" class="headerlink" title="Linux三剑客"></a><a href="https://klcc.cc/bfa86649.html">Linux三剑客</a></h5><h5 id="Linux命令总结"><a href="#Linux命令总结" class="headerlink" title="Linux命令总结"></a><a href="https://klcc.cc/51ea15a6.html">Linux命令总结</a></h5><h5 id="Linux磁盘挂载分区"><a href="#Linux磁盘挂载分区" class="headerlink" title="Linux磁盘挂载分区"></a><a href="https://klcc.cc/f9ef965d.html">Linux磁盘挂载分区</a></h5><h5 id="Linux防火墙iptables"><a href="#Linux防火墙iptables" class="headerlink" title="Linux防火墙iptables"></a><a href="https://klcc.cc/2efe136b.html">Linux防火墙iptables</a></h5><h5 id="VPN搭建使用"><a href="#VPN搭建使用" class="headerlink" title="VPN搭建使用"></a><a href="https://klcc.cc/7efc43b.html">VPN搭建使用</a></h5><h5 id="Rsync使用"><a href="#Rsync使用" class="headerlink" title="Rsync使用"></a><a href="https://klcc.cc/340a13f1.html">Rsync使用</a></h5><h5 id="NFS搭建使用"><a href="#NFS搭建使用" class="headerlink" title="NFS搭建使用"></a><a href="https://klcc.cc/e15f268d.html">NFS搭建使用</a></h5>]]></content>
       <categories>
@@ -38,7 +38,7 @@
   </entry>
   <entry>
     <title>NFS搭建使用</title>
-    <url>/klcc-c.github.io/e15f268d.html</url>
+    <url>/e15f268d.html</url>
     <content><![CDATA[<h1 id="NFS-网络存储"><a href="#NFS-网络存储" class="headerlink" title="NFS 网络存储"></a>NFS 网络存储</h1><h2 id="NFS简介"><a href="#NFS简介" class="headerlink" title="NFS简介"></a>NFS简介</h2><span id="more"></span>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">NFS : 共享存储，文件服务器</span><br><span class="line"></span><br><span class="line">基本概述：</span><br><span class="line">   1.NFS是Network File System的缩写及网络文件系统。NFS主要功能是通过局域网络让不同的主机系统之间可以共享文件或目录。</span><br><span class="line"></span><br><span class="line">   2.NFS系统和Windows网络共享、网络驱动器类似, 只不过windows用于局域网, NFS用于企业集群架构中, 如果是大型网站, 会用到更复杂的分布式文件系统FastDFS，glusterfs，HDFS，ceph</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">为何使用NFS：</span><br><span class="line">  1.实现多台服务器之间数据共享</span><br><span class="line">  2.实现多台服务器之间数据一致</span><br></pre></td></tr></table></figure>
 
@@ -119,7 +119,7 @@
   </entry>
   <entry>
     <title>Rsync使用</title>
-    <url>/klcc-c.github.io/340a13f1.html</url>
+    <url>/340a13f1.html</url>
     <content><![CDATA[<h1 id="rsync同步工具"><a href="#rsync同步工具" class="headerlink" title="rsync同步工具"></a>rsync同步工具</h1><ul>
 <li>rsync (remote synchronizetion) 一款开源的快速的，多功能的，可实现全量及增量（差异化备份）的本地或远程数据备份的优秀工具<span id="more"></span>
 <img src="https://gitee.com/gengff/blogimage/raw/master/images/v2-6f26d816c7a3d517e75d8f4187d2c5b5_1440w.jpg" alt="v2-6f26d816c7a3d517e75d8f4187d2c5b5_1440w"></li>
@@ -162,7 +162,7 @@
   </entry>
   <entry>
     <title>Linux防火墙iptables</title>
-    <url>/klcc-c.github.io/2efe136b.html</url>
+    <url>/2efe136b.html</url>
     <content><![CDATA[<h1 id="架构图"><a href="#架构图" class="headerlink" title="架构图"></a>架构图</h1><span id="more"></span>
 <p><img src="https://gitee.com/gengff/blogimage/raw/master/images/%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84.png" alt="项目架构"></p>
 <p><img src="https://gitee.com/gengff/blogimage/raw/master/images/6581640856451_.pic_%E5%89%AF%E6%9C%AC.jpg" alt="6581640856451_.pic_副本"></p>
@@ -287,7 +287,7 @@
   </entry>
   <entry>
     <title>VPN搭建使用</title>
-    <url>/klcc-c.github.io/7efc43b.html</url>
+    <url>/7efc43b.html</url>
     <content><![CDATA[<h1 id="虚拟专用网络"><a href="#虚拟专用网络" class="headerlink" title="虚拟专用网络"></a>虚拟专用网络</h1><p>VPN(全称：Virtual Private Network)虚拟专用网络，是依靠ISP和其他的NSP，在公共网络中建立专用的数据通信的网络技术，可以为企业之间或者个人与企业之间提供安全的数据传输隧道服务。在VPN中任意两点之间的链接并没有传统专网所需的端到端的物理链路，而是利用公共网络资源动态组成的，可以理解为通过私有的隧道技术在公共数据网络上模拟出来的和专网有同样功能的点到点的专线技术，所谓虚拟是指不需要去拉实际的长途物理线路，而是借用了公共Internet网络实现的。</p>
 <span id="more"></span>
 <h2 id="VPN的作用"><a href="#VPN的作用" class="headerlink" title="VPN的作用"></a>VPN的作用</h2><p>VPN的功能是帮助公司里的远程用户（出差，在家）、公司的分支机构、商业合作伙伴及供应商等公司和自己的公司内部网络之间建立可信的安全连接或者是局域网连接，确保数据的加密安全传输和业务访问，对于运维工程师来说，还可以连接不同的机房为局域网来处理相关事宜。</p>
@@ -386,7 +386,7 @@
   </entry>
   <entry>
     <title>Linux磁盘挂载分区</title>
-    <url>/klcc-c.github.io/f9ef965d.html</url>
+    <url>/f9ef965d.html</url>
     <content><![CDATA[<h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h1><span id="more"></span>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Linux系统中磁盘管理就是将硬盘通过挂载的方式挂载到linux文件系统中。</span><br><span class="line"></span><br><span class="line">1、挂载磁盘的步骤</span><br><span class="line">	1、磁盘分区</span><br><span class="line">	2、挂载</span><br><span class="line"></span><br><span class="line">2、磁盘分区</span><br><span class="line">	fdisk：分区2TB以下的磁盘，最多可以分4个分区</span><br><span class="line">	gdisk：分区2TB以上的磁盘，最多可以分128个分区</span><br><span class="line"></span><br><span class="line">3、添加一块磁盘</span><br><span class="line">	lsblk   ： 查看本机的磁盘</span><br><span class="line">	df -h   :  查看本机的分区</span><br><span class="line"></span><br><span class="line">4、磁盘分区</span><br><span class="line">	n : 新建分区</span><br><span class="line">	p : 打印分区表</span><br><span class="line">	w : 写入磁盘保存并退出</span><br><span class="line">	q : 不保存退出</span><br><span class="line">	d : 删除分区</span><br><span class="line">	</span><br><span class="line">5、挂载磁盘分区</span><br><span class="line">	1、格式化文件系统</span><br><span class="line">		mkfs.xfs /dev/sdb1 </span><br><span class="line"></span><br><span class="line">6、总结</span><br><span class="line">	1、关机</span><br><span class="line">	2、添加硬盘</span><br><span class="line">	3、创建分区</span><br><span class="line">		fdisk /dev/sdb</span><br><span class="line">		或</span><br><span class="line">		gdisk /dev/sdb</span><br><span class="line">	4、格式化文件系统</span><br><span class="line">		mkfs.xfs /dev/sdb1 </span><br><span class="line">	5、挂载</span><br><span class="line">		mount /dev/sdb1 /mnt</span><br></pre></td></tr></table></figure>
 
@@ -572,7 +572,7 @@
   </entry>
   <entry>
     <title>MySQL优化</title>
-    <url>/klcc-c.github.io/2c9a5c07.html</url>
+    <url>/2c9a5c07.html</url>
     <content><![CDATA[<h3 id="优化风险"><a href="#优化风险" class="headerlink" title="优化风险"></a>优化风险</h3><span id="more"></span>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">优化不总是对一个单纯的环境进行！还很可能是一个复杂的已投产的系统。</span><br><span class="line">优化手段本来就有很大的风险，只不过你没能力意识到和预见到！</span><br><span class="line">任何的技术可以解决一个问题，但必然存在带来一个问题的风险！</span><br><span class="line">对于优化来说解决问题而带来的问题控制在可接受的范围内才是有成果。</span><br><span class="line">保持现状或出现更差的情况都是失败！</span><br><span class="line"></span><br><span class="line">稳定性和业务可持续性通常比性能更重要！</span><br><span class="line">优化不可避免涉及到变更，变更就有风险！</span><br><span class="line">优化使性能变好，维持和变差是等概率事件！</span><br><span class="line">优化不能只是数据库管理员担当风险，但会所有的人分享优化成果！</span><br><span class="line">所以优化工作是由业务需要驱使的！！！</span><br><span class="line"></span><br><span class="line">不应该一个人独自参与优化，风险要和参与人员一起承担</span><br></pre></td></tr></table></figure>
 
@@ -654,7 +654,7 @@
   </entry>
   <entry>
     <title>MySQL主从复制</title>
-    <url>/klcc-c.github.io/c813917a.html</url>
+    <url>/c813917a.html</url>
     <content><![CDATA[<h3 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h3><span id="more"></span>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 简介</span><br><span class="line">1.基于二进制日志复制的</span><br><span class="line">2.主库的修改操作会记录二进制日志</span><br><span class="line">3.从库会请求新的二进制日志并回放,最终达到主从数据同步</span><br><span class="line">4.主从复制核心功能:</span><br><span class="line">  辅助备份,处理物理损坏                   </span><br><span class="line">  扩展新型的架构:高可用,高性能,分布式架构等</span><br><span class="line">  </span><br><span class="line"># 前提</span><br><span class="line">1.两台以上mysql实例 ,server_id,server_uuid不同</span><br><span class="line">2.主库开启二进制日志</span><br><span class="line">3.专用的复制用户</span><br><span class="line">4.保证主从开启之前的某个时间点,从库数据是和主库一致</span><br><span class="line">5.告知从库,复制user,passwd,IP port,以及复制起点(change master to)</span><br><span class="line">6.线程(三个):Dump thread  IO thread  SQL thread 开启(start slave)</span><br></pre></td></tr></table></figure>
 
@@ -700,7 +700,7 @@
   </entry>
   <entry>
     <title>MySQL备份恢复与迁移</title>
-    <url>/klcc-c.github.io/2c2a11ca.html</url>
+    <url>/2c2a11ca.html</url>
     <content><![CDATA[<h3 id="数据库备份恢复职责"><a href="#数据库备份恢复职责" class="headerlink" title="数据库备份恢复职责"></a>数据库备份恢复职责</h3><span id="more"></span>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 备份策略</span><br><span class="line">全备、增量、时间、自动</span><br><span class="line"></span><br><span class="line"># 日常备份检查</span><br><span class="line">备份存在性</span><br><span class="line">备份空间够用否</span><br><span class="line"></span><br><span class="line"># 定期恢复演练(测试库)</span><br><span class="line">一季度 或者 半年</span><br><span class="line"></span><br><span class="line"># 故障恢复</span><br><span class="line">通过现有备份,能够将数据库恢复到故障之前的时间点</span><br><span class="line"></span><br><span class="line"># 迁移</span><br><span class="line">1. 停机时间</span><br><span class="line">2. 回退方案</span><br></pre></td></tr></table></figure>
 
@@ -748,7 +748,7 @@
   </entry>
   <entry>
     <title>MySQL日志管理</title>
-    <url>/klcc-c.github.io/2386d3bc.html</url>
+    <url>/2386d3bc.html</url>
     <content><![CDATA[<h3 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a>日志管理</h3><span id="more"></span>
 <p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/f262Yf.jpg" alt="f262Yf"></p>
 <h3 id="错误日志-log-err"><a href="#错误日志-log-err" class="headerlink" title="错误日志(log_err)"></a>错误日志(<code>log_err</code>)</h3><ul>
@@ -830,7 +830,7 @@
   </entry>
   <entry>
     <title>MySQL存储引擎(InnoDB)</title>
-    <url>/klcc-c.github.io/ff3d77ac.html</url>
+    <url>/ff3d77ac.html</url>
     <content><![CDATA[<h3 id="存储引擎介绍"><a href="#存储引擎介绍" class="headerlink" title="存储引擎介绍"></a>存储引擎介绍</h3><blockquote>
 <p>类似于Linux系统中的文件系统</p>
 </blockquote>
@@ -925,7 +925,7 @@
   </entry>
   <entry>
     <title>MySQL索引管理</title>
-    <url>/klcc-c.github.io/5c917bb6.html</url>
+    <url>/5c917bb6.html</url>
     <content><![CDATA[<h3 id="索引的作用"><a href="#索引的作用" class="headerlink" title="索引的作用"></a>索引的作用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">提供了类似书中目录的作用，目的是为了优化查询</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h3 id="索引的种类"><a href="#索引的种类" class="headerlink" title="索引的种类"></a>索引的种类</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">B树索引  # 默认使用的索引类型</span><br><span class="line">Hash索引</span><br><span class="line">R树索引</span><br><span class="line">Full text</span><br><span class="line">GIS</span><br></pre></td></tr></table></figure>
@@ -1002,7 +1002,7 @@
   </entry>
   <entry>
     <title>MySQL基础应用</title>
-    <url>/klcc-c.github.io/8da0cafb.html</url>
+    <url>/8da0cafb.html</url>
     <content><![CDATA[<h3 id="SQL介绍"><a href="#SQL介绍" class="headerlink" title="SQL介绍"></a>SQL介绍</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">结构化查询语言</span><br><span class="line">5.7 以后符合SQL92严格模式</span><br><span class="line">通过sql_mode参数来控制</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h3 id="常用SQL分类"><a href="#常用SQL分类" class="headerlink" title="常用SQL分类"></a>常用SQL分类</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DDL：数据定义语言</span><br><span class="line">DCL：数据控制语言</span><br><span class="line">DML：数据操作语言</span><br><span class="line">DQL：数据的查询语言</span><br></pre></td></tr></table></figure>
@@ -1149,7 +1149,7 @@
   </entry>
   <entry>
     <title>MySQL初始化配置</title>
-    <url>/klcc-c.github.io/37f9f562.html</url>
+    <url>/37f9f562.html</url>
     <content><![CDATA[<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">控制MySQL的启动</span><br><span class="line">影响到客户端的连接</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h3 id="初始化配置的方法"><a href="#初始化配置的方法" class="headerlink" title="初始化配置的方法"></a>初始化配置的方法</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">初始化配置文件(例如/etc/my.cnf)</span><br><span class="line">启动命令行上进行设置(例如:mysqld_safe mysqld)</span><br><span class="line">预编译时设置(仅限于编译安装时设置)</span><br></pre></td></tr></table></figure>
@@ -1175,7 +1175,7 @@
   </entry>
   <entry>
     <title>MySQL基础管理</title>
-    <url>/klcc-c.github.io/d7227a45.html</url>
+    <url>/d7227a45.html</url>
     <content><![CDATA[<h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><p>作用: 登录、管理数据逻辑对象</p>
 <span id="more"></span>
 <p>定义:</p>
@@ -1207,7 +1207,7 @@
   </entry>
   <entry>
     <title>MySQL体系结构</title>
-    <url>/klcc-c.github.io/3c4a0863.html</url>
+    <url>/3c4a0863.html</url>
     <content><![CDATA[<h3 id="C-S模型介绍"><a href="#C-S模型介绍" class="headerlink" title="C/S模型介绍"></a>C/S模型介绍</h3><span id="more"></span>
 <p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/AuYdO0.jpg" alt="AuYdO0"></p>
 <ul>
@@ -1261,7 +1261,7 @@
   </entry>
   <entry>
     <title>MySQL登录及密码管理</title>
-    <url>/klcc-c.github.io/318aa70a.html</url>
+    <url>/318aa70a.html</url>
     <content><![CDATA[<h3 id="已知密码情况下"><a href="#已知密码情况下" class="headerlink" title="已知密码情况下"></a>已知密码情况下</h3><span id="more"></span>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysqladmin -uroot -p password 123456</span><br><span class="line"><span class="comment"># Enter password: #因为我们现在没有密码，直接回车即可！</span></span><br><span class="line"><span class="comment"># 修改密码和上面一样，只是在要求输入密码时输入正确的密码即可</span></span><br></pre></td></tr></table></figure>
 
@@ -1278,7 +1278,7 @@
   </entry>
   <entry>
     <title>MySQL二进制安装</title>
-    <url>/klcc-c.github.io/f88e38d3.html</url>
+    <url>/f88e38d3.html</url>
     <content><![CDATA[<h2 id="Centos7下二进制安装"><a href="#Centos7下二进制安装" class="headerlink" title="Centos7下二进制安装"></a>Centos7下二进制安装</h2><span id="more"></span>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 下载地址</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-5.7/</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭防火墙及selinux</span></span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line">setenforce 0</span><br><span class="line">sed -i  s#enforcing#disabled#g /etc/selinux/config</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 卸载mariadb相关软件包</span></span><br><span class="line">yum remove mariadb* -y</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载依赖包</span></span><br><span class="line">yum install  libaio-devel -y</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载tar包</span></span><br><span class="line">wget https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-5.7/mysql-5.7.34-el7-x86_64.tar.gz</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 解压</span></span><br><span class="line">tar xf mysql-5.7.31-el7-x86_64.tar.gz </span><br><span class="line">mv mysql-5.7.31-el7-x86_64 /usr/local/mysql</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建mysql用户</span></span><br><span class="line">useradd -s /sbin/nologin mysql</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">添加环境变量</span></span><br><span class="line">echo &#x27;export PATH=/usr/local/mysql/bin:$PATH&#x27; &gt;&gt;/etc/profile</span><br><span class="line">source /etc/profile</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mysql软件目录授权mysql用户</span></span><br><span class="line">chown -R mysql:mysql /usr/local/mysql</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看版本</span></span><br><span class="line">mysql -V</span><br></pre></td></tr></table></figure>
 
@@ -1293,7 +1293,7 @@
   </entry>
   <entry>
     <title>Linux目录结构</title>
-    <url>/klcc-c.github.io/5e2eb880.html</url>
+    <url>/5e2eb880.html</url>
     <content><![CDATA[<h1 id="虚拟机快照"><a href="#虚拟机快照" class="headerlink" title="虚拟机快照"></a>虚拟机快照</h1><h3 id="1、拍摄快照"><a href="#1、拍摄快照" class="headerlink" title="1、拍摄快照"></a>1、拍摄快照</h3><p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211209204224924.png" alt="image-20211209204224924"></p>
 <span id="more"></span>
 <p><img src="https://gitee.com/gengff/blogimage/raw/master/images/image-20211209204345586.png" alt="image-20211209204345586"></p>
@@ -1446,7 +1446,7 @@
   </entry>
   <entry>
     <title>Linux安装、远程连接</title>
-    <url>/klcc-c.github.io/20cf8e98.html</url>
+    <url>/20cf8e98.html</url>
     <content><![CDATA[<h1 id="基础介绍"><a href="#基础介绍" class="headerlink" title="基础介绍"></a>基础介绍</h1><p>主要介绍企业中常用的服务器操作系统</p>
 <ul>
 <li><p>什么是Linux？</p>
@@ -1587,7 +1587,7 @@
   </entry>
   <entry>
     <title>Linux三剑客</title>
-    <url>/klcc-c.github.io/bfa86649.html</url>
+    <url>/bfa86649.html</url>
     <content><![CDATA[<p>Linux中最重要的三个命令在业界被称为“<strong>三剑客</strong>”，它们是grep，sed，awk。</p>
 <p>我们知道Linux下一切皆文件，对Linux的操作就是对文件的处理，那么怎么能更好的处理文件呢？这就要用到我们的三剑客命令。</p>
 <span id="more"></span>
@@ -1666,7 +1666,7 @@
   </entry>
   <entry>
     <title>Linux文本处理和find命令</title>
-    <url>/klcc-c.github.io/47edf33b.html</url>
+    <url>/47edf33b.html</url>
     <content><![CDATA[<h1 id="find命令"><a href="#find命令" class="headerlink" title="find命令"></a>find命令</h1><ul>
 <li><p>根据文件的名称或者属性查找文件。</p>
 </li>
@@ -1737,7 +1737,7 @@
   </entry>
   <entry>
     <title>Linux命令总结</title>
-    <url>/klcc-c.github.io/51ea15a6.html</url>
+    <url>/51ea15a6.html</url>
     <content><![CDATA[<h2 id="帮助相关"><a href="#帮助相关" class="headerlink" title="帮助相关"></a>帮助相关</h2><span id="more"></span>
 <ul>
 <li>man  查看普通命令的帮助</li>
@@ -2218,7 +2218,7 @@
   </entry>
   <entry>
     <title>Linux系统优化及定时任务</title>
-    <url>/klcc-c.github.io/c3540fc.html</url>
+    <url>/c3540fc.html</url>
     <content><![CDATA[<h1 id="系统安全优化"><a href="#系统安全优化" class="headerlink" title="系统安全优化"></a>系统安全优化</h1><h2 id="关闭-selinux-安全服务"><a href="#关闭-selinux-安全服务" class="headerlink" title="关闭 selinux 安全服务"></a>关闭 selinux 安全服务</h2><p> selinux（Security-Enhanced Linux）是美国国家安全局（NSA）对于强制访问控制的实现，这个功能让系统管理员又爱又恨，这里我们还是把它给关闭了吧，至于安全问题，后面通过其他手段来解决，这也是大多数生产环境的做法，如果非要开启也是可以的。</p>
 <span id="more"></span>
 
@@ -2332,7 +2332,7 @@
   </entry>
   <entry>
     <title>Linux包管理及压缩命令</title>
-    <url>/klcc-c.github.io/891d6bd.html</url>
+    <url>/891d6bd.html</url>
     <content><![CDATA[<h1 id="Linux中安装软件的三种方式"><a href="#Linux中安装软件的三种方式" class="headerlink" title="Linux中安装软件的三种方式"></a>Linux中安装软件的三种方式</h1><p>与windows类似，在Linux系统上也可以安装各种应用程序，或称之为软件包</p>
 <span id="more"></span>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1.rpm安装</span><br><span class="line">   rpm安装预先编译打包，安装简单，下载下来之后直接安装。</span><br><span class="line">   优点：已经制作好的安装程序</span><br><span class="line">	 缺点：不能自己解决依赖</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">2.yum安装</span><br><span class="line">   yum安装基于rpm安装</span><br><span class="line">   优点：增加了自动解决依赖的功能。</span><br><span class="line">	</span><br><span class="line">  </span><br><span class="line">3.源代码编译安装</span><br><span class="line">   源代码安装通过编译源代码，得到软件包。</span><br><span class="line">   优点：可以自定制软件包。</span><br><span class="line">   缺点：比较复杂   </span><br></pre></td></tr></table></figure>
@@ -2469,7 +2469,7 @@
   </entry>
   <entry>
     <title>Linux用户管理</title>
-    <url>/klcc-c.github.io/ef277b25.html</url>
+    <url>/ef277b25.html</url>
     <content><![CDATA[<h1 id="用户和用户组"><a href="#用户和用户组" class="headerlink" title="用户和用户组"></a>用户和用户组</h1><p><img src="https://gitee.com/gengff/blogimage/raw/master/images/1583571865_ab05a7218d58cc85bbfc02fbec2d730f.png" alt="1583571865_ab05a7218d58cc85bbfc02fbec2d730f"></p>
 <span id="more"></span>
 <ul>
@@ -2560,7 +2560,7 @@
   </entry>
   <entry>
     <title>Linux文件权限管理</title>
-    <url>/klcc-c.github.io/ad5612ad.html</url>
+    <url>/ad5612ad.html</url>
     <content><![CDATA[<h1 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h1><p><strong>把⼀个⽤户加⼊了⼀个组，该⽤户就拥有了该组的权限，当⼀个⽤户要操作某个⽂件时，系统会依次检索该⽤户是否是该⽂件的(属主)拥有者，其次是(数组)组成员，最后是其他⼈，如果扫描到是拥有者，则具备拥有者的权限，不必往后扫描，以此类推</strong></p>
 <span id="more"></span>
 <h2 id="权限类型"><a href="#权限类型" class="headerlink" title="权限类型"></a>权限类型</h2><p>每一个权限拥有一个数字编号</p>
@@ -2639,7 +2639,7 @@
   </entry>
   <entry>
     <title>Linux文件管理</title>
-    <url>/klcc-c.github.io/117ba17a.html</url>
+    <url>/117ba17a.html</url>
     <content><![CDATA[<h1 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h1><h4 id="Linux-系统的单根⽬录结构"><a href="#Linux-系统的单根⽬录结构" class="headerlink" title="Linux  系统的单根⽬录结构"></a><strong>Linux  系统的单根⽬录结构</strong></h4><p>linux与windows的⽬录结构对⽐</p>
 <span id="more"></span>
 <p><img src="https://gitee.com/gengff/blogimage/raw/master/images/2321466-20210620230259931-1963226798.png" alt=" "></p>
@@ -2695,7 +2695,7 @@
   </entry>
   <entry>
     <title>Linux系统目录结构</title>
-    <url>/klcc-c.github.io/684b776b.html</url>
+    <url>/684b776b.html</url>
     <content><![CDATA[<h1 id="重要目录文件"><a href="#重要目录文件" class="headerlink" title="重要目录文件"></a>重要目录文件</h1><h2 id="网卡配置文件"><a href="#网卡配置文件" class="headerlink" title="网卡配置文件"></a>网卡配置文件</h2><span id="more"></span>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">文件信息：/etc/sysconfig/network-scripts/ifcfg-eth0  </span><br><span class="line">ip a</span><br><span class="line">作用：</span><br><span class="line">1、查看网卡配置</span><br><span class="line">  [root@localhost ~]<span class="comment"># cat /etc/sysconfig/network-scripts/ifcfg-eth0</span></span><br><span class="line"></span><br><span class="line">  [root@localhost ~]<span class="comment"># cat /etc/sysconfig/network-scripts/ifcfg-ens32</span></span><br><span class="line"></span><br><span class="line">  或</span><br><span class="line">  ip address show 或 nmtui</span><br><span class="line">2、重载网卡信息</span><br><span class="line">  <span class="comment"># 方式一</span></span><br><span class="line">  [root@localhost ~]<span class="comment"># systemctl restart network</span></span><br><span class="line">  <span class="comment"># 方式二</span></span><br><span class="line">	ifdown [网卡名称] &amp;&amp; ifup [网卡名称]</span><br><span class="line">		</span><br><span class="line">  关闭网络管理器（因为已经有了network）</span><br><span class="line">		systemctl  stop NetworkManager</span><br><span class="line">		systemctl  <span class="built_in">disable</span> NetworkManager</span><br><span class="line">		或</span><br><span class="line">		systemctl  <span class="built_in">disable</span> --now  NetworkManager</span><br><span class="line">		</span><br><span class="line">3、判断SSH服务是否开启</span><br><span class="line">   [root@localhost ~]<span class="comment"># systemctl status sshd</span></span><br></pre></td></tr></table></figure>
 
@@ -2741,7 +2741,7 @@
   </entry>
   <entry>
     <title>vim的使用</title>
-    <url>/klcc-c.github.io/627226e0.html</url>
+    <url>/627226e0.html</url>
     <content><![CDATA[<h1 id="系统快捷键"><a href="#系统快捷键" class="headerlink" title="系统快捷键"></a>系统快捷键</h1><span id="more"></span>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1、历史命令信息：上下键</span><br><span class="line">2、清屏命令：ctrl + l | clear</span><br><span class="line">3、中断取消命令执行过程 ： ctrl + c</span><br><span class="line">4、快速移动光标到行首尾：ctrl + a/e</span><br><span class="line">5、将光标到行首信息剪切：ctrl + u</span><br><span class="line">6、将剪切的内容进行粘贴：ctrl + y</span><br><span class="line">7、将光标到行尾信息剪切：ctrl + k</span><br><span class="line">8、锁定系统窗口信息状态：ctrl + s</span><br><span class="line">9、解锁系统窗口信息状态：ctrl + q</span><br><span class="line">10、搜索最近执行过的指令：ctrl + r</span><br><span class="line">11、命令行中快速移动光标：ctrl + 方向键</span><br><span class="line">12、退出当前的登录，相当于<span class="built_in">logout</span>：ctrl+d</span><br><span class="line">13、删除当前光标向前一组字符串，以空格为分隔符：ctrl+w</span><br><span class="line">14、杀死当前进程：ctrl+z </span><br><span class="line">15、系统命令信息补全功能：tab</span><br></pre></td></tr></table></figure>
 
@@ -2830,7 +2830,7 @@
   </entry>
   <entry>
     <title>python-并发编程</title>
-    <url>/klcc-c.github.io/59b85335.html</url>
+    <url>/59b85335.html</url>
     <content><![CDATA[<h2 id="操作系统相关"><a href="#操作系统相关" class="headerlink" title="操作系统相关"></a>操作系统相关</h2><blockquote>
 <p>操作系统就是一个协调、管理和控制计算机硬件资源和软件资源的控制程序</p>
 </blockquote>
@@ -3197,7 +3197,7 @@
   </entry>
   <entry>
     <title>Mac上VMware的NAT网络设置</title>
-    <url>/klcc-c.github.io/2ba065a.html</url>
+    <url>/2ba065a.html</url>
     <content><![CDATA[<h3 id="NAT网络设置"><a href="#NAT网络设置" class="headerlink" title="NAT网络设置"></a>NAT网络设置</h3><h4 id="创建一个NAT网络"><a href="#创建一个NAT网络" class="headerlink" title="创建一个NAT网络"></a>创建一个NAT网络</h4><span id="more"></span>
 
 <p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/4vNGH4.png" alt="4vNGH4"></p>
@@ -3219,7 +3219,7 @@
   </entry>
   <entry>
     <title>python-网络编程</title>
-    <url>/klcc-c.github.io/e67db240.html</url>
+    <url>/e67db240.html</url>
     <content><![CDATA[<h3 id="OSI七层模型"><a href="#OSI七层模型" class="headerlink" title="OSI七层模型"></a>OSI七层模型</h3><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/g3kSJQ.jpg" alt="g3kSJQ"></p>
 <span id="more"></span>
 <h4 id="每层运行常见物理设备"><a href="#每层运行常见物理设备" class="headerlink" title="每层运行常见物理设备"></a>每层运行常见物理设备</h4><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/bevfsC.jpg" alt="bevfsC"></p>
@@ -3319,7 +3319,7 @@
   </entry>
   <entry>
     <title>python-面向对象(一)</title>
-    <url>/klcc-c.github.io/832cc1e6.html</url>
+    <url>/832cc1e6.html</url>
     <content><![CDATA[<h3 id="1-面向对象由来"><a href="#1-面向对象由来" class="headerlink" title="1. 面向对象由来"></a>1. 面向对象由来</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span>面向过程编程:定义变量,定义函数</span><br><span class="line">    优点：复杂的问题流程化，进而简单化</span><br><span class="line">    缺点：牵一发而动全身，扩展性差，可维护性差</span><br><span class="line">    应用场景：对扩展性要求不高的地方</span><br><span class="line"><span class="number">2.</span>面向对象编程:定义一个类,类有属性(变量、特征),有方法(函数，技能)</span><br><span class="line">		优点:扩展性强，可维护性强</span><br><span class="line">    缺点：编程复杂度高</span><br><span class="line">    应用场景：对扩展性要求较高的地方</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h3 id="2-面向对象编程"><a href="#2-面向对象编程" class="headerlink" title="2. 面向对象编程"></a>2. 面向对象编程</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span> 面向过程变成的核心是过程二字,过程指的是解决问题的步骤,即先干什么再干什么然后干什么</span><br><span class="line"><span class="number">2</span> 面向对象编程的核心是对象二字,对象是特征与技能的结合体,盛放数据和函数的容器</span><br></pre></td></tr></table></figure>
@@ -3342,7 +3342,7 @@
   </entry>
   <entry>
     <title>python-模块(四)</title>
-    <url>/klcc-c.github.io/779eb679.html</url>
+    <url>/779eb679.html</url>
     <content><![CDATA[<h3 id="1-hashlib模块"><a href="#1-hashlib模块" class="headerlink" title="1. hashlib模块"></a>1. <code>hashlib</code>模块</h3><blockquote>
 <p>加密模块</p>
 <p>加密: 将明文数据通过一些列算法变成密文，为了数据安全</p>
@@ -3381,7 +3381,7 @@
   </entry>
   <entry>
     <title>python-模块(三)</title>
-    <url>/klcc-c.github.io/8ddd5976.html</url>
+    <url>/8ddd5976.html</url>
     <content><![CDATA[<h3 id="random模块"><a href="#random模块" class="headerlink" title="random模块"></a>random模块</h3><ul>
 <li><p><code>random()</code></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="built_in">print</span>(random.random())  <span class="comment"># 随机产生一个0-1之间的小数</span></span><br></pre></td></tr></table></figure>
@@ -3452,7 +3452,7 @@
   </entry>
   <entry>
     <title>python-模块(二)</title>
-    <url>/klcc-c.github.io/f32e795d.html</url>
+    <url>/f32e795d.html</url>
     <content><![CDATA[<h3 id="re模块"><a href="#re模块" class="headerlink" title="re模块"></a>re模块</h3><blockquote>
 <p>在python中使用正则必须借助于模块，re是其中之一</p>
 </blockquote>
@@ -3526,7 +3526,7 @@
   </entry>
   <entry>
     <title>Ubuntu安装NVIDIA驱动</title>
-    <url>/klcc-c.github.io/b9c60b23.html</url>
+    <url>/b9c60b23.html</url>
     <content><![CDATA[<h3 id="安装NVIDIA驱动"><a href="#安装NVIDIA驱动" class="headerlink" title="安装NVIDIA驱动"></a>安装NVIDIA驱动</h3><h4 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#关闭桌面</span></span><br><span class="line">systemctl <span class="built_in">disable</span> gdm3</span><br><span class="line"></span><br><span class="line"><span class="comment">#禁用nouveau</span></span><br><span class="line">sudo <span class="built_in">echo</span> <span class="string">&quot;blacklist nouveau&quot;</span> &gt;&gt;  /etc/modprobe.d/blacklist.conf</span><br><span class="line">sudo <span class="built_in">echo</span> <span class="string">&quot;options nouveau modeset=0&quot;</span> &gt;&gt;  /etc/modprobe.d/blacklist.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 官网下载Linux版驱动 https://www.nvidia.cn/Download/index.aspx</span></span><br><span class="line"></span><br><span class="line">chmod +x NVIDIA-Linux-x86_64-440.100.run</span><br><span class="line">apt install curl make gcc g++ wget pkg-config --reinstall -y</span><br><span class="line"></span><br><span class="line">./NVIDIA-Linux-x86_64-440.100.run  -a -q -s -z -Z</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h4 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#关闭桌面</span></span><br><span class="line">systemctl <span class="built_in">disable</span> gdm3</span><br><span class="line"></span><br><span class="line"><span class="comment">#禁用nouveau</span></span><br><span class="line">sudo <span class="built_in">echo</span> <span class="string">&quot;blacklist nouveau&quot;</span> &gt;&gt;  /etc/modprobe.d/blacklist.conf</span><br><span class="line">sudo <span class="built_in">echo</span> <span class="string">&quot;options nouveau modeset=0&quot;</span> &gt;&gt;  /etc/modprobe.d/blacklist.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查找内核版本</span></span><br><span class="line">cat /proc/driver/nvidia/version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载显卡残留依赖</span></span><br><span class="line">sudo apt-get --purge remove nvidia* -y</span><br><span class="line">sudo apt-get --purge remove <span class="string">&quot;*nvidia*&quot;</span> -y</span><br><span class="line">sudo apt-get --purge remove <span class="string">&quot;*cublas*&quot;</span> <span class="string">&quot;cuda*&quot;</span> -y</span><br><span class="line">sudo apt autoremove -y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装驱动460版本</span></span><br><span class="line">apt install nvidia-headless-460 -y</span><br><span class="line">apt install nvidia-utils-460</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装驱动455版本</span></span><br><span class="line">apt install -y nvidia-driver-455 nvidia-utils-455 nvidia-cuda-dev nvidia-cuda-toolkit nvidia-opencl-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查显卡驱动</span></span><br><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
@@ -3547,7 +3547,7 @@
   </entry>
   <entry>
     <title>python-软件目录规范和正则表达式</title>
-    <url>/klcc-c.github.io/26f31071.html</url>
+    <url>/26f31071.html</url>
     <content><![CDATA[<h3 id="1-软件开发目录规范"><a href="#1-软件开发目录规范" class="headerlink" title="1. 软件开发目录规范"></a>1. 软件开发目录规范</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">demo</span><br><span class="line">├── <span class="built_in">bin</span>  <span class="comment"># 存放一系列启动文件,当启动文件很少或者只有一个时也可以直接放外面</span></span><br><span class="line">│   └── start.py</span><br><span class="line">├── conf  <span class="comment"># 存放一系列配置文件</span></span><br><span class="line">│   └── settings.py  <span class="comment"># 一般情况下该文件的变量名都大写</span></span><br><span class="line">├── core  <span class="comment"># 存放项目核心代码文件</span></span><br><span class="line">│   └── src.py</span><br><span class="line">├── db  <span class="comment"># 存放数据相关文件</span></span><br><span class="line">│   └── userinfo.txt</span><br><span class="line">├── lib  <span class="comment"># 存放公共的功能</span></span><br><span class="line">│   └── common.py</span><br><span class="line">├── log  <span class="comment"># 存放日志的目录</span></span><br><span class="line">│   └── log.txt</span><br><span class="line">├── readme  <span class="comment"># 存放相关信息(使用说明等)</span></span><br><span class="line">└── requirements.txt  <span class="comment"># 存放项目所需的第三方模块及版本号</span></span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 
@@ -3680,7 +3680,7 @@
   </entry>
   <entry>
     <title>python-模块(一)</title>
-    <url>/klcc-c.github.io/5c1fe23f.html</url>
+    <url>/5c1fe23f.html</url>
     <content><![CDATA[<h3 id="1-面向过程编程"><a href="#1-面向过程编程" class="headerlink" title="1. 面向过程编程"></a>1. 面向过程编程</h3><p>面向过程编程，核心是过程二字，过程指的是解决问题的步骤，即先干什么、后干什么、再干什么、然后干什么……</p>
 <p>基于该思想编写程序就好比在设计一条流水线，面向对称编程其实是一种机械式的思维方式</p>
 <p>优点: 复杂的问题流程化，进而简单化</p>
@@ -3838,7 +3838,7 @@
   </entry>
   <entry>
     <title>CGroups和Namespace</title>
-    <url>/klcc-c.github.io/4a318272.html</url>
+    <url>/4a318272.html</url>
     <content><![CDATA[<h2 id="CGroup"><a href="#CGroup" class="headerlink" title="CGroup"></a>CGroup</h2><h3 id="CGroups概述"><a href="#CGroups概述" class="headerlink" title="CGroups概述"></a>CGroups概述</h3><p><code>CGroups</code> 全称为 <code>Linux Control Group</code>，其作用是限制一组进程使用的资源（CPU、内存等）上限，<code>CGroups</code> 也是 Containerd 容器技术的核心实现原理之一</p>
 <span id="more"></span>
 <ul>
@@ -3916,7 +3916,7 @@
   </entry>
   <entry>
     <title>python-生成器和常见内置函数</title>
-    <url>/klcc-c.github.io/ae4233d7.html</url>
+    <url>/ae4233d7.html</url>
     <content><![CDATA[<h3 id="异常捕获-二"><a href="#异常捕获-二" class="headerlink" title="异常捕获(二)"></a>异常捕获(二)</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    name</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;代码错误&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;代码正常才会执行了&#x27;</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;代码不管是否异常都会运行&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 断言</span></span><br><span class="line">name = <span class="string">&#x27;jason&#x27;</span></span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">isinstance</span>(name, <span class="built_in">str</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 主动抛出异常</span></span><br><span class="line"><span class="keyword">raise</span> ZeroDivisionError(<span class="string">&#x27;除数不能为0&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h3 id="for循环本质"><a href="#for循环本质" class="headerlink" title="for循环本质"></a>for循环本质</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">d = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;jason&#x27;</span>, <span class="string">&#x27;age&#x27;</span>: <span class="number">18</span>&#125;</span><br><span class="line">res = d.__iter__()  <span class="comment"># StopIteration的异常,该异常是在循环对象穷尽所有元素时的报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># while实现循环打印</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="built_in">print</span>(res.__next__())</span><br><span class="line">    <span class="keyword">except</span> StopIteration <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># for循环打印</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> d:</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br></pre></td></tr></table></figure>
@@ -3961,7 +3961,7 @@
   </entry>
   <entry>
     <title>python-迭代器</title>
-    <url>/klcc-c.github.io/ccf84d2b.html</url>
+    <url>/ccf84d2b.html</url>
     <content><![CDATA[<h3 id="1-常用内置函数"><a href="#1-常用内置函数" class="headerlink" title="1. 常用内置函数"></a>1. 常用内置函数</h3><h4 id="1-1-map"><a href="#1-1-map" class="headerlink" title="1.1 map()"></a>1.1 map()</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># map()  # 映射</span></span><br><span class="line">l = [<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>, <span class="number">44</span>]</span><br><span class="line">res = <span class="built_in">map</span>(<span class="keyword">lambda</span> x: x + <span class="number">1</span>, l)  <span class="comment"># 循环获取列表中的每个元素并交给匿名函数保存返回值</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>(res))  <span class="comment"># [12, 23, 34, 45]</span></span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h4 id="1-2-zip"><a href="#1-2-zip" class="headerlink" title="1.2 zip()"></a>1.2 zip()</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># zip() 拉链  按最少元素</span></span><br><span class="line">l1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line">l2 = [<span class="string">&#x27;jason&#x27;</span>, <span class="string">&#x27;tony&#x27;</span>, <span class="string">&#x27;xxx&#x27;</span>, <span class="string">&#x27;tom&#x27;</span>, <span class="string">&#x27;bob&#x27;</span>]</span><br><span class="line">res = <span class="built_in">zip</span>(l1, l2)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>(res))</span><br><span class="line"><span class="comment"># [(1, &#x27;jason&#x27;), (2, &#x27;tony&#x27;), (3, &#x27;xxx&#x27;), (4, &#x27;tom&#x27;), (5, &#x27;bob&#x27;)]</span></span><br></pre></td></tr></table></figure>
@@ -4001,7 +4001,7 @@
   </entry>
   <entry>
     <title>python-函数使用(三)</title>
-    <url>/klcc-c.github.io/d5376901.html</url>
+    <url>/d5376901.html</url>
     <content><![CDATA[<h3 id="递归函数"><a href="#递归函数" class="headerlink" title="递归函数"></a>递归函数</h3><blockquote>
 <p>函数在运行过程中，直接或间接调用了自身</p>
 </blockquote>
@@ -4037,7 +4037,7 @@
   </entry>
   <entry>
     <title>python-装饰器</title>
-    <url>/klcc-c.github.io/3a5cdcf8.html</url>
+    <url>/3a5cdcf8.html</url>
     <content><![CDATA[<h3 id="1-装饰器定义"><a href="#1-装饰器定义" class="headerlink" title="1. 装饰器定义"></a>1. 装饰器定义</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">装饰器由名称空间，函数对象，闭包函数组合而来</span><br><span class="line"></span><br><span class="line">装饰:给被装饰对象添加额外的功能</span><br><span class="line">器:指的是工具</span><br><span class="line"></span><br><span class="line">装饰器的原则:开放封闭原则</span><br><span class="line">  开放:对扩展开放</span><br><span class="line">  封闭:对修改封闭</span><br><span class="line">    </span><br><span class="line">装饰器核心思想:在不改变被<span class="string">&quot;装饰对象内部代码&quot;</span>和<span class="string">&quot;原有调用方式&quot;</span>的基础上添加额外的功能</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">eg:</span><br><span class="line">  <span class="keyword">import</span> time</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">      time.sleep(<span class="number">3</span>)  <span class="comment"># 阻塞3秒</span></span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&#x27;form index&#x27;</span>)</span><br><span class="line">  start_time = time.time()  <span class="comment"># 记录函数运行之前的时间戳(1970年1月1日开始计算的秒数)</span></span><br><span class="line">  index()  <span class="comment"># 调用函数</span></span><br><span class="line">  end_time = time.time()  <span class="comment"># 记录函数运行之后的时间戳</span></span><br><span class="line">  <span class="built_in">print</span>(end_time - start_time)  <span class="comment"># 计算出函数运行的时间值</span></span><br></pre></td></tr></table></figure>
@@ -4080,7 +4080,7 @@
   </entry>
   <entry>
     <title>python-函数使用(二)</title>
-    <url>/klcc-c.github.io/abc4492a.html</url>
+    <url>/abc4492a.html</url>
     <content><![CDATA[<h2 id="1-名称空间作用域"><a href="#1-名称空间作用域" class="headerlink" title="1. 名称空间作用域"></a>1. 名称空间作用域</h2><ol>
 <li><p>作用域</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">名称空间所能够作用的范围</span><br></pre></td></tr></table></figure></li>
@@ -4141,7 +4141,7 @@
   </entry>
   <entry>
     <title>Nginx安装配置使用</title>
-    <url>/klcc-c.github.io/13085aa8.html</url>
+    <url>/13085aa8.html</url>
     <content><![CDATA[<h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#全一些的依赖</span></span><br><span class="line">yum install -y libxml2 libxml2-devel openssl \</span><br><span class="line">openssl-devel bzip2 bzip2-devel libcurl \</span><br><span class="line">libcurl-devel libjpeg libjpeg-devel \</span><br><span class="line">libpng libpng-devel freetype freetype-devel \</span><br><span class="line">gmp gmp-devel libmcrypt libmcrypt-devel \</span><br><span class="line">readline readline-devel libxslt libxslt-devel  \</span><br><span class="line">libicu-devel  openldap  openldap-devel \</span><br><span class="line">make zlib zlib-devel gcc-c++ libtool \</span><br><span class="line">pcre pcre-devel  cmake gcc  ncurses ncurses-devel \</span><br><span class="line">bison bison-devel libgcrypt perl wget</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#最小依赖</span></span><br><span class="line">yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建www用户管理nginx并设置为不可登录</span></span><br><span class="line">useradd www</span><br><span class="line">usermod -s nologin www</span><br><span class="line"></span><br><span class="line"><span class="comment">#www用户一步到位#</span></span><br><span class="line">useradd -s nologin www</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建nginx工作目录</span></span><br><span class="line">mkdir -p /usr/<span class="built_in">local</span>/nginx</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建存放nginx下载的目录</span></span><br><span class="line">mkdir -p /data/tools &amp;&amp; <span class="built_in">cd</span> /data/tools</span><br><span class="line"></span><br><span class="line"><span class="comment">#版本选择</span></span><br><span class="line"><span class="comment">#http://nginx.org/en/download.html  #下载地址</span></span><br><span class="line"><span class="comment">#Stable version		 稳定版本</span></span><br><span class="line"><span class="comment">#Mainline version 	 新版本（不推荐，无特殊要求稳定版即可）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#下载安装包</span></span><br><span class="line">wget http://nginx.org/download/nginx-1.20.1.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">#解压nginx</span></span><br><span class="line">tar xf nginx-1.20.1.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">#隐藏版本，看需要是否隐藏nginx版本</span></span><br><span class="line">sed -i <span class="string">&#x27;s/1.20.1//g&#x27;</span> nginx-1.20.1/src/core/nginx.h</span><br><span class="line"></span><br><span class="line"><span class="comment">#编译参数开始编译</span></span><br><span class="line"><span class="built_in">cd</span> nginx-1.20.1</span><br><span class="line">./configure --user=www --group=www \</span><br><span class="line">--prefix=/usr/<span class="built_in">local</span>/nginx  \</span><br><span class="line">--with-http_stub_status_module  \</span><br><span class="line">--with-http_ssl_module --with-pcre </span><br><span class="line"></span><br><span class="line"><span class="comment">#nginx -V 可查看安装的nginx的编译参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#编译</span></span><br><span class="line">make -j `cat /proc/cpuinfo |grep processor |wc -l` &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="comment">#添加环境变量</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=/usr/local/nginx/sbin:$PATH&#x27;</span> &gt;&gt; /etc/profile</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="comment">#给nginx工作目录www权限</span></span><br><span class="line">chown -R www.www /usr/<span class="built_in">local</span>/nginx</span><br></pre></td></tr></table></figure>
@@ -4183,7 +4183,7 @@
   </entry>
   <entry>
     <title>Linux-命令记录-02</title>
-    <url>/klcc-c.github.io/36b9df2b.html</url>
+    <url>/36b9df2b.html</url>
     <content><![CDATA[<h3 id="去除文件空行和-开头的行"><a href="#去除文件空行和-开头的行" class="headerlink" title="去除文件空行和#开头的行"></a>去除文件空行和#开头的行</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grep ^[^<span class="comment">#] file</span></span><br><span class="line">grep -Ev <span class="string">&quot;^$|[#;]&quot;</span>  file</span><br><span class="line">egrep -v <span class="string">&quot;^$|#&quot;</span>  file</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <h3 id="修改文件最大打开数"><a href="#修改文件最大打开数" class="headerlink" title="修改文件最大打开数"></a>修改文件最大打开数</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -n 1048576</span><br><span class="line">sed -i <span class="string">&quot;/nofile/d&quot;</span> /etc/security/limits.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;* hard nofile 1048576&quot;</span> &gt;&gt; /etc/security/limits.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;* soft nofile 1048576&quot;</span> &gt;&gt; /etc/security/limits.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;root hard nofile 1048576&quot;</span> &gt;&gt; /etc/security/limits.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;root soft nofile 1048576&quot;</span> &gt;&gt; /etc/security/limits.conf</span><br></pre></td></tr></table></figure>
@@ -4201,7 +4201,7 @@
   </entry>
   <entry>
     <title>python-函数参数(一)</title>
-    <url>/klcc-c.github.io/c86b83ee.html</url>
+    <url>/c86b83ee.html</url>
     <content><![CDATA[<h3 id="1-函数参数分类"><a href="#1-函数参数分类" class="headerlink" title="1. 函数参数分类"></a>1. 函数参数分类</h3><h4 id="1-1-形式参数"><a href="#1-1-形式参数" class="headerlink" title="1.1 形式参数"></a>1.1 形式参数</h4><p>在函数定义阶段括号内所填写的参数，简称形参</p>
 <span id="more"></span>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="comment"># a和b就是函数func的形参</span></span><br></pre></td></tr></table></figure>
@@ -4260,7 +4260,7 @@
   </entry>
   <entry>
     <title>Bond4配置</title>
-    <url>/klcc-c.github.io/c2b5b878.html</url>
+    <url>/c2b5b878.html</url>
     <content><![CDATA[<h3 id="Ubuntu配置"><a href="#Ubuntu配置" class="headerlink" title="Ubuntu配置"></a>Ubuntu配置</h3><span id="more"></span>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat /etc/netplan/00-installer-config.yaml</span><br><span class="line">network:</span><br><span class="line">  ethernets:</span><br><span class="line">    ens3f1: &#123;&#125;</span><br><span class="line">    ens3f0: &#123;&#125;</span><br><span class="line">  renderer: networkd</span><br><span class="line">  bonds:</span><br><span class="line">    bond4:</span><br><span class="line">      addresses: [10.10.2.1/16]</span><br><span class="line">      gateway4: 10.10.1.254</span><br><span class="line">      nameservers:</span><br><span class="line">        addresses: [114.114.114.114,202.96.128.86,8.8.8.8]</span><br><span class="line">      interfaces:</span><br><span class="line">        - ens3f1</span><br><span class="line">        - ens3f0</span><br><span class="line">      parameters:</span><br><span class="line">        mode: 802.3ad</span><br><span class="line">        mii-monitor-interval:</span><br><span class="line">        lacp-rate: fast</span><br><span class="line">        transmit-hash-policy: layer3+4</span><br><span class="line">        </span><br><span class="line"><span class="comment">#生效        </span></span><br><span class="line">netplan apply</span><br></pre></td></tr></table></figure>
 
@@ -4280,7 +4280,7 @@
   </entry>
   <entry>
     <title>python-文件与函数初识</title>
-    <url>/klcc-c.github.io/a7f42e80.html</url>
+    <url>/a7f42e80.html</url>
     <content><![CDATA[<h2 id="1-文件"><a href="#1-文件" class="headerlink" title="1. 文件"></a>1. 文件</h2><h3 id="1-1-二进制模式读"><a href="#1-1-二进制模式读" class="headerlink" title="1.1 二进制模式读"></a>1.1 二进制模式读</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f.read())  <span class="comment"># 读取的是二进制内容</span></span><br><span class="line">    <span class="built_in">print</span>(f.read().decode(<span class="string">&#x27;utf8&#x27;</span>))  <span class="comment"># 经过住解码，能正常读取内容</span></span><br><span class="line">    <span class="built_in">print</span>(f.read(<span class="number">3</span>).decode(<span class="string">&#x27;utf8&#x27;</span>))  <span class="comment"># 三个字节为一个中文</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">read()  括号内可以放数字</span></span><br><span class="line"><span class="string">    在t模式下表示字符个数</span></span><br><span class="line"><span class="string">    在b模式下表示字节个数</span></span><br><span class="line"><span class="string">英文字符统一使用一个bytes来表示</span></span><br><span class="line"><span class="string">中文字符统一使用三个bytes来表示</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 
@@ -4312,7 +4312,7 @@
   </entry>
   <entry>
     <title>YAML格式</title>
-    <url>/klcc-c.github.io/2391e1e4.html</url>
+    <url>/2391e1e4.html</url>
     <content><![CDATA[<h2 id="资源清单"><a href="#资源清单" class="headerlink" title="资源清单"></a>资源清单</h2><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>在Kubernetes 环境下可以使用 kubectl run 运行应用，但是不推荐，而是希望使用资源清单的东西来描述应用，资源清单可以使用YAML和JSON文件来编写，一般YAML更方便阅读</p>
 <p>通过一个资源清单文件定义好一个应用后，可以使用kubectl工具直接运行</p>
 <span id="more"></span>
@@ -4385,7 +4385,7 @@
   </entry>
   <entry>
     <title>python-文件操作(二)</title>
-    <url>/klcc-c.github.io/19603b60.html</url>
+    <url>/19603b60.html</url>
     <content><![CDATA[<h3 id="1-文件操作方法"><a href="#1-文件操作方法" class="headerlink" title="1. 文件操作方法"></a>1. 文件操作方法</h3><h4 id="1-1-读方法"><a href="#1-1-读方法" class="headerlink" title="1.1 读方法"></a>1.1 读方法</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;a.txt&#x27;</span>,<span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="built_in">print</span>(f.read())  <span class="comment"># 一次性读取文件所有的内容</span></span><br><span class="line">    <span class="built_in">print</span>(f.readline())  <span class="comment"># 每次值读文件一行内容</span></span><br><span class="line">    <span class="built_in">print</span>(f.readlines())  <span class="comment"># 读取文件所有内容,组织成列表,每个元素是文件的每行内容</span></span><br><span class="line">    <span class="built_in">print</span>(f.readable())  <span class="comment"># 判断当前文件是否可读,返回布尔值</span></span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 
@@ -4420,7 +4420,7 @@
   </entry>
   <entry>
     <title>python-编码和文件操作</title>
-    <url>/klcc-c.github.io/b8f382b7.html</url>
+    <url>/b8f382b7.html</url>
     <content><![CDATA[<h3 id="1-字符编码"><a href="#1-字符编码" class="headerlink" title="1. 字符编码"></a>1. 字符编码</h3><p>只跟文本和字符串有关<br>由于计算机内部只是别二进制,但是用户在使用计算机的时候却可以看到各种语言字符,字符编码就是内部记录了人类字符与数字对应关系的数据</p>
 <span id="more"></span>
 <h4 id="1-1-字符编码史"><a href="#1-1-字符编码史" class="headerlink" title="1.1 字符编码史"></a>1.1 字符编码史</h4><ol>
@@ -4497,7 +4497,7 @@
   </entry>
   <entry>
     <title>Containerd相关使用</title>
-    <url>/klcc-c.github.io/4610149.html</url>
+    <url>/4610149.html</url>
     <content><![CDATA[<h2 id="Containerd安装"><a href="#Containerd安装" class="headerlink" title="Containerd安装"></a>Containerd安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#依赖安装</span></span><br><span class="line">rpm -qa |grep libseccomp</span><br><span class="line">yum install wget -y</span><br><span class="line">wget http://mirror.centos.org/centos/7/os/x86_64/Packages/libseccomp-2.3.1-4.el7.x86_64.rpm</span><br><span class="line">yum install libseccomp-2.3.1-4.el7.x86_64.rpm -y</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#下载</span></span><br><span class="line">wget https://github.com/containerd/containerd/releases/download/v1.5.5/cri-containerd-cni-1.5.5-linux-amd64.tar.gz</span><br><span class="line"><span class="comment"># 如果有限制，也可以替换成下面的 URL 加速下载</span></span><br><span class="line"><span class="comment"># wget https://download.fastgit.org/containerd/containerd/releases/download/v1.5.5/cri-containerd-cni-1.5.5-linux-amd64.tar.gz</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#解压到系统各个目录中去</span></span><br><span class="line">tar -C / -xzf cri-containerd-cni-1.5.5-linux-amd64.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">#环境变量设置</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$PATH:/usr/local/bin:/usr/local/sbin&#x27;</span> &gt;&gt; ~/.bashrc </span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成默认配置</span></span><br><span class="line">mkdir -p /etc/containerd</span><br><span class="line">containerd config default &gt; /etc/containerd/config.toml</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看启动配置文件</span></span><br><span class="line">cat /etc/systemd/system/containerd.service</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> containerd --now</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看版本</span></span><br><span class="line">ctr version</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看插件列表</span></span><br><span class="line">ctr plugin ls</span><br><span class="line"></span><br><span class="line"><span class="comment">#配置加速器</span></span><br><span class="line">[plugins.<span class="string">&quot;io.containerd.grpc.v1.cri&quot;</span>.registry]</span><br><span class="line">  [plugins.<span class="string">&quot;io.containerd.grpc.v1.cri&quot;</span>.registry.mirrors]</span><br><span class="line">    [plugins.<span class="string">&quot;io.containerd.grpc.v1.cri&quot;</span>.registry.mirrors.<span class="string">&quot;docker.io&quot;</span>]</span><br><span class="line">      endpoint = [<span class="string">&quot;https://bqr1dr1n.mirror.aliyuncs.com&quot;</span>]</span><br><span class="line">    [plugins.<span class="string">&quot;io.containerd.grpc.v1.cri&quot;</span>.registry.mirrors.<span class="string">&quot;k8s.gcr.io&quot;</span>]</span><br><span class="line">      endpoint = [<span class="string">&quot;https://registry.aliyuncs.com/k8sxio&quot;</span>]</span><br></pre></td></tr></table></figure>
@@ -4530,7 +4530,7 @@
   </entry>
   <entry>
     <title>python-内置方法(三)</title>
-    <url>/klcc-c.github.io/bb5f959.html</url>
+    <url>/bb5f959.html</url>
     <content><![CDATA[<h3 id="1-列表其他方法"><a href="#1-列表其他方法" class="headerlink" title="1. 列表其他方法"></a>1. 列表其他方法</h3><h4 id="1-1-排序"><a href="#1-1-排序" class="headerlink" title="1.1 排序"></a>1.1 排序</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">l1 = [<span class="number">33</span>, <span class="number">22</span>, <span class="number">77</span>, <span class="number">99</span>, <span class="number">11</span>, <span class="number">88</span>, <span class="number">44</span>, <span class="number">55</span>]</span><br><span class="line"><span class="number">1.</span>sort()  <span class="comment"># 默认是升序</span></span><br><span class="line">  l1.sort()</span><br><span class="line">  <span class="built_in">print</span>(l1)  <span class="comment"># [11, 22, 33, 44, 55, 77, 88, 99]</span></span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">2.</span>sort(reverse=<span class="literal">True</span>)  <span class="comment"># 降序</span></span><br><span class="line">  l1.sort(reverse=<span class="literal">True</span>)</span><br><span class="line">  <span class="built_in">print</span>(l1)  <span class="comment"># [99, 88, 77, 55, 44, 33, 22, 11]</span></span><br><span class="line">  </span><br><span class="line"><span class="number">3.</span>revers()  <span class="comment"># 顺序颠倒</span></span><br><span class="line">  l1.reverse()</span><br><span class="line">	<span class="built_in">print</span>(l1)  <span class="comment"># [55, 44, 88, 11, 99, 77, 22, 33]</span></span><br></pre></td></tr></table></figure>
@@ -4599,7 +4599,7 @@
   </entry>
   <entry>
     <title>python-内置方法(二)</title>
-    <url>/klcc-c.github.io/d645d15c.html</url>
+    <url>/d645d15c.html</url>
     <content><![CDATA[<h2 id="1-字符串内置方法"><a href="#1-字符串内置方法" class="headerlink" title="1. 字符串内置方法"></a>1. 字符串内置方法</h2><h3 id="1-1-大小写转换"><a href="#1-1-大小写转换" class="headerlink" title="1.1 大小写转换"></a>1.1 大小写转换</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">res = <span class="string">&#x27;jasOn123 JAsOn&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>全转大写upper()</span><br><span class="line">  <span class="built_in">print</span>(res.upper())  <span class="comment"># JASON123 JASON</span></span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">2.</span>全转小写lower()</span><br><span class="line">  <span class="built_in">print</span>(res.lower())  <span class="comment"># jason123 jason</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>eg:</span><br><span class="line">  old_code = <span class="string">&#x27;jAson123&#x27;</span></span><br><span class="line">  code = <span class="built_in">input</span>(<span class="string">&quot;请输入验证码:%s&gt;&gt;&gt;:&quot;</span> % old_code).strip()</span><br><span class="line">  <span class="keyword">if</span> code.upper() == old_code.upper():  <span class="comment"># 这里也可以用lower()</span></span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;验证码输入正确&quot;</span>)</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;验证码输入错误&quot;</span>)</span><br><span class="line"> <span class="comment"># 忽略大小写,全部转为大写或者小写</span></span><br></pre></td></tr></table></figure>
@@ -4640,7 +4640,7 @@
   </entry>
   <entry>
     <title>for循环及内置方法</title>
-    <url>/klcc-c.github.io/5bfa71b5.html</url>
+    <url>/5bfa71b5.html</url>
     <content><![CDATA[<h3 id="1-while循环"><a href="#1-while循环" class="headerlink" title="1. while循环"></a>1. while循环</h3><h4 id="1-1-continue"><a href="#1-1-continue" class="headerlink" title="1.1 continue"></a>1.1 continue</h4><span id="more"></span>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">contiue可以让循环体代码直接回到条件判断处重新判断,相当于跳出本次循环</span><br><span class="line">eg:</span><br><span class="line">  <span class="comment"># 使用while循环打印0-10但是不打印4</span></span><br><span class="line">  num = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span> num &lt; <span class="number">11</span>:</span><br><span class="line">      <span class="keyword">if</span> num == <span class="number">4</span>:</span><br><span class="line">          num += <span class="number">1</span>  <span class="comment"># 跳出的时候将num加1到num为5,好继续下次的循环,否则会卡在4一直循环</span></span><br><span class="line">          <span class="keyword">continue</span>  <span class="comment"># 当num为4时跳出本次循环</span></span><br><span class="line">      <span class="built_in">print</span>(num)</span><br><span class="line">      num += <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
@@ -4703,7 +4703,7 @@
   </entry>
   <entry>
     <title>Kubernetes安装</title>
-    <url>/klcc-c.github.io/60b500c7.html</url>
+    <url>/60b500c7.html</url>
     <content><![CDATA[<h3 id="规划"><a href="#规划" class="headerlink" title="规划"></a>规划</h3><table>
 <thead>
 <tr>
@@ -4799,7 +4799,7 @@
   </entry>
   <entry>
     <title>python-流程控制</title>
-    <url>/klcc-c.github.io/26ba1150.html</url>
+    <url>/26ba1150.html</url>
     <content><![CDATA[<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><h3 id="1-定义及说明"><a href="#1-定义及说明" class="headerlink" title="1. 定义及说明"></a>1. 定义及说明</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">流程控制即控制事物的执行过程</span><br><span class="line">任何使用执行流程只有三种情况:</span><br><span class="line">  <span class="number">1.</span>顺序结构  <span class="comment"># 自上而下依次运行</span></span><br><span class="line">  <span class="number">2.</span>分支结构  <span class="comment"># 在运行过程中根据条件的不同可能会执行不同的流程</span></span><br><span class="line">  <span class="number">3.</span>循环结构  <span class="comment"># 在运行过程中有些代码需要反复执行</span></span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 
@@ -4858,7 +4858,7 @@
   </entry>
   <entry>
     <title>python基础-02</title>
-    <url>/klcc-c.github.io/43f82467.html</url>
+    <url>/43f82467.html</url>
     <content><![CDATA[<h2 id="1、数据类型"><a href="#1、数据类型" class="headerlink" title="1、数据类型"></a>1、数据类型</h2><h3 id="1-1-字符串str"><a href="#1-1-字符串str" class="headerlink" title="1.1 字符串str"></a>1.1 字符串str</h3><span id="more"></span>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">作用:主要记录描述性质的数据，例如姓名、地址、邮箱......</span><br><span class="line"></span><br><span class="line">定义:</span><br><span class="line">  方式<span class="number">1</span>:使用单引号,eg:</span><br><span class="line">      name = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">  方式<span class="number">2</span>:使用双引号,eg:</span><br><span class="line">      name = <span class="string">&quot;hello&quot;</span></span><br><span class="line">  方式<span class="number">3</span>:使用三引号,eg:</span><br><span class="line">      name = <span class="string">&#x27;&#x27;&#x27;hello&#x27;&#x27;&#x27;</span></span><br><span class="line">  方式<span class="number">4</span>:使用三引号,eg:</span><br><span class="line">      name = <span class="string">&quot;&quot;&quot;hello&quot;&quot;&quot;</span></span><br><span class="line">      </span><br><span class="line">  类型查看:</span><br><span class="line">    str_a = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">		<span class="built_in">print</span>(<span class="built_in">type</span>(str_a))</span><br><span class="line">    结果:&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">str</span>&#x27;&gt;</span></span><br><span class="line"><span class="class">      </span></span><br><span class="line"><span class="class">  三引号说明:</span></span><br><span class="line">    <span class="number">1.</span>两个三引号都支持换行</span><br><span class="line">    <span class="number">2.</span>定义字符的多种方式原因</span><br><span class="line">    	<span class="built_in">print</span>(<span class="string">&#x27;鲁迅说：&#x27;</span>我没说过这句话<span class="string">&#x27;&#x27;</span>)  <span class="comment"># 这语句就是错误的了</span></span><br><span class="line">			<span class="built_in">print</span>(<span class="string">&#x27;鲁迅说：&quot;我没说过这句话&quot;&#x27;</span>)  <span class="comment"># 这条语句就正确了</span></span><br><span class="line">    <span class="number">3.</span><span class="built_in">print</span>(<span class="string">&#x27;It\&#x27;s a dog&#x27;</span>)  <span class="comment"># 可以用\ 进行转义为本身含义</span></span><br></pre></td></tr></table></figure>
 
@@ -5024,7 +5024,7 @@
   </entry>
   <entry>
     <title>python基础-01</title>
-    <url>/klcc-c.github.io/daf175dd.html</url>
+    <url>/daf175dd.html</url>
     <content><![CDATA[<h2 id="1、Pycharm基本使用"><a href="#1、Pycharm基本使用" class="headerlink" title="1、Pycharm基本使用"></a>1、Pycharm基本使用</h2><h3 id="1-1-新建项目"><a href="#1-1-新建项目" class="headerlink" title="1.1 新建项目"></a>1.1 新建项目</h3><span id="more"></span>
 
 <p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/Fg5CT2.png" alt="Fg5CT2"></p>
@@ -5092,7 +5092,7 @@
   </entry>
   <entry>
     <title>Python解释器与Pycharm</title>
-    <url>/klcc-c.github.io/c1fd5357.html</url>
+    <url>/c1fd5357.html</url>
     <content><![CDATA[<h1 id="1、Python解释器安装"><a href="#1、Python解释器安装" class="headerlink" title="1、Python解释器安装"></a>1、Python解释器安装</h1><h2 id="1-1-Python下载"><a href="#1-1-Python下载" class="headerlink" title="1.1 Python下载"></a>1.1 Python下载</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#官网，下载速度慢</span></span><br><span class="line">https://www.python.org</span><br><span class="line"></span><br><span class="line"><span class="comment">#国内下载</span></span><br><span class="line">https://npm.taobao.org/mirrors/python</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 
@@ -5175,7 +5175,7 @@
   </entry>
   <entry>
     <title>Markdown使用</title>
-    <url>/klcc-c.github.io/28cddff3.html</url>
+    <url>/28cddff3.html</url>
     <content><![CDATA[<h2 id="1、Markdown"><a href="#1、Markdown" class="headerlink" title="1、Markdown"></a>1、Markdown</h2><h3 id="1-1-Typora软件"><a href="#1-1-Typora软件" class="headerlink" title="1.1 Typora软件"></a>1.1 Typora软件</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Typora：最好用的Markdown语法编辑器</span></span><br><span class="line"><span class="comment">#官网</span></span><br><span class="line">https://www.typora.io</span><br><span class="line"><span class="comment">#下载地址</span></span><br><span class="line">https://www.typora.io/<span class="comment">#download</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#源代码模式快捷键</span></span><br><span class="line">Windows系统 ctrl + /</span><br><span class="line">mac command + /</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 
@@ -5258,7 +5258,7 @@
   </entry>
   <entry>
     <title>Linux-命令记录-01</title>
-    <url>/klcc-c.github.io/afb08e91.html</url>
+    <url>/afb08e91.html</url>
     <content><![CDATA[<h2 id="Ubuntu扩容lvm"><a href="#Ubuntu扩容lvm" class="headerlink" title="Ubuntu扩容lvm"></a>Ubuntu扩容lvm</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv</span><br><span class="line">resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv</span><br></pre></td></tr></table></figure>
 
 <span id="more"></span>
