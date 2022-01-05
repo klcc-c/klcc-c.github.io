@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="备份工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB备份与恢复迁移">
+<meta property="og:url" content="https://klcc.cc/d4437f91.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="备份工具">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-05T06:29:00.773Z">
+<meta property="article:modified_time" content="2022-01-05T06:40:51.890Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="MongoDB">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/d4437f91.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/d4437f91.html","path":"d4437f91.html","title":"MongoDB备份与恢复迁移"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MongoDB备份与恢复迁移 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">16</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">79</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E5%B7%A5%E5%85%B7"><span class="nav-number">1.</span> <span class="nav-text">备份工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mongoexport%E5%AF%BC%E5%87%BA"><span class="nav-number">2.</span> <span class="nav-text">mongoexport导出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mongoimport-%E5%AF%BC%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">mongoimport 导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E6%9E%84%E5%B9%B3%E5%8F%B0%E8%BF%81%E7%A7%BB"><span class="nav-number">4.</span> <span class="nav-text">异构平台迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL%E5%88%B0MongoDB"><span class="nav-number">4.1.</span> <span class="nav-text">MySQL到MongoDB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%A7%E9%87%8F%E6%95%B0%E6%8D%AE%E6%89%B9%E9%87%8F%E8%BF%81%E7%A7%BB"><span class="nav-number">4.2.</span> <span class="nav-text">大量数据批量迁移</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mongodump%E5%A4%87%E4%BB%BD"><span class="nav-number">5.</span> <span class="nav-text">mongodump备份</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">5.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%B3%95"><span class="nav-number">5.2.</span> <span class="nav-text">用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">5.3.</span> <span class="nav-text">基本使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mongorestore%E6%81%A2%E5%A4%8D"><span class="nav-number">6.</span> <span class="nav-text">mongorestore恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#oplog"><span class="nav-number">7.</span> <span class="nav-text">oplog</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D-1"><span class="nav-number">7.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">7.2.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="nav-number">7.3.</span> <span class="nav-text">使用案例</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/d4437f91.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MongoDB备份与恢复迁移
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-05 14:29:00 / 修改时间：14:40:51" itemprop="dateCreated datePublished" datetime="2022-01-05T14:29:00+08:00">2022-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MongoDB/" itemprop="url" rel="index"><span itemprop="name">MongoDB</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="备份工具"><a href="#备份工具" class="headerlink" title="备份工具"></a>备份工具</h3><span id="more"></span>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1.mongoexport/mongoimport</span><br><span class="line">2.mongodump/mongorestore</span><br><span class="line"></span><br><span class="line"><span class="comment"># 区别</span></span><br><span class="line">mongoexport/mongoimport  导入/导出的是JSON格式或者CSV格式</span><br><span class="line">mongodump/mongorestore   导入/导出的是BSON格式</span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用场景</span></span><br><span class="line">mongoexport/mongoimport:json csv </span><br><span class="line">1.异构平台迁移      mysql  &lt;---&gt; mongodb</span><br><span class="line">2.同平台,跨大版本   mongodb2  ----&gt; mongodb3</span><br><span class="line"></span><br><span class="line">mongodump/mongorestore</span><br><span class="line">日常备份恢复时使用</span><br></pre></td></tr></table></figure>
+
+<h3 id="mongoexport导出"><a href="#mongoexport导出" class="headerlink" title="mongoexport导出"></a><code>mongoexport</code>导出</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数说明</span></span><br><span class="line">-h   指明数据库宿主机的IP</span><br><span class="line">-u   指明数据库的用户名</span><br><span class="line">-p   指明数据库的密码</span><br><span class="line">-d   指明数据库的名字</span><br><span class="line">-c   指明collection的名字</span><br><span class="line">-f   指明要导出那些列</span><br><span class="line">-o   指明到要导出的文件名</span><br><span class="line">-q   指明导出数据的过滤条件</span><br><span class="line">--authenticationDatabase admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据准备</span></span><br><span class="line">use <span class="built_in">test</span></span><br><span class="line"><span class="keyword">for</span>(i=0;i&lt;10000;i++)&#123; db.log.insert(&#123;<span class="string">&quot;uid&quot;</span>:i,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;mongodb&quot;</span>,<span class="string">&quot;age&quot;</span>:6,<span class="string">&quot;date&quot;</span>:new Date()&#125;);&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 单表备份至json格式</span></span><br><span class="line">mongoexport -uroot -proot123 --port 27017 --authenticationDatabase admin -d <span class="built_in">test</span> -c <span class="built_in">log</span> -o /mongodb/log.json</span><br><span class="line"><span class="comment">## 备份文件的名字可以自定义，默认导出了JSON格式的数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  单表备份至csv格式</span></span><br><span class="line"><span class="comment">## 如果我们需要导出CSV格式的数据，则需要使用----type=csv参数</span></span><br><span class="line">mongoexport -uroot -proot123 --port 27017 --authenticationDatabase admin -d <span class="built_in">test</span> -c <span class="built_in">log</span> --<span class="built_in">type</span>=csv -f uid,name,age,date  -o /mongodb/log.csv</span><br></pre></td></tr></table></figure>
+
+<h3 id="mongoimport-导入"><a href="#mongoimport-导入" class="headerlink" title="mongoimport 导入"></a><code>mongoimport</code> 导入</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数说明</span></span><br><span class="line">-h  指明数据库宿主机的IP</span><br><span class="line">-u  指明数据库的用户名</span><br><span class="line">-p  指明数据库的密码</span><br><span class="line">-d  指明数据库的名字</span><br><span class="line">-c  指明collection的名字</span><br><span class="line">-f  指明要导入那些列</span><br><span class="line">-j  并发数</span><br><span class="line"></span><br><span class="line">//并行</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据恢复</span></span><br><span class="line"><span class="comment"># 恢复json格式表数据到log1 ( --drop 就可以删除之前的表导入或者换个表，如导入到这边的 log1 )</span></span><br><span class="line">mongoimport -uroot -proot123 --port 27017 --authenticationDatabase admin -d <span class="built_in">test</span> -c log1 /mongodb/log.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复csv格式的文件到log2</span></span><br><span class="line">上面演示的是导入JSON格式的文件中的内容，如果要导入CSV格式文件中的内容，则需要通过--<span class="built_in">type</span>参数指定导入格式，具体如下所示：</span><br><span class="line">错误的恢复</span><br><span class="line"></span><br><span class="line"><span class="comment"># csv格式的文件头行，有列名字</span></span><br><span class="line">mongoimport   -uroot -proot123 --port 27017 --authenticationDatabase admin -d <span class="built_in">test</span> -c log2 --<span class="built_in">type</span>=csv --headerline --file  /mongodb/log.csv</span><br><span class="line"><span class="comment"># --headerline 指明第一行是列名，不需要导入</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># csv格式的文件头行，没有列名字</span></span><br><span class="line">mongoimport   -uroot -proot123 --port 27017 --authenticationDatabase admin -d <span class="built_in">test</span> -c log3 -j 4 --<span class="built_in">type</span>=csv -f id,name,age,date --file  /mongodb/log.csv</span><br></pre></td></tr></table></figure>
+
+<h3 id="异构平台迁移"><a href="#异构平台迁移" class="headerlink" title="异构平台迁移"></a>异构平台迁移</h3><h4 id="MySQL到MongoDB"><a href="#MySQL到MongoDB" class="headerlink" title="MySQL到MongoDB"></a><code>MySQL</code>到<code>MongoDB</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">mysql ---&gt; mongodb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 准备mysql数据库，略</span></span><br><span class="line"><span class="comment"># 添加配置文件，导出文件存放位置</span></span><br><span class="line">vim /etc/my.cnf</span><br><span class="line">...</span><br><span class="line">secure-file-priv=/data/bak</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">chown -R mysql.mysql /data/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入一个world库，下载地址: https://dev.mysql.com/doc/index-other.html</span></span><br><span class="line">mysql -uroot -p123 &lt; world.sql</span><br><span class="line"></span><br><span class="line"><span class="comment"># sql导出city表为csv格式</span></span><br><span class="line">use world;</span><br><span class="line">select * from city into outfile <span class="string">&#x27;/data/bak/city.csv&#x27;</span> fields terminated by <span class="string">&#x27;,&#x27;</span> enclosed by <span class="string">&#x27;&quot;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导出的格式缺少mongodb的头信息，可以用desc 查看补齐</span></span><br><span class="line">desc world.city;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者用下列语句查看</span></span><br><span class="line">select table_name,group_concat(column_name) from information_schema.columns <span class="built_in">where</span> table_schema=<span class="string">&#x27;world&#x27;</span> group by table_name;</span><br><span class="line"><span class="comment"># 得到 Name,CountryCode,District,Population,ID</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># mongodb 导入</span></span><br><span class="line">mongoimport -uroot -proot123 --port 27017 --authenticationDatabase admin -d world -c city --<span class="built_in">type</span>=csv -f Name,CountryCode,District,Population,ID --file /data/bak/city.csv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查</span></span><br><span class="line">mongo -uroot -proot123 --port 27017 admin</span><br><span class="line">use world</span><br><span class="line">show collections  // show tables</span><br><span class="line">db.city.count()</span><br><span class="line">db.city.find().pretty()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="大量数据批量迁移"><a href="#大量数据批量迁移" class="headerlink" title="大量数据批量迁移"></a>大量数据批量迁移</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模拟大量数据</span></span><br><span class="line">wget https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/sql/100w.sql.zip </span><br><span class="line">unzip 100w.sql.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入到mysql </span></span><br><span class="line">use world;</span><br><span class="line"><span class="built_in">source</span> /root/100w.sql;</span><br><span class="line">create table t1 like t100w;</span><br><span class="line">insert into t1 select * from t100w;</span><br><span class="line">create table t2 like t100w;</span><br><span class="line">insert into t2 select * from t100w;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将数据批量导出，world库的数据</span></span><br><span class="line">mysqldump --fields-terminated-by <span class="string">&#x27;,&#x27;</span> --fields-enclosed-by <span class="string">&#x27;&quot;&#x27;</span> world -T /data/bak/</span><br><span class="line">rm -f /data/bak/*.sql</span><br><span class="line">find ./ -name <span class="string">&quot;*.txt&quot;</span>|awk -F <span class="string">&quot;.&quot;</span> <span class="string">&#x27;&#123;print $2&#125;&#x27;</span> |xargs -i -t mv ./&#123;&#125;.txt ./&#123;&#125;.csv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 mysql 的SQL语句，拼接批量导入mongodb的语句</span></span><br><span class="line">select concat(<span class="string">&quot;mongoimport -uroot -proot123 --port 27017 --authenticationDatabase admin -d &quot;</span>,table_schema,<span class="string">&quot; -c &quot;</span>,table_name,<span class="string">&quot; --type=csv -f &quot;</span>,group_concat(column_name),<span class="string">&quot; --file /data/bak/&quot;</span>, table_name,<span class="string">&quot;.csv&quot;</span>) from information_schema.columns <span class="built_in">where</span> table_schema=<span class="string">&#x27;world&#x27;</span> group by table_name into outfile <span class="string">&#x27;/data/bak/import-mongodb.sh&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看批量导入语句</span></span><br><span class="line">cat /data/bak/import-mongodb.sh</span><br><span class="line">chmod +x /data/bak/import-mongodb.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除之前的数据</span></span><br><span class="line">su - mongod</span><br><span class="line"> mongo -uroot -proot123 --port 27017 admin</span><br><span class="line"> use world</span><br><span class="line"> db.dropDatabase();</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 使用脚本批量导入数据</span></span><br><span class="line">su - mongod</span><br><span class="line">bash /data/bak/import-mongodb.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查数据</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="mongodump备份"><a href="#mongodump备份" class="headerlink" title="mongodump备份"></a><code>mongodump</code>备份</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mongodump能够在Mongodb运行时进行备份，它的工作原理是对运行的Mongodb做查询，然后将所有查到的文档写入磁盘,</span><br><span class="line">但是存在的问题时使用mongodump产生的备份不一定是数据库的实时快照，如果我们在备份时对数据库进行了写入操作,</span><br><span class="line">则备份出来的文件可能不完全和Mongodb实时数据相等。另外在备份时可能会对其它客户端性能产生不利的影响,</span><br></pre></td></tr></table></figure>
+
+<h4 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数说明</span></span><br><span class="line">-h  指明数据库宿主机的IP</span><br><span class="line">-u  指明数据库的用户名</span><br><span class="line">-p  指明数据库的密码</span><br><span class="line">-d  指明数据库的名字</span><br><span class="line">-c  指明collection的名字</span><br><span class="line">-o  指明到要导出的文件名</span><br><span class="line">-q  指明导出数据的过滤条件</span><br><span class="line">-j  指定并发数</span><br><span class="line">--oplog  备份的同时备份oplog</span><br></pre></td></tr></table></figure>
+
+<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全库备份</span></span><br><span class="line">mkdir /mongodb/backup</span><br><span class="line">mongodump -uroot -proot123 --port 27017 --authenticationDatabase admin -o /mongodb/backup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份world库</span></span><br><span class="line">mongodump -uroot -proot123 --port 27017 --authenticationDatabase admin -d world -o /mongodb/backup/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份world库下的city集合</span></span><br><span class="line">mongodump -uroot -proot123 --port 27017 --authenticationDatabase admin -d world -c city -o /mongodb/backup/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 压缩备份</span></span><br><span class="line">mongodump   -uroot -proot123 --port 27017 --authenticationDatabase admin -o /mongodb/backup/ --gzip</span><br><span class="line">mongodump   -uroot -proot123 --port 27017 --authenticationDatabase admin -d world -o /mongodb/backup/ --gzip</span><br><span class="line">mongodump   -uroot -proot123 --port 27017 --authenticationDatabase admin -d world -c city -o /mongodb/backup/ --gzip</span><br></pre></td></tr></table></figure>
+
+<h3 id="mongorestore恢复"><a href="#mongorestore恢复" class="headerlink" title="mongorestore恢复"></a><code>mongorestore</code>恢复</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全库恢复</span></span><br><span class="line">mongorestore   -uroot -proot123 --port 27017 --authenticationDatabase admin /mongodb/backup/ --gzip </span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复world库</span></span><br><span class="line">mongorestore   -uroot -proot123 --port 27017 --authenticationDatabase admin -d world1  /mongodb/backup/world</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复world库下的t1集合</span></span><br><span class="line">mongorestore   -uroot -proot123 --port 27017 --authenticationDatabase admin -d world -c t1  --gzip /mongodb/backup.bak/oldboy/log1.bson.gz </span><br><span class="line"></span><br><span class="line"><span class="comment"># --drop 表示恢复的时候把之前的集合删除再导入</span></span><br><span class="line">mongorestore  -uroot -proot123 --port 27017 --authenticationDatabase admin -d world --drop  /mongodb/backup/world</span><br></pre></td></tr></table></figure>
+
+<h3 id="oplog"><a href="#oplog" class="headerlink" title="oplog"></a><code>oplog</code></h3><h4 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">这是replica <span class="built_in">set</span>或者master/slave模式专用</span><br><span class="line">在replica <span class="built_in">set</span>中oplog是一个定容集合(capped collection),它的默认大小是磁盘空间的5%(可以通过--oplogSizeMB参数修改),位于<span class="built_in">local</span>库的db.oplog.rs</span><br><span class="line">其中记录的是整个mongod实例一段时间内数据库的所有变更（插入/更新/删除）操作,当空间用完时新记录自动覆盖最老的记录</span><br><span class="line">其覆盖范围被称作oplog时间窗口。需要注意的是，因为oplog是一个定容集合，所以时间窗口能覆盖的范围会因为你单位时间内的更新次数不同而变化</span><br><span class="line"></span><br><span class="line">想要查看当前的oplog时间窗口预计值，可以使用以下命令:</span><br><span class="line"> use <span class="built_in">local</span> </span><br><span class="line"> db.oplog.rs.find().pretty()</span><br><span class="line"></span><br><span class="line">rs.printReplicationInfo()</span><br><span class="line">configured oplog size:   1561.5615234375MB      //&lt;--集合大小</span><br><span class="line"><span class="built_in">log</span> length start to end: 423849secs (117.74hrs) //&lt;--预计窗口覆盖时间</span><br></pre></td></tr></table></figure>
+
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实现热备，在备份时使用 --oplog 选项</span></span><br><span class="line"><span class="comment"># 搭建复制集，略</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试数据</span></span><br><span class="line">mongo --port 28018</span><br><span class="line">use <span class="built_in">test</span></span><br><span class="line"><span class="keyword">for</span>(var i = 1 ;i &lt; 100; i++) &#123;</span><br><span class="line">    db.foo.insert(&#123;a:i&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">db.oplog.rs.find(&#123;<span class="string">&quot;op&quot;</span>:<span class="string">&quot;i&quot;</span>&#125;).pretty()</span><br><span class="line"></span><br><span class="line"><span class="comment"># oplog 配合mongodump实现热备</span></span><br><span class="line">mongodump --port 28018 --oplog -o /mongodb/backup</span><br><span class="line"><span class="comment"># 作用介绍：--oplog 会记录备份过程中的数据变化。会以oplog.bson保存下来</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复</span></span><br><span class="line">mongorestore  --port 28018 --oplogReplay /mongodb/backup</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用案例"><a href="#使用案例" class="headerlink" title="使用案例"></a>使用案例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">背景：每天0点全备，oplog恢复窗口为48小时。某天，上午10点world.city 业务表被误删除</span><br><span class="line">恢复思路：</span><br><span class="line">    0、停应用</span><br><span class="line">    2、找测试库</span><br><span class="line">    3、恢复昨天晚上全备</span><br><span class="line">    4、截取全备之后到world.city误删除时间点的oplog，并恢复到测试库</span><br><span class="line">    5、将误删除表导出，恢复到生产库</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复步骤如下</span></span><br><span class="line"><span class="comment"># 全备数据库</span></span><br><span class="line">    <span class="comment"># 模拟原始数据</span></span><br><span class="line">    mongo --port 28017</span><br><span class="line">    use wo</span><br><span class="line">    <span class="keyword">for</span>(var i = 1 ;i &lt; 20; i++) &#123;</span><br><span class="line">        db.ci.insert(&#123;a: i&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 全备</span></span><br><span class="line">    rm -rf /mongodb/backup/*</span><br><span class="line">    mongodump --port 28018 --oplog -o /mongodb/backup</span><br><span class="line">   <span class="comment">#  --oplog功能:在备份同时,将备份过程中产生的日志进行备份，文件必须存放在/mongodb/backup下,自动命令为oplog.bson</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 再次模拟数据</span></span><br><span class="line">    db.ci1.insert(&#123;id:1&#125;)</span><br><span class="line">    db.ci2.insert(&#123;id:2&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上午10点：删除wo库下的ci表，10:00时刻,误删除</span></span><br><span class="line">db.ci.drop()</span><br><span class="line">show tables;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份现有的oplog.rs表</span></span><br><span class="line">mongodump --port 28018 -d <span class="built_in">local</span> -c oplog.rs  -o /mongodb/backup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 截取oplog并恢复到drop之前的位置，更合理的方法：登陆到原数据库</span></span><br><span class="line">mongo --port 28018</span><br><span class="line">use <span class="built_in">local</span></span><br><span class="line">db.oplog.rs.find(&#123;op:<span class="string">&quot;c&quot;</span>&#125;).pretty();</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;ts&quot;</span> : Timestamp(1553659908, 1),</span><br><span class="line">    <span class="string">&quot;t&quot;</span> : NumberLong(2),</span><br><span class="line">    <span class="string">&quot;h&quot;</span> : NumberLong(<span class="string">&quot;-7439981700218302504&quot;</span>),</span><br><span class="line">    <span class="string">&quot;v&quot;</span> : 2,</span><br><span class="line">    <span class="string">&quot;op&quot;</span> : <span class="string">&quot;c&quot;</span>,</span><br><span class="line">    <span class="string">&quot;ns&quot;</span> : <span class="string">&quot;wo.<span class="variable">$cmd</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;ui&quot;</span> : UUID(<span class="string">&quot;db70fa45-edde-4945-ade3-747224745725&quot;</span>),</span><br><span class="line">    <span class="string">&quot;wall&quot;</span> : ISODate(<span class="string">&quot;2019-03-27T04:11:48.890Z&quot;</span>),</span><br><span class="line">    <span class="string">&quot;o&quot;</span> : &#123;</span><br><span class="line">        <span class="string">&quot;drop&quot;</span> : <span class="string">&quot;ci&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取到oplog误删除时间点位置</span></span><br><span class="line"><span class="string">&quot;ts&quot;</span> : Timestamp(1553659908, 1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复备份+应用oplog</span></span><br><span class="line"><span class="built_in">cd</span> /mongodb/backup/<span class="built_in">local</span>/</span><br><span class="line">ls</span><br><span class="line">oplog.rs.bson  oplog.rs.metadata.json</span><br><span class="line"></span><br><span class="line">cp oplog.rs.bson ../oplog.bson </span><br><span class="line">rm -rf /mongodb/backup/<span class="built_in">local</span>/</span><br><span class="line"></span><br><span class="line">mongorestore --port 38021  --oplogReplay --oplogLimit <span class="string">&quot;1553659908:1&quot;</span>  --drop   /mongodb/backup/</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MongoDB/" rel="tag"><i class="fa fa-tag"></i> MongoDB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2a426223.html" rel="prev" title="MongoDB全球多写">
+                  <i class="fa fa-chevron-left"></i> MongoDB全球多写
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/8ba5944d.html" rel="next" title="MongoDB监控">
+                  MongoDB监控 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">415k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:17</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

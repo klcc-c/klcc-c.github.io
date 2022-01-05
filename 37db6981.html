@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="复制集的作用12345678MongoDB 复制集的主要意义在于实现服务高可用，它的现实依赖于两个方面的功能1.数据写入时将数据迅速复制到另一个独立节点上2.在接受写入的节点发生故障时自动选举出一个新的替代节点在实现高可用的同时，复制集实现了其他几个附加作用1.数据分发：将数据从一个区域复制到另一个区域，减少另一个区域的读延迟2.读写分离：不同类型的压力分别在不同的节点上执行3.异地容灾：在数据中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB复制集">
+<meta property="og:url" content="https://klcc.cc/37db6981.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="复制集的作用12345678MongoDB 复制集的主要意义在于实现服务高可用，它的现实依赖于两个方面的功能1.数据写入时将数据迅速复制到另一个独立节点上2.在接受写入的节点发生故障时自动选举出一个新的替代节点在实现高可用的同时，复制集实现了其他几个附加作用1.数据分发：将数据从一个区域复制到另一个区域，减少另一个区域的读延迟2.读写分离：不同类型的压力分别在不同的节点上执行3.异地容灾：在数据中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/B6n7ov.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/cTeuoL.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/3QYZEh.png">
+<meta property="article:published_time" content="2022-01-05T06:24:51.894Z">
+<meta property="article:modified_time" content="2022-01-05T06:40:51.886Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="MongoDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/B6n7ov.png">
+
+
+<link rel="canonical" href="https://klcc.cc/37db6981.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/37db6981.html","path":"37db6981.html","title":"MongoDB复制集"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MongoDB复制集 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">16</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">79</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E9%9B%86%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">复制集的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%A4%8D%E5%88%B6%E9%9B%86%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">典型复制集结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%98%AF%E5%A6%82%E4%BD%95%E5%A4%8D%E5%88%B6%E7%9A%84"><span class="nav-number">3.</span> <span class="nav-text">数据是如何复制的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E9%80%89%E4%B8%BE%E5%AE%8C%E6%88%90%E6%95%85%E9%9A%9C%E6%81%A2%E5%A4%8D"><span class="nav-number">4.</span> <span class="nav-text">通过选举完成故障恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%B1%E5%93%8D%E9%80%89%E4%B8%BE%E7%9A%84%E5%9B%A0%E7%B4%A0"><span class="nav-number">5.</span> <span class="nav-text">影响选举的因素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%80%89%E9%A1%B9"><span class="nav-number">6.</span> <span class="nav-text">常见选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E9%9B%86%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">7.</span> <span class="nav-text">复制集注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E5%A4%8D%E5%88%B6%E9%9B%86"><span class="nav-number">8.</span> <span class="nav-text">搭建复制集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E5%AE%9E%E4%BE%8B%E9%85%8D%E7%BD%AE%E5%90%AF%E5%8A%A8"><span class="nav-number">8.1.</span> <span class="nav-text">多实例配置启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%A4%8D%E5%88%B6%E9%9B%86"><span class="nav-number">8.2.</span> <span class="nav-text">配置复制集</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E9%9B%86%E6%B5%8B%E8%AF%95"><span class="nav-number">9.</span> <span class="nav-text">复制集测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E9%9B%86%E7%AE%A1%E7%90%86"><span class="nav-number">10.</span> <span class="nav-text">复制集管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E4%BB%8E%E8%8A%82%E7%82%B9"><span class="nav-number">11.</span> <span class="nav-text">特殊从节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C"><span class="nav-number">12.</span> <span class="nav-text">其他命令操作</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/37db6981.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MongoDB复制集
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-05 14:24:51 / 修改时间：14:40:51" itemprop="dateCreated datePublished" datetime="2022-01-05T14:24:51+08:00">2022-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MongoDB/" itemprop="url" rel="index"><span itemprop="name">MongoDB</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="复制集的作用"><a href="#复制集的作用" class="headerlink" title="复制集的作用"></a>复制集的作用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MongoDB 复制集的主要意义在于实现服务高可用，它的现实依赖于两个方面的功能</span><br><span class="line">1.数据写入时将数据迅速复制到另一个独立节点上</span><br><span class="line">2.在接受写入的节点发生故障时自动选举出一个新的替代节点</span><br><span class="line"></span><br><span class="line">在实现高可用的同时，复制集实现了其他几个附加作用</span><br><span class="line">1.数据分发：将数据从一个区域复制到另一个区域，减少另一个区域的读延迟</span><br><span class="line">2.读写分离：不同类型的压力分别在不同的节点上执行</span><br><span class="line">3.异地容灾：在数据中心故障时候快速切换到异地</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="典型复制集结构"><a href="#典型复制集结构" class="headerlink" title="典型复制集结构"></a>典型复制集结构</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一个典型的复制集由3个以上具有投票权的节点组成</span><br><span class="line">1.一个主节点（PRIMARY）：接受写入操作和选举时投票</span><br><span class="line">2.两个（或多个）从节点（SECONDARY）：复制主节点上的新数据和选举时投票</span><br><span class="line">3.不推荐使用 Arbiter（投票节点）</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/B6n7ov.png" alt="B6n7ov"></p>
+<h3 id="数据是如何复制的"><a href="#数据是如何复制的" class="headerlink" title="数据是如何复制的"></a>数据是如何复制的</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.当一个修改操作，无论是插入、更新或删除，到达主节点时，它对数据的操作将被记录下来（经过一些必要的转换），这些记录称为 oplog (是一张表)</span><br><span class="line">2.从节点通过在主节点上打开一个 tailable 游标不断获取新进入主节点的 oplog，并在自己的数据上回放，以此保持跟主节点的数据一致</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/cTeuoL.png" alt="cTeuoL"></p>
+<h3 id="通过选举完成故障恢复"><a href="#通过选举完成故障恢复" class="headerlink" title="通过选举完成故障恢复"></a>通过选举完成故障恢复</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.具有投票权的节点之间两两互相发送心跳</span><br><span class="line">2.当5次心跳未收到时判断为节点失联</span><br><span class="line">3.如果失联的是主节点，从节点会发起选举，选出新的主节点</span><br><span class="line">4.如果失联的是从节点则不会产生新的选举</span><br><span class="line">5.选举基于 RAFT一致性算法 实现，选举成功的必要条件是大多数投票节点存活</span><br><span class="line">6.复制集中最多可以有50个节点，但具有投票权的节点最多7个</span><br></pre></td></tr></table></figure>
+
+<h3 id="影响选举的因素"><a href="#影响选举的因素" class="headerlink" title="影响选举的因素"></a>影响选举的因素</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">整个集群必须有大多数节点存活，被选举为主节点的节点必须</span><br><span class="line">  1.能够与多数节点建立连接</span><br><span class="line">  2.具有较新的 oplog</span><br><span class="line">  3.具有较高的优先级（如果有配置）</span><br></pre></td></tr></table></figure>
+
+<h3 id="常见选项"><a href="#常见选项" class="headerlink" title="常见选项"></a>常见选项</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">复制集节点有以下常见的选配项</span><br><span class="line">1.是否具有投票权（v 参数）：有则参与投票</span><br><span class="line">2.优先级（priority 参数）：优先级越高的节点越优先成为主节点。优先级为0的节点无法成为主节点</span><br><span class="line">3.隐藏（hidden 参数）：复制数据，但对应用不可见。隐藏节点可以具有投票仅，但优先级必须为0</span><br><span class="line">4.延迟（slaveDelay 参数）：复制 n 秒之前的数据，保持与主节点的时间差</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/3QYZEh.png" alt="3QYZEh"></p>
+<h3 id="复制集注意事项"><a href="#复制集注意事项" class="headerlink" title="复制集注意事项"></a>复制集注意事项</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">关于硬件:</span><br><span class="line">1.因为正常的复制集节点都有可能成为主节点，它们的地位是一样的，因此硬件配置上必须一致</span><br><span class="line">2.为了保证节点不会同时宕机，各节点使用的硬件必须具有独立性</span><br><span class="line"></span><br><span class="line">关于软件:</span><br><span class="line">1.复制集各节点软件版本必须一致，以避免出现不可预知的问题。</span><br><span class="line"> </span><br><span class="line">增加节点不会增加系统写性能</span><br></pre></td></tr></table></figure>
+
+<h3 id="搭建复制集"><a href="#搭建复制集" class="headerlink" title="搭建复制集"></a>搭建复制集</h3><h4 id="多实例配置启动"><a href="#多实例配置启动" class="headerlink" title="多实例配置启动"></a>多实例配置启动</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 三个以上的mongodb节点（或多实例）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 采用多实例的端口规划</span></span><br><span class="line">28017、28018、28019、28020</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建相关目录</span></span><br><span class="line">mkdir -p /mongodb/&#123;28017..28020&#125;/&#123;conf,data,<span class="built_in">log</span>&#125;</span><br><span class="line">tree -L 2 /mongodb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件</span></span><br><span class="line">cat &gt; /mongodb/28017/conf/mongod.conf &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">systemLog:</span></span><br><span class="line"><span class="string">  destination: file</span></span><br><span class="line"><span class="string">  path: /mongodb/28017/log/mongodb.log</span></span><br><span class="line"><span class="string">  logAppend: true</span></span><br><span class="line"><span class="string">storage:</span></span><br><span class="line"><span class="string">  journal:</span></span><br><span class="line"><span class="string">    enabled: true</span></span><br><span class="line"><span class="string">  dbPath: /mongodb/28017/data</span></span><br><span class="line"><span class="string">  directoryPerDB: true</span></span><br><span class="line"><span class="string">  #engine: wiredTiger</span></span><br><span class="line"><span class="string">  wiredTiger:</span></span><br><span class="line"><span class="string">    engineConfig:</span></span><br><span class="line"><span class="string">      cacheSizeGB: 1</span></span><br><span class="line"><span class="string">      directoryForIndexes: true</span></span><br><span class="line"><span class="string">    collectionConfig:</span></span><br><span class="line"><span class="string">      blockCompressor: zlib</span></span><br><span class="line"><span class="string">    indexConfig:</span></span><br><span class="line"><span class="string">      prefixCompression: true</span></span><br><span class="line"><span class="string">processManagement:</span></span><br><span class="line"><span class="string">  fork: true</span></span><br><span class="line"><span class="string">net:</span></span><br><span class="line"><span class="string">  bindIpAll: true</span></span><br><span class="line"><span class="string">  port: 28017</span></span><br><span class="line"><span class="string">replication:</span></span><br><span class="line"><span class="string">  oplogSizeMB: 2048</span></span><br><span class="line"><span class="string">  replSetName: my_repl</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件说明</span></span><br><span class="line">engine: wiredTiger   <span class="comment"># 存储引擎，默认就是wiredTiger</span></span><br><span class="line">cacheSizeGB: 1       <span class="comment"># 类似缓冲区大小</span></span><br><span class="line">oplogSizeMB: 2048    <span class="comment"># 设置  oplog 大小</span></span><br><span class="line">replSetName: my_repl <span class="comment"># 设置 oplog 名字，要和配置复制内的名称一样</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多配置文件复制</span></span><br><span class="line">cp  /mongodb/28017/conf/mongod.conf  /mongodb/28018/conf/</span><br><span class="line">cp  /mongodb/28017/conf/mongod.conf  /mongodb/28019/conf/</span><br><span class="line">cp  /mongodb/28017/conf/mongod.conf  /mongodb/28020/conf/</span><br><span class="line"></span><br><span class="line">sed -i <span class="string">&#x27;s#28017#28018#g&#x27;</span> /mongodb/28018/conf/mongod.conf</span><br><span class="line">sed -i <span class="string">&#x27;s#28017#28019#g&#x27;</span> /mongodb/28019/conf/mongod.conf</span><br><span class="line">sed -i <span class="string">&#x27;s#28017#28020#g&#x27;</span> /mongodb/28020/conf/mongod.conf</span><br><span class="line"></span><br><span class="line">chown -R mongod:mongod /mongodb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">su - mongod</span><br><span class="line">mongod -f /mongodb/28017/conf/mongod.conf</span><br><span class="line">mongod -f /mongodb/28018/conf/mongod.conf</span><br><span class="line">mongod -f /mongodb/28019/conf/mongod.conf</span><br><span class="line">mongod -f /mongodb/28020/conf/mongod.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查</span></span><br><span class="line">netstat -lntp |grep 280</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置复制集"><a href="#配置复制集" class="headerlink" title="配置复制集"></a>配置复制集</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1主2从，从库普通从库 PSS</span></span><br><span class="line">mongo --port 28017 admin</span><br><span class="line"></span><br><span class="line">config = &#123;_id: <span class="string">&#x27;my_repl&#x27;</span>, members: [</span><br><span class="line">                          &#123;_id: 0, host: <span class="string">&#x27;192.168.0.11:28017&#x27;</span>&#125;,</span><br><span class="line">                          &#123;_id: 1, host: <span class="string">&#x27;192.168.0.11:28018&#x27;</span>&#125;,</span><br><span class="line">                          &#123;_id: 2, host: <span class="string">&#x27;192.168.0.11:28019&#x27;</span>&#125;]</span><br><span class="line">          &#125;                   </span><br><span class="line">rs.initiate(config) </span><br><span class="line">rs.status();  //查询复制集状态</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1主1从1个arbiter PSA</span></span><br><span class="line">mongo -port 28017 admin</span><br><span class="line">config = &#123;_id: <span class="string">&#x27;my_repl&#x27;</span>, members: [</span><br><span class="line">                          &#123;_id: 0, host: <span class="string">&#x27;192.168.0.11:28017&#x27;</span>&#125;,</span><br><span class="line">                          &#123;_id: 1, host: <span class="string">&#x27;192.168.0.11:28018&#x27;</span>&#125;,</span><br><span class="line">                          &#123;_id: 2, host: <span class="string">&#x27;192.168.0.11:28019&#x27;</span>,<span class="string">&quot;arbiterOnly&quot;</span>:<span class="literal">true</span>&#125;]</span><br><span class="line">          &#125;                </span><br><span class="line">rs.initiate(config) </span><br></pre></td></tr></table></figure>
+
+<h3 id="复制集测试"><a href="#复制集测试" class="headerlink" title="复制集测试"></a>复制集测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 主库插入数据</span></span><br><span class="line">mongo --port 28017 admin</span><br><span class="line">use <span class="built_in">test</span></span><br><span class="line">db.movies.insert([&#123; <span class="string">&quot;title&quot;</span>: <span class="string">&quot;Jaws&quot;</span>,<span class="string">&quot;year&quot;</span>:1975 ,<span class="string">&quot;imdb_rating&quot;</span>:8.1&#125;,</span><br><span class="line">                  &#123; <span class="string">&quot;title&quot;</span>: <span class="string">&quot;Batman&quot;</span>,<span class="string">&quot;year&quot;</span>:1989,<span class="string">&quot;imdb_rating&quot;</span>:7.6&#125;]);</span><br><span class="line">                  </span><br><span class="line">db.movies.find().pretty()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从库查看</span></span><br><span class="line">mongo --port 28018 admin</span><br><span class="line">use <span class="built_in">test</span></span><br><span class="line">db.movies.find().pretty()  //默认情况下从库不允许读写</span><br><span class="line">rs.slaveOk()               //当前版本4.4还可以用，提示后续会弃用，use secondaryOk() instead</span><br><span class="line">db.movies.find().pretty()  //此时就可以查看到数据了</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭主库查看从库接管情况</span></span><br><span class="line">mongod -f /mongodb/28017/conf/mongod.conf --shutdown</span><br></pre></td></tr></table></figure>
+
+<h3 id="复制集管理"><a href="#复制集管理" class="headerlink" title="复制集管理"></a>复制集管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line">rs.status();    //查看整体复制集状态</span><br><span class="line">rs.isMaster();  // 查看当前是否是主节点</span><br><span class="line">rs.conf()；     //查看复制集配置信息</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加和删除节点命令</span></span><br><span class="line">rs.add(<span class="string">&quot;ip:port&quot;</span>); // 新增从节点</span><br><span class="line">rs.remove(<span class="string">&quot;ip:port&quot;</span>); // 删除一个节点</span><br><span class="line">rs.addArb(<span class="string">&quot;ip:port&quot;</span>); // 新增仲裁节点</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接到主节点(shell命令)</span></span><br><span class="line">mongo --port 28017 admin </span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增从节点</span></span><br><span class="line">rs.add(<span class="string">&quot;192.168.0.11:28020&quot;</span>)</span><br><span class="line">rs.status();</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除一个节点</span></span><br><span class="line">rs.remove(<span class="string">&quot;192.168.0.11:28020&quot;</span>);</span><br><span class="line">rs.status();</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 arbiter节点</span></span><br><span class="line">rs.addArb(<span class="string">&quot;192.168.0.11:28020&quot;</span>)</span><br><span class="line">rs.status();</span><br><span class="line"></span><br><span class="line">从其他集群踢出的节点不能直接加入新的集群，强行加入也会被踢出，需要先清空这个节点的数据再加入</span><br></pre></td></tr></table></figure>
+
+<h3 id="特殊从节点"><a href="#特殊从节点" class="headerlink" title="特殊从节点"></a>特殊从节点</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数说明</span></span><br><span class="line">priority (0-1000): 优先级越高的节点越优先成为主节点，优先级为0的节点无法成为主节点</span><br><span class="line">hidden 参数: 复制数据，但对应用不可见，隐藏节点可以具有投票仅，但优先级必须为0</span><br><span class="line">slaveDelay 参数: 复制 n 秒之前的数据，保持与主节点的时间差</span><br><span class="line"></span><br><span class="line"><span class="comment"># 节点种类</span></span><br><span class="line">arbiter节点: 主要负责选主过程中的投票，但是不存储任何数据，也不提供任何服务</span><br><span class="line">hidden节点: 隐藏节点，不参与选主，也不对外提供服务</span><br><span class="line">delay节点: 延时节点，数据落后于主库一段时间，因为数据是延时的，也不应该提供服务或参与选主，所以通常会配合hidden（隐藏）</span><br><span class="line">一般情况下会将delay+hidden一起配置使用</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看副本集的配置信息</span></span><br><span class="line">rs.<span class="function"><span class="title">conf</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="string">&quot;_id&quot;</span> : <span class="string">&quot;my_repl&quot;</span>,</span><br><span class="line">	<span class="string">&quot;version&quot;</span> : 2,</span><br><span class="line">	<span class="string">&quot;protocolVersion&quot;</span> : NumberLong(1),</span><br><span class="line">	<span class="string">&quot;writeConcernMajorityJournalDefault&quot;</span> : <span class="literal">true</span>,</span><br><span class="line">	<span class="string">&quot;members&quot;</span> : [</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="string">&quot;_id&quot;</span> : 0,</span><br><span class="line">			<span class="string">&quot;host&quot;</span> : <span class="string">&quot;192.168.0.11:28017&quot;</span>,  // 主机和端口</span><br><span class="line">			<span class="string">&quot;arbiterOnly&quot;</span> : <span class="literal">false</span>,  //是不是arbiter节点</span><br><span class="line">			<span class="string">&quot;buildIndexes&quot;</span> : <span class="literal">true</span>, </span><br><span class="line">			<span class="string">&quot;hidden&quot;</span> : <span class="literal">false</span>,  //隐藏节点</span><br><span class="line">			<span class="string">&quot;priority&quot;</span> : 1,  //权重</span><br><span class="line">			<span class="string">&quot;tags&quot;</span> : &#123;</span><br><span class="line"></span><br><span class="line">			&#125;,</span><br><span class="line">			<span class="string">&quot;slaveDelay&quot;</span> : NumberLong(0),</span><br><span class="line">			<span class="string">&quot;votes&quot;</span> : 1  //参与节点投票</span><br><span class="line">		&#125;</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置延时节点（一般延时节点也配置成hidden）</span></span><br><span class="line"><span class="comment"># MongoDB数据库内配置</span></span><br><span class="line">rs.conf()  //查看当前配置</span><br><span class="line">cfg=rs.conf() </span><br><span class="line">//members[num]中，num是从0开始依次往下数的节点数字，不是根据 _id 数字，因为后续添加删除之后这个数字容易混乱</span><br><span class="line">cfg.members[3].priority=0  //不能成为主节点</span><br><span class="line">cfg.members[3].hidden=<span class="literal">true</span>  //隐藏节点</span><br><span class="line">cfg.members[3].slaveDelay=120  //延时2小时同步</span><br><span class="line">cfg.members[3].votes=0  //不参与投票</span><br><span class="line">rs.reconfig(cfg)  //生效</span><br><span class="line">rs.conf()  //再次查看</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取消以上配置,恢复</span></span><br><span class="line">cfg=rs.conf() </span><br><span class="line">cfg.members[3].priority=1</span><br><span class="line">cfg.members[3].hidden=<span class="literal">false</span></span><br><span class="line">cfg.members[3].slaveDelay=0</span><br><span class="line">cfg.members[3].votes=1</span><br><span class="line">rs.reconfig(cfg)    </span><br><span class="line">rs.conf();</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他命令操作"><a href="#其他命令操作" class="headerlink" title="其他命令操作"></a>其他命令操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看副本集各成员的状态</span></span><br><span class="line">rs.status()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 副本集角色切换（不要人为随便操作）</span></span><br><span class="line">rs.stepDown()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 锁定从，使其不会转变成主库</span></span><br><span class="line">rs.freeze(300)</span><br><span class="line">//freeze()和stepDown单位都是秒</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置副本节点可读：在副本节点执行</span></span><br><span class="line">rs.slaveOk()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看副本节点（监控主从延时）</span></span><br><span class="line">rs.printSlaveReplicationInfo()</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MongoDB/" rel="tag"><i class="fa fa-tag"></i> MongoDB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/3bf43096.html" rel="prev" title="MongoDB聚合框架">
+                  <i class="fa fa-chevron-left"></i> MongoDB聚合框架
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/d8bf061a.html" rel="next" title="MongoDB分片集群搭建及扩容">
+                  MongoDB分片集群搭建及扩容 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">415k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:17</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

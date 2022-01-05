@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="规划测试机器没有那么多，所以采用三台机器多实例的办法，应该一台机器一个实例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB分片集群搭建及扩容">
+<meta property="og:url" content="https://klcc.cc/d8bf061a.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="规划测试机器没有那么多，所以采用三台机器多实例的办法，应该一台机器一个实例">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20211231194820648.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220104111409719.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220104114356075.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220104114436035.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220104114502342.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220104114530321.png">
+<meta property="article:published_time" content="2022-01-05T06:25:30.138Z">
+<meta property="article:modified_time" content="2022-01-05T06:40:51.887Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="MongoDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20211231194820648.png">
+
+
+<link rel="canonical" href="https://klcc.cc/d8bf061a.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/d8bf061a.html","path":"d8bf061a.html","title":"MongoDB分片集群搭建及扩容"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MongoDB分片集群搭建及扩容 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">16</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">79</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%84%E5%88%92"><span class="nav-number">1.</span> <span class="nav-text">规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4"><span class="nav-number">2.</span> <span class="nav-text">配置分片集群</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8"><span class="nav-number">2.2.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%A4%8D%E5%88%B6%E9%9B%86"><span class="nav-number">2.3.</span> <span class="nav-text">配置复制集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEconfig%E8%8A%82%E7%82%B9"><span class="nav-number">2.4.</span> <span class="nav-text">配置config节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEmongos%E8%8A%82%E7%82%B9"><span class="nav-number">2.5.</span> <span class="nav-text">配置mongos节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mongos%E6%B7%BB%E5%8A%A0%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4"><span class="nav-number">2.6.</span> <span class="nav-text">mongos添加分片集群</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%88%86%E7%89%87"><span class="nav-number">3.</span> <span class="nav-text">使用分片</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RANGE%E5%88%86%E7%89%87%E9%85%8D%E7%BD%AE%E5%8F%8A%E6%B5%8B%E8%AF%95"><span class="nav-number">3.1.</span> <span class="nav-text">RANGE分片配置及测试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E7%89%87%E5%8A%9F%E8%83%BD"><span class="nav-number">3.1.1.</span> <span class="nav-text">激活数据库分片功能</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%88%86%E7%89%87%E9%94%AE%E5%AF%B9%E9%9B%86%E5%90%88%E5%88%86%E7%89%87"><span class="nav-number">3.1.2.</span> <span class="nav-text">指定分片键对集合分片</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E5%88%86%E7%89%87%E9%AA%8C%E8%AF%81"><span class="nav-number">3.1.3.</span> <span class="nav-text">集合分片验证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E7%89%87%E7%BB%93%E6%9E%9C%E6%B5%8B%E8%AF%95"><span class="nav-number">3.1.4.</span> <span class="nav-text">分片结果测试</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hash%E5%88%86%E7%89%87"><span class="nav-number">3.2.</span> <span class="nav-text">Hash分片</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4%E6%9F%A5%E8%AF%A2%E5%8F%8A%E7%AE%A1%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">分片集群查询及管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#balancer%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">balancer操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">5.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%B9%B3%E8%A1%A1%E6%97%B6%E9%97%B4%E6%AE%B5"><span class="nav-number">5.2.</span> <span class="nav-text">自动平衡时间段</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4%E8%AE%BE%E8%AE%A1"><span class="nav-number">6.</span> <span class="nav-text">分片集群设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E7%89%87%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A0%87%E5%87%86"><span class="nav-number">6.1.</span> <span class="nav-text">分片的基本标准</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%A4%9A%E5%B0%91%E5%88%86%E7%89%87"><span class="nav-number">6.2.</span> <span class="nav-text">需求多少分片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%9C%80%E6%B1%82"><span class="nav-number">6.3.</span> <span class="nav-text">其他需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E7%9A%84%E5%A7%BF%E5%8A%BF"><span class="nav-number">6.4.</span> <span class="nav-text">正确的姿势</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%89%87%E9%94%AE"><span class="nav-number">6.4.1.</span> <span class="nav-text">选择合适的片键</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%9F%BA%E6%95%B0%E5%A4%A7%E7%9A%84%E7%89%87%E9%94%AE"><span class="nav-number">6.4.2.</span> <span class="nav-text">选择基数大的片键</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%88%86%E5%B8%83%E5%9D%87%E5%8C%80%E7%9A%84%E7%89%87%E9%94%AE"><span class="nav-number">6.4.3.</span> <span class="nav-text">选择分布均匀的片键</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">6.4.4.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%89%87%E9%94%AE-id-1"><span class="nav-number">6.4.4.1.</span> <span class="nav-text">片键: { _id: 1}</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%89%87%E9%94%AE%EF%BC%9A-id-%E2%80%9Dhashed%E2%80%9D"><span class="nav-number">6.4.4.2.</span> <span class="nav-text">片键： { _id: ”hashed”}</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%89%87%E9%94%AE%EF%BC%9A-user-id-1"><span class="nav-number">6.4.4.3.</span> <span class="nav-text">片键： { user_id: 1 }</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%89%87%E9%94%AE%EF%BC%9A-user-id-1-time-1"><span class="nav-number">6.4.4.4.</span> <span class="nav-text">片键： { user_id: 1, time:1 }</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E8%A7%84%E5%88%92"><span class="nav-number">6.4.5.</span> <span class="nav-text">硬件规划</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/d8bf061a.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MongoDB分片集群搭建及扩容
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-05 14:25:30 / 修改时间：14:40:51" itemprop="dateCreated datePublished" datetime="2022-01-05T14:25:30+08:00">2022-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MongoDB/" itemprop="url" rel="index"><span itemprop="name">MongoDB</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="规划"><a href="#规划" class="headerlink" title="规划"></a>规划</h3><p>测试机器没有那么多，所以采用三台机器多实例的办法，应该一台机器一个实例</p>
+<span id="more"></span>
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>IP</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4c8g</td>
+<td>192.168.0.11(db1)</td>
+<td>shard1(node1(28017))、shard2(node1(28018))、config(node1(28019))、mongos(28021)</td>
+</tr>
+<tr>
+<td>4c8g</td>
+<td>192.168.0.12(db2)</td>
+<td>shard1(node2(28017))、shard2(node2(28018))、config(node1(28019))</td>
+</tr>
+<tr>
+<td>4c8g</td>
+<td>192.168.0.13(db3)</td>
+<td>shard1(node3(27017))、shard2(node3(28018))、config(node1(28019))</td>
+</tr>
+</tbody></table>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20211231194820648.png" alt="image-20211231194820648"></p>
+<h3 id="配置分片集群"><a href="#配置分片集群" class="headerlink" title="配置分片集群"></a>配置分片集群</h3><h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全部机器操作，软件按照上述安装部署</span></span><br><span class="line"><span class="comment"># hosts解析</span></span><br><span class="line">cat &gt;&gt; /etc/hosts &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">192.168.0.11 db1</span></span><br><span class="line"><span class="string">192.168.0.12 db2</span></span><br><span class="line"><span class="string">192.168.0.13 db3</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建集群目录</span></span><br><span class="line">mkdir -p /mongodb/&#123;28017..28019&#125;/&#123;conf,data,<span class="built_in">log</span>&#125;</span><br><span class="line">chown -R mongod.mongod /mongodb</span><br><span class="line"></span><br><span class="line">su - mongod</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制集一配置文件</span></span><br><span class="line">cat &gt;  /mongodb/28017/conf/mongodb.conf  &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">systemLog:</span></span><br><span class="line"><span class="string">  destination: file</span></span><br><span class="line"><span class="string">  path: /mongodb/28017/log/mongodb.log   </span></span><br><span class="line"><span class="string">  logAppend: true</span></span><br><span class="line"><span class="string">storage:</span></span><br><span class="line"><span class="string">  journal:</span></span><br><span class="line"><span class="string">    enabled: true</span></span><br><span class="line"><span class="string">  dbPath: /mongodb/28017/data</span></span><br><span class="line"><span class="string">  directoryPerDB: true</span></span><br><span class="line"><span class="string">  #engine: wiredTiger</span></span><br><span class="line"><span class="string">  wiredTiger:</span></span><br><span class="line"><span class="string">    engineConfig:</span></span><br><span class="line"><span class="string">      cacheSizeGB: 1</span></span><br><span class="line"><span class="string">      directoryForIndexes: true</span></span><br><span class="line"><span class="string">    collectionConfig:</span></span><br><span class="line"><span class="string">      blockCompressor: zlib</span></span><br><span class="line"><span class="string">    indexConfig:</span></span><br><span class="line"><span class="string">      prefixCompression: true</span></span><br><span class="line"><span class="string">net:</span></span><br><span class="line"><span class="string">  bindIpAll: true</span></span><br><span class="line"><span class="string">  port: 28017</span></span><br><span class="line"><span class="string">replication:</span></span><br><span class="line"><span class="string">  oplogSizeMB: 2048</span></span><br><span class="line"><span class="string">  replSetName: sh1</span></span><br><span class="line"><span class="string">sharding:</span></span><br><span class="line"><span class="string">  clusterRole: shardsvr</span></span><br><span class="line"><span class="string">processManagement: </span></span><br><span class="line"><span class="string">  fork: true</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制集二配置文件</span></span><br><span class="line">cat &gt;  /mongodb/28018/conf/mongodb.conf  &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">systemLog:</span></span><br><span class="line"><span class="string">  destination: file</span></span><br><span class="line"><span class="string">  path: /mongodb/28018/log/mongodb.log   </span></span><br><span class="line"><span class="string">  logAppend: true</span></span><br><span class="line"><span class="string">storage:</span></span><br><span class="line"><span class="string">  journal:</span></span><br><span class="line"><span class="string">    enabled: true</span></span><br><span class="line"><span class="string">  dbPath: /mongodb/28018/data</span></span><br><span class="line"><span class="string">  directoryPerDB: true</span></span><br><span class="line"><span class="string">  #engine: wiredTiger</span></span><br><span class="line"><span class="string">  wiredTiger:</span></span><br><span class="line"><span class="string">    engineConfig:</span></span><br><span class="line"><span class="string">      cacheSizeGB: 1</span></span><br><span class="line"><span class="string">      directoryForIndexes: true</span></span><br><span class="line"><span class="string">    collectionConfig:</span></span><br><span class="line"><span class="string">      blockCompressor: zlib</span></span><br><span class="line"><span class="string">    indexConfig:</span></span><br><span class="line"><span class="string">      prefixCompression: true</span></span><br><span class="line"><span class="string">net:</span></span><br><span class="line"><span class="string">  bindIpAll: true</span></span><br><span class="line"><span class="string">  port: 28018</span></span><br><span class="line"><span class="string">replication:</span></span><br><span class="line"><span class="string">  oplogSizeMB: 2048</span></span><br><span class="line"><span class="string">  replSetName: sh2</span></span><br><span class="line"><span class="string">sharding:</span></span><br><span class="line"><span class="string">  clusterRole: shardsvr</span></span><br><span class="line"><span class="string">processManagement: </span></span><br><span class="line"><span class="string">  fork: true</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># config集群配置文件</span></span><br><span class="line">cat &gt; /mongodb/28019/conf/mongodb.conf  &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">systemLog:</span></span><br><span class="line"><span class="string">  destination: file</span></span><br><span class="line"><span class="string">  path: /mongodb/28019/log/mongodb.log</span></span><br><span class="line"><span class="string">  logAppend: true</span></span><br><span class="line"><span class="string">storage:</span></span><br><span class="line"><span class="string">  journal:</span></span><br><span class="line"><span class="string">    enabled: true</span></span><br><span class="line"><span class="string">  dbPath: /mongodb/28019/data/</span></span><br><span class="line"><span class="string">  directoryPerDB: true</span></span><br><span class="line"><span class="string">  #engine: wiredTiger</span></span><br><span class="line"><span class="string">  wiredTiger:</span></span><br><span class="line"><span class="string">    engineConfig:</span></span><br><span class="line"><span class="string">      cacheSizeGB: 1</span></span><br><span class="line"><span class="string">      directoryForIndexes: true</span></span><br><span class="line"><span class="string">    collectionConfig:</span></span><br><span class="line"><span class="string">      blockCompressor: zlib</span></span><br><span class="line"><span class="string">    indexConfig:</span></span><br><span class="line"><span class="string">      prefixCompression: true</span></span><br><span class="line"><span class="string">net:</span></span><br><span class="line"><span class="string">  bindIpAll: true</span></span><br><span class="line"><span class="string">  port: 28019</span></span><br><span class="line"><span class="string">replication:</span></span><br><span class="line"><span class="string">  oplogSizeMB: 2048</span></span><br><span class="line"><span class="string">  replSetName: configReplSet</span></span><br><span class="line"><span class="string">sharding:</span></span><br><span class="line"><span class="string">  clusterRole: configsvr</span></span><br><span class="line"><span class="string">processManagement: </span></span><br><span class="line"><span class="string">  fork: true</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 所有机器</span></span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">mongod -f /mongodb/28017/conf/mongodb.conf</span><br><span class="line">mongod -f /mongodb/28018/conf/mongodb.conf      </span><br><span class="line">mongod -f /mongodb/28019/conf/mongodb.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭</span></span><br><span class="line">mongod -f /mongodb/28017/conf/mongodb.conf  --shutdown</span><br><span class="line">mongod -f /mongodb/28018/conf/mongodb.conf  --shutdown     </span><br><span class="line">mongod -f /mongodb/28019/conf/mongodb.conf  --shutdown</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置复制集"><a href="#配置复制集" class="headerlink" title="配置复制集"></a>配置复制集</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在db1上操作即可</span></span><br><span class="line">su - mongod</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制集1</span></span><br><span class="line">mongo --port 28017 admin</span><br><span class="line">use admin</span><br><span class="line">config = &#123;_id: <span class="string">&#x27;sh1&#x27;</span>, members: [</span><br><span class="line">                          &#123;_id: 0, host: <span class="string">&#x27;192.168.0.11:28017&#x27;</span>&#125;,</span><br><span class="line">                          &#123;_id: 1, host: <span class="string">&#x27;192.168.0.12:28017&#x27;</span>&#125;,</span><br><span class="line">                          &#123;_id: 2, host: <span class="string">&#x27;192.168.0.13:28017&#x27;</span>&#125;]</span><br><span class="line">           &#125;</span><br><span class="line">rs.initiate(config)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制集2</span></span><br><span class="line">mongo --port 28018 admin </span><br><span class="line">use admin</span><br><span class="line">config = &#123;_id: <span class="string">&#x27;sh2&#x27;</span>, members: [</span><br><span class="line">                        &#123;_id: 0, host: <span class="string">&#x27;192.168.0.11:28018&#x27;</span>&#125;,</span><br><span class="line">                        &#123;_id: 1, host: <span class="string">&#x27;192.168.0.12:28018&#x27;</span>&#125;,</span><br><span class="line">                        &#123;_id: 2, host: <span class="string">&#x27;192.168.0.13:28018&#x27;</span>&#125;]</span><br><span class="line">         &#125;</span><br><span class="line">rs.initiate(config)</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置config节点"><a href="#配置config节点" class="headerlink" title="配置config节点"></a>配置<code>config</code>节点</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mongo --port 28019 admin</span><br><span class="line">use  admin</span><br><span class="line">config = &#123;_id: <span class="string">&#x27;configReplSet&#x27;</span>, members: [</span><br><span class="line">                        &#123;_id: 0, host: <span class="string">&#x27;192.168.0.11:28019&#x27;</span>&#125;,</span><br><span class="line">                        &#123;_id: 1, host: <span class="string">&#x27;192.168.0.12:28019&#x27;</span>&#125;,</span><br><span class="line">                        &#123;_id: 2, host: <span class="string">&#x27;192.168.0.13:28019&#x27;</span>&#125;]</span><br><span class="line">         &#125;</span><br><span class="line">rs.initiate(config)  </span><br><span class="line">  </span><br><span class="line">注：configserver 可以是一个节点，官方建议复制集。configserver不能有arbiter</span><br><span class="line">新版本中，要求必须是复制集</span><br><span class="line">注：mongodb 3.4之后，虽然要求config server为replica <span class="built_in">set</span>，但是不支持arbiter</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置mongos节点"><a href="#配置mongos节点" class="headerlink" title="配置mongos节点"></a>配置<code>mongos</code>节点</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># db1单独配置</span></span><br><span class="line">mkdir -p /mongodb/28020/&#123;conf,<span class="built_in">log</span>&#125;</span><br><span class="line">cat &gt; /mongodb/28020/conf/mongos.conf &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">systemLog:</span></span><br><span class="line"><span class="string">  destination: file</span></span><br><span class="line"><span class="string">  path: /mongodb/28020/log/mongos.log</span></span><br><span class="line"><span class="string">  logAppend: true</span></span><br><span class="line"><span class="string">net:</span></span><br><span class="line"><span class="string">  bindIpAll: true </span></span><br><span class="line"><span class="string">  port: 28020</span></span><br><span class="line"><span class="string">sharding:</span></span><br><span class="line"><span class="string">  configDB: configReplSet/192.168.0.11:28019,192.168.0.12:28019,192.168.0.13:28019</span></span><br><span class="line"><span class="string">processManagement: </span></span><br><span class="line"><span class="string">  fork: true</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 mongos 命令有差别</span></span><br><span class="line">mongos -f /mongodb/28020/conf/mongos.conf </span><br></pre></td></tr></table></figure>
+
+<h4 id="mongos添加分片集群"><a href="#mongos添加分片集群" class="headerlink" title="mongos添加分片集群"></a>mongos添加分片集群</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在db1上操作(随便一台都行)</span></span><br><span class="line"><span class="comment"># 连接到mongs的admin数据库</span></span><br><span class="line">su - mongod</span><br><span class="line">mongo 192.168.0.11:28020/admin</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加分片</span></span><br><span class="line">db.runCommand( &#123; addshard : <span class="string">&quot;sh1/192.168.0.11:28017,192.168.0.12:28017,192.168.0.13:28017&quot;</span>,name:<span class="string">&quot;shard1&quot;</span>&#125; )</span><br><span class="line">db.runCommand( &#123; addshard : <span class="string">&quot;sh2/192.168.0.11:28018,192.168.0.12:28018,192.168.0.13:28018&quot;</span>,name:<span class="string">&quot;shard2&quot;</span>&#125; )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出分片</span></span><br><span class="line">db.runCommand( &#123; listshards : 1 &#125; )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 整体状态查看</span></span><br><span class="line">sh.status()</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用分片"><a href="#使用分片" class="headerlink" title="使用分片"></a>使用分片</h3><h4 id="RANGE分片配置及测试"><a href="#RANGE分片配置及测试" class="headerlink" title="RANGE分片配置及测试"></a><code>RANGE</code>分片配置及测试</h4><h5 id="激活数据库分片功能"><a href="#激活数据库分片功能" class="headerlink" title="激活数据库分片功能"></a>激活数据库分片功能</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.runCommand( &#123; enablesharding : <span class="string">&quot;数据库名称&quot;</span> &#125; )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 例如激活test库分片功能，先登录 mongos </span></span><br><span class="line">mongo 192.168.0.11:28020/admin</span><br><span class="line">db.runCommand( &#123; enablesharding : <span class="string">&quot;test&quot;</span> &#125; )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 整体状态查看</span></span><br><span class="line">sh.status()</span><br></pre></td></tr></table></figure>
+
+<h5 id="指定分片键对集合分片"><a href="#指定分片键对集合分片" class="headerlink" title="指定分片键对集合分片"></a>指定分片键对集合分片</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建索引</span></span><br><span class="line">use <span class="built_in">test</span></span><br><span class="line">db.vast.ensureIndex( &#123; id: 1 &#125; )</span><br><span class="line">show tables;</span><br><span class="line">db.vest.find()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启分片</span></span><br><span class="line">use admin</span><br><span class="line">db.runCommand( &#123; shardcollection : <span class="string">&quot;test.vast&quot;</span>,key : &#123;id: 1&#125; &#125; )</span><br><span class="line">sh.status()</span><br></pre></td></tr></table></figure>
+
+<h5 id="集合分片验证"><a href="#集合分片验证" class="headerlink" title="集合分片验证"></a>集合分片验证</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">use <span class="built_in">test</span></span><br><span class="line"><span class="keyword">for</span>(i=1;i&lt;1000000;i++)&#123; db.vast.insert(&#123;<span class="string">&quot;id&quot;</span>:i,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;shenzheng&quot;</span>,<span class="string">&quot;age&quot;</span>:70,<span class="string">&quot;date&quot;</span>:new Date()&#125;); &#125;</span><br><span class="line">db.vast.stats()</span><br></pre></td></tr></table></figure>
+
+<h5 id="分片结果测试"><a href="#分片结果测试" class="headerlink" title="分片结果测试"></a>分片结果测试</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 复制集1</span></span><br><span class="line">mongo --port 28017</span><br><span class="line">use <span class="built_in">test</span></span><br><span class="line">db.vast.count();</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制集2</span></span><br><span class="line">mongo --port 28018</span><br><span class="line">use <span class="built_in">test</span></span><br><span class="line">db.vast.count();</span><br></pre></td></tr></table></figure>
+
+<h4 id="Hash分片"><a href="#Hash分片" class="headerlink" title="Hash分片"></a><code>Hash</code>分片</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对test1库下的vast大表进行hash</span></span><br><span class="line"><span class="comment"># 创建哈希索引</span></span><br><span class="line"><span class="comment"># 对于test1开启分片功能，连接到mongos</span></span><br><span class="line">mongo 192.168.0.11:28020/admin</span><br><span class="line"></span><br><span class="line">use admin</span><br><span class="line">db.runCommand( &#123; enablesharding : <span class="string">&quot;test1&quot;</span> &#125; )</span><br><span class="line">sh.status()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对于test1库下的vast表建立hash索引</span></span><br><span class="line">use test1</span><br><span class="line">db.vast.ensureIndex( &#123; id: <span class="string">&quot;hashed&quot;</span> &#125; )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启分片 </span></span><br><span class="line">use admin</span><br><span class="line">sh.shardCollection( <span class="string">&quot;test1.vast&quot;</span>, &#123; id: <span class="string">&quot;hashed&quot;</span> &#125; )</span><br><span class="line">sh.status()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 录入10w行数据测试</span></span><br><span class="line">use test1</span><br><span class="line"><span class="keyword">for</span>(i=1;i&lt;100000;i++)&#123; db.vast.insert(&#123;<span class="string">&quot;id&quot;</span>:i,<span class="string">&quot;name&quot;</span>:<span class="string">&quot;shenzheng&quot;</span>,<span class="string">&quot;age&quot;</span>:70,<span class="string">&quot;date&quot;</span>:new Date()&#125;); &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># hash分片结果测试</span></span><br><span class="line"><span class="comment"># 复制集1</span></span><br><span class="line">mongo --port 28017</span><br><span class="line">use test1</span><br><span class="line">db.vast.count();</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制集2</span></span><br><span class="line">mongo --port 28018</span><br><span class="line">use test1</span><br><span class="line">db.vast.count();</span><br></pre></td></tr></table></figure>
+
+<h3 id="分片集群查询及管理"><a href="#分片集群查询及管理" class="headerlink" title="分片集群查询及管理"></a>分片集群查询及管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 判断是否Shard集群</span></span><br><span class="line">db.runCommand(&#123; isdbgrid : 1&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有分片信息</span></span><br><span class="line">db.runCommand(&#123; listshards : 1&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出开启分片的数据库</span></span><br><span class="line">use config</span><br><span class="line">db.databases.find( &#123; <span class="string">&quot;partitioned&quot;</span>: <span class="literal">true</span> &#125; )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看分片的片键</span></span><br><span class="line">db.collections.find().pretty()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看分片的详细信息</span></span><br><span class="line">sh.status()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除分片节点(谨慎)</span></span><br><span class="line">    <span class="comment"># 确认blance是否在工作</span></span><br><span class="line">    sh.getBalancerState()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 删除shard2节点(谨慎)</span></span><br><span class="line">    db.runCommand( &#123; removeShard: <span class="string">&quot;shard2&quot;</span> &#125; )</span><br><span class="line">    <span class="comment"># 注意：删除操作一定会立即触发blancer</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="balancer操作"><a href="#balancer操作" class="headerlink" title="balancer操作"></a>balancer操作</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mongos的一个重要功能，自动巡查所有shard节点上的chunk的情况，自动做chunk迁移，什么时候工作？</span><br><span class="line">1、自动运行，会检测系统不繁忙的时候做迁移</span><br><span class="line">2、在做节点删除的时候，立即开始迁移工作</span><br><span class="line">3、balancer只能在预设定的时间窗口内运行</span><br><span class="line"></span><br><span class="line">有需要时可以关闭和开启blancer（备份的时候）</span><br><span class="line">sh.stopBalancer()</span><br><span class="line">sh.startBalancer()</span><br></pre></td></tr></table></figure>
+
+<h4 id="自动平衡时间段"><a href="#自动平衡时间段" class="headerlink" title="自动平衡时间段"></a>自动平衡时间段</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 官方文档: https://docs.mongodb.com/manual/tutorial/manage-sharded-cluster-balancer/#schedule-the-balancing-window</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接到mongos</span></span><br><span class="line">use config</span><br><span class="line">sh.setBalancerState( <span class="literal">true</span> )</span><br><span class="line">db.settings.update(&#123; _id : <span class="string">&quot;balancer&quot;</span> &#125;, &#123; <span class="variable">$set</span> : &#123; activeWindow : &#123; start : <span class="string">&quot;3:00&quot;</span>, stop : <span class="string">&quot;5:00&quot;</span> &#125; &#125; &#125;, <span class="literal">true</span> )</span><br><span class="line"></span><br><span class="line">sh.getBalancerWindow()</span><br><span class="line">sh.status()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关于集合的balancer</span></span><br><span class="line">    <span class="comment"># 关闭某个集合的balance</span></span><br><span class="line">    sh.disableBalancing(<span class="string">&quot;students.grades&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 打开某个集合的balancer</span></span><br><span class="line">    sh.enableBalancing(<span class="string">&quot;students.grades&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 确定某个集合的balance是开启或者关闭</span></span><br><span class="line">    db.getSiblingDB(<span class="string">&quot;config&quot;</span>).collections.findOne(&#123;_id : <span class="string">&quot;students.grades&quot;</span>&#125;).noBalance</span><br></pre></td></tr></table></figure>
+
+<h3 id="分片集群设计"><a href="#分片集群设计" class="headerlink" title="分片集群设计"></a>分片集群设计</h3><h4 id="分片的基本标准"><a href="#分片的基本标准" class="headerlink" title="分片的基本标准"></a>分片的基本标准</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.关于数据：数据量不超过3TB，尽可能保持在2TB一个片</span><br><span class="line">2.关于索引：常用索引必须容纳进内存</span><br><span class="line">3.按照以上标准初步确定分片后，还需要考虑业务压力，随着压力增大，CPU、RAM、磁盘中的任何一项出现瓶颈时，都可以通过添加更多分片来解决</span><br></pre></td></tr></table></figure>
+
+<h4 id="需求多少分片"><a href="#需求多少分片" class="headerlink" title="需求多少分片"></a>需求多少分片</h4><table>
+<thead>
+<tr>
+<th>条件</th>
+<th>分片个数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A = 所需存储总量 / 单服务器可挂载容量</td>
+<td>8TB / 2TB = 4</td>
+</tr>
+<tr>
+<td>B = 工作集大小 / 单服务器内存容量</td>
+<td>400GB / （256G * 0.6） = 3</td>
+</tr>
+<tr>
+<td>C = 并发量总数 / （单服务器并发量 * 0.7）</td>
+<td>30000 / (9000*0.7) = 6</td>
+</tr>
+<tr>
+<td>额外开销</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="其他需求"><a href="#其他需求" class="headerlink" title="其他需求"></a>其他需求</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">考虑分片的分布：</span><br><span class="line">1.是否需要跨机房分布分片</span><br><span class="line">2.是否需要容灾</span><br><span class="line">3.高可用的要求如何</span><br></pre></td></tr></table></figure>
+
+<h4 id="正确的姿势"><a href="#正确的姿势" class="headerlink" title="正确的姿势"></a>正确的姿势</h4><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220104111409719.png" alt="image-20220104111409719"></p>
+<h5 id="选择合适的片键"><a href="#选择合适的片键" class="headerlink" title="选择合适的片键"></a>选择合适的片键</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">影响片键效率的主要因素:</span><br><span class="line">1.取值基数(Cardinality)</span><br><span class="line">2.取值分布</span><br><span class="line">3.分散写，集中读</span><br><span class="line">4.被尽可能多的业务场景用到</span><br><span class="line">5.避免单调递增或递减的片键</span><br></pre></td></tr></table></figure>
+
+<h5 id="选择基数大的片键"><a href="#选择基数大的片键" class="headerlink" title="选择基数大的片键"></a>选择基数大的片键</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">对于小基数的片键:</span><br><span class="line">1.因为备选值有限，那么块的总数量就有限</span><br><span class="line">2.随着数据增多，块的大小会越来越大</span><br><span class="line">3.水平扩展时移动块会非常困难</span><br><span class="line"></span><br><span class="line">例如：存储一个高中的师生数据，以年龄（假设年龄范围为15~65岁）作为片键，那么:</span><br><span class="line">1.15&lt;=年龄&lt;=65，且只为整数</span><br><span class="line">2.最多只会有51个 chunk</span><br><span class="line">结论：取值基数要大</span><br></pre></td></tr></table></figure>
+
+<h5 id="选择分布均匀的片键"><a href="#选择分布均匀的片键" class="headerlink" title="选择分布均匀的片键"></a>选择分布均匀的片键</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">对于分布不均匀的片键</span><br><span class="line">1.造成某些块的数据量急剧增大</span><br><span class="line">2.这些块压力随之增大</span><br><span class="line">3.数据均衡以 chunk 为单位，所以系统无能为力</span><br><span class="line"></span><br><span class="line">例如：存储一个学校的师生数据，以年龄（假设年龄范围为15~65岁）作为片键，那么：</span><br><span class="line">1.15&lt;=年龄&lt;=65，且只为整数</span><br><span class="line">2.大部分人的年龄范围为15~18岁（学生）</span><br><span class="line">3.15、16、17、18四个 chunk 的数据量、访问压力远大于其他 chunk</span><br><span class="line">结论：取值分布应尽可能均匀</span><br></pre></td></tr></table></figure>
+
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  _id: ObjectId(),</span><br><span class="line">  user: <span class="number">123</span>,</span><br><span class="line">  time: Date(),</span><br><span class="line">  subject: “...”,</span><br><span class="line">  recipients: [],</span><br><span class="line">  body: “...”,</span><br><span class="line">  attachments: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="片键-id-1"><a href="#片键-id-1" class="headerlink" title="片键: { _id: 1}"></a>片键: { _id: 1}</h6><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220104114356075.png" alt="image-20220104114356075"></p>
+<h6 id="片键：-id-”hashed”"><a href="#片键：-id-”hashed”" class="headerlink" title="片键： { _id: ”hashed”}"></a>片键： { _id: ”hashed”}</h6><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220104114436035.png" alt="image-20220104114436035"></p>
+<h6 id="片键：-user-id-1"><a href="#片键：-user-id-1" class="headerlink" title="片键： { user_id: 1 }"></a>片键： { user_id: 1 }</h6><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220104114502342.png" alt="image-20220104114502342"></p>
+<h6 id="片键：-user-id-1-time-1"><a href="#片键：-user-id-1-time-1" class="headerlink" title="片键： { user_id: 1, time:1 }"></a>片键： { user_id: 1, time:1 }</h6><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220104114530321.png" alt="image-20220104114530321"></p>
+<h5 id="硬件规划"><a href="#硬件规划" class="headerlink" title="硬件规划"></a>硬件规划</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mongos 与 config 通常消耗很少的资源，可以选择低规格虚拟机，资源的重点在于 shard 服务器:</span><br><span class="line">  1.需要足以容纳热数据索引的内存</span><br><span class="line">  2.正确创建索引后 CPU 通常不会成为瓶颈，除非涉及非常多的计算</span><br><span class="line">  3.磁盘尽量选用 SSD</span><br><span class="line">  4.最后，实际测试是最好的检验，来看你的资源配置是否完备</span><br><span class="line"></span><br><span class="line">即使项目初期已经具备了足够的资源，仍然需要考虑在合适的时候扩展。建议监控各项资源使用情况，无论哪一项达到60%以上，则开始考虑扩展，因为：</span><br><span class="line">  1.扩展需要新的资源，申请新资源需要时间</span><br><span class="line">  2.扩展后数据需要均衡，均衡需要时间。应保证新数据入库速度慢于均衡速度</span><br><span class="line">  3.均衡需要资源，如果资源即将或已经耗尽，均衡也是会很低效的</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MongoDB/" rel="tag"><i class="fa fa-tag"></i> MongoDB</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/37db6981.html" rel="prev" title="MongoDB复制集">
+                  <i class="fa fa-chevron-left"></i> MongoDB复制集
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/ec5ee46f.html" rel="next" title="MongoDB两地三中心部署">
+                  MongoDB两地三中心部署 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">415k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:17</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
