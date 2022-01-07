@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Task Controlwhen条件语句when 关键字主要针对 TASK 任务进行判断，对于此前我 们使用过的 yum 模块是可以自动检测软件包是否已被安 装，无需人为干涉；但对于有些任务则是需要进行判断 才可以实现的。  web 节点都需要配置 nginx 仓库，但其他节 点并不需要，此时就会用到 when 判断  Centos 与 Ubuntu 都需要安装 Apache，而 Centos 系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Task控制">
+<meta property="og:url" content="https://klcc.cc/d30594ae.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="Task Controlwhen条件语句when 关键字主要针对 TASK 任务进行判断，对于此前我 们使用过的 yum 模块是可以自动检测软件包是否已被安 装，无需人为干涉；但对于有些任务则是需要进行判断 才可以实现的。  web 节点都需要配置 nginx 仓库，但其他节 点并不需要，此时就会用到 when 判断  Centos 与 Ubuntu 都需要安装 Apache，而 Centos 系">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-07T07:06:53.290Z">
+<meta property="article:modified_time" content="2022-01-07T07:14:41.423Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="Ansible">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/d30594ae.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/d30594ae.html","path":"d30594ae.html","title":"Task控制"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Task控制 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">17</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">85</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-Control"><span class="nav-number">1.</span> <span class="nav-text">Task Control</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#when%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.1.</span> <span class="nav-text">when条件语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#loop-%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.2.</span> <span class="nav-text">loop 循环语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Handlers%E5%92%8CNotify"><span class="nav-number">1.3.</span> <span class="nav-text">Handlers和Notify</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tags%E4%BB%BB%E5%8A%A1%E6%A0%87%E7%AD%BE"><span class="nav-number">1.4.</span> <span class="nav-text">tags任务标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#include%E4%BB%BB%E5%8A%A1%E5%A4%8D%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">include任务复用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Playbook%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">Playbook异常处理</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/d30594ae.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Task控制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-07 15:06:53 / 修改时间：15:14:41" itemprop="dateCreated datePublished" datetime="2022-01-07T15:06:53+08:00">2022-01-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Ansible/" itemprop="url" rel="index"><span itemprop="name">Ansible</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="Task-Control"><a href="#Task-Control" class="headerlink" title="Task Control"></a><code>Task Control</code></h2><h3 id="when条件语句"><a href="#when条件语句" class="headerlink" title="when条件语句"></a><code>when</code>条件语句</h3><p>when 关键字主要针对 TASK 任务进行判断，对于此前我 们使用过的 yum 模块是可以自动检测软件包是否已被安 装，无需人为干涉；但对于有些任务则是需要进行判断 才可以实现的。</p>
+<ul>
+<li><p>web 节点都需要配置 nginx 仓库，但其他节 点并不需要，此时就会用到 when 判断</p>
+</li>
+<li><p>Centos 与 Ubuntu 都需要安装 Apache，而 Centos 系统软件包为 httpd，而 Ubuntu系统软件 包为httpd2，那么此时就需要判断主机系统，然后 为不同的主机系统安装不同的软件包</p>
+<span id="more"></span>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 为所有主机安装 Apache 软件</span></span><br><span class="line">1.系统为CentOS：安装 httpd</span><br><span class="line">2.系统为Ubuntu：安装 httpd2</span><br><span class="line"></span><br><span class="line">cat facts4.yml</span><br><span class="line">- hosts: web</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Centos Install httpd </span><br><span class="line">      yum:</span><br><span class="line">        name: httpd</span><br><span class="line">        state: present</span><br><span class="line">      when: (ansible_distribution ==<span class="string">&quot;CentOS&quot;</span>)</span><br><span class="line">    - name: Ubuntu Install httpd </span><br><span class="line">      yum:</span><br><span class="line">        name: apache2</span><br><span class="line">        state: present</span><br><span class="line">      when: (ansible_distribution ==<span class="string">&quot;Ubuntu&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>针对主机名为web的机器添加nginx仓库</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">all</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Add</span> <span class="string">Nginx</span> <span class="string">Yum</span> <span class="string">Repository</span></span><br><span class="line">    <span class="attr">yum_repository:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">ansible_web_nginx</span></span><br><span class="line">      <span class="attr">description:</span> <span class="string">Nginx</span> <span class="string">Repository</span></span><br><span class="line">      <span class="attr">baseurl:</span> <span class="string">http://nginx.org/packages/centos/7/$basearch/</span></span><br><span class="line">      <span class="attr">gpgcheck:</span> <span class="literal">no</span></span><br><span class="line">    <span class="attr">when:</span> <span class="string">(ansible_hostname</span> <span class="string">is</span> <span class="string">match(&quot;web*&quot;))</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment">#当然when也可以使用and与or方式</span></span><br><span class="line"><span class="comment">#when: (ansible_hostname is match(&quot;web*&quot;)) or</span></span><br><span class="line"><span class="comment"># (ansible_hostname is match(&quot;lb*&quot;))</span></span><br></pre></td></tr></table></figure>
+
+<p>判断 httpd 服务是否处于运行状态</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 判断 httpd 服务是否处于运行状态</span></span><br><span class="line"><span class="comment"># 已运行：则重启服务</span></span><br><span class="line"><span class="comment"># 未运行：则不做处理</span></span><br><span class="line"><span class="comment"># 通过 register 将命令执行结果保存至变量，然后通过 when 语句进行判断</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">hosts:</span> <span class="string">webservers</span></span><br><span class="line">  <span class="attr">tasks:</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Get</span> <span class="string">Httpd</span> <span class="string">Server</span> <span class="string">Status</span></span><br><span class="line">      <span class="attr">shell:</span></span><br><span class="line">        <span class="attr">cmd:</span> <span class="string">systemctl</span> <span class="string">status</span> <span class="string">httpd</span> <span class="string">&amp;&gt;/dev/null</span></span><br><span class="line">      <span class="attr">register:</span> <span class="string">Httpd_Check</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Debug</span></span><br><span class="line">      <span class="attr">debug:</span></span><br><span class="line">        <span class="attr">msg:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123; Httpd_Check.rc &#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Restart</span> <span class="string">Httpd</span></span><br><span class="line">      <span class="attr">systemd:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">httpd</span></span><br><span class="line">        <span class="attr">state:</span> <span class="string">restarted</span></span><br><span class="line">      <span class="attr">when:</span> <span class="string">Httpd_Check.rc</span> <span class="string">==</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>为特定的主机执行任务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 有2台 server</span></span><br><span class="line"><span class="comment"># 第一台：172.16.1.7安装了 nginx</span></span><br><span class="line"><span class="comment"># 第二台：172.16.1.8没有安装 nginx</span></span><br><span class="line"><span class="comment"># 现在需要在没有安装 nginx的节点上做操作，需要通过 when 条件语句实现</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- hosts: all</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Get System Install Nginx</span><br><span class="line">      shell:</span><br><span class="line">        cmd: rpm -qa nginx | wc -l</span><br><span class="line">      register: get_nginx</span><br><span class="line"></span><br><span class="line">    - name: Create Nginx File</span><br><span class="line">      file:</span><br><span class="line">        path: /tmp/nginx_not_install.txt</span><br><span class="line">        state: touch</span><br><span class="line">      when: get_nginx.stdout == <span class="string">&#x27;0&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="loop-循环语句"><a href="#loop-循环语句" class="headerlink" title="loop 循环语句"></a><code>loop</code> 循环语句</h3><p>在写 playbook 的时候发现了很多 task 都要重复引用 某个相同的模块，比如一次启动10个服务，或者一次拷 贝10个文件，如果按照传统的写法最少要写10次，这样 会显得 playbook 很臃肿。如果使用循环的方式来编写 playbook，这样可以减少重复编写 task 带来的臃肿</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 循环启动nginx和php-fpm</span></span><br><span class="line">- hosts: webservers</span><br><span class="line">  tasks:</span><br><span class="line"></span><br><span class="line">    - name: Systemd Nginx php</span><br><span class="line">      systemd:</span><br><span class="line">        name: <span class="string">&quot;&#123;&#123; item &#125;&#125;&quot;</span></span><br><span class="line">        state: started</span><br><span class="line">      loop:</span><br><span class="line">        - nginx</span><br><span class="line">        - php-fpm</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 循环安装httpd mariadb</span></span><br><span class="line">- hosts: webservers</span><br><span class="line">  tasks:</span><br><span class="line"></span><br><span class="line">    - name: Installed Httpd Mariadb Package</span><br><span class="line">      yum:</span><br><span class="line">        name: <span class="string">&quot;&#123;&#123; item &#125;&#125;&quot;</span></span><br><span class="line">        state: latest</span><br><span class="line">      loop:</span><br><span class="line">         - httpd</span><br><span class="line">         - mariadb-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># 循环拷贝配置文件</span></span><br><span class="line">- hosts: webservers</span><br><span class="line">  tasks:</span><br><span class="line"></span><br><span class="line">    - name: Rsync rsyncd.conf</span><br><span class="line">      copy:</span><br><span class="line">        src: <span class="string">&quot;&#123;&#123; item.src &#125;&#125;&quot;</span></span><br><span class="line">        dest: <span class="string">&quot;&#123;&#123; item.dest &#125;&#125;&quot;</span></span><br><span class="line">        owner: root</span><br><span class="line">        group: root</span><br><span class="line">        mode: <span class="string">&quot;&#123;&#123; item.mode &#125;&#125;&quot;</span></span><br><span class="line">      loop:</span><br><span class="line">        - &#123; src: rsyncd.conf , dest: /tmp/rsyncd.conf , mode: <span class="string">&quot;0644&quot;</span>  &#125;</span><br><span class="line">        - &#123; src: rsyncd.pass , dest: /root/rsync.pass , mode: <span class="string">&quot;0600&quot;</span> &#125;</span><br><span class="line">        - &#123; src: rsynnd.test , dest: /mnt/rsync.test , mode: <span class="string">&quot;0000&quot;</span> &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"><span class="comment"># 循环创建user</span></span><br><span class="line">- hosts: webservers</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Add Users</span><br><span class="line">      user:</span><br><span class="line">        name: <span class="string">&quot;&#123;&#123; item.name &#125;&#125;&quot;</span></span><br><span class="line">        groups: <span class="string">&quot;&#123;&#123; item.groups &#125;&#125;&quot;</span></span><br><span class="line">        state: present</span><br><span class="line">      loop:</span><br><span class="line">        - &#123; name: <span class="string">&#x27;testuser1&#x27;</span>, groups: <span class="string">&#x27;bin&#x27;</span> &#125;</span><br><span class="line">        - &#123; name: <span class="string">&#x27;testuser2&#x27;</span>, groups: <span class="string">&#x27;root&#x27;</span> &#125;</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 循环创建文件</span></span><br><span class="line">- hosts: webservers</span><br><span class="line">  tasks:</span><br><span class="line"></span><br><span class="line">    - name: Create /data /backup</span><br><span class="line">      file:</span><br><span class="line">        path: <span class="string">&quot;&#123;&#123; item &#125;&#125;&quot;</span></span><br><span class="line">        state: directory</span><br><span class="line">      loop:</span><br><span class="line">        - /data</span><br><span class="line">        - /backup</span><br></pre></td></tr></table></figure>
+
+<h3 id="Handlers和Notify"><a href="#Handlers和Notify" class="headerlink" title="Handlers和Notify"></a><code>Handlers</code>和<code>Notify</code></h3><p><code>Handlers</code> 是一个触发器，同时是一个特殊的 <code>tasks</code>， 它无法直接运行，它需要被 tasks 通知后才会运行</p>
+<p>比如：httpd 服务配置文件发生变更，我们则可通过 Notify 通知给指定的 handlers 触发器，然后执行相 应重启服务的操作，如果配置文件不发生变更操作，则 不会触发 Handlers 任务的执行</p>
+<p>handlers 注意事项 </p>
+<ul>
+<li><p>1.无论多少个 task 通知了相同的 <code>handlers</code>， <code>handlers</code>仅会在所有<code>tasks</code> 结束后运行一次</p>
+</li>
+<li><p>2.只有<code>task</code>发生改变了才会通知<code>handlers</code>，没 有改变则不会触发<code>handlers</code> </p>
+</li>
+<li><p>3.不能使用 handlers 替代 <code>tasks</code>、因为<code>handlers</code>是一个特殊的<code>tasks</code></p>
+</li>
+</ul>
+<h3 id="tags任务标签"><a href="#tags任务标签" class="headerlink" title="tags任务标签"></a><code>tags</code>任务标签</h3><p>默认情况下，<code>Ansible</code> 在执行一个<code> playbook</code> 时，会执 行<code> playbook</code>中所有的任务。而标签功能是用来指定要 运行 <code>playbook</code>中的某个特定的任务；</p>
+<ul>
+<li><p>为 <code>playbook</code> 添加标签的方式有如下几种</p>
+<ol>
+<li>对一个<code>task</code>打一个标签 </li>
+<li>对一个 <code>task</code>打多个标签 </li>
+<li>对多个 <code>task</code>打一个标签</li>
+</ol>
+</li>
+<li><p><code>task</code>打完标签使用的几种方式 </p>
+<ol>
+<li><code>-t</code> 执行指定<code>tag</code>标签对应的任务 </li>
+<li><code>--skip-tags</code> 执行除<code> --skip-tags</code> 标签之外的所有任务</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cat f5.yml</span><br><span class="line">- hosts: nfs</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Install Nfs Server</span><br><span class="line">      yum: name=nfs-utils state=present</span><br><span class="line">      tags:</span><br><span class="line">        - install_nfs</span><br><span class="line">        - install_nfs-server</span><br><span class="line">      </span><br><span class="line">    - name: Service Nfs Server</span><br><span class="line">      service: name=nfs-server state=started enabled=yes</span><br><span class="line">      tags: start_nfs-server</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">ansible-playbook f5.yml -t install_nfs</span><br><span class="line">ansible-playbook f5.yml --skip-tags install_nfs</span><br></pre></td></tr></table></figure>
+
+<h3 id="include任务复用"><a href="#include任务复用" class="headerlink" title="include任务复用"></a><code>include</code>任务复用</h3><p>有时，我们发现大量的 Playbook 内容需要重复编写， 各 Tasks 之间功能需相互调用才能完成各自功能， Playbook 庞大到维护困难，这时我们需要使用 include 比如：A项目需要用到重启 httpd，B项目需要用到，重 启 httpd，那么我们可以使用 Include来减少重复编 写</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cat main.yml</span><br><span class="line">- hosts: web</span><br><span class="line">  tasks:</span><br><span class="line">  - name: Install Tomcat8 Server</span><br><span class="line">    include: install_tomcat_8.yml</span><br><span class="line">    tags: install_tomcat_8</span><br><span class="line"></span><br><span class="line">  - name: Install Tomcat9 Server</span><br><span class="line">    include: install_tomcat_9.yml</span><br><span class="line">    tags: install_tomcat_9</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">install_tomcat_8.yml</span><br><span class="line">install_tomcat_9.yml</span><br><span class="line"></span><br><span class="line">ansible-playbook main.yml -t install_tomcat_8</span><br></pre></td></tr></table></figure>
+
+<h2 id="Playbook异常处理"><a href="#Playbook异常处理" class="headerlink" title="Playbook异常处理"></a><code>Playbook</code>异常处理</h2><p>在 playbook 执行的过程中，难免会遇到一些错误。由 于 playbook 遇到错误后，不会执行之后的任务，不便 于调试，此时，可以使用 ignore_errors 来暂时忽略 错误，使得 playbook 继续执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- hosts: all</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">    - name: Ignore False</span><br><span class="line">      <span class="built_in">command</span>: /bin/<span class="literal">false</span></span><br><span class="line">      ignore_errors: yes</span><br><span class="line"></span><br><span class="line">    - name: touch new file</span><br><span class="line">      file: path=/tmp/oldxu_ignore state=touch</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Ansible/" rel="tag"><i class="fa fa-tag"></i> Ansible</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/27816ec8.html" rel="prev" title="Variable和Register的使用">
+                  <i class="fa fa-chevron-left"></i> Variable和Register的使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/658bdd20.html" rel="next" title="jinja2和Role">
+                  jinja2和Role <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">459k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

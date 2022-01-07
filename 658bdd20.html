@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="template模板 模板是一个文本文件，可以做为生成文件的模版，并且模板文件中还可嵌套jinja语法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jinja2和Role">
+<meta property="og:url" content="https://klcc.cc/658bdd20.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="template模板 模板是一个文本文件，可以做为生成文件的模版，并且模板文件中还可嵌套jinja语法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jinja.palletsprojects.com/en/3.0.x/_images/jinja-logo.png">
+<meta property="article:published_time" content="2022-01-07T07:07:44.709Z">
+<meta property="article:modified_time" content="2022-01-07T07:14:41.424Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="Ansible">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jinja.palletsprojects.com/en/3.0.x/_images/jinja-logo.png">
+
+
+<link rel="canonical" href="https://klcc.cc/658bdd20.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/658bdd20.html","path":"658bdd20.html","title":"jinja2和Role"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>jinja2和Role | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">17</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">85</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#template%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.</span> <span class="nav-text">template模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jinja2%E8%AF%AD%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">jinja2语言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">数据类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#template"><span class="nav-number">1.2.</span> <span class="nav-text">template</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#template%E5%8F%98%E6%9B%B4%E6%9B%BF%E6%8D%A2"><span class="nav-number">1.2.1.</span> <span class="nav-text">template变更替换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.2.</span> <span class="nav-text">常用的系统参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#template%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97"><span class="nav-number">1.2.3.</span> <span class="nav-text">template算术运算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#template%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6for%E5%92%8Cif"><span class="nav-number">1.2.4.</span> <span class="nav-text">template中使用流程控制for和if</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#playbook%E4%BD%BF%E7%94%A8when"><span class="nav-number">1.2.5.</span> <span class="nav-text">playbook使用when</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#playbook%E4%BD%BF%E7%94%A8%E8%BF%AD%E4%BB%A3with-items-loop"><span class="nav-number">1.2.6.</span> <span class="nav-text">playbook使用迭代with_items(loop)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E7%90%86%E8%8A%82%E7%82%B9%E8%BF%87%E5%A4%9A%E5%AF%BC%E8%87%B4%E7%9A%84%E8%B6%85%E6%97%B6%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">管理节点过多导致的超时问题解决方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Role"><span class="nav-number"></span> <span class="nav-text">Role</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible-Roles%E7%9B%AE%E5%BD%95%E7%BC%96%E6%8E%92"><span class="nav-number">1.</span> <span class="nav-text">Ansible Roles目录编排</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Roles%E5%90%84%E7%9B%AE%E5%BD%95%E4%BD%9C%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">Roles各目录作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BArole"><span class="nav-number">3.</span> <span class="nav-text">创建role</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E5%A4%A7%E5%9E%8B%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8Roles%E8%BF%9B%E8%A1%8C%E7%BC%96%E6%8E%92"><span class="nav-number">3.1.</span> <span class="nav-text">针对大型项目使用Roles进行编排</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#playbook%E8%B0%83%E7%94%A8%E8%A7%92%E8%89%B2"><span class="nav-number">4.</span> <span class="nav-text">playbook调用角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#httpd%E8%A7%92%E8%89%B2"><span class="nav-number">5.1.</span> <span class="nav-text">httpd角色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NGINX%E8%A7%92%E8%89%B2"><span class="nav-number">5.2.</span> <span class="nav-text">NGINX角色</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BANginx%E7%9A%84roles"><span class="nav-number">6.</span> <span class="nav-text">创建Nginx的roles</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/658bdd20.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          jinja2和Role
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-07 15:07:44 / 修改时间：15:14:41" itemprop="dateCreated datePublished" datetime="2022-01-07T15:07:44+08:00">2022-01-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Ansible/" itemprop="url" rel="index"><span itemprop="name">Ansible</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="template模板"><a href="#template模板" class="headerlink" title="template模板"></a>template模板</h2><blockquote>
+<p>模板是一个文本文件，可以做为生成文件的模版，并且模板文件中还可嵌套jinja语法。</p>
+</blockquote>
+<span id="more"></span>
+<h3 id="jinja2语言"><a href="#jinja2语言" class="headerlink" title="jinja2语言"></a>jinja2语言</h3><blockquote>
+<p>官方网站：</p>
+<p><a target="_blank" rel="noopener" href="http://jinja.pocoo.org/">http://jinja.pocoo.org/</a></p>
+<p><a target="_blank" rel="noopener" href="https://jinja.palletsprojects.com/en/2.11.x/">https://jinja.palletsprojects.com/en/2.11.x/</a></p>
+</blockquote>
+<p><img src="https://jinja.palletsprojects.com/en/3.0.x/_images/jinja-logo.png" alt="img"></p>
+<h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><p><strong>jinja2 语言支持多种数据类型和操作:</strong></p>
+<ul>
+<li>字符串：使用单引号或双引号,</li>
+<li>数字：整数，浮点数</li>
+<li>列表：[item1, item2, …]</li>
+<li>元组：(item1, item2, …)</li>
+<li>字典：{key1:value1, key2:value2, …}</li>
+<li>布尔型：true/false</li>
+<li>算术运算：+, -, *, /, //, %, **</li>
+<li>比较操作：==, !=, &gt;, &gt;=, &lt;, &lt;=</li>
+<li>逻辑运算：and，or，not</li>
+<li>流表达式：For，If，When</li>
+</ul>
+<h3 id="template"><a href="#template" class="headerlink" title="template"></a>template</h3><p>template功能：可以根据和参考模块文件，动态生成相类似的配置文件，template文件必须存放于templates目录下，且命名为 .j2 结尾，yaml/yml 文件需和templates目录平级，目录结构如下示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> ./</span><br><span class="line">├── temnginx.yml</span><br><span class="line">└── templates</span><br><span class="line">    └── nginx.conf.j2Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<p>范例：利用template 同步nginx配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#准备templates/nginx.conf.j2文件</span></span><br><span class="line">[root@ansible ~]<span class="comment">#vim temnginx.yml</span></span><br><span class="line">---</span><br><span class="line">- hosts: web</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">    - name: template config to remote hosts</span><br><span class="line">     template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf</span><br><span class="line"> [root@ansible ~]<span class="comment">#ansible-playbook temnginx.ymlCopy to clipboardErrorCopied</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="template变更替换"><a href="#template变更替换" class="headerlink" title="template变更替换"></a>template变更替换</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#修改文件nginx.conf.j2 </span></span><br><span class="line">[root@ansible ~]<span class="comment">#mkdir templates</span></span><br><span class="line">[root@ansible ~]<span class="comment">#vim templates/nginx.conf.j2</span></span><br><span class="line">......</span><br><span class="line">worker_processes &#123;&#123; ansible_processor_vcpus &#125;&#125;;</span><br><span class="line">......</span><br><span class="line">[root@ansible ~]<span class="comment">#vim temnginx2.yml</span></span><br><span class="line">---</span><br><span class="line">- hosts: web</span><br><span class="line">  remote_user: root</span><br><span class="line">  </span><br><span class="line">  tasks:</span><br><span class="line">    - name: install nginx</span><br><span class="line">      yum: name=nginx</span><br><span class="line">    - name: template config to remote hosts</span><br><span class="line">      template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf </span><br><span class="line">    - name: start service</span><br><span class="line">      service: name=nginx state=started enabled=yes</span><br><span class="line">       </span><br><span class="line">[root@ansible ~]<span class="comment">#ansible-playbook temnginx2.ymlCopy to clipboardErrorCopied</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="常用的系统参数"><a href="#常用的系统参数" class="headerlink" title="常用的系统参数"></a>常用的系统参数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ansible_all_ipv4_addresses：仅显示ipv4的信息</span><br><span class="line">ansible_devices：仅显示磁盘设备信息</span><br><span class="line">ansible_distribution：显示是什么系统，例：centos,suse等</span><br><span class="line">ansible_distribution_version：仅显示系统版本</span><br><span class="line">ansible_distribution_major_version：显示系统版本号（7）</span><br><span class="line">ansible_machine：显示系统类型，例：32位，还是64位</span><br><span class="line">ansible_eth0：仅显示eth0的信息</span><br><span class="line">ansible_hostname：仅显示主机名</span><br><span class="line">ansible_kernel：仅显示内核版本</span><br><span class="line">ansible_lvm：显示lvm相关信息</span><br><span class="line">ansible_memtotal_mb：显示系统总内存</span><br><span class="line">ansible_memfree_mb：显示可用系统内存</span><br><span class="line">ansible_memory_mb：详细显示内存情况</span><br><span class="line">ansible_swaptotal_mb：显示总的swap内存</span><br><span class="line">ansible_swapfree_mb：显示swap内存的可用内存</span><br><span class="line">ansible_mounts：显示系统磁盘挂载情况</span><br><span class="line">ansible_processor：显示cpu个数(具体显示每个cpu的型号)</span><br><span class="line">ansible_processor_vcpus：显示cpu个数(只显示总的个数)</span><br><span class="line">ansible_python_version：显示python版本</span><br></pre></td></tr></table></figure>
+
+<h4 id="template算术运算"><a href="#template算术运算" class="headerlink" title="template算术运算"></a>template算术运算</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@ansible ansible]<span class="comment">#vim templates/nginx.conf.j2</span></span><br><span class="line">worker_processes &#123;&#123; ansible_processor_vcpus**3 &#125;&#125;;</span><br><span class="line">[root@ansible ansible]<span class="comment">#cat templnginx.yml</span></span><br><span class="line">---</span><br><span class="line">- hosts: websrvs</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">    - name: install nginx</span><br><span class="line">      yum: name=nginx</span><br><span class="line">    - name: template config to remote hosts</span><br><span class="line">      template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf</span><br><span class="line">      notify: restart nginx</span><br><span class="line">    - name: start service</span><br><span class="line">      service: name=nginx state=started enabled=yes</span><br><span class="line"> handlers:</span><br><span class="line">    - name: restart nginx</span><br><span class="line">      service: name=nginx state=restarted</span><br><span class="line">[root@ansible ~]<span class="comment">#-playbook templnginx.yml --limit 10.0.0.8Copy to clipboardErrorCopied</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="template中使用流程控制for和if"><a href="#template中使用流程控制for和if" class="headerlink" title="template中使用流程控制for和if"></a>template中使用流程控制for和if</h4><blockquote>
+<p>template中也可以使用流程控制 for 循环和 if 条件判断，实现动态生成文件功能</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#temlnginx2.yml</span></span><br><span class="line">---</span><br><span class="line">- hosts: websrvs</span><br><span class="line"> remote_user: root</span><br><span class="line"> vars:</span><br><span class="line">   nginx_vhosts:</span><br><span class="line">     - 81</span><br><span class="line">     - 82</span><br><span class="line">     - 83</span><br><span class="line"> tasks:</span><br><span class="line">   - name: template config</span><br><span class="line">     template: src=nginx.conf2.j2 dest=/data/nginx.conf</span><br><span class="line"><span class="comment">#templates/nginx.conf2.j2</span></span><br><span class="line">&#123;% <span class="keyword">for</span> vhost <span class="keyword">in</span> nginx_vhosts %&#125;</span><br><span class="line">server &#123;</span><br><span class="line">   listen &#123;&#123; vhost &#125;&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line">ansible-playbook -C templnginx2.yml --<span class="built_in">limit</span> 192.168.15.8</span><br><span class="line"><span class="comment">#生成的结果：</span></span><br><span class="line">server &#123;</span><br><span class="line">   listen 81   </span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">   listen 82   </span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">   listen 83   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#templnginx4.yml</span></span><br><span class="line">- hosts: websrvs</span><br><span class="line"> remote_user: root</span><br><span class="line"> vars:</span><br><span class="line">   nginx_vhosts:</span><br><span class="line">     - listen: 8080</span><br><span class="line">       server_name: <span class="string">&quot;web1.oldboy.com&quot;</span></span><br><span class="line">       root: <span class="string">&quot;/var/www/nginx/web1/&quot;</span></span><br><span class="line">     - listen: 8081</span><br><span class="line">       server_name: <span class="string">&quot;web2.oldboy.com&quot;</span></span><br><span class="line">       root: <span class="string">&quot;/var/www/nginx/web2/&quot;</span></span><br><span class="line">     - &#123;listen: 8082, server_name: <span class="string">&quot;web3.oldboy.com&quot;</span>, root: </span><br><span class="line"><span class="string">&quot;/var/www/nginx/web3/&quot;</span>&#125;</span><br><span class="line"> tasks:</span><br><span class="line">   - name: template config </span><br><span class="line">     template: src=nginx.conf4.j2 dest=/data/nginx4.conf</span><br><span class="line">      </span><br><span class="line">   </span><br><span class="line"><span class="comment"># templates/nginx.conf4.j2</span></span><br><span class="line">&#123;% <span class="keyword">for</span> vhost <span class="keyword">in</span> nginx_vhosts %&#125;</span><br><span class="line">server &#123;</span><br><span class="line">   listen &#123;&#123; vhost.listen &#125;&#125;</span><br><span class="line">   server_name &#123;&#123; vhost.server_name &#125;&#125;</span><br><span class="line">   root &#123;&#123; vhost.root &#125;&#125;  </span><br><span class="line">&#125;&#123;% endfor %&#125; </span><br><span class="line"></span><br><span class="line">[root@ansible ~]<span class="comment">#ansible-playbook templnginx4.yml --limit 10.0.0.8</span></span><br><span class="line"><span class="comment">#生成结果：</span></span><br><span class="line">server &#123;</span><br><span class="line">   listen 8080</span><br><span class="line">   server_name web1.oldboy.com</span><br><span class="line">   root /var/www/nginx/web1/  </span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">   listen 8081</span><br><span class="line">   server_name web2.oldboy.com</span><br><span class="line">   root /var/www/nginx/web2/  </span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">   listen 8082</span><br><span class="line">   server_name web3.oldboy.com</span><br><span class="line">   root /var/www/nginx/web3/  </span><br><span class="line">&#125;Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<h4 id="playbook使用when"><a href="#playbook使用when" class="headerlink" title="playbook使用when"></a>playbook使用when</h4><p>when语句，可以实现条件测试。如果需要根据变量、facts或此前任务的执行结果来做为某task执行与否的前提时要用到条件测试,通过在task后添加when子句即可使用条件测试，jinja2的语法格式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tasks:</span><br><span class="line">  - name: <span class="string">&quot;shut down CentOS 6 and Debian 7 systems&quot;</span></span><br><span class="line">   <span class="built_in">command</span>: /sbin/shutdown -t now</span><br><span class="line">   when: (ansible_facts[<span class="string">&#x27;distribution&#x27;</span>] == <span class="string">&quot;CentOS&quot;</span> and ansible_facts[<span class="string">&#x27;distribution_major_version&#x27;</span>] == <span class="string">&quot;6&quot;</span>) or (ansible_facts[<span class="string">&#x27;distribution&#x27;</span>] == <span class="string">&quot;Debian&quot;</span> and ansible_facts[<span class="string">&#x27;distribution_major_version&#x27;</span>] == <span class="string">&quot;7&quot;</span>)Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<h4 id="playbook使用迭代with-items-loop"><a href="#playbook使用迭代with-items-loop" class="headerlink" title="playbook使用迭代with_items(loop)"></a>playbook使用迭代with_items(loop)</h4><p>迭代：当有需要重复性执行的任务时，可以使用迭代机制对迭代项的引用，固定内置变量名为”item”，要在task中使用with_items给定要迭代的元素列表</p>
+<p>注意: ansible2.5版本后,可以用loop代替with_items</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: websrvs</span><br><span class="line"> remote_user: root</span><br><span class="line">  </span><br><span class="line"> tasks:</span><br><span class="line">    - name: add several users</span><br><span class="line">     user: name=&#123;&#123; item &#125;&#125; state=present groups=wheel</span><br><span class="line">     with_items:</span><br><span class="line">        - testuser1</span><br><span class="line">        - testuser2</span><br><span class="line">        - testuser3</span><br><span class="line">        </span><br><span class="line"><span class="comment">#上面语句的功能等同于下面的语句</span></span><br><span class="line">    - name: add several users</span><br><span class="line">      user: name=testuser1 state=present groups=wheel</span><br><span class="line">    - name: add several users</span><br><span class="line">      user: name=testuser2 state=present groups=wheel</span><br><span class="line">    - name: add several users</span><br><span class="line">      user: name=testuser3 state=present groups=wheel</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"><span class="comment">#remove mariadb server</span></span><br><span class="line">- hosts: 172.16.1.7</span><br><span class="line">  remote_user: root</span><br><span class="line">  tasks:</span><br><span class="line">    - name: stop service</span><br><span class="line">      shell: /etc/init.d/mysqld stop</span><br><span class="line">    - name: delete files and dir</span><br><span class="line">      file: path=&#123;&#123;item&#125;&#125; state=absent</span><br><span class="line">      with_items:</span><br><span class="line">        - /usr/<span class="built_in">local</span>/mysql</span><br><span class="line">        - /usr/<span class="built_in">local</span>/mariadb-10.2.27-linux-x86_64</span><br><span class="line">        - /etc/init.d/mysqld</span><br><span class="line">        - /etc/profile.d/mysql.sh</span><br><span class="line">        - /etc/my.cnf</span><br><span class="line">        - /data/mysql</span><br><span class="line">    - name: delete user</span><br><span class="line">      user: name=mysql state=absent remove=yesCopy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<p><strong>迭代嵌套子变量：</strong>在迭代中，还可以嵌套子变量，关联多个变量在一起使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: websrvs</span><br><span class="line">  remote_user: root</span><br><span class="line">  </span><br><span class="line">  tasks:</span><br><span class="line">    - name: add some groups</span><br><span class="line">      group: name=&#123;&#123; item &#125;&#125; state=present</span><br><span class="line">      with_items:</span><br><span class="line">        - nginx</span><br><span class="line">        - mysql</span><br><span class="line">        - apache</span><br><span class="line">    - name: add some users</span><br><span class="line">      user: name=&#123;&#123; item.name &#125;&#125; group=&#123;&#123; item.group &#125;&#125; state=present</span><br><span class="line">      with_items:</span><br><span class="line">        - &#123; name: <span class="string">&#x27;nginx&#x27;</span>, group: <span class="string">&#x27;nginx&#x27;</span> &#125;</span><br><span class="line">        - &#123; name: <span class="string">&#x27;mysql&#x27;</span>, group: <span class="string">&#x27;mysql&#x27;</span> &#125;</span><br><span class="line">        - &#123; name: <span class="string">&#x27;apache&#x27;</span>, group: <span class="string">&#x27;apache&#x27;</span> &#125;Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<h3 id="管理节点过多导致的超时问题解决方法"><a href="#管理节点过多导致的超时问题解决方法" class="headerlink" title="管理节点过多导致的超时问题解决方法"></a>管理节点过多导致的超时问题解决方法</h3><blockquote>
+<p>默认情况下，Ansible将尝试并行管理playbook中所有的机器。对于滚动更新用例，可以使用serial关键字定义Ansible一次应管理多少主机，还可以将serial关键字指定为百分比，表示每次并行执行的主机数占总数的比例</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#vim test_serial.yml</span></span><br><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  serial: 2  <span class="comment">#每次只同时处理2个主机,将所有task执行完成后,再选下2个主机再执行所有task,直至所有主机</span></span><br><span class="line">  gather_facts: False</span><br><span class="line">  tasks:</span><br><span class="line">    - name: task one</span><br><span class="line">  comand: hostname</span><br><span class="line">    - name: task two</span><br><span class="line">      <span class="built_in">command</span>: hostname</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 案例2：</span></span><br><span class="line">- name: <span class="built_in">test</span> serail</span><br><span class="line">  hosts: all</span><br><span class="line">  serial: <span class="string">&quot;20%&quot;</span>   <span class="comment">#每次只同时处理20%的主机</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="Role"><a href="#Role" class="headerlink" title="Role"></a><a target="_blank" rel="noopener" href="http://192.168.13.73:3000/#/file/roles%E8%A7%92%E8%89%B2?id=role">Role</a></h1><p>角色是ansible自1.2版本引入的新特性，用于层次性、结构化地组织playbook。roles能够根据层次型结构自动装载变量文件、tasks以及handlers等。要使用roles只需要在playbook中使用include指令即可。简单来讲，roles就是通过分别将变量、文件、任务、模板及处理器放置于单独的目录中，并可以便捷地include它们的一种机制。角色一般用于基于主机构建服务的场景中，但也可以是用于构建守护进程等场景中</p>
+<p>运维复杂的场景：建议使用 roles，代码复用度高</p>
+<p>roles：多个角色的集合目录， 可以将多个的role，分别放至roles目录下的独立子目录中,如下示例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">roles/</span><br><span class="line"> mysql/</span><br><span class="line"> nginx/</span><br><span class="line"> tomcat/</span><br><span class="line"> redis/Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<p>默认roles存放路径</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/root/.ansible/roles</span><br><span class="line">/usr/share/ansible/roles</span><br><span class="line">/etc/ansible/rolesCopy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ansible-Roles目录编排"><a href="#Ansible-Roles目录编排" class="headerlink" title="Ansible Roles目录编排"></a><a target="_blank" rel="noopener" href="http://192.168.13.73:3000/#/file/roles%E8%A7%92%E8%89%B2?id=ansible-roles%E7%9B%AE%E5%BD%95%E7%BC%96%E6%8E%92">Ansible Roles目录编排</a></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">├── nginx -------------role1名称</span><br><span class="line">│   ├── defaults  ---------必须存在的目录，存放默认的变量，模板文件中的变量就是引用自这里。defaults中的变量优先级最低，通常我们可以临时指定变量来进行覆盖</span><br><span class="line">│   │   └── main.yml</span><br><span class="line">│   ├── files -------------ansible中unarchive、copy等模块会自动来这里找文件，从而我们不必写绝对路径，只需写文件名</span><br><span class="line">│   │   ├── mysql.tar.gz</span><br><span class="line">│   │   └── nginx.tar.gz</span><br><span class="line">│   ├── handlers -----------存放tasks中的notify指定的内容</span><br><span class="line">│   │   └── main.yml</span><br><span class="line">│   ├── meta</span><br><span class="line">│   ├── tasks --------------存放playbook的目录，其中main.yml是主入口文件，在main.yml中导入其他yml文件，要采用import_tasks关键字，include要弃用了</span><br><span class="line">│   │   ├── install.yml</span><br><span class="line">│   │   └── main.yml -------主入口文件</span><br><span class="line">│   ├── templates ----------存放模板文件。template模块会将模板文件中的变量替换为实际值，然后覆盖到客户机指定路径上</span><br><span class="line">│   │   └── nginx.conf.j2</span><br><span class="line">│   └── varsCopy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<h2 id="Roles各目录作用"><a href="#Roles各目录作用" class="headerlink" title="Roles各目录作用"></a><a target="_blank" rel="noopener" href="http://192.168.13.73:3000/#/file/roles%E8%A7%92%E8%89%B2?id=roles%E5%90%84%E7%9B%AE%E5%BD%95%E4%BD%9C%E7%94%A8">Roles各目录作用</a></h2><ul>
+<li><p>files/ ：存放由copy或script模块等调用的文件</p>
+</li>
+<li><p>templates/：template模块查找所需要模板文件的目录</p>
+</li>
+<li><p>tasks/：定义task,role的基本元素，至少应该包含一个名为main.yml的文件；其它的文件需要在此文件中通过include进行包含</p>
+</li>
+<li><p>handlers/：至少应该包含一个名为main.yml的文件；此目录下的其它的文件需要在此文件中通过</p>
+</li>
+<li><p>include进行包含</p>
+</li>
+<li><p>vars/：定义变量，至少应该包含一个名为main.yml的文件；此目录下的其它的变量文件需要在此文件中通过include进行包含</p>
+</li>
+<li><p>meta/：定义当前角色的特殊设定及其依赖关系,至少应该包含一个名为main.yml的文件，其它文件需在此文件中通过include进行包含</p>
+</li>
+<li><p>default/：设定默认变量时使用此目录中的main.yml文件，比vars的优先级低</p>
+<h2 id="创建role"><a href="#创建role" class="headerlink" title="创建role"></a><a target="_blank" rel="noopener" href="http://192.168.13.73:3000/#/file/roles%E8%A7%92%E8%89%B2?id=%E5%88%9B%E5%BB%BArole">创建role</a></h2></li>
+</ul>
+<blockquote>
+<p>创建role的步骤</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1 创建以roles命名的目录</span><br><span class="line">2 在roles目录中分别创建以各角色名称命名的目录，如mysql等</span><br><span class="line">3 在每个角色命名的目录中分别创建files、handlers、tasks、templates和vars等目录；用不到的目录可以创建为空目录，也可以不创建</span><br><span class="line">4 在每个角色相关的子目录中创建相应的文件,如 tasks/main.yml,templates/nginx.conf.j2</span><br><span class="line">5 在playbook文件中，调用需要的角色</span><br><span class="line"></span><br><span class="line">[root@m01 package]<span class="comment"># mkdir -p /root/package/roles/nginx/&#123;files,handlers,tasks,templates,vars,meta&#125;</span></span><br><span class="line">[root@m01 package]<span class="comment"># tree</span></span><br><span class="line">.</span><br><span class="line">└── roles</span><br><span class="line">    └── nginx</span><br><span class="line">        ├── files</span><br><span class="line">        ├── handlers</span><br><span class="line">        ├── meta</span><br><span class="line">        ├── tasks</span><br><span class="line">        ├── templates</span><br><span class="line">        └── vars</span><br><span class="line">Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<h3 id="针对大型项目使用Roles进行编排"><a href="#针对大型项目使用Roles进行编排" class="headerlink" title="针对大型项目使用Roles进行编排"></a><a target="_blank" rel="noopener" href="http://192.168.13.73:3000/#/file/roles%E8%A7%92%E8%89%B2?id=%E9%92%88%E5%AF%B9%E5%A4%A7%E5%9E%8B%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8roles%E8%BF%9B%E8%A1%8C%E7%BC%96%E6%8E%92">针对大型项目使用Roles进行编排</a></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 范例</span></span><br><span class="line">nginx-role.yml </span><br><span class="line">roles/</span><br><span class="line">└── nginx </span><br><span class="line">     ├── files</span><br><span class="line">     │   └── main.yml </span><br><span class="line">     ├── tasks</span><br><span class="line">     │   ├── groupadd.yml </span><br><span class="line">     │   ├── install.yml </span><br><span class="line">     │   ├── main.yml </span><br><span class="line">     │   ├── restart.yml </span><br><span class="line">     │   └── useradd.yml </span><br><span class="line">     └── vars </span><br><span class="line">         └── main.ymlCopy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<h2 id="playbook调用角色"><a href="#playbook调用角色" class="headerlink" title="playbook调用角色"></a><a target="_blank" rel="noopener" href="http://192.168.13.73:3000/#/file/roles%E8%A7%92%E8%89%B2?id=playbook%E8%B0%83%E7%94%A8%E8%A7%92%E8%89%B2">playbook调用角色</a></h2><ul>
+<li>调用角色方法1</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: web</span><br><span class="line">  remote_user: root</span><br><span class="line">  roles:</span><br><span class="line">    - mysql</span><br><span class="line">    - memcached</span><br><span class="line">    - nginx  Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>调用角色方法2</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  remote_user: root</span><br><span class="line">  roles:</span><br><span class="line">    - mysql</span><br><span class="line">    - &#123; role: nginx, username: nginx &#125;Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>调用角色方法3</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: all</span><br><span class="line">  remote_user: root</span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: nginx, username: nginx, when: ansible_distribution_major_version == <span class="string">&#x27;7&#x27;</span> &#125;Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>调用角色方法4</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: appsrvs</span><br><span class="line">  remote_user: root</span><br><span class="line">  roles:</span><br><span class="line">    - &#123; role: nginx ,tags: [ <span class="string">&#x27;nginx&#x27;</span>, <span class="string">&#x27;web&#x27;</span> ] ,when: ansible_distribution_major_version == <span class="string">&quot;6&quot;</span> &#125;</span><br><span class="line">    - &#123; role: httpd ,tags: [ <span class="string">&#x27;httpd&#x27;</span>, <span class="string">&#x27;web&#x27;</span> ] &#125;</span><br><span class="line">    - &#123; role: mysql ,tags: [ <span class="string">&#x27;mysql&#x27;</span>, <span class="string">&#x27;db&#x27;</span> ] &#125;</span><br><span class="line">    - &#123; role: mariadb ,tags: [ <span class="string">&#x27;mariadb&#x27;</span>, <span class="string">&#x27;db&#x27;</span> ] &#125;Copy to clipboardErrorCopied</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a><a target="_blank" rel="noopener" href="http://192.168.13.73:3000/#/file/roles%E8%A7%92%E8%89%B2?id=%E6%A1%88%E4%BE%8B">案例</a></h2><h3 id="httpd角色"><a href="#httpd角色" class="headerlink" title="httpd角色"></a><a target="_blank" rel="noopener" href="http://192.168.13.73:3000/#/file/roles%E8%A7%92%E8%89%B2?id=httpd%E8%A7%92%E8%89%B2">httpd角色</a></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建角色相关的目录</span></span><br><span class="line">[root@ansible ~]<span class="comment">#mkdir -pv /data/ansible/roles/httpd/&#123;tasks,handlers,files&#125;</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">#创建角色相关的文件</span></span><br><span class="line">[root@ansible ~]<span class="comment">#cd /data/ansible/roles/httpd/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#main.yml 是task的入口文件</span></span><br><span class="line">[root@ansible ~]<span class="comment">#vim tasks/main.yml</span></span><br><span class="line">- include: group.yml</span><br><span class="line">- include: user.yml</span><br><span class="line">- include: install.yml</span><br><span class="line">- include: config.yml</span><br><span class="line">- include: index.yml</span><br><span class="line">- include: service.yml</span><br><span class="line"></span><br><span class="line">[root@ansible ~]<span class="comment">#vim tasks/group.yml</span></span><br><span class="line">- name: create apache group</span><br><span class="line">  group: name=apache system=yes gid=80</span><br><span class="line">  </span><br><span class="line">[root@ansible ~]<span class="comment">#vim tasks/user.yml</span></span><br><span class="line">- name: create apache user</span><br><span class="line">  user: name=apache system=yes shell=/sbin/nologin home=/var/www/ uid=80 group=apache</span><br><span class="line">  </span><br><span class="line">[root@ansible ~]<span class="comment">#vim tasks/install.yml</span></span><br><span class="line">- name: install httpd package</span><br><span class="line">  yum: name=httpd</span><br><span class="line">[root@ansible ~]<span class="comment">#vim tasks/config.yml</span></span><br><span class="line">- name: config file</span><br><span class="line">  copy: src=httpd.conf dest=/etc/httpd/conf/ backup=yes</span><br><span class="line">  notify: restart</span><br><span class="line">[root@ansible ~]<span class="comment"># tasks/index.yml</span></span><br><span class="line">- name: index.html</span><br><span class="line">  copy: src=index.html dest=/var/www/html/</span><br><span class="line">[root@ansible ~]<span class="comment">#vim tasks/service.yml</span></span><br><span class="line">- name: start service</span><br><span class="line">  service: name=httpd state=started enabled=yes</span><br><span class="line">[root@ansible ~]<span class="comment">#vim handlers/main.yml</span></span><br><span class="line">- name: restart</span><br><span class="line">  service: name=httpd state=restarted</span><br><span class="line">  </span><br><span class="line"><span class="comment">#在files目录下准备两个文件</span></span><br><span class="line">[root@ansible ~]<span class="comment">#ls files/</span></span><br><span class="line">httpd.conf index.html</span><br><span class="line">[root@ansible ~]<span class="comment">#tree /data/ansible/roles/httpd/</span></span><br><span class="line">/data/ansible/roles/httpd/</span><br><span class="line">├── files</span><br><span class="line">│   ├── httpd.conf</span><br><span class="line">│   └── index.html</span><br><span class="line">├── handlers</span><br><span class="line">│   └── main.yml</span><br><span class="line">└── tasks</span><br><span class="line">   ├── config.yml</span><br><span class="line">   ├── group.yml</span><br><span class="line">   ├── index.yml</span><br><span class="line">   ├── install.yml</span><br><span class="line">   ├── main.yml</span><br><span class="line">   ├── service.yml</span><br><span class="line">   └── user.yml</span><br><span class="line">3 directories, 10 files</span><br><span class="line"><span class="comment">#在playbook中调用角色</span></span><br><span class="line">[root@ansible ~]<span class="comment">#vim /data/ansible/role_httpd.yml</span></span><br><span class="line">---</span><br><span class="line"><span class="comment"># httpd role</span></span><br><span class="line">- hosts: websrvs</span><br><span class="line">  remote_user: root</span><br><span class="line">  roles:</span><br><span class="line">    - httpd</span><br><span class="line">    </span><br><span class="line"><span class="comment">#运行playbook</span></span><br><span class="line">[root@ansible ~]<span class="comment">#ansible-playbook /data/ansible/role_httpd.ymlCopy to clipboardErrorCopied</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="NGINX角色"><a href="#NGINX角色" class="headerlink" title="NGINX角色"></a><a target="_blank" rel="noopener" href="http://192.168.13.73:3000/#/file/roles%E8%A7%92%E8%89%B2?id=nginx%E8%A7%92%E8%89%B2">NGINX角色</a></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">[root@ansible ~]<span class="comment">#mkdir -pv /data/ansible/roles/nginx/&#123;tasks,handlers,templates,vars&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#创建task文件</span></span><br><span class="line">[root@ansible ~]<span class="comment">#cd /data/ansible/roles/nginx/</span></span><br><span class="line">[root@ansible nginx]<span class="comment">#vim tasks/main.yml </span></span><br><span class="line">- include: install.yml</span><br><span class="line">- include: config.yml</span><br><span class="line">- include: index.yml</span><br><span class="line">- include: service.yml</span><br><span class="line">[root@ansible nginx]<span class="comment">#vim tasks/install.yml </span></span><br><span class="line">- name: install</span><br><span class="line">  yum: name=nginx </span><br><span class="line"> </span><br><span class="line">[root@ansible nginx]<span class="comment">#vim tasks/config.yml </span></span><br><span class="line">- name: config file <span class="keyword">for</span> centos7</span><br><span class="line">  template: src=nginx7.conf.j2 dest=/etc/nginx/nginx.conf</span><br><span class="line">  when: ansible_distribution_major_version==<span class="string">&quot;7&quot;</span></span><br><span class="line">  notify: restart</span><br><span class="line">- name: config file <span class="keyword">for</span> centos8</span><br><span class="line">  template: src=nginx8.conf.j2 dest=/etc/nginx/nginx.conf</span><br><span class="line">  when: ansible_distribution_major_version==<span class="string">&quot;8&quot;</span></span><br><span class="line">  notify: restart</span><br><span class="line">  </span><br><span class="line"><span class="comment">#跨角色调用文件</span></span><br><span class="line">[root@ansible nginx]<span class="comment">#vim tasks/index.yml </span></span><br><span class="line">- name: index.html</span><br><span class="line">  copy: src=roles/httpd/files/index.html dest=/usr/share/nginx/html/</span><br><span class="line">[root@ansible nginx]<span class="comment">#vim tasks/service.yml </span></span><br><span class="line">- name: start service</span><br><span class="line">  service: name=nginx state=started enabled=yes</span><br><span class="line"><span class="comment">#创建handler文件</span></span><br><span class="line">[root@ansible nginx]<span class="comment">#cat handlers/main.yml </span></span><br><span class="line">- name: restart</span><br><span class="line">  service: name=nginx state=restarted</span><br><span class="line"><span class="comment">#创建两个template文件</span></span><br><span class="line">[root@ansible nginx]<span class="comment">#cat templates/nginx7.conf.j2</span></span><br><span class="line">...省略...</span><br><span class="line">user &#123;&#123;user&#125;&#125;;</span><br><span class="line">worker_processes &#123;&#123;ansible_processor_vcpus+3&#125;&#125;;   <span class="comment">#修改此行</span></span><br><span class="line">error_log /var/<span class="built_in">log</span>/nginx/error.log;</span><br><span class="line">pid /run/nginx.pid;</span><br><span class="line">...省略...</span><br><span class="line">[root@ansible nginx]<span class="comment">#cat templates/nginx8.conf.j2</span></span><br><span class="line">...省略...</span><br><span class="line">user nginx;</span><br><span class="line">worker_processes &#123;&#123;ansible_processor_vcpus**3&#125;&#125;;  <span class="comment">#修改此行</span></span><br><span class="line">error_log /var/<span class="built_in">log</span>/nginx/error.log;</span><br><span class="line">pid /run/nginx.pid;</span><br><span class="line">...省略...</span><br><span class="line"><span class="comment">#创建变量文件</span></span><br><span class="line">[root@ansible nginx]<span class="comment">#vim vars/main.yml </span></span><br><span class="line">user: daemon</span><br><span class="line"><span class="comment">#目录结构如下</span></span><br><span class="line">[root@ansible ~]<span class="comment">#tree /data/ansible/roles/nginx/</span></span><br><span class="line">/data/ansible/roles/nginx/</span><br><span class="line">├── handlers</span><br><span class="line">│   └── main.yml</span><br><span class="line">├── tasks</span><br><span class="line">│   ├── config.yml</span><br><span class="line">│   ├── file.yml</span><br><span class="line">│   ├── install.yml</span><br><span class="line">│   ├── main.yml</span><br><span class="line">│   └── service.yml</span><br><span class="line">├── templates</span><br><span class="line">│   ├── nginx7.conf.j2</span><br><span class="line">│   └── nginx8.conf.j2</span><br><span class="line">└── vars</span><br><span class="line">   └── main.yml</span><br><span class="line">4 directories, 9 files</span><br><span class="line"><span class="comment">#在playbook中调用角色</span></span><br><span class="line">[root@ansible ~]<span class="comment">#vim /data/ansible/role_nginx.yml </span></span><br><span class="line">---</span><br><span class="line"><span class="comment">#nginx role </span></span><br><span class="line">- hosts: web</span><br><span class="line"> roles:</span><br><span class="line">    - role: nginx</span><br><span class="line">    </span><br><span class="line"><span class="comment">#运行playbook</span></span><br><span class="line">[root@ansible ~]<span class="comment">#ansible-playbook /data/ansible/role_nginx.yml</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="创建Nginx的roles"><a href="#创建Nginx的roles" class="headerlink" title="创建Nginx的roles"></a>创建Nginx的roles</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建初始文件</span></span><br><span class="line">[root@m01 roles]<span class="comment"># ansible-galaxy init nginx</span></span><br><span class="line">- Role nginx was created successfully</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看目录层级结构</span></span><br><span class="line">baim0/</span><br><span class="line">└── roles</span><br><span class="line">    └── nginx</span><br><span class="line">        ├── defaults</span><br><span class="line">        │   └── main.yml</span><br><span class="line">        ├── files</span><br><span class="line">        ├── handlers</span><br><span class="line">        │   └── main.yml</span><br><span class="line">        ├── meta</span><br><span class="line">        │   └── main.yml</span><br><span class="line">        ├── README.md</span><br><span class="line">        ├── tasks</span><br><span class="line">        │   └── main.yml</span><br><span class="line">        ├── templates</span><br><span class="line">        ├── tests</span><br><span class="line">        │   ├── inventory</span><br><span class="line">        │   └── test.yml</span><br><span class="line">        └── vars</span><br><span class="line">            └── main.yml</span><br><span class="line"></span><br><span class="line"><span class="comment"># </span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Ansible/" rel="tag"><i class="fa fa-tag"></i> Ansible</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/d30594ae.html" rel="prev" title="Task控制">
+                  <i class="fa fa-chevron-left"></i> Task控制
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">459k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

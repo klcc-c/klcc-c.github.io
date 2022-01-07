@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Ansible介绍简 介ansible是自动化运维工具，基于Python开发，集合了众多运维工具（puppet、cfengine、chef、func、fabric）的优点，实现了批量系统配置、批量程序部署、批量运行命令等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ansible简介、安装">
+<meta property="og:url" content="https://klcc.cc/1452b361.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="Ansible介绍简 介ansible是自动化运维工具，基于Python开发，集合了众多运维工具（puppet、cfengine、chef、func、fabric）的优点，实现了批量系统配置、批量程序部署、批量运行命令等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220103130441938.png">
+<meta property="article:published_time" content="2022-01-07T06:58:00.023Z">
+<meta property="article:modified_time" content="2022-01-07T07:14:41.419Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="Ansible">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220103130441938.png">
+
+
+<link rel="canonical" href="https://klcc.cc/1452b361.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/1452b361.html","path":"1452b361.html","title":"Ansible简介、安装"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Ansible简介、安装 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">17</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">85</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ansible%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Ansible介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80-%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">简 介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">基础架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">安装部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F-yum"><span class="nav-number">2.1.</span> <span class="nav-text">包管理方式(yum)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pip%E5%AE%89%E8%A3%85"><span class="nav-number">2.2.</span> <span class="nav-text">pip安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E"><span class="nav-number">3.</span> <span class="nav-text">配置文件说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">默认配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">3.2.</span> <span class="nav-text">配置文件优先级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inventory"><span class="nav-number">4.</span> <span class="nav-text">Inventory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">4.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%9C%BA%E6%B8%85%E5%8D%95%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F"><span class="nav-number">4.2.</span> <span class="nav-text">主机清单定义方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81"><span class="nav-number">4.2.1.</span> <span class="nav-text">用户密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%8D%E5%AF%86"><span class="nav-number">4.2.2.</span> <span class="nav-text">免密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%B9%E9%85%8D%E4%B8%BB%E6%9C%BA%E7%BB%84%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">匹配主机组的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E8%A2%AB%E6%8E%A7%E7%AB%AF"><span class="nav-number">4.4.</span> <span class="nav-text">使用普通用户管理被控端</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/1452b361.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ansible简介、安装
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-07 14:58:00 / 修改时间：15:14:41" itemprop="dateCreated datePublished" datetime="2022-01-07T14:58:00+08:00">2022-01-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Ansible/" itemprop="url" rel="index"><span itemprop="name">Ansible</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="Ansible介绍"><a href="#Ansible介绍" class="headerlink" title="Ansible介绍"></a><code>Ansible</code>介绍</h2><h3 id="简-介"><a href="#简-介" class="headerlink" title="简 介"></a>简 介</h3><p>ansible是自动化运维工具，基于Python开发，集合了众多运维工具（puppet、cfengine、chef、func、fabric）的优点，实现了批量系统配置、批量程序部署、批量运行命令等</p>
+<span id="more"></span>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
+<li><p>优势</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.ansible不需要单独安装客户端，也不需要启动任何服务</span><br><span class="line">2.ansible是python中的一套完整的自动化执行任务模块</span><br><span class="line">3.ansible playbook，采用yaml配置，对于自动化任务执行一目了然</span><br><span class="line">4.ansible 模块较多，对于自动化的场景支持较丰富</span><br></pre></td></tr></table></figure></li>
+<li><p>劣势</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.幂等性，每次的描述一种状态后，服务器会按照你所期望的状态去运行；出了问题无法回退，需要重新在描述一次状态，然后执行，以实现回退的效果</span><br><span class="line"></span><br><span class="line">2.效率，如果连接的主机较多，执行的速度会比较的慢，速度相对比saltstack慢</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.连接插件connectior plugins用于连接主机 用来连接被管理端</span><br><span class="line">2.核心模块 core modules 连接主机实现操作， 它依赖于具体的模块来做具体的事情</span><br><span class="line">3.自定义模块 custom modules，根据自己的需求编写具体的模块</span><br><span class="line">4.插件 plugins，完成模块功能的补充</span><br><span class="line">5.剧本 playbooks，ansible的配置文件,将多个任务定义在剧本中，由ansible自动执行</span><br><span class="line">6.主机清单 inventor，定义ansible需要操作主机的范围</span><br><span class="line">最重要的一点是 ansible是模块化的 它所有的操作都依赖于模块</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220103130441938.png" alt="image-20220103130441938"></p>
+<h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><h3 id="包管理方式-yum"><a href="#包管理方式-yum" class="headerlink" title="包管理方式(yum)"></a>包管理方式(<code>yum</code>)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># centos需要有epel源</span></span><br><span class="line">curl -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接安装</span></span><br><span class="line">yum install ansible -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">ansible --version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 简单使用</span></span><br><span class="line">ansible localhost -m ping</span><br></pre></td></tr></table></figure>
+
+<h3 id="pip安装"><a href="#pip安装" class="headerlink" title="pip安装"></a><code>pip</code>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装python3</span></span><br><span class="line">yum -y install python3 python3-devel python3-pip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 升级pip3</span></span><br><span class="line">pip3 install --upgrade pip -i https://pypi.douban.com/simple/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装ansible</span></span><br><span class="line">pip3 install ansible -i https://pypi.douban.com/simple/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看ansible安装位置</span></span><br><span class="line"><span class="built_in">which</span> ansible</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看ansible版本</span></span><br><span class="line">/usr/<span class="built_in">local</span>/bin/ansible --version</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置文件说明"><a href="#配置文件说明" class="headerlink" title="配置文件说明"></a>配置文件说明</h2><h3 id="默认配置文件"><a href="#默认配置文件" class="headerlink" title="默认配置文件"></a>默认配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看默认配置文件路径</span></span><br><span class="line">rpm -qc ansible</span><br><span class="line">/etc/ansible/ansible.cfg  <span class="comment"># 主配置文件</span></span><br><span class="line">/etc/ansible/hosts				<span class="comment"># 主机清单文件 inventory</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># /etc/ansible/ansible.cfg 部分说明</span></span><br><span class="line"><span class="comment">#inventory      = /etc/ansible/hosts			    # 默认主机清单路径</span></span><br><span class="line"><span class="comment">#library        = /usr/share/my_modules/      # 模块存放路径</span></span><br><span class="line"><span class="comment">#module_utils   = /usr/share/my_module_utils/ # 模块存放路径</span></span><br><span class="line"><span class="comment">#remote_tmp     = ~/.ansible/tmp              # 将模块推送到被控端的临时位置</span></span><br><span class="line"><span class="comment">#local_tmp      = ~/.ansible/tmp              # 本地模块临时存放位置</span></span><br><span class="line"><span class="comment">#forks          = 5											      #	默认并行的主机数量  可以使用参数 -f 单独指定</span></span><br><span class="line"><span class="comment">#poll_interval  = 15</span></span><br><span class="line"><span class="comment">#sudo_user      = root</span></span><br><span class="line"><span class="comment">#ask_sudo_pass = True</span></span><br><span class="line"><span class="comment">#ask_pass      = True</span></span><br><span class="line"><span class="comment">#remote_port    = 22</span></span><br><span class="line"><span class="comment">#host_key_checking = False								    # 第一次连接主机的 yes 需要打开注释</span></span><br><span class="line"><span class="comment">#roles_path    = /etc/ansible/roles           # 默认角色路径</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置文件优先级"><a href="#配置文件优先级" class="headerlink" title="配置文件优先级"></a>配置文件优先级</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置文件加载顺序</span></span><br><span class="line">第一步读取：ANSIBLE_CONFIG</span><br><span class="line">第二步读取：当前项目目录下的ansible.cfg</span><br><span class="line">第三步读取：当前用户家目录下的 .ansible.cfg </span><br><span class="line">第四步读取: /etc/ansible/ansible.cfg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 环境变量</span></span><br><span class="line"><span class="built_in">export</span> ANSIBLE_CONFIG=/tmp/ansible.cfg  <span class="comment"># 定义</span></span><br><span class="line">touch /tmp/ansible.cfg</span><br><span class="line">ansible --version     <span class="comment"># 可以看到配置文件位置是 /tmp/ansible.cfg</span></span><br><span class="line"><span class="built_in">unset</span> ANSIBLE_CONFIG  <span class="comment"># 取消定义</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 为项目单独定义配置文件，非常的重要</span></span><br><span class="line">mkdir project1</span><br><span class="line"><span class="built_in">cd</span> project1/</span><br><span class="line">touch ansible.cfg</span><br><span class="line">ansible --version  <span class="comment"># 此时加载的配置文件位置就是 /root/project1/ansible.cfg</span></span><br><span class="line"><span class="comment"># 退出当前目录就变成默认的配置文件了</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 为当前执行的用户家目录植入一个配置文件；</span></span><br><span class="line">touch ~/.ansible.cfg</span><br><span class="line">ansible --version  <span class="comment"># 此时加载的配置文件位置就是 ~/.ansible.cfg</span></span><br><span class="line">rm -f ~/.ansible.cfg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认的配置文件加载路径，优先级是最低的</span></span><br><span class="line">ansible --version</span><br></pre></td></tr></table></figure>
+
+<h2 id="Inventory"><a href="#Inventory" class="headerlink" title="Inventory"></a><code>Inventory</code></h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">主要用来填写被管理主机及主机组信息(逻辑定义)</span><br><span class="line">默认Inventory文件为/etc/ansible/hosts</span><br><span class="line">也可以自定义一个我看，使用ansible命令 -i 参数指定Inventory文件位置</span><br></pre></td></tr></table></figure>
+
+<h3 id="主机清单定义方式"><a href="#主机清单定义方式" class="headerlink" title="主机清单定义方式"></a>主机清单定义方式</h3><h4 id="用户密码"><a href="#用户密码" class="headerlink" title="用户密码"></a>用户密码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直接写主机IP</span></span><br><span class="line">[server1]</span><br><span class="line">192.168.0.11 ansible_ssh_port=22 ansible_ssh_user=root ansible_ssh_pass=<span class="string">&#x27;123456&#x27;</span></span><br><span class="line">192.168.0.12 ansible_ssh_port=22 ansible_ssh_user=root ansible_ssh_pass=<span class="string">&#x27;123456&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将密码改成变量，等同于上面</span></span><br><span class="line">[server1]</span><br><span class="line">192.168.0.11</span><br><span class="line">192.168.0.11</span><br><span class="line"></span><br><span class="line">[server1:vars]</span><br><span class="line">ansible_ssh_port=22</span><br><span class="line">ansible_ssh_user=root</span><br><span class="line">ansible_ssh_pass=<span class="string">&#x27;123456&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多台机器时</span></span><br><span class="line">[server1]</span><br><span class="line">192.168.0.[11:100] ansible_ssh_port=22 ansible_ssh_user=root ansible_ssh_pass=<span class="string">&#x27;123456&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以通过域名简写(前提在 hosts 文件中解析)</span></span><br><span class="line">[server1]</span><br><span class="line">server[1:2].test.com ansible_ssh_port=22 ansible_ssh_user=root ansible_ssh_pass=<span class="string">&#x27;123456&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="免密"><a href="#免密" class="headerlink" title="免密"></a>免密</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 免交互生成秘钥对</span></span><br><span class="line">ssh-keygen -f ~/.ssh/id_rsa  -P <span class="string">&#x27;&#x27;</span> -q</span><br><span class="line"></span><br><span class="line">yum install sshpass</span><br><span class="line"></span><br><span class="line">sshpass -p123456 ssh-copy-id -f -i ~/.ssh/id_rsa.pub <span class="string">&quot;-o StrictHostKeyChecking=no&quot;</span> root@10.0.0.100 &gt;/dev/null 2&gt;&amp;1</span><br><span class="line"><span class="comment"># 可以依据上述编写批量免密推送脚本</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 主机清单</span></span><br><span class="line"><span class="comment"># 方式一</span></span><br><span class="line">[server1]</span><br><span class="line">192.168.0.11</span><br><span class="line">192.168.0.12</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式二</span></span><br><span class="line">[db]</span><br><span class="line">192.168.0.[100:110]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式三</span></span><br><span class="line">[server1]</span><br><span class="line">server[1:100]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 server 主机组内有多少机器，两种方式通用</span></span><br><span class="line">ansible server  --list-hosts</span><br></pre></td></tr></table></figure>
+
+<h3 id="匹配主机组的方式"><a href="#匹配主机组的方式" class="headerlink" title="匹配主机组的方式"></a>匹配主机组的方式</h3><p><code>ansible</code>命令格式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible &lt;host-pattern&gt; [-m module_name] [-a args]</span><br></pre></td></tr></table></figure>
+
+<p><code>host-pattern</code>的使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定所有组</span></span><br><span class="line">ansible all -m ping</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通配符</span></span><br><span class="line">ansible <span class="string">&quot;server*&quot;</span> -m ping</span><br><span class="line">ansible 192.168.0.* -m ping</span><br><span class="line"></span><br><span class="line"><span class="comment"># 与: 在server1组，并且在db1组中的主机</span></span><br><span class="line">ansible <span class="string">&quot;server1:&amp;db1&quot;</span> -m ping</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或: 在server1组，或者在db1组中的主机</span></span><br><span class="line">ansible <span class="string">&quot;server1:db1&quot;</span> -m ping</span><br><span class="line"></span><br><span class="line"><span class="comment"># 非: 在server1组，或者在db1组中的主机</span></span><br><span class="line">ansible <span class="string">&quot;server1:!db1&quot;</span> -m ping</span><br><span class="line"></span><br><span class="line"><span class="comment"># 正则表达式</span></span><br><span class="line">ansible <span class="string">&quot;~(web|db).*&quot;</span> -m ping </span><br></pre></td></tr></table></figure>
+
+<h3 id="使用普通用户管理被控端"><a href="#使用普通用户管理被控端" class="headerlink" title="使用普通用户管理被控端"></a>使用普通用户管理被控端</h3><p><code>ansible</code>使用<code>test</code>普通用户统一管理所有被控端节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 所有主机都创建 test 普通用户</span></span><br><span class="line">useradd <span class="built_in">test</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;123&#x27;</span> |passwd --stdin <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 管理机推送秘钥到被控端</span></span><br><span class="line">su - <span class="built_in">test</span></span><br><span class="line">ssh-keygen -f ~/.ssh/id_rsa  -P <span class="string">&#x27;&#x27;</span> -q</span><br><span class="line">sshpass -p123 ssh-copy-id -f -i ~/.ssh/id_rsa.pub <span class="string">&quot;-o StrictHostKeyChecking=no&quot;</span> <span class="built_in">test</span>@192.168.0.12 &gt;/dev/null 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启所有主机的sudo权限</span></span><br><span class="line">visudo</span><br><span class="line"><span class="built_in">test</span> ALL=(ALL) NOPASSWD: ALL</span><br><span class="line"></span><br><span class="line"><span class="comment"># 控制端配置文件中配置普通用户提权</span></span><br><span class="line">[privilege_escalation]</span><br><span class="line">become=True</span><br><span class="line">become_method=sudo</span><br><span class="line">become_user=root</span><br><span class="line">become_ask_pass=False</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不配置上述参数可以使用 -b -K 输入密码即可</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Ansible/" rel="tag"><i class="fa fa-tag"></i> Ansible</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/8ba5944d.html" rel="prev" title="MongoDB监控">
+                  <i class="fa fa-chevron-left"></i> MongoDB监控
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/6beab3d3.html" rel="next" title="Ansible常用模块">
+                  Ansible常用模块 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">459k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:57</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
