@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="单独调用父类的方法需求：编写一个类，然后再写一个子类进行继承，使用子类去调用父类的方法1。 使用方法1打印： 胖子老板，来包槟榔。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="调用父类、super()、多态">
+<meta property="og:url" content="https://klcc.cc/3b14afe5.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="单独调用父类的方法需求：编写一个类，然后再写一个子类进行继承，使用子类去调用父类的方法1。 使用方法1打印： 胖子老板，来包槟榔。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-11T06:11:13.169Z">
+<meta property="article:modified_time" content="2022-01-11T06:50:56.355Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/3b14afe5.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/3b14afe5.html","path":"3b14afe5.html","title":"调用父类、super()、多态"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>调用父类、super()、多态 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">20</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">98</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E7%8B%AC%E8%B0%83%E7%94%A8%E7%88%B6%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">单独调用父类的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#super-%E6%96%B9%E6%B3%95%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">super() 方法基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%8F%E8%BF%B0"><span class="nav-number">2.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E7%BB%A7%E6%89%BF%E4%BD%BF%E7%94%A8super"><span class="nav-number">2.3.</span> <span class="nav-text">单继承使用super()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BB%A7%E6%89%BF%E4%BD%BF%E7%94%A8super"><span class="nav-number">2.4.</span> <span class="nav-text">多继承使用super()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0"><span class="nav-number">4.</span> <span class="nav-text">练习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%80%81"><span class="nav-number">5.</span> <span class="nav-text">多态</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E7%89%A9%E7%9A%84%E5%A4%9A%E7%A7%8D%E5%BD%A2%E6%80%81"><span class="nav-number">5.1.</span> <span class="nav-text">动物的多种形态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%9A%E7%A7%8D%E5%BD%A2%E6%80%81"><span class="nav-number">5.2.</span> <span class="nav-text">文件的多种形态</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%80%81%E6%80%A7"><span class="nav-number">6.</span> <span class="nav-text">多态性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E7%89%A9%E5%BD%A2%E6%80%81%E5%A4%9A%E6%80%81%E6%80%A7%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">6.1.</span> <span class="nav-text">动物形态多态性的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%BD%A2%E6%80%81%E5%A4%9A%E6%80%81%E6%80%A7%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">6.2.</span> <span class="nav-text">文件形态多态性的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%A4%9A%E6%80%81%E6%80%A7%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">6.3.</span> <span class="nav-text">序列数据类型多态性的使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%80%81%E6%80%A7%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-number">7.</span> <span class="nav-text">多态性的好处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">小结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/3b14afe5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          调用父类、super()、多态
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-11 14:11:13 / 修改时间：14:50:56" itemprop="dateCreated datePublished" datetime="2022-01-11T14:11:13+08:00">2022-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>10k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="单独调用父类的方法"><a href="#单独调用父类的方法" class="headerlink" title="单独调用父类的方法"></a>单独调用父类的方法</h1><p>需求：编写一个类，然后再写一个子类进行继承，使用子类去调用父类的方法1。</p>
+<p>使用方法1打印： 胖子老板，来包槟榔。</p>
+<span id="more"></span>
+<blockquote>
+<p>那么先写一个胖子老板的父类，执行一下：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatFather</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;FatFather的init开始被调用&#x27;</span>)</span><br><span class="line">        self.name = name</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;FatFather的name是%s&#x27;</span> % self.name)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;FatFather的init调用结束&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    ff = FatFather(<span class="string">&quot;胖子老板的父亲&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行一下这个胖子老板父类的构造方法<strong>init</strong> 如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">FatFather的init开始被调用</span></span><br><span class="line"><span class="string">FatFather的name是胖子老板的父亲</span></span><br><span class="line"><span class="string">FatFather的init调用结束</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>好了，那么下面来写一个子类，也就是胖子老板类，继承上面的类</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 胖子老板的父类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatFather</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;FatFather的init开始被调用&#x27;</span>)</span><br><span class="line">        self.name = name</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;调用FatFather类的name是%s&#x27;</span> % self.name)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;FatFather的init调用结束&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 胖子老板类 继承 FatFather 类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatBoss</span>(<span class="params">FatFather</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, hobby</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;胖子老板的类被调用啦！&#x27;</span>)</span><br><span class="line">        self.hobby = hobby</span><br><span class="line">        FatFather.__init__(self, name)  <span class="comment"># 直接调用父类的构造方法</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;%s 的爱好是 %s&quot;</span> % (name, self.hobby))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="comment">#ff = FatFather(&quot;胖子老板的父亲&quot;)</span></span><br><span class="line">    fatboss = FatBoss(<span class="string">&quot;胖子老板&quot;</span>, <span class="string">&quot;打斗地主&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在这上面的代码中，我使用FatFather.<strong>init</strong>(self,name)直接调用父类的方法。<br>运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">胖子老板的类被调用啦！</span></span><br><span class="line"><span class="string">FatFather的init开始被调用</span></span><br><span class="line"><span class="string">调用FatFather类的name是胖子老板</span></span><br><span class="line"><span class="string">FatFather的init调用结束</span></span><br><span class="line"><span class="string">胖子老板 的爱好是 打斗地主</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="super-方法基本概念"><a href="#super-方法基本概念" class="headerlink" title="super() 方法基本概念"></a>super() 方法基本概念</h1><blockquote>
+<p>除了直接使用 FatFather.<strong>init</strong>(self,name) 的方法，还可以使用super()方法来调用。</p>
+</blockquote>
+<p>那么首先需要看super()方法的描述和语法理解一下super() 方法的使用。</p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p><strong>super() 函数是用于调用父类(超类)的一个方法。</strong></p>
+<p>super 是用来解决多重继承问题的，直接用类名调用父类方法在使用单继承的时候没问题，但是如果使用多继承，会涉及到查找顺序（MRO）、重复调用（钻石继承）等种种问题。</p>
+<p>MRO 就是类的方法解析顺序表, 其实也就是继承父类方法时的顺序表。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>以下是 super() 方法的语法:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">super</span>(<span class="built_in">type</span>[, <span class="built_in">object</span>-<span class="keyword">or</span>-<span class="built_in">type</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参数</p>
+</blockquote>
+<ul>
+<li>type – 类</li>
+<li>object-or-type – 类，一般是 self</li>
+</ul>
+<blockquote>
+<p>Python3.x 和 Python2.x 的一个区别是: Python 3 可以使用直接使用 super().xxx 代替 super(Class, self).xxx :</p>
+</blockquote>
+<ul>
+<li>Python3.x 实例：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>(<span class="params">A</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().add(x)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Python2.x 实例：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class A(object):   # Python2.x 记得继承 object</span><br><span class="line">    pass</span><br><span class="line">class B(A):</span><br><span class="line">    def add(self, x):</span><br><span class="line">        super(B, self).add(x)</span><br></pre></td></tr></table></figure>
+
+<h2 id="单继承使用super"><a href="#单继承使用super" class="headerlink" title="单继承使用super()"></a>单继承使用super()</h2><ul>
+<li>使用super() 方法来改写刚才胖子老板继承父类的 <strong>init</strong> 构造方法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 胖子老板的父类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatFather</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;FatFather的init开始被调用&#x27;</span>)</span><br><span class="line">        self.name = name</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;调用FatFather类的name是%s&#x27;</span> % self.name)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;FatFather的init调用结束&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 胖子老板类 继承 FatFather 类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatBoss</span>(<span class="params">FatFather</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, hobby</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;胖子老板的类被调用啦！&#x27;</span>)</span><br><span class="line">        self.hobby = hobby</span><br><span class="line">        <span class="comment">#FatFather.__init__(self,name)   # 直接调用父类的构造方法</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(name)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;%s 的爱好是 %s&quot;</span> % (name, self.hobby))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="comment">#ff = FatFather(&quot;胖子老板的父亲&quot;)</span></span><br><span class="line">    fatboss = FatBoss(<span class="string">&quot;胖子老板&quot;</span>, <span class="string">&quot;打斗地主&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>从上面使用super方法的时候，因为是单继承，直接就可以使用了。<br>运行如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">胖子老板的类被调用啦！</span></span><br><span class="line"><span class="string">FatFather的init开始被调用</span></span><br><span class="line"><span class="string">调用FatFather类的name是胖子老板</span></span><br><span class="line"><span class="string">FatFather的init调用结束</span></span><br><span class="line"><span class="string">胖子老板 的爱好是 打斗地主</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>那么为什么说<strong>单继承</strong>直接使用就可以呢？因为super()方法如果多继承的话，会涉及到一个MRO(<strong>继承父类方法时的顺序表</strong>) 的调用排序问题。</p>
+<blockquote>
+<p>下面可以打印一下看看单继承的MRO顺序(FatBoss.<strong>mro</strong>)。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 胖子老板的父类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatFather</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;FatFather的init开始被调用&#x27;</span>)</span><br><span class="line">        self.name = name</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;调用FatFather类的name是%s&#x27;</span> % self.name)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;FatFather的init调用结束&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 胖子老板类 继承 FatFather 类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatBoss</span>(<span class="params">FatFather</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, hobby</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;胖子老板的类被调用啦！&#x27;</span>)</span><br><span class="line">        self.hobby = hobby</span><br><span class="line">        <span class="comment">#FatFather.__init__(self,name)   # 直接调用父类的构造方法</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(name)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;%s 的爱好是 %s&quot;</span> % (name, self.hobby))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;打印FatBoss类的MRO&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(FatBoss.__mro__)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=========== 下面按照 MRO 顺序执行super方法 =============&quot;</span>)</span><br><span class="line">    fatboss = FatBoss(<span class="string">&quot;胖子老板&quot;</span>, <span class="string">&quot;打斗地主&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码使用 FatBoss.<strong>mro</strong> 可以打印出 FatBoss这个类经过 python解析器的 C3算法计算过后的继承调用顺序。<br>运行如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">打印FatBoss类的MRO</span></span><br><span class="line"><span class="string">(&lt;class &#x27;__main__.FatBoss&#x27;&gt;, &lt;class &#x27;__main__.FatFather&#x27;&gt;, &lt;class &#x27;object&#x27;&gt;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">=========== 下面按照 MRO 顺序执行super方法 ===========</span></span><br><span class="line"><span class="string">胖子老板的类被调用啦！</span></span><br><span class="line"><span class="string">FatFather的init开始被调用</span></span><br><span class="line"><span class="string">调用FatFather类的name是胖子老板</span></span><br><span class="line"><span class="string">FatFather的init调用结束</span></span><br><span class="line"><span class="string">胖子老板 的爱好是 打斗地主</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>从上面的结果 (&lt;class ‘**main**.FatBoss’&gt;, &lt;class ‘**main**.FatFather’&gt;, &lt;class ‘object’&gt;) 可以看出，super() 方法在 FatBoss 会直接调用父类是 FatFather ，所以单继承是没问题的。</p>
+<p>那么如果多继承的话，会有什么问题呢？</p>
+<h2 id="多继承使用super"><a href="#多继承使用super" class="headerlink" title="多继承使用super()"></a>多继承使用super()</h2><p>假设再写一个胖子老板的女儿类，和 胖子老板的老婆类，此时女儿需要同时继承 两个类（胖子老板类，胖子老板老婆类）。</p>
+<p>因为胖子老板有一个爱好，胖子老板的老婆需要干活干家务，那么女儿需要帮忙同时兼顾。</p>
+<p>此时女儿就是需要继承使用这两个父类的方法了，那么该如何去写呢？</p>
+<p>下面来看看实现代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 胖子老板的父类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatFather</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="built_in">print</span>()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=============== 开始调用 FatFather  ========================&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;FatFather的init开始被调用&#x27;</span>)</span><br><span class="line">        self.name = name</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;调用FatFather类的name是%s&#x27;</span> % self.name)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;FatFather的init调用结束&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=============== 结束调用 FatFather  ========================&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 胖子老板类 继承 FatFather 类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatBoss</span>(<span class="params">FatFather</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, hobby, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="built_in">print</span>()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=============== 开始调用 FatBoss  ========================&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;胖子老板的类被调用啦！&#x27;</span>)</span><br><span class="line">        <span class="comment">#super().__init__(name)</span></span><br><span class="line">        <span class="comment">## 因为多继承传递的参数不一致，所以使用不定参数</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(name, *args, **kwargs)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;%s 的爱好是 %s&quot;</span> % (name, hobby))</span><br><span class="line">        <span class="built_in">print</span>()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=============== 结束调用 FatBoss  ========================&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 胖子老板的老婆类 继承 FatFather类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatBossWife</span>(<span class="params">FatFather</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, housework, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="built_in">print</span>()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=============== 开始调用 FatBossWife  ========================&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;胖子老板的老婆类被调用啦！要学会干家务&#x27;</span>)</span><br><span class="line">        <span class="comment">#super().__init__(name)</span></span><br><span class="line">        <span class="comment">## 因为多继承传递的参数不一致，所以使用不定参数</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(name, *args, **kwargs)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;%s 需要干的家务是 %s&quot;</span> % (name, housework))</span><br><span class="line">        <span class="built_in">print</span>()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=============== 结束调用 FatBossWife  ========================&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 胖子老板的女儿类 继承 FatBoss FatBossWife类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FatBossGril</span>(<span class="params">FatBoss, FatBossWife</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, hobby, housework</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;胖子老板的女儿类被调用啦！要学会干家务，还要会帮胖子老板斗地主&#x27;</span>)</span><br><span class="line">        <span class="built_in">super</span>().__init__(name, hobby, housework)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;打印FatBossGril类的MRO&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(FatBossGril.__mro__)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;========== 下面按照 MRO 顺序执行super方法 ============&quot;</span>)</span><br><span class="line">    gril = FatBossGril(<span class="string">&quot;胖子老板&quot;</span>, <span class="string">&quot;打斗地主&quot;</span>, <span class="string">&quot;拖地&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">打印FatBossGril类的MRO</span></span><br><span class="line"><span class="string">(&lt;class &#x27;__main__.FatBossGril&#x27;&gt;, &lt;class &#x27;__main__.FatBoss&#x27;&gt;, &lt;class &#x27;__main__.FatBossWife&#x27;&gt;, &lt;class &#x27;__main__.FatFather&#x27;&gt;, &lt;class &#x27;object&#x27;&gt;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">=========== 下面按照 MRO 顺序执行super方法 =============</span></span><br><span class="line"><span class="string">胖子老板的女儿类被调用啦！要学会干家务，还要会帮胖子老板斗地主</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">=============== 开始调用 FatBoss  ========================</span></span><br><span class="line"><span class="string">胖子老板的类被调用啦！</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">=============== 开始调用 FatBossWife =====================</span></span><br><span class="line"><span class="string">胖子老板的老婆类被调用啦！要学会干家务</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">=============== 开始调用 FatFather  ========================</span></span><br><span class="line"><span class="string">FatFather的init开始被调用</span></span><br><span class="line"><span class="string">调用FatFather类的name是胖子老板</span></span><br><span class="line"><span class="string">FatFather的init调用结束</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">=============== 结束调用 FatFather  ========================</span></span><br><span class="line"><span class="string">胖子老板 需要干的家务是 拖地</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">=============== 结束调用 FatBossWife  ======================</span></span><br><span class="line"><span class="string">胖子老板 的爱好是 打斗地主</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">=============== 结束调用 FatBoss  =======================</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>从上面的运行结果来看，我特意给每个类的调用开始以及结束都进行打印标识，可以看到。</p>
+<p>每个类开始调用是根据MRO顺序进行开始，然后逐个进行结束的。</p>
+<p>还有就是由于因为需要继承不同的父类，参数不一定。</p>
+<p>所以，所有的父类都应该加上不定参数*args , **kwargs ，不然参数不对应是会报错的。</p>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><ul>
+<li>super().<strong>init</strong>相对于类名.<strong>init</strong>，在单继承上用法基本无差</li>
+<li>但在多继承上有区别，super方法能保证每个父类的方法只会执行一次，而使用类名的方法会导致方法被执行多次，可以尝试写个代码来看输出结果</li>
+<li>多继承时，使用super方法，对父类的传参数，应该是由于python中super的算法导致的原因，必须把参数全部传递，否则会报错</li>
+<li>单继承时，使用super方法，则不能全部传递，只能传父类方法所需的参数，否则会报错</li>
+<li>多继承时，相对于使用类名.<strong>init</strong>方法，要把每个父类全部写一遍, 而使用super方法，只需写一句话便执行了全部父类的方法，这也是为何多继承需要全部传参的一个原因</li>
+</ul>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><blockquote>
+<p>以下的代码的输出将是什么? 说出你的答案并解释。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    x = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child1</span>(<span class="params">Parent</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child2</span>(<span class="params">Parent</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(Parent.x, Child1.x, Child2.x)  <span class="comment"># 1 1 1</span></span><br><span class="line"></span><br><span class="line">Child1.x = <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(Parent.x, Child1.x, Child2.x)  <span class="comment"># 1 2 1</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意：Child1已经拥有了属于自己的x</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Parent.x = <span class="number">3</span></span><br><span class="line"><span class="built_in">print</span>(Parent.x, Child1.x, Child2.x)  <span class="comment"># 3 2 3</span></span><br></pre></td></tr></table></figure>
+
+<p>很多人喜欢将多态与多态性二者混为一谈，然后百思不得其解，其实只要分开看，就会很明朗。</p>
+<h1 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h1><p>多态指的是一类事物有多种形态，（一个抽象类有多个子类，因而多态的概念依赖于继承）</p>
+<ol>
+<li>序列数据类型有多种形态：字符串，列表，元组</li>
+<li>动物有多种形态：人，狗，猪</li>
+</ol>
+<h2 id="动物的多种形态"><a href="#动物的多种形态" class="headerlink" title="动物的多种形态"></a>动物的多种形态</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 动物有多种形态：人类、猪、狗</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span>  <span class="comment"># 子类约定俗称的必须实现这个方法</span></span><br><span class="line">        <span class="keyword">raise</span> AttributeError(<span class="string">&#x27;子类必须实现这个方法&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span>(<span class="params">Animal</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;人正在走&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pig</span>(<span class="params">Animal</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;pig is walking&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span>(<span class="params">Animal</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;dog is running&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">peo1 = People()</span><br><span class="line">pig1 = Pig()</span><br><span class="line">d1 = Dog()</span><br><span class="line"></span><br><span class="line">peo1.run()  <span class="comment"># 人正在走</span></span><br><span class="line">pig1.run()  <span class="comment"># pig is walking</span></span><br><span class="line">d1.run()  <span class="comment"># dog is running</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> abc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span>(<span class="params">metaclass=abc.ABCMeta</span>):</span>  <span class="comment"># 同一类事物:动物</span></span><br><span class="line"><span class="meta">    @abc.abstractmethod  </span><span class="comment"># 上述代码子类是约定俗称的实现这个方法，加上@abc.abstractmethod装饰器后严格控制子类必须实现这个方法</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">talk</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">raise</span> AttributeError(<span class="string">&#x27;子类必须实现这个方法&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span>(<span class="params">Animal</span>):</span>  <span class="comment"># 动物的形态之一:人</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">talk</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;say hello&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span>(<span class="params">Animal</span>):</span>  <span class="comment"># 动物的形态之二:狗</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">talk</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;say wangwang&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pig</span>(<span class="params">Animal</span>):</span>  <span class="comment"># 动物的形态之三:猪</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">talk</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;say aoao&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">peo2 = People()</span><br><span class="line">pig2 = Pig()</span><br><span class="line">d2 = Dog()</span><br><span class="line"></span><br><span class="line">peo2.talk()  <span class="comment"># say hello</span></span><br><span class="line">pig2.talk()  <span class="comment"># say aoao</span></span><br><span class="line">d2.talk()  <span class="comment"># say wangwang</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="文件的多种形态"><a href="#文件的多种形态" class="headerlink" title="文件的多种形态"></a>文件的多种形态</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文件有多种形态：文件、文本文件、可执行文件</span></span><br><span class="line"><span class="keyword">import</span> abc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">File</span>(<span class="params">metaclass=abc.ABCMeta</span>):</span>  <span class="comment"># 同一类事物:文件</span></span><br><span class="line"><span class="meta">    @abc.abstractmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">click</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Text</span>(<span class="params">File</span>):</span>  <span class="comment"># 文件的形态之一:文本文件</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">click</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;open file&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExeFile</span>(<span class="params">File</span>):</span>  <span class="comment"># 文件的形态之二:可执行文件</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">click</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;execute file&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">text = Text()</span><br><span class="line">exe_file = ExeFile()</span><br><span class="line"></span><br><span class="line">text.click()  <span class="comment"># open file</span></span><br><span class="line">exe_file.click()  <span class="comment"># execute file</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="多态性"><a href="#多态性" class="headerlink" title="多态性"></a>多态性</h1><p>注意：多态与多态性是两种概念</p>
+<p>多态性是指具有不同功能的函数可以使用相同的函数名，这样就可以用一个函数名调用不同内容的函数。在面向对象方法中一般是这样表述多态性：向不同的对象发送同一条消息，不同的对象在接收时会产生不同的行为（即方法）。也就是说，每个对象可以用自己的方式去响应共同的消息。所谓消息，就是调用函数，不同的行为就是指不同的实现，即执行不同的函数。</p>
+<h2 id="动物形态多态性的使用"><a href="#动物形态多态性的使用" class="headerlink" title="动物形态多态性的使用"></a>动物形态多态性的使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 多态性：一种调用方式，不同的执行效果（多态性）</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">obj</span>):</span></span><br><span class="line">    obj.run()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func(peo1)  <span class="comment"># 人正在走</span></span><br><span class="line">func(pig1)  <span class="comment"># pig is walking</span></span><br><span class="line">func(d1)  <span class="comment"># dog is running</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多态性依赖于：继承</span></span><br><span class="line"><span class="comment"># 多态性：定义统一的接口</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">obj</span>):</span>  <span class="comment"># obj这个参数没有类型限制，可以传入不同类型的值</span></span><br><span class="line">    obj.talk()  <span class="comment"># 调用的逻辑都一样，执行的结果却不一样</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func(peo2)  <span class="comment"># say hello</span></span><br><span class="line">func(pig2)  <span class="comment"># say aoao</span></span><br><span class="line">func(d2)  <span class="comment"># say wangwang</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="文件形态多态性的使用"><a href="#文件形态多态性的使用" class="headerlink" title="文件形态多态性的使用"></a>文件形态多态性的使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">obj</span>):</span></span><br><span class="line">    obj.click()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func(text)  <span class="comment"># open file</span></span><br><span class="line">func(exe_file)  <span class="comment"># execute file</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="序列数据类型多态性的使用"><a href="#序列数据类型多态性的使用" class="headerlink" title="序列数据类型多态性的使用"></a>序列数据类型多态性的使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">obj</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">len</span>(obj))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func(<span class="string">&#x27;hello&#x27;</span>)  <span class="comment"># 5</span></span><br><span class="line">func([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])  <span class="comment"># 3</span></span><br><span class="line">func((<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))  <span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+
+<p>综上可以说，多态性是一个接口（函数func）的多种实现（如obj.run()，obj.talk()，obj.click()，len(obj)）</p>
+<h1 id="多态性的好处"><a href="#多态性的好处" class="headerlink" title="多态性的好处"></a>多态性的好处</h1><p>其实大家从上面多态性的例子可以看出，我们并没有增加新的知识，也就是说Python本身就是支持多态性的，这么做的好处是什么呢？</p>
+<ol>
+<li>增加了程序的灵活性：以不变应万变，不论对象千变万化，使用者都是同一种形式去调用，如func(animal)</li>
+<li>增加了程序额可扩展性：通过继承Animal类创建了一个新的类，使用者无需更改自己的代码，还是用func(animal)去调用</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span>(<span class="params">Animal</span>):</span>  <span class="comment"># 属于动物的另外一种形态：猫</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">talk</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;say miao&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">animal</span>):</span>  <span class="comment"># 对于使用者来说，自己的代码根本无需改动</span></span><br><span class="line">    animal.talk()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cat1 = Cat()  <span class="comment"># 实例出一只猫</span></span><br><span class="line">func(cat1)  <span class="comment"># say miao 甚至连调用方式也无需改变，就能调用猫的talk功能</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>上述代码我们新增了一个形态Cat，由Cat类产生的实例cat1，使用者可以在完全不需要修改自己代码的情况下。使用和人、狗、猪一样的方式调用cat1的talk方法，即func(cat1)</li>
+</ul>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>多态：同一种事物的多种形态，动物分为人类，猪类（在定义角度）<br>多态性：一种调用方式，不同的执行效果（多态性）</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/84aad6a1.html" rel="prev" title="封装和property特性">
+                  <i class="fa fa-chevron-left"></i> 封装和property特性
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2327de81.html" rel="next" title="派生、继承、分类及菱形问题">
+                  派生、继承、分类及菱形问题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">556k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:25</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

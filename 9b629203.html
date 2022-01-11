@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="123456789101112131415161718192021class Foo:    def __init__(self, name):        self.name &#x3D; name    def __getitem__(self, item):        print(&amp;#x27;getitem执行&amp;#x27;, self.__dict__[item])    def __setit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="魔术方法(二)">
+<meta property="og:url" content="https://klcc.cc/9b629203.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="123456789101112131415161718192021class Foo:    def __init__(self, name):        self.name &#x3D; name    def __getitem__(self, item):        print(&amp;#x27;getitem执行&amp;#x27;, self.__dict__[item])    def __setit">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/0081Kckwgy1gm2qsa5w7hj30f807zt8r-20211206135642069.jpg">
+<meta property="og:image" content="https://gitee.com/gengff/blogimage/raw/master/images/0081Kckwgy1gm2qsqvvbaj30dv0bbq33-20211206135642109.jpg">
+<meta property="article:published_time" content="2022-01-11T06:11:10.477Z">
+<meta property="article:modified_time" content="2022-01-11T06:50:56.360Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/gengff/blogimage/raw/master/images/0081Kckwgy1gm2qsa5w7hj30f807zt8r-20211206135642069.jpg">
+
+
+<link rel="canonical" href="https://klcc.cc/9b629203.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/9b629203.html","path":"9b629203.html","title":"魔术方法(二)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>魔术方法(二) | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">20</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">98</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#setitem"><span class="nav-number">1.</span> <span class="nav-text">setitem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#getitem"><span class="nav-number">2.</span> <span class="nav-text">getitem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#delitem%E4%B8%8Edelattr"><span class="nav-number">3.</span> <span class="nav-text">delitem与delattr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#format"><span class="nav-number">4.</span> <span class="nav-text">format</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#del"><span class="nav-number">5.</span> <span class="nav-text">del</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#slots"><span class="nav-number">6.</span> <span class="nav-text">slots</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFslots"><span class="nav-number">6.1.</span> <span class="nav-text">什么是slots</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8slots"><span class="nav-number">6.2.</span> <span class="nav-text">为什么用slots</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A8%E6%A0%B9%E9%97%AE%E5%BA%95"><span class="nav-number">6.3.</span> <span class="nav-text">刨根问底</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#doc"><span class="nav-number">7.</span> <span class="nav-text">doc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#call"><span class="nav-number">8.</span> <span class="nav-text">call</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#init%E5%92%8Cnew"><span class="nav-number">9.</span> <span class="nav-text">init和new</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">9.1.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#str"><span class="nav-number">10.</span> <span class="nav-text">str</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#repr"><span class="nav-number">11.</span> <span class="nav-text">repr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#module%E5%92%8Cclass"><span class="nav-number">12.</span> <span class="nav-text">module和class</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#module"><span class="nav-number">12.1.</span> <span class="nav-text">module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class"><span class="nav-number">12.2.</span> <span class="nav-text">class</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/9b629203.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          魔术方法(二)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-11 14:11:10 / 修改时间：14:50:56" itemprop="dateCreated datePublished" datetime="2022-01-11T14:11:10+08:00">2022-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Foo:</span><br><span class="line">    def __init__(self, name):</span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    def __getitem__(self, item):</span><br><span class="line">        print(&#x27;getitem执行&#x27;, self.__dict__[item])</span><br><span class="line"></span><br><span class="line">    def __setitem__(self, key, value):</span><br><span class="line">        print(&#x27;setitem执行&#x27;)</span><br><span class="line">        self.__dict__[key] = value</span><br><span class="line"></span><br><span class="line">    def __delitem__(self, key):</span><br><span class="line">        print(&#x27;del obj[key]时，delitem执行&#x27;)</span><br><span class="line">        self.__dict__.pop(key)</span><br><span class="line"></span><br><span class="line">    def __delattr__(self, item):</span><br><span class="line">        print(&#x27;del obj.key时，delattr执行&#x27;)</span><br><span class="line">        self.__dict__.pop(item)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">f1 = Foo(&#x27;sb&#x27;)</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h1 id="setitem"><a href="#setitem" class="headerlink" title="setitem"></a><strong>setitem</strong></h1><ul>
+<li>中括号赋值时触发</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f1[<span class="string">&#x27;age&#x27;</span>] = <span class="number">18</span>  <span class="comment"># setitem执行</span></span><br><span class="line"></span><br><span class="line">f1[<span class="string">&#x27;age1&#x27;</span>] = <span class="number">19</span>  <span class="comment"># setitem执行</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="getitem"><a href="#getitem" class="headerlink" title="getitem"></a><strong>getitem</strong></h1><ul>
+<li>中括号取值时触发</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f1[<span class="string">&#x27;age&#x27;</span>]  <span class="comment"># getitem执行 18</span></span><br><span class="line"></span><br><span class="line">f1[<span class="string">&#x27;name&#x27;</span>] = <span class="string">&#x27;tank&#x27;</span>  <span class="comment"># setitem执行</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="delitem与delattr"><a href="#delitem与delattr" class="headerlink" title="delitem与delattr"></a><strong>delitem</strong>与<strong>delattr</strong></h1><ul>
+<li><strong>delitem</strong>：中括号删除时触发</li>
+<li><strong>delattr</strong>：.删除时触发</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">del</span> f1.age1  <span class="comment"># del obj.key时，delattr执行</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> f1[<span class="string">&#x27;age&#x27;</span>]  <span class="comment"># del obj[key]时，delitem执行</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(f1.__dict__)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;tank&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h1 id="format"><a href="#format" class="headerlink" title="format"></a><strong>format</strong></h1><ul>
+<li>自定制格式化字符串</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">date_dic = &#123;</span><br><span class="line">    <span class="string">&#x27;ymd&#x27;</span>: <span class="string">&#x27;&#123;0.year&#125;:&#123;0.month&#125;:&#123;0.day&#125;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;dmy&#x27;</span>: <span class="string">&#x27;&#123;0.day&#125;/&#123;0.month&#125;/&#123;0.year&#125;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;mdy&#x27;</span>: <span class="string">&#x27;&#123;0.month&#125;-&#123;0.day&#125;-&#123;0.year&#125;&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Date</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, year, month, day</span>):</span></span><br><span class="line">        self.year = year</span><br><span class="line">        self.month = month</span><br><span class="line">        self.day = day</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__format__</span>(<span class="params">self, format_spec</span>):</span></span><br><span class="line">        <span class="comment"># 默认打印ymd的&#123;0.year&#125;:&#123;0.month&#125;:&#123;0.day&#125;格式</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> format_spec <span class="keyword">or</span> format_spec <span class="keyword">not</span> <span class="keyword">in</span> date_dic:</span><br><span class="line">            format_spec = <span class="string">&#x27;ymd&#x27;</span></span><br><span class="line">        fmt = date_dic[format_spec]</span><br><span class="line">        <span class="keyword">return</span> fmt.<span class="built_in">format</span>(self)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">d1 = Date(<span class="number">2016</span>, <span class="number">12</span>, <span class="number">29</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">format</span>(d1))  <span class="comment"># 2016:12:29</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;&#123;:mdy&#125;&#x27;</span>.<span class="built_in">format</span>(d1))  <span class="comment"># 12-29-2016</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="del"><a href="#del" class="headerlink" title="del"></a><strong>del</strong></h1><ul>
+<li><strong>del</strong>也称之为析构方法</li>
+<li><strong>del</strong>会在对象被删除之前自动触发</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, age</span>):</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line">        self.f = <span class="built_in">open</span>(<span class="string">&#x27;test.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__del__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;run======&gt;&#x27;</span>)</span><br><span class="line">        <span class="comment"># 做回收系统资源相关的事情</span></span><br><span class="line">        self.f.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">obj = People(<span class="string">&#x27;egon&#x27;</span>, <span class="number">18</span>)</span><br><span class="line"><span class="keyword">del</span> obj  <span class="comment"># del obj会间接删除f的内存占用，但是还需要自定制__del__删除文件的系统占用</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;主&#x27;</span>)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">run=-====&gt;</span></span><br><span class="line"><span class="string">主</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="slots"><a href="#slots" class="headerlink" title="slots"></a>slots</h1><h2 id="什么是slots"><a href="#什么是slots" class="headerlink" title="什么是slots"></a>什么是<strong>slots</strong></h2><ul>
+<li><strong>slots</strong>是一个类变量，变量值可以是列表，元祖，或者可迭代对象，也可以是一个字符串(意味着所有实例只有一个数据属性)</li>
+<li>使用点来访问属性本质就是在访问类或者对象的<strong>dict</strong>属性字典(类的字典是共享的，而每个实例的是独立的)</li>
+</ul>
+<p><img src="https://gitee.com/gengff/blogimage/raw/master/images/0081Kckwgy1gm2qsa5w7hj30f807zt8r-20211206135642069.jpg" alt="107-slots-内存.jpg"></p>
+<h2 id="为什么用slots"><a href="#为什么用slots" class="headerlink" title="为什么用slots"></a>为什么用<strong>slots</strong></h2><ul>
+<li><p>字典会占用大量内存，如果你有一个属性很少的类，但是有很多实例，为了节省内存可以使用<strong>slots</strong>取代实例的<strong>dict</strong></p>
+</li>
+<li><p>当你定义<strong>slots</strong>后，<strong>slots</strong>就会为实例使用一种更加紧凑的内部表示。实例通过一个很小的固定大小的数组来构建，而不是为每个实例定义一个字典，这跟元组或列表很类似。在<strong>slots</strong>中列出的属性名在内部被映射到这个数组的指定小标上。使用<strong>slots</strong>一个不好的地方就是我们不能再给实例添加新的属性了，只能使用在<strong>slots</strong>中定义的那些属性名。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    __slots__=<span class="string">&#x27;x&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">f1=Foo()</span><br><span class="line">f1.x=<span class="number">1</span></span><br><span class="line">f1.y=<span class="number">2</span>  <span class="comment"># 报错</span></span><br><span class="line"><span class="built_in">print</span>(f1.__slots__)  <span class="comment"># f1不再有__dict__</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span>:</span></span><br><span class="line">    __slots__=[<span class="string">&#x27;x&#x27;</span>,<span class="string">&#x27;y&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">n=Bar()</span><br><span class="line">n.x,n.y=<span class="number">1</span>,<span class="number">2</span></span><br><span class="line">n.z=<span class="number">3</span>  <span class="comment"># 报错</span></span><br></pre></td></tr></table></figure></li>
+<li><p>注意：<strong>slots</strong>的很多特性都依赖于普通的基于字典的实现。另外，定义了<strong>slots</strong>后的类不再 支持一些普通类特性了，比如多继承。大多数情况下，你应该只在那些经常被使用到 的用作数据结构的类上定义<strong>slots</strong>比如在程序中需要创建某个类的几百万个实例对象 。</p>
+</li>
+<li><p>关于<strong>slots</strong>的一个常见误区是它可以作为一个封装工具来防止用户给实例增加新的属性。尽管使用<strong>slots</strong>可以达到这样的目的，但是这个并不是它的初衷。它更多的是用来作为一个内存优化工具。</p>
+</li>
+</ul>
+<h2 id="刨根问底"><a href="#刨根问底" class="headerlink" title="刨根问底"></a>刨根问底</h2><p><img src="https://gitee.com/gengff/blogimage/raw/master/images/0081Kckwgy1gm2qsqvvbaj30dv0bbq33-20211206135642109.jpg" alt="107-slots-刨根问底.jpg"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    __slots__=[<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;age&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">f1=Foo()</span><br><span class="line">f1.name=<span class="string">&#x27;alex&#x27;</span></span><br><span class="line">f1.age=<span class="number">18</span></span><br><span class="line"><span class="built_in">print</span>(f1.__slots__)  <span class="comment"># [&#x27;name&#x27;, &#x27;age&#x27;]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">f2=Foo()</span><br><span class="line">f2.name=<span class="string">&#x27;egon&#x27;</span></span><br><span class="line">f2.age=<span class="number">19</span></span><br><span class="line"><span class="built_in">print</span>(f2.__slots__)  <span class="comment"># [&#x27;name&#x27;, &#x27;age&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>f1与f2都没有属性字典<strong>dict</strong>了，统一归<strong>slots</strong>管，节省内存</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(Foo.__dict__)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&#123;&#x27;__module__&#x27;: &#x27;__main__&#x27;, &#x27;__slots__&#x27;: [&#x27;name&#x27;, &#x27;age&#x27;], &#x27;age&#x27;: &lt;member &#x27;age&#x27; of &#x27;Foo&#x27; objects&gt;, &#x27;name&#x27;: &lt;member &#x27;name&#x27; of &#x27;Foo&#x27; objects&gt;, &#x27;__doc__&#x27;: None&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="doc"><a href="#doc" class="headerlink" title="doc"></a><strong>doc</strong></h1><ul>
+<li>返回类的注释信息</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    <span class="string">&#x27;我是描述信息&#x27;</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(Foo.__doc__)</span><br><span class="line">我是描述信息</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>该属性无法被继承</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    <span class="string">&#x27;我是描述信息&#x27;</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span>(<span class="params">Foo</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="built_in">print</span>(Bar.__doc__) <span class="comment">#该属性无法继承给子类</span></span><br><span class="line"><span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="call"><a href="#call" class="headerlink" title="call"></a><strong>call</strong></h1><ul>
+<li>对象后面加括号时，触发执行。</li>
+<li>注：构造方法的执行是由创建对象触发的，即：对象 = 类名() ；而对于 <strong>call</strong> 方法的执行是由对象后加括号触发的，即：对象() 或者 类()()</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;__init__触发了&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span>(<span class="params">self, *args, **kwargs</span>):</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;__call__触发了&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行 __init__</span></span><br><span class="line">obj = Foo()  <span class="comment"># __init__触发了</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行 __call__</span></span><br><span class="line">obj()  <span class="comment"># __call__</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="init和new"><a href="#init和new" class="headerlink" title="init和new"></a>init和new</h1><p>曾经我幼稚的以为认识了python的<strong>init</strong>()方法就相当于认识了类构造器，结果，<strong>new</strong>()方法突然出现在我眼前，让我突然认识到原来<strong>new</strong>才是老大。为什么这么说呢？</p>
+<p>我们首先得从<strong>new</strong>(cls[,…])的参数说说起，<strong>new</strong>方法的第一个参数是这个类，而其余的参数会在调用成功后全部传递给<strong>init</strong>方法初始化，这一下子就看出了谁是老子谁是小子的关系。</p>
+<p>所以，<strong>new</strong>方法（第一个执行）先于<strong>init</strong>方法执行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>(<span class="params">A</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;__new__方法被执行&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>().__new__(cls)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;__init__方法被执行&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">b = B()</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">__new__方法被执行</span></span><br><span class="line"><span class="string">__init__方法被执行</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们比较两个方法的参数，可以发现<strong>new</strong>方法是传入类(cls)，而<strong>init</strong>方法传入类的实例化对象(self)，而有意思的是，<strong>new</strong>方法返回的值就是一个实例化对象（ps:如果<strong>new</strong>方法返回None，则<strong>init</strong>方法不会被执行，并且返回值只能调用父类中的<strong>new</strong>方法，而不能调用毫无关系的类的<strong>new</strong>方法）。我们可以这么理解它们之间的关系，<strong>new</strong>是开辟疆域的大将军，而<strong>init</strong>是在这片疆域上辛勤劳作的小老百姓，只有<strong>new</strong>执行完后，开辟好疆域后，<strong>init</strong>才能工作。</p>
+<p>绝大多数情况下，我们都不需要自己重写<strong>new</strong>方法，但在当继承一个不可变的类型（例如str类,int类等）时，它的特性就尤显重要了。我们举下面这个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CapStr</span>(<span class="params"><span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, string</span>):</span></span><br><span class="line">        string = string.upper()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a = CapStr(<span class="string">&quot;I love China!&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line">I love China!</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CapStr</span>(<span class="params"><span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span>(<span class="params">cls, string</span>):</span></span><br><span class="line">        string = string.upper()</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>().__new__(cls, string)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a = CapStr(<span class="string">&quot;I love China!&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># I LOVE CHINA!</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以根据上面的理论可以这样分析，我们知道字符串是不可改变的，所以第一个例子中，传入的字符串相当于已经被打下的疆域，而这块疆域除了将军其他谁也无法改变，<strong>init</strong>只能在这块领地上干瞪眼，此时这块疆域就是”I love China!“。而第二个例子中，<strong>new</strong>大将军重新去开辟了一块疆域，所以疆域上的内容也发生了变化，此时这块疆域变成了”I LOVE CHINA!“。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>小结：****new**和*<em>init*<em>想配合才是python中真正的类构造器</em></em></p>
+<h1 id="str"><a href="#str" class="headerlink" title="str"></a><strong>str</strong></h1><ul>
+<li>打印时触发</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">obj = Foo()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj)  <span class="comment"># &lt;__main__.Foo object at 0x10d2b8f98&gt;</span></span><br><span class="line"></span><br><span class="line">dic = &#123;<span class="string">&#x27;a&#x27;</span>: <span class="number">1</span>&#125;  <span class="comment"># d = dict(&#123;&#x27;x&#x27;:1&#125;)</span></span><br><span class="line"><span class="built_in">print</span>(dic)  <span class="comment"># &#123;&#x27;a&#x27;: 1&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>obj和dic都是实例化的对象，但是obj打印的是内存地址，而dic打印的是有用的信息，很明显dic的打印是非常好的</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, age</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;对象实例化的时候自动触发&quot;&quot;&quot;</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;打印的时候自动触发，但是其实不需要print即可打印&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&#x27;<span class="subst">&#123;self.name&#125;</span>:<span class="subst">&#123;self.age&#125;</span>&#x27;</span>  <span class="comment"># 如果不返回字符串类型，则会报错</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">obj = Foo(<span class="string">&#x27;nick&#x27;</span>, <span class="number">18</span>)</span><br><span class="line"><span class="built_in">print</span>(obj)  <span class="comment"># obj.__str__() # 打印的时候就是在打印返回值</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">打印的时候自动触发，但是其实不需要print即可打印</span></span><br><span class="line"><span class="string">nick:18</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">obj2 = Foo(<span class="string">&#x27;tank&#x27;</span>, <span class="number">30</span>)</span><br><span class="line"><span class="built_in">print</span>(obj2)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">打印的时候自动触发，但是其实不需要print即可打印</span></span><br><span class="line"><span class="string">tank:30</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="repr"><a href="#repr" class="headerlink" title="repr"></a><strong>repr</strong></h1><ul>
+<li>str函数或者print函数—&gt;obj.<strong>str</strong>()</li>
+<li>repr或者交互式解释器—&gt;obj.<strong>repr</strong>()</li>
+<li>如果<strong>str</strong>没有被定义，那么就会使用<strong>repr</strong>来代替输出</li>
+<li>注意：这俩方法的返回值必须是字符串，否则抛出异常</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">School</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, addr, <span class="built_in">type</span></span>):</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.addr = addr</span><br><span class="line">        self.<span class="built_in">type</span> = <span class="built_in">type</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;School(%s,%s)&#x27;</span> % (self.name, self.addr)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;(%s,%s)&#x27;</span> % (self.name, self.addr)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">s1 = School(<span class="string">&#x27;oldboy1&#x27;</span>, <span class="string">&#x27;北京&#x27;</span>, <span class="string">&#x27;私立&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;from repr: &#x27;</span>, <span class="built_in">repr</span>(s1))  <span class="comment"># # from repr:  School(oldboy1,北京)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;from str: &#x27;</span>, <span class="built_in">str</span>(s1))  <span class="comment"># from str:  (oldboy1,北京)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(s1)  <span class="comment"># (oldboy1,北京)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="module和class"><a href="#module和class" class="headerlink" title="module和class"></a>module和class</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># lib/aa.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.name = <span class="string">&#x27;SB&#x27;</span></span><br><span class="line"><span class="comment"># index.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> lib.aa <span class="keyword">import</span> C</span><br><span class="line"></span><br><span class="line">obj = C()</span><br></pre></td></tr></table></figure>
+
+<h2 id="module"><a href="#module" class="headerlink" title="module"></a><strong>module</strong></h2><ul>
+<li><strong>module</strong> 表示当前操作的对象在那个模块</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(obj.__module__)  <span class="comment"># 输出 lib.aa，即：输出模块</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="class"><a href="#class" class="headerlink" title="class"></a><strong>class</strong></h2><ul>
+<li><strong>class</strong>表示当前操作的对象的类是什么</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(obj.__class__)  <span class="comment"># 输出 lib.aa.C，即：输出类</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/75c8d1ab.html" rel="prev" title="迭代器、with、元类">
+                  <i class="fa fa-chevron-left"></i> 迭代器、with、元类
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/bf389a0f.html" rel="next" title="描述符">
+                  描述符 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">556k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:25</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

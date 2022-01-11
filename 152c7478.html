@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="类和对象 类的意思：种类、分类、类别  对象是特征与技能的结合体，我可能有身高体重、而你也有身高体重，所以你会说你像我，但是你一定不会说你像阿猫阿狗。并且我和你其实就可以说成是一类，而你和选课系统不能说是一类，因此给出类的定义：类就是一系列对象相似的特征与技能的结合体。 在现实世界中：先有一个个具体存在的对象，然后随着人类文明的发展才了分类的概念，既然现实世界中有类这个概念，Python程序中也一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="类和对象、属性查找及绑定方法">
+<meta property="og:url" content="https://klcc.cc/152c7478.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="类和对象 类的意思：种类、分类、类别  对象是特征与技能的结合体，我可能有身高体重、而你也有身高体重，所以你会说你像我，但是你一定不会说你像阿猫阿狗。并且我和你其实就可以说成是一类，而你和选课系统不能说是一类，因此给出类的定义：类就是一系列对象相似的特征与技能的结合体。 在现实世界中：先有一个个具体存在的对象，然后随着人类文明的发展才了分类的概念，既然现实世界中有类这个概念，Python程序中也一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-11T06:10:49.595Z">
+<meta property="article:modified_time" content="2022-01-11T06:50:56.351Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/152c7478.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/152c7478.html","path":"152c7478.html","title":"类和对象、属性查找及绑定方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>类和对象、属性查找及绑定方法 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">20</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">98</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">类和对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E5%AE%9E%E4%B8%96%E7%95%8C%E4%B8%AD%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">现实世界中定义类和对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.1.</span> <span class="nav-text">定义对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E7%B1%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">定义类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.2.</span> <span class="nav-text">程序中定义类和对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E7%B1%BB-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">定义类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">定义对象</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E5%AF%B9%E8%B1%A1%E7%8B%AC%E6%9C%89%E7%89%B9%E5%BE%81"><span class="nav-number">2.</span> <span class="nav-text">定制对象独有特征</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%85%A5"><span class="nav-number">2.1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E5%88%B6%E5%AF%B9%E8%B1%A1%E7%8B%AC%E6%9C%89%E7%89%B9%E5%BE%81-1"><span class="nav-number">2.2.</span> <span class="nav-text">定制对象独有特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E6%9F%A5%E6%89%BE"><span class="nav-number">2.3.</span> <span class="nav-text">属性查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%AE%9A%E4%B9%89%E9%98%B6%E6%AE%B5%E5%AE%9A%E5%88%B6%E5%B1%9E%E6%80%A7"><span class="nav-number">2.4.</span> <span class="nav-text">类定义阶段定制属性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E6%9F%A5%E6%89%BE-1"><span class="nav-number">3.</span> <span class="nav-text">属性查找</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BB%91%E5%AE%9A%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">对象的绑定方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E4%BD%BF%E7%94%A8%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BB%91%E5%AE%9A%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.1.</span> <span class="nav-text">类使用对象的绑定对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E4%BD%BF%E7%94%A8%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BB%91%E5%AE%9A%E6%96%B9%E6%B3%95"><span class="nav-number">4.2.</span> <span class="nav-text">对象使用对象的绑定方法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/152c7478.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          类和对象、属性查找及绑定方法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-11 14:10:49 / 修改时间：14:50:56" itemprop="dateCreated datePublished" datetime="2022-01-11T14:10:49+08:00">2022-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h1><ul>
+<li>类的意思：种类、分类、类别</li>
+</ul>
+<p>对象是特征与技能的结合体，我可能有身高体重、而你也有身高体重，所以你会说你像我，但是你一定不会说你像阿猫阿狗。并且我和你其实就可以说成是一类，而你和选课系统不能说是一类，因此给出类的定义：类就是一系列对象相似的特征与技能的结合体。</p>
+<p>在现实世界中：先有一个个具体存在的对象，然后随着人类文明的发展才了分类的概念，既然现实世界中有类这个概念，Python程序中也一定有类这个概念，但是在Python程序中：必须先定义类，然后调用类来产生对象。</p>
+<span id="more"></span>
+
+<h2 id="现实世界中定义类和对象"><a href="#现实世界中定义类和对象" class="headerlink" title="现实世界中定义类和对象"></a>现实世界中定义类和对象</h2><h3 id="定义对象"><a href="#定义对象" class="headerlink" title="定义对象"></a>定义对象</h3><p>就拿未来我们的选课系统来讲，我们先总结一套现实世界中的学生对象：</p>
+<ul>
+<li>对象1：<ul>
+<li>特征：<ul>
+<li>学校=’oldboy’</li>
+<li>姓名=’耗哥’</li>
+<li>年龄=18</li>
+<li>性别=’male’</li>
+</ul>
+</li>
+<li>技能：<ul>
+<li>选课</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>对象2：<ul>
+<li>特征：<ul>
+<li>学校=’oldboy’</li>
+<li>姓名=’猪哥’</li>
+<li>年龄=17</li>
+<li>性别=’male’</li>
+</ul>
+</li>
+<li>技能：<ul>
+<li>选课</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="定义类"><a href="#定义类" class="headerlink" title="定义类"></a>定义类</h3><p>站在未来选课系统的角度，我们还可以总结现实世界中的学生类：</p>
+<ul>
+<li>老男孩学生类：<ul>
+<li>相似的特征：<ul>
+<li>学校=’oldboy’</li>
+</ul>
+</li>
+<li>相似的技能<ul>
+<li>选课</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="程序中定义类和对象"><a href="#程序中定义类和对象" class="headerlink" title="程序中定义类和对象"></a>程序中定义类和对象</h2><h3 id="定义类-1"><a href="#定义类-1" class="headerlink" title="定义类"></a>定义类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意类中定义变量使用驼峰体</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OldboyStudent</span>():</span></span><br><span class="line">    school = <span class="string">&#x27;oldboy&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">choose_course</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;is choosing course&#x27;</span>)</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>曾经定义函数，函数只检测语法，不执行代码，但是定义类的时候，类体代码会在类定义阶段就立刻执行，并且会产生一个类的名称空间，也就是说类的本身其实就是一个容器/名称空间，是用来存放名字的，这是类的用途之一</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(OldboyStudent.__dict__)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&#123;&#x27;__module__&#x27;: &#x27;__main__&#x27;, &#x27;school&#x27;: &#x27;oldboy&#x27;, &#x27;choose_course&#x27;: &lt;function OldboyStudent.choose_course at 0x10d653ae8&gt;, &#x27;__dict__&#x27;: &lt;attribute &#x27;__dict__&#x27; of &#x27;OldboyStudent&#x27; objects&gt;, &#x27;__weakref__&#x27;: &lt;attribute &#x27;__weakref__&#x27; of &#x27;OldboyStudent&#x27; objects&gt;, &#x27;__doc__&#x27;: None&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(OldboyStudent.__dict__[<span class="string">&#x27;school&#x27;</span>])  <span class="comment"># oldboy</span></span><br><span class="line"><span class="built_in">print</span>(OldboyStudent.__dict__[<span class="string">&#x27;choose_course&#x27;</span>])  <span class="comment"># &lt;function OldboyStudent.choose_course at 0x10d653ae8&gt;</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    OldboyStudent.__dict__[<span class="string">&#x27;choose_course&#x27;</span>]()</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;error:&#x27;</span>, e)</span><br><span class="line">    </span><br><span class="line"><span class="string">&#x27;&#x27;&#x27; </span></span><br><span class="line"><span class="string">error: choose_course() missing 1 required positional argument: &#x27;self&#x27;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>   </span><br><span class="line">    </span><br><span class="line">  </span><br><span class="line"><span class="built_in">print</span>(OldboyStudent.school)  <span class="comment"># oldboy</span></span><br><span class="line">OldboyStudent.choose_course(<span class="number">111</span>)  <span class="comment"># is choosing course</span></span><br><span class="line"><span class="built_in">print</span>(OldboyStudent.choose_course)  <span class="comment"># &lt;function OldboyStudent.choose_course at 0x10d653ae8&gt;</span></span><br><span class="line">OldboyStudent.__dict__[<span class="string">&#x27;choose_course&#x27;</span>]  <span class="comment"># &lt;function __main__.OldboyStudent.choose_course(self)&gt;</span></span><br><span class="line">OldboyStudent.country=<span class="string">&#x27;China&#x27;</span></span><br><span class="line">OldboyStudent.__dict__[<span class="string">&#x27;country&#x27;</span>]  <span class="comment"># &#x27;China&#x27;</span></span><br><span class="line"></span><br><span class="line">OldboyStudent.country=<span class="string">&#x27;CHINA&#x27;</span></span><br><span class="line">OldboyStudent.__dict__[<span class="string">&#x27;country&#x27;</span>]  <span class="comment"># &#x27;CHINA&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> OldboyStudent.school</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(OldboyStudent.__dict__)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">&#123;&#x27;__module__&#x27;: &#x27;__main__&#x27;, &#x27;school&#x27;: &#x27;oldboy&#x27;, &#x27;choose_course&#x27;: &lt;function OldboyStudent.choose_course at 0x10d653ae8&gt;, &#x27;__dict__&#x27;: &lt;attribute &#x27;__dict__&#x27; of &#x27;OldboyStudent&#x27; objects&gt;, &#x27;__weakref__&#x27;: &lt;attribute &#x27;__weakref__&#x27; of &#x27;OldboyStudent&#x27; objects&gt;, &#x27;__doc__&#x27;: None, &#x27;country&#x27;: &#x27;CHINA&#x27;&#125;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="定义对象-1"><a href="#定义对象-1" class="headerlink" title="定义对象"></a>定义对象</h3><ul>
+<li>调用类即可产生对象，调用类的过程，又称为类的实例化，实例化的结果称为类的对象/实例</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">stu1=OldboyStudent() <span class="comment"># 调用类会得到一个返回值，该返回值就是类的一个具体存在的对象/实例</span></span><br><span class="line"><span class="built_in">print</span>(stu1.school)  <span class="comment"># oldboy</span></span><br><span class="line"></span><br><span class="line">stu2=OldboyStudent() <span class="comment"># 调用类会得到一个返回值，该返回值就是类的一个具体存在的对象/实例</span></span><br><span class="line"><span class="built_in">print</span>(stu2.school)  <span class="comment"># oldboy</span></span><br><span class="line"></span><br><span class="line">stu3=OldboyStudent() <span class="comment"># 调用类会得到一个返回值，该返回值就是类的一个具体存在的对象/实例</span></span><br><span class="line">stu3.choose_course() <span class="comment"># is choosing course</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="定制对象独有特征"><a href="#定制对象独有特征" class="headerlink" title="定制对象独有特征"></a>定制对象独有特征</h1><p>类中定义的函数是类的函数属性，类可以使用，但使用的就是一个普通的函数而已，意味着需要完全遵循函数的参数规则，该传几个值就传几个</p>
+<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OldboyStudent</span>:</span></span><br><span class="line">    school = <span class="string">&#x27;oldboy&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">choose_course</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;is choosing course&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">stu1 = OldboyStudent()</span><br><span class="line">stu2 = OldboyStudent()</span><br><span class="line">stu3 = OldboyStudent()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对于上述的学生类，如果类的属性改了，则其他对象的属性也会随之改变</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">OldboyStudent.school = <span class="string">&#x27;OLDBOY&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(stu1.school)  <span class="comment"># OLDBOY</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(stu2.school)  <span class="comment"># OLDBOY</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="定制对象独有特征-1"><a href="#定制对象独有特征-1" class="headerlink" title="定制对象独有特征"></a>定制对象独有特征</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(stu1.__dict__)  <span class="comment"># &#123;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(stu2.__dict__)  <span class="comment"># &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对象本质类似于类，也是一个名称空间，但是对象的名称空间存放对象独有的名字，而类中存放的是对象们共有的名字。因此我们可以直接为对象单独定制名字。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">stu1.name = <span class="string">&#x27;tank&#x27;</span></span><br><span class="line">stu1.age = <span class="number">18</span></span><br><span class="line">stu1.gender = <span class="string">&#x27;male&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(stu1.name, stu1.age, stu1.gender)</span><br><span class="line">tank <span class="number">18</span> male</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="built_in">print</span>(stu2.name, stu2.age, stu2.gender)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(e)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># &#x27;OldboyStudent&#x27; object has no attribute &#x27;name&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">stu2.name = <span class="string">&#x27;sean&#x27;</span></span><br><span class="line">stu2.age = <span class="number">19</span></span><br><span class="line">stu2.gender = <span class="string">&#x27;female&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(stu2.name, stu2.age, stu2.gender)  <span class="comment"># sean 19 female</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="属性查找"><a href="#属性查找" class="headerlink" title="属性查找"></a>属性查找</h2><ul>
+<li>首先从自身查找，没找到往类中找，类中没有则会报错。即对象的属性查找顺序为：自身–》类–》报错</li>
+</ul>
+<h2 id="类定义阶段定制属性"><a href="#类定义阶段定制属性" class="headerlink" title="类定义阶段定制属性"></a>类定义阶段定制属性</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init</span>(<span class="params">obj, x, y, z</span>):</span></span><br><span class="line">    obj.name = x</span><br><span class="line">    obj.age = y</span><br><span class="line">    obj.gender = z</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">init(stu1, <span class="string">&#x27;tank1&#x27;</span>, <span class="number">181</span>, <span class="string">&#x27;male&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(stu1.name, stu1.age, stu1.gender)  <span class="comment"># tank1 181 male</span></span><br><span class="line"></span><br><span class="line">init(stu2, <span class="string">&#x27;sean1&#x27;</span>, <span class="number">191</span>, <span class="string">&#x27;female&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(stu2.name, stu2.age, stu2.gender)  <span class="comment"># sean1 191 female</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用上述方法虽然让我们定制属性更简单，但是还是太麻烦了，如果可以在实例化对象的时候自动触发定时属性，那就更方便了，因此可以使用类的<strong>init</strong>方法。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OldboyStudent</span>:</span></span><br><span class="line">    school = <span class="string">&#x27;oldboy&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, age, gender</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;调用类的时候自动触发&quot;&quot;&quot;</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line">        self.gender = gender</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;*&#x27;</span> * <span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">choose_course</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;is choosing course&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    stu1 = OldboyStudent()</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(e)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># __init__() missing 3 required positional arguments: &#x27;name&#x27;, &#x27;age&#x27;, and &#x27;gender&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">stu1 = OldboyStudent(<span class="string">&#x27;lqz&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;male&#x27;</span>)</span><br><span class="line"><span class="comment"># **************************************************</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过上述现象可以发现，调用类时发生两件事：<ol>
+<li>创造一个空对象</li>
+<li>自动触发类中<strong>init</strong>功能的执行，将stu1以及调用类括号内的参数一同传入</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(stu1.__dict__)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;lqz&#x27;, &#x27;age&#x27;: 18, &#x27;gender&#x27;: &#x27;male&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="属性查找-1"><a href="#属性查找-1" class="headerlink" title="属性查找"></a>属性查找</h1><ul>
+<li>先从对象自己的名称空间找，没有则去类中找，如果类也没有则报错</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OldboyStudent</span>:</span></span><br><span class="line">    school = <span class="string">&#x27;oldboy&#x27;</span></span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    aa = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, x, y, z</span>):</span>  <span class="comment">#会在调用类时自动触发</span></span><br><span class="line">        self.name = x  <span class="comment"># stu1.name=&#x27;耗哥&#x27;</span></span><br><span class="line">        self.age = y  <span class="comment"># stu1.age=18</span></span><br><span class="line">        self.sex = z  <span class="comment"># stu1.sex=&#x27;male&#x27;</span></span><br><span class="line">        OldboyStudent.count += <span class="number">1</span></span><br><span class="line">        <span class="comment">#         self.count += 5</span></span><br><span class="line">        self.aa = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">choose_course</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;is choosing course&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(OldboyStudent.count)  <span class="comment"># 0</span></span><br><span class="line"></span><br><span class="line">stu1 = OldboyStudent(<span class="string">&#x27;nick&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;male&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(stu1.count)  <span class="comment">#  1</span></span><br><span class="line"></span><br><span class="line">stu2 = OldboyStudent(<span class="string">&#x27;sean&#x27;</span>, <span class="number">17</span>, <span class="string">&#x27;male&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(stu2.count)  <span class="comment"># 2</span></span><br><span class="line"></span><br><span class="line">stu3 = OldboyStudent(<span class="string">&#x27;tank&#x27;</span>, <span class="number">19</span>, <span class="string">&#x27;female&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(stu3.count)  <span class="comment"># 3</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(OldboyStudent.count) <span class="comment"># 3</span></span><br><span class="line"><span class="built_in">print</span>(stu1.name)  <span class="comment"># nick</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>由于上述修改的是类属性，类属性的count已经被修改为3，所以其他实例的count都为3</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(stu1.count)  <span class="comment"># 3</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(stu2.count)  <span class="comment"># 3</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(stu3.count)  <span class="comment"># 4</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>由于aa是私有属性，因此stu们都会用自己私有的aa，不会用类的aa</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(stu1.__dict__)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;nick&#x27;, &#x27;age&#x27;: 18, &#x27;sex&#x27;: &#x27;male&#x27;, &#x27;aa&#x27;: 1&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(stu2.__dict__)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;sean&#x27;, &#x27;age&#x27;: 17, &#x27;sex&#x27;: &#x27;male&#x27;, &#x27;aa&#x27;: 1&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(stu3.__dict__)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;tank&#x27;, &#x27;age&#x27;: 19, &#x27;sex&#x27;: &#x27;female&#x27;, &#x27;aa&#x27;: 1&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="对象的绑定方法"><a href="#对象的绑定方法" class="headerlink" title="对象的绑定方法"></a>对象的绑定方法</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OldboyStudent</span>:</span></span><br><span class="line">    school = <span class="string">&#x27;oldboy&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, name, age, gender</span>):</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line">        self.sex = gender</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">choose_course</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;<span class="subst">&#123;self.name&#125;</span> choosing course&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;from func&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>类名称空间中定义的数据属性和函数属性都是共享给所有对象用的</li>
+<li>对象名称空间中定义的只有数据属性，而且是对象所独有的数据属性</li>
+</ul>
+<h2 id="类使用对象的绑定对象"><a href="#类使用对象的绑定对象" class="headerlink" title="类使用对象的绑定对象"></a>类使用对象的绑定对象</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">stu1 = OldboyStudent(<span class="string">&#x27;lqz&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;male&#x27;</span>)</span><br><span class="line">stu2 = OldboyStudent(<span class="string">&#x27;sean&#x27;</span>, <span class="number">17</span>, <span class="string">&#x27;male&#x27;</span>)</span><br><span class="line">stu3 = OldboyStudent(<span class="string">&#x27;tank&#x27;</span>, <span class="number">19</span>, <span class="string">&#x27;female&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(stu1.name)  <span class="comment"># lqz</span></span><br><span class="line"><span class="built_in">print</span>(stu1.school)  <span class="comment"># oldboy</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>类中定义的函数是类的函数属性，类可以使用，但使用的就是一个普通的函数而已，意味着需要完全遵循函数的参数规则，该传几个值就传几个</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(OldboyStudent.choose_course)  <span class="comment"># &lt;function OldboyStudent.choose_course at 0x10558e840&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    OldboyStudent.choose_course(<span class="number">123</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(e)</span><br><span class="line">    </span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;    </span></span><br><span class="line"><span class="string">&#x27;int&#x27; object has no attribute &#x27;name&#x27;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="对象使用对象的绑定方法"><a href="#对象使用对象的绑定方法" class="headerlink" title="对象使用对象的绑定方法"></a>对象使用对象的绑定方法</h2><ul>
+<li>类中定义的函数是共享给所有对象的，对象也可以使用，而且是绑定给对象用的，</li>
+<li>绑定的效果：绑定给谁，就应该由谁来调用，谁来调用就会将谁当作第一个参数自动传入</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(stu1.choose_course))  <span class="comment"># 4379911304</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(stu2.choose_course))  <span class="comment"># 4379911304</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(stu3.choose_course))  <span class="comment"># 4379911304</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(OldboyStudent.choose_course))  <span class="comment"># 4384680000</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(stu1.school))  <span class="comment"># 4380883688</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(stu2.school))  <span class="comment"># 4380883688</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(stu3.school))  <span class="comment"># 4380883688</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>(stu1.name), <span class="built_in">id</span>(stu2.name), <span class="built_in">id</span>(stu3.name))</span><br><span class="line"><span class="comment"># 4384509600 4384506072 4384507864</span></span><br><span class="line"></span><br><span class="line">stu1.choose_course()  <span class="comment"># lqz choosing course</span></span><br><span class="line"></span><br><span class="line">stu2.choose_course()  <span class="comment"># sean choosing course</span></span><br><span class="line"></span><br><span class="line">stu3.choose_course()  <span class="comment"># tank choosing course</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>补充：类中定义的函数，类确实可以使用，但其实类定义的函数大多情况下都是绑定给对象用的，所以在类中定义的函数都应该自带一个参数self</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stu1.func()  <span class="comment"># from func</span></span><br><span class="line"></span><br><span class="line">stu2.func()  <span class="comment"># from func</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/5d15ec84.html" rel="prev" title="Jenkins安装">
+                  <i class="fa fa-chevron-left"></i> Jenkins安装
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/9d01c62a.html" rel="next" title="类和数据类型、类的继承">
+                  类和数据类型、类的继承 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">556k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:25</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
