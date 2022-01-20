@@ -7,6 +7,7 @@
 <p> <a href="https://klcc.cc/c1fd5357.html">Python解释器与Pycharm</a><br> <a href="https://klcc.cc/daf175dd.html">pycharm使用及python变量、命名规范</a><br> <a href="https://klcc.cc/43f82467.html">数据类型、输入输出、基本运算符</a><br> <a href="https://klcc.cc/26ba1150.html">流程控制</a><br> <a href="https://klcc.cc/5bfa71b5.html">for循环及内置方法</a><br> <a href="https://klcc.cc/d645d15c.html">内置方法二</a><br> <a href="https://klcc.cc/bb5f959.html">内置方法三</a><br> <a href="https://klcc.cc/b8f382b7.html">编码和文件操作</a><br> <a href="https://klcc.cc/19603b60.html">文件操作</a><br> <a href="https://klcc.cc/a7f42e80.html">文件操作与函数</a><br> <a href="https://klcc.cc/c86b83ee.html">函数参数</a><br> <a href="https://klcc.cc/abc4492a.html">函数使用</a><br> <a href="https://klcc.cc/3a5cdcf8.html">装饰器</a><br> <a href="https://klcc.cc/d5376901.html">函数使用和生成式</a><br> <a href="https://klcc.cc/ccf84d2b.html">迭代器</a><br> <a href="https://klcc.cc/ae4233d7.html">生成器</a><br> <a href="https://klcc.cc/5c1fe23f.html">模块一</a><br> <a href="https://klcc.cc/26f31071.html">软件目录规范、正则表达式</a><br> <a href="https://klcc.cc/f32e795d.html">模块二</a><br> <a href="https://klcc.cc/8ddd5976.html">模块三</a><br> <a href="https://klcc.cc/779eb679.html">模块四</a></p>
 <h4 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h4><p> <a href="https://klcc.cc/152c7478.html">类和对象、属性查找及绑定方法</a><br> <a href="https://klcc.cc/9d01c62a.html">类和数据类型、类的继承</a><br> <a href="https://klcc.cc/2327de81.html">派生、继承、分类及菱形问题</a><br> <a href="https://klcc.cc/3b14afe5.html">调用父类、super()、多态</a><br> <a href="https://klcc.cc/84aad6a1.html">封装和property特性</a><br> <a href="https://klcc.cc/4b65bd78.html">绑定方法及面向对象小结</a><br> <a href="https://klcc.cc/47a473e6.html">反射和魔术方法(一)</a><br> <a href="https://klcc.cc/bf389a0f.html">描述符</a><br> <a href="https://klcc.cc/9b629203.html">魔术方法(二)</a><br> <a href="https://klcc.cc/75c8d1ab.html">迭代器、with、元类</a><br> <a href="https://klcc.cc/">面向对象高级小结</a></p>
 <h4 id="网络和并发"><a href="#网络和并发" class="headerlink" title="网络和并发"></a>网络和并发</h4><p> <a href="https://klcc.cc/e67db240.html">网络编程</a><br> <a href="https://klcc.cc/59b85335.html">并发编程</a></p>
+<h4 id="前端基础"><a href="#前端基础" class="headerlink" title="前端基础"></a>前端基础</h4><p><a href="https://klcc.cc/e173abca.html">HTML基础</a></p>
 ]]></content>
       <categories>
         <category>python</category>
@@ -19,8 +20,9 @@
     <title>Kuberneters从入门到入土</title>
     <url>/30dd6ee6.html</url>
     <content><![CDATA[<h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><span id="more"></span>
-
-<h4 id="容器运行时"><a href="#容器运行时" class="headerlink" title="容器运行时"></a>容器运行时</h4><h4 id="Kuberneters基础"><a href="#Kuberneters基础" class="headerlink" title="Kuberneters基础"></a>Kuberneters基础</h4><p><a href="https://klcc.cc/60b500c7.html">kubeadm安装</a><br><a href="https://klcc.cc/2391e1e4.html">yaml资源清单格式</a></p>
+<p><a href=""></a></p>
+<h4 id="Containerd"><a href="#Containerd" class="headerlink" title="Containerd"></a>Containerd</h4><p><a href="https://klcc.cc/4610149.html">Containerd相关使用</a></p>
+<h4 id="Kuberneters基础"><a href="#Kuberneters基础" class="headerlink" title="Kuberneters基础"></a>Kuberneters基础</h4><p><a href="https://klcc.cc/60b500c7.html">kubeadm安装</a><br><a href="https://klcc.cc/2391e1e4.html">yaml资源清单格式</a></p>
 <h4 id="配置管理安全"><a href="#配置管理安全" class="headerlink" title="配置管理安全"></a>配置管理安全</h4><h4 id="Kuberneters网络"><a href="#Kuberneters网络" class="headerlink" title="Kuberneters网络"></a>Kuberneters网络</h4><h4 id="调度器与CRD"><a href="#调度器与CRD" class="headerlink" title="调度器与CRD"></a>调度器与CRD</h4><h4 id="Kuberneters存储"><a href="#Kuberneters存储" class="headerlink" title="Kuberneters存储"></a>Kuberneters存储</h4><h4 id="Helm管理工具"><a href="#Helm管理工具" class="headerlink" title="Helm管理工具"></a>Helm管理工具</h4><h4 id="应用可观测性"><a href="#应用可观测性" class="headerlink" title="应用可观测性"></a>应用可观测性</h4><h4 id="DevOps"><a href="#DevOps" class="headerlink" title="DevOps"></a>DevOps</h4><h4 id="Service-Mesh"><a href="#Service-Mesh" class="headerlink" title="Service Mesh"></a>Service Mesh</h4><h4 id="集群维护"><a href="#集群维护" class="headerlink" title="集群维护"></a>集群维护</h4>]]></content>
       <categories>
         <category>Kuberneters</category>
@@ -56,6 +58,167 @@
       </categories>
       <tags>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTML基础</title>
+    <url>/e173abca.html</url>
+    <content><![CDATA[<h3 id="前端与后端"><a href="#前端与后端" class="headerlink" title="前端与后端"></a>前端与后端</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">前端：</span><br><span class="line">如何与操作系统打交道的界面都可以称为<span class="string">&#x27;前端&#x27;</span></span><br><span class="line">如：手机界面 电脑软件界面 平板界面</span><br><span class="line"></span><br><span class="line">后端：</span><br><span class="line">不直接与用户打交道，而是控制核心逻辑的运行</span><br><span class="line"></span><br><span class="line">前端三剑客</span><br><span class="line">HTML  网页的骨架(没有样式)</span><br><span class="line">CSS   网页的样式(给骨架美化)</span><br><span class="line">JS    网页的动态效果(丰富用户体验)</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="B-S架构"><a href="#B-S架构" class="headerlink" title="B/S架构"></a>B/S架构</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">B/S架构的本质也是C/S架构</span><br><span class="line">当编写TC服务端的时候，客户端的选择可以是自己写的客户端代码也可以是浏览器充当客户端</span><br><span class="line"></span><br><span class="line">之前编写的TCP服务端浏览器无法识别的原因在于每个人编写的服务端不一样，没有统一的格式，浏览器不能自动识别</span><br><span class="line"> 	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"> 	浏览器可以访问很多服务端 如何做到无障碍的与这么多不同程序员开发的软件实现数据的交互</span></span><br><span class="line"><span class="string"> 		1.浏览器自身功能强大 自动识别并切换(太过消耗资源)</span></span><br><span class="line"><span class="string"> 		2.大家统一一个与浏览器交互的数据方式(统一思想)</span></span><br><span class="line"><span class="string"> 	&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h3><p>规定了浏览器与服务端之间数据交互的方式及其他事项，如果开发的服务端不遵守该协议，那么浏览器无法识别服务端的数据，就需要自己编写一个客户端</p>
+<h4 id="四大特性"><a href="#四大特性" class="headerlink" title="四大特性"></a>四大特性</h4><ul>
+<li><p>基于请求响应</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">服务端永远不会主动给客户端发消息，必须是客户端先发请求，如果让服务端主动给客户发送消息可以采用其他网络协议</span><br></pre></td></tr></table></figure></li>
+<li><p>基于TCP/IP作用于应用之上的协议</p>
+</li>
+<li><p>无状态</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">不保存客户端的状态信息</span><br></pre></td></tr></table></figure></li>
+<li><p>无连接/短连接</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">两者请求响应之后立刻断绝关系</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a>数据格式</h4><ul>
+<li><p>请求格式</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">请求首行(网络请求的方法)</span><br><span class="line">请求头(一堆k:v键值对)</span><br><span class="line">(换行符 不能省略)</span><br><span class="line">请求体(并不是所有的请求方法都有)</span><br></pre></td></tr></table></figure></li>
+<li><p>响应格式</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">响应首行(响应状态码)</span><br><span class="line">响应头(一堆K:V键值对)</span><br><span class="line">(换行符 不能省略)</span><br><span class="line">响应提(即将交给浏览器的数据)</span><br></pre></td></tr></table></figure></li>
+<li><p>响应状态码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">用数字来表示一串中文意思</span><br><span class="line">  1XX:服务端已经接受到了数据正在处理 你可以继续发送数据也可以等待</span><br><span class="line">  2XX:<span class="number">200</span> OK请求成功 服务端返回了相应的数据</span><br><span class="line">  3XX:重定向(原本想访问A页面 但是自动跳转到了B页面)</span><br><span class="line">  4XX:<span class="number">403</span>没有权限访问  <span class="number">404</span>请求资源不存在</span><br><span class="line">  5XX:服务器内部错误</span><br><span class="line">  <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"> 	公司还会自定义状态码 一般以10000开头</span></span><br><span class="line"><span class="string">  参考:聚合数据</span></span><br><span class="line"><span class="string">  &quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="HTML前戏"><a href="#HTML前戏" class="headerlink" title="HTML前戏"></a>HTML前戏</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">server = socket.socket()</span><br><span class="line">server.bind((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8080</span>))</span><br><span class="line">server.listen()</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">请求首行</span></span><br><span class="line"><span class="string">b&#x27;GET / HTTP/1.1\r\n  </span></span><br><span class="line"><span class="string">请求头</span></span><br><span class="line"><span class="string">Host: 127.0.0.1:8080\r\n</span></span><br><span class="line"><span class="string">Connection: keep-alive\r\n</span></span><br><span class="line"><span class="string">sec-ch-ua: &quot; Not;A Brand&quot;;v=&quot;99&quot;, &quot;Google Chrome&quot;;v=&quot;97&quot;, &quot;Chromium&quot;;v=&quot;97&quot;\r\n</span></span><br><span class="line"><span class="string">sec-ch-ua-mobile: ?0\r\n</span></span><br><span class="line"><span class="string">sec-ch-ua-platform: &quot;macOS&quot;\r\n</span></span><br><span class="line"><span class="string">Upgrade-Insecure-Requests: 1\r\n</span></span><br><span class="line"><span class="string">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36\r\n</span></span><br><span class="line"><span class="string">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\n</span></span><br><span class="line"><span class="string">Sec-Fetch-Site: none\r\n</span></span><br><span class="line"><span class="string">Sec-Fetch-Mode: navigate\r\n</span></span><br><span class="line"><span class="string">Sec-Fetch-User: ?1\r\n</span></span><br><span class="line"><span class="string">Sec-Fetch-Dest: document\r\n</span></span><br><span class="line"><span class="string">Accept-Encoding: gzip, deflate, br\r\n</span></span><br><span class="line"><span class="string">Accept-Language: zh-CN,zh;q=0.9\r\n</span></span><br><span class="line"><span class="string">\r\n</span></span><br><span class="line"><span class="string">请求体(当前为空)</span></span><br><span class="line"><span class="string">&#x27;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    sock, addr = server.accept()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        data = sock.recv(<span class="number">1024</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(data) == <span class="number">0</span>: <span class="keyword">break</span></span><br><span class="line">        <span class="built_in">print</span>(data)</span><br><span class="line">        <span class="comment"># 遵循HTTP响应格式</span></span><br><span class="line">        sock.send(<span class="string">b&#x27;HTTP/1.1 200 OK\r\n\r\n&#x27;</span>)</span><br><span class="line">        sock.send(<span class="string">b&#x27;&lt;h1&gt;hello big baby&lt;h1&gt;&#x27;</span>)</span><br><span class="line">        sock.send(<span class="string">b&#x27;&lt;a href=&quot;https://www.jd.com&quot;&gt;good see&lt;a&gt;&#x27;</span>)</span><br><span class="line">        sock.send(</span><br><span class="line">            <span class="string">b&#x27;&lt;img src=&quot;https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png&quot;/&gt;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="HTML简介"><a href="#HTML简介" class="headerlink" title="HTML简介"></a>HTML简介</h3><p>HTML：超文本标记语言，没有逻辑，只有固定的标记功能</p>
+<h4 id="基本文档结构"><a href="#基本文档结构" class="headerlink" title="基本文档结构"></a>基本文档结构</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span>浏览器上相关信息<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span>主体内容<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="HTML注释"><a href="#HTML注释" class="headerlink" title="HTML注释"></a>HTML注释</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--单行注释--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">多行注释</span></span><br><span class="line"><span class="comment">多行注释</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="HTML标签"><a href="#HTML标签" class="headerlink" title="HTML标签"></a>HTML标签</h3><h4 id="标签分类"><a href="#标签分类" class="headerlink" title="标签分类"></a>标签分类</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.双标签(有闭合)</span><br><span class="line">  &lt;a&gt;&lt;/a&gt;</span><br><span class="line">2.自闭合标签(单标签)</span><br><span class="line">  &lt;img/&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="head内常见标签"><a href="#head内常见标签" class="headerlink" title="head内常见标签"></a>head内常见标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">title  定义网页标题</span><br><span class="line">style  内部支持CSS代码</span><br><span class="line">script 内部支持编写JS代码 还可以通过src属性导入外部js文件</span><br><span class="line">link   通过href属性引入外部的css文件</span><br><span class="line">meta   定义网页源信息</span><br><span class="line">       keywords关键字搜索</span><br><span class="line">       description网页描述信息</span><br></pre></td></tr></table></figure>
+
+<h4 id="body内常见标签"><a href="#body内常见标签" class="headerlink" title="body内常见标签"></a>body内常见标签</h4><table>
+<thead>
+<tr>
+<th>标签</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>h1-h6</td>
+<td>标题标签</td>
+</tr>
+<tr>
+<td>p</td>
+<td>段落标签</td>
+</tr>
+<tr>
+<td>b</td>
+<td>加粗</td>
+</tr>
+<tr>
+<td>i</td>
+<td>斜体</td>
+</tr>
+<tr>
+<td>u</td>
+<td>下划线</td>
+</tr>
+<tr>
+<td>s</td>
+<td>删除线</td>
+</tr>
+<tr>
+<td>br</td>
+<td>换行</td>
+</tr>
+<tr>
+<td>hr</td>
+<td>水平分割线</td>
+</tr>
+</tbody></table>
+<p>多种标签有些时候可以实现相同的样式</p>
+<h4 id="特殊符"><a href="#特殊符" class="headerlink" title="特殊符"></a>特殊符</h4><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;nbsp;</td>
+<td>空格</td>
+</tr>
+<tr>
+<td>&amp;gt;</td>
+<td>大于号</td>
+</tr>
+<tr>
+<td>&amp;lt;</td>
+<td>小于号</td>
+</tr>
+<tr>
+<td>&amp;amp;</td>
+<td>&amp;符号</td>
+</tr>
+<tr>
+<td>&amp;yen;</td>
+<td>RMB 符号</td>
+</tr>
+<tr>
+<td>&amp;copy;</td>
+<td>版权符</td>
+</tr>
+<tr>
+<td>&amp;reg;</td>
+<td>注册</td>
+</tr>
+</tbody></table>
+<h4 id="常见标签"><a href="#常见标签" class="headerlink" title="常见标签"></a>常见标签</h4><p><code>div&amp;span</code>标签</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">div   块级标签</span><br><span class="line">span  行内标签</span><br><span class="line"></span><br><span class="line">标签是可以嵌套的，但是需要遵循以下规律:</span><br><span class="line">1.块级标签,可以无限制的嵌套块儿级标签和行内标签</span><br><span class="line">2.p标签虽然是块级标签但是也不能嵌套块级标签</span><br><span class="line">3.行内标签不能嵌套块儿级标签，可以嵌套行内标签</span><br><span class="line">	</span><br><span class="line">页面布局的技巧:先用div划分区域，再考虑后面填充具体内容</span><br></pre></td></tr></table></figure>
+
+<p><code>a</code>标签</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">链接标签</span><br><span class="line">1.可以通过href属性指定URL进行点击跳转</span><br><span class="line">	跳转的两种方式:</span><br><span class="line">	1)在当前页面跳转  target=&quot;_self&quot;   默认的参数</span><br><span class="line">	2)新建标签页跳转  target=&quot;_blank&quot;</span><br><span class="line">2.锚点功能</span><br><span class="line">	通过href属性指定标签的id值，然后点击即可跳转到对应的位置</span><br><span class="line">	&lt;a href=&quot;#10&quot;&gt;跳到id为10的标签位置&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>img</code>标签</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">图片标签</span><br><span class="line">src属性指定图片地址，可以是本地地址，也可以是网络地址</span><br><span class="line">alt属性编写文本，用于在图片无法加载时的提示信息</span><br><span class="line">tatle属性编写文本，用于鼠标悬浮在图片上时提示的信息</span><br><span class="line">height、width属性写像素(图片大小)，单位是px，调整一个参数时会等比缩放，同时两个参数可能会失真</span><br></pre></td></tr></table></figure>
+
+<h4 id="标签属性"><a href="#标签属性" class="headerlink" title="标签属性"></a>标签属性</h4><p><code>id</code>属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">个体查找，类似于身份证，在同一个html页面上的id不能重复</span><br><span class="line">&lt;h1 id=&#x27;10&#x27;&gt;&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>class</code>属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">群体查找，可以将多个标签划分为一类，一个标签同时也可以有多个属性，如：</span><br><span class="line">&lt;h1 class=&#x27;c1 c2&#x27;&gt;&lt;/h1&gt;</span><br><span class="line">&lt;p class=&#x27;c1 c3&#x27;&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="列表标签"><a href="#列表标签" class="headerlink" title="列表标签"></a>列表标签</h4><ul>
+<li><p>无序列表</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">	&lt;li&gt;123&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;1234&lt;/li&gt;</span><br><span class="line">	&lt;li&gt;12345&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">网页上有规则排列的多个横向或者竖向内容几乎都是使用的无序列表</span><br></pre></td></tr></table></figure></li>
+<li><p>有序列表</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;ol&gt;</span><br><span class="line">    &lt;li&gt;111&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;222&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;333&lt;/li&gt;</span><br><span class="line">	&lt;/ol&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>标题列表</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dl&gt;</span><br><span class="line">  &lt;dt&gt;标题1&lt;/dt&gt;</span><br><span class="line">    &lt;dd&gt;内容1&lt;/dd&gt;</span><br><span class="line">  &lt;dt&gt;标题2&lt;/dt&gt;</span><br><span class="line">    &lt;dd&gt;内容1&lt;/dd&gt;</span><br><span class="line">    &lt;dd&gt;内容2&lt;/dd&gt;</span><br><span class="line">&lt;/dl&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="表格标签"><a href="#表格标签" class="headerlink" title="表格标签"></a>表格标签</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;table&gt;</span><br><span class="line">	&lt;thead&gt;&lt;/thead&gt;  表头</span><br><span class="line">	&lt;tbody&gt;&lt;/tbody&gt;  表单</span><br><span class="line">&lt;/table&gt;</span><br><span class="line"></span><br><span class="line">&lt;tr&gt;标签表示一行</span><br><span class="line">&lt;th&gt;标签表头内的字段名称</span><br><span class="line">&lt;td&gt;标签普通的单元格数据</span><br><span class="line"></span><br><span class="line">例：</span><br><span class="line">&lt;table border=&quot;1&quot;&gt;</span><br><span class="line">    &lt;thead&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;th&gt;姓名&lt;/th&gt;</span><br><span class="line">            &lt;th&gt;年龄&lt;/th&gt;</span><br><span class="line">            &lt;th&gt;密码&lt;/th&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">    &lt;/thead&gt;</span><br><span class="line">    &lt;tbody&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;jason&lt;/td&gt;</span><br><span class="line">            &lt;td&gt;18&lt;/td&gt;</span><br><span class="line">            &lt;td&gt;123456&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">            &lt;td&gt;tom&lt;/td&gt;</span><br><span class="line">            &lt;td&gt;28&lt;/td&gt;</span><br><span class="line">            &lt;td&gt;123&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">    &lt;/tbody&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">border:      表格边框</span><br><span class="line">cellpadding: 内边距</span><br><span class="line">cellspacing: 外边距</span><br><span class="line">width:       像素 百分比(最好通过css来设置长宽)</span><br><span class="line">rowspan:     单元格竖跨多少行</span><br><span class="line">colspan:     单元格横跨多少列(即合并单元格)</span><br></pre></td></tr></table></figure>
+
+<h4 id="form标签"><a href="#form标签" class="headerlink" title="form标签"></a><code>form</code>标签</h4><p>form表单的功能是获取用户的数据并发送给后端，例如登录、注册等信息</p>
+<h5 id="input标签"><a href="#input标签" class="headerlink" title="input标签"></a><code>input</code>标签</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">input标签是最常用的获取数据标签，该标签为行内标签，可以通过type参数的不同变换不同的表现形式</span><br><span class="line"></span><br><span class="line"># type的属性</span><br><span class="line">1) text  普通文本</span><br><span class="line"></span><br><span class="line">2) password  密码隐藏</span><br><span class="line"></span><br><span class="line">3) date  日期选择</span><br><span class="line"></span><br><span class="line">4) radio 单选</span><br><span class="line">         当有多个选项标签需要相同的name属性</span><br><span class="line">         默认选中需要 checked=&#x27;checked&#x27;</span><br><span class="line">         当属性名与属性值相等可以简写checked</span><br><span class="line">         </span><br><span class="line">5) checkbox  多选，默认选中需要 checked=&#x27;checked&#x27;</span><br><span class="line"></span><br><span class="line">6) email  邮箱格式，不满足邮箱格式提交时会提示</span><br><span class="line"></span><br><span class="line">7) file 上传文件，默认只支持单个文件，上传多个文件需要 multiple 参数</span><br><span class="line"></span><br><span class="line">8) submit 提交按钮，点击时会将表单内的信息进行提交</span><br><span class="line"></span><br><span class="line">9) button 普通按钮，本身无任何功能，一般结合JS定制</span><br><span class="line"></span><br><span class="line">10) rest 重置按钮</span><br><span class="line"></span><br><span class="line">按钮的提示信息可以通过value属性自定义，不自定义的时候不同的浏览器会显示不同的信息</span><br></pre></td></tr></table></figure>
+
+<h5 id="select标签"><a href="#select标签" class="headerlink" title="select标签"></a><code>select</code>标签</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">下拉框选项，选项的内容用 option 标签包裹</span><br><span class="line">默认单选，多选可以使用 multiple 参数</span><br></pre></td></tr></table></figure>
+
+<h5 id="textarea标签"><a href="#textarea标签" class="headerlink" title="textarea标签"></a><code>textarea</code>标签</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">获取大段文本内容</span><br></pre></td></tr></table></figure>
+
+<h5 id="其他注意事项"><a href="#其他注意事项" class="headerlink" title="其他注意事项"></a>其他注意事项</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2.直接编写input会出现黄色阴影，原因在于input需要结合lable一起使用</span><br><span class="line">	方式1:lable包裹input并绑定id</span><br><span class="line">    	&lt;label for=&#x27;input标签id值&#x27;&gt;input标签&lt;/label&gt;</span><br><span class="line">  方式2:label与input单独出现并绑定id</span><br><span class="line">    	&lt;label for=&quot;d1&quot;&gt;username:&lt;/label&gt;</span><br><span class="line">      &lt;input type=&quot;text&quot; id=&quot;d1&quot;&gt;</span><br><span class="line">      </span><br><span class="line">3.form表单提交数据</span><br><span class="line">	数据的提交地址由form表单的action参数来控制</span><br><span class="line">  	action=&quot;URL&quot;</span><br><span class="line">    	# 不写默认朝当前页面所在的地址提交</span><br><span class="line">    method=&quot;数据的提交方式&quot;</span><br><span class="line">    	# 数据的提交方式有很多种 这里先忽略(后续讲解)</span><br><span class="line">      	get post put delete patch...</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">form表单在提交数据的时候 如果含文件则需要指定两个固定参数</span><br><span class="line">	method=&#x27;post&#x27;</span><br><span class="line">	enctype=&quot;multipart/form-data&quot;</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="前后端简易交互"><a href="#前后端简易交互" class="headerlink" title="前后端简易交互"></a>前后端简易交互</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://127.0.0.1:5000/index/&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>用户名: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>密码: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;passwd&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>邮箱: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;email&#x27;</span> <span class="attr">name</span>=<span class="string">&quot;email&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>出生日期: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;date&quot;</span> <span class="attr">name</span>=<span class="string">&quot;birthday&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>性别:</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">value</span>=<span class="string">&quot;male&quot;</span>&gt;</span>男</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">value</span>=<span class="string">&quot;female&quot;</span>&gt;</span>女</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">name</span>=<span class="string">&quot;gender&quot;</span> <span class="attr">value</span>=<span class="string">&quot;secrecy&quot;</span>&gt;</span>保密</span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>爱好:</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;hobby&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Basketball&quot;</span>&gt;</span> 篮球</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;hobby&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Football&quot;</span>&gt;</span> 足球</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;hobby&quot;</span> <span class="attr">value</span>=<span class="string">&quot;Volleyball&quot;</span>&gt;</span> 排球</span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    城市: <span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">&quot;pro&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;shanghai&quot;</span>&gt;</span>上海<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;beijing&quot;</span>&gt;</span>北京<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;guangzhou&quot;</span>&gt;</span>广州<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;shenzhen&quot;</span>&gt;</span>深圳<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>自我评价: <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">name</span>=<span class="string">&quot;info&quot;</span> <span class="attr">id</span>=<span class="string">&quot;&quot;</span> <span class="attr">cols</span>=<span class="string">&quot;30&quot;</span> <span class="attr">rows</span>=<span class="string">&quot;5&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>file:</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>file:</span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;files&quot;</span> <span class="attr">multiple</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;注册&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">value</span>=<span class="string">&quot;按钮&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;reset&quot;</span> <span class="attr">value</span>=<span class="string">&quot;重置&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220120145019978.png" alt="image-20220120145019978"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask,request</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/index/&#x27;</span>,methods=[<span class="string">&#x27;GET&#x27;</span>,<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(request.form)  <span class="comment"># 获取普通数据</span></span><br><span class="line">    <span class="built_in">print</span>(request.files)  <span class="comment"># 获取文件数据</span></span><br><span class="line">    <span class="built_in">print</span>(request.form.get(<span class="string">&#x27;name&#x27;</span>))  <span class="comment">#  单独获取表单内的值</span></span><br><span class="line">    file_obj = request.files.get(<span class="string">&#x27;file&#x27;</span>)  <span class="comment"># 获取文件对象</span></span><br><span class="line">    file_obj.save(<span class="string">&#x27;xxx.md&#x27;</span>)  <span class="comment"># 保存文件</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;flask框架&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.run()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>HTML</category>
+      </categories>
+      <tags>
+        <tag>HTML</tag>
       </tags>
   </entry>
   <entry>
@@ -5746,6 +5909,23 @@
 </ul>
 </li>
 </ul>
+<h2 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>IO模型研究的主要是网络IO(linux系统)</p>
+<ul>
+<li>同步（synchronous）    大部分情况下会采用缩写的形式  sync</li>
+<li>异步（asynchronous） async</li>
+<li>阻塞（blocking） </li>
+<li>非阻塞（non-blocking）</li>
+</ul>
+<p>五种IO模型：<br>    * blocking IO           阻塞IO<br>    * nonblocking IO          非阻塞IO<br>    * IO multiplexing          IO多路复用<br>    * signal driven IO         信号驱动IO<br>    * asynchronous IO            异步IO<br>    由signal driven IO（信号驱动IO）在实际中并不常用，所以主要介绍其余四种IO Model</p>
+<h3 id="四种IO模型简介"><a href="#四种IO模型简介" class="headerlink" title="四种IO模型简介"></a>四种IO模型简介</h3><h4 id="阻塞IO"><a href="#阻塞IO" class="headerlink" title="阻塞IO"></a>阻塞IO</h4><pre><code>最为常见的一种IO模型 有两个等待的阶段(wait for data、copy data)
+</code></pre>
+<h4 id="非阻塞IO"><a href="#非阻塞IO" class="headerlink" title="非阻塞IO"></a>非阻塞IO</h4><pre><code>系统调用阶段变为了非阻塞(轮训) 有一个等待的阶段(copy data)
+  轮训的阶段是比较消耗资源的
+</code></pre>
+<h4 id="多路复用IO"><a href="#多路复用IO" class="headerlink" title="多路复用IO"></a>多路复用IO</h4><pre><code>利用select或者epoll来监管多个程序 一旦某个程序需要的数据存在于内存中了 那么立刻通知该程序去取即可
+</code></pre>
+<h4 id="异步IO"><a href="#异步IO" class="headerlink" title="异步IO"></a>异步IO</h4><pre><code>只需要发起一次系统调用 之后无需频繁发送 有结果并准备好之后会通过异步回调机制反馈给调用者
+</code></pre>
 ]]></content>
       <categories>
         <category>python</category>
