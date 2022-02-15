@@ -4,7 +4,79 @@
   <url>
     <loc>https://klcc.cc/c1ca5201.html</loc>
     
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/a4a81253.html</loc>
+    
+    <lastmod>2022-02-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/5a8f3b66.html</loc>
+    
+    <lastmod>2022-02-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/2211e793.html</loc>
+    
+    <lastmod>2022-02-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/a72f05d4.html</loc>
+    
+    <lastmod>2022-02-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/37ea497d.html</loc>
+    
+    <lastmod>2022-02-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/3cb7076b.html</loc>
+    
+    <lastmod>2022-02-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/889563.html</loc>
+    
+    <lastmod>2022-02-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/a9ba4134.html</loc>
+    
+    <lastmod>2022-02-15</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -165,15 +237,6 @@
   
   <url>
     <loc>https://klcc.cc/152c7478.html</loc>
-    
-    <lastmod>2022-01-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://klcc.cc/a4a81253.html</loc>
     
     <lastmod>2022-01-11</lastmod>
     
@@ -940,7 +1003,7 @@
 
   <url>
     <loc>https://klcc.cc/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -948,161 +1011,175 @@
   
   <url>
     <loc>https://klcc.cc/tags/Containerd/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/MySQL/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/Kuberneters/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/kubeadm/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/YAML/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/linux/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/Nginx/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/Ubuntu/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/NVIDIA/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/Bond/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/Mac/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/python/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/markdown/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/Typora/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/pycharm/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/MongoDB/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/Ansible/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/git/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/jenkins/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/gitlab/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/HTML/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/Docker/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/tags/CSS/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/tags/JavaScript/</loc>
+    <lastmod>2022-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/tags/jQuery/</loc>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -1111,119 +1188,133 @@
   
   <url>
     <loc>https://klcc.cc/categories/Containerd/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/MySQL/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/Kuberneters/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/linux/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/Nginx/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/Ubuntu/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/Mac/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/python/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/Markdown/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/MongoDB/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/Ansible/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/git/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/jenkins/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/gitlab/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/HTML/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/Docker/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://klcc.cc/categories/CSS/</loc>
-    <lastmod>2022-02-10</lastmod>
+    <lastmod>2022-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/categories/JavaScript/</loc>
+    <lastmod>2022-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/categories/jQuery/</loc>
+    <lastmod>2022-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
