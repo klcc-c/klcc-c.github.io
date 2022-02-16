@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="主要查看官方文档: https:&#x2F;&#x2F;v3.bootcss.com&#x2F; 简介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bootstrap框架">
+<meta property="og:url" content="https://klcc.cc/f2f17718.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="主要查看官方文档: https:&#x2F;&#x2F;v3.bootcss.com&#x2F; 简介">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-08T03:18:08.406Z">
+<meta property="article:modified_time" content="2022-02-16T12:31:07.741Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="Bootstrap">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/f2f17718.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/f2f17718.html","path":"f2f17718.html","title":"Bootstrap框架"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Bootstrap框架 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">26</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">20</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">110</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%83%E5%B1%80%E5%AE%B9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">布局容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%85%E6%A0%BC%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">栅格系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E6%A0%BC"><span class="nav-number">4.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95"><span class="nav-number">5.</span> <span class="nav-text">表单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E9%92%AE%E7%BB%84"><span class="nav-number">6.</span> <span class="nav-text">按钮组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87"><span class="nav-number">7.</span> <span class="nav-text">图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E6%A0%87"><span class="nav-number">8.</span> <span class="nav-text">图标</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/f2f17718.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bootstrap框架
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 11:18:08" itemprop="dateCreated datePublished" datetime="2022-02-08T11:18:08+08:00">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-16 20:31:07" itemprop="dateModified" datetime="2022-02-16T20:31:07+08:00">2022-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Bootstrap/" itemprop="url" rel="index"><span itemprop="name">Bootstrap</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>主要查看官方文档: <a target="_blank" rel="noopener" href="https://v3.bootcss.com/">https://v3.bootcss.com/</a></p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><span id="more"></span>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Bootstrap 是最受欢迎的 HTML、CSS 和 JS 框架，用于开发响应式布局、移动设备优先的 WEB 项目</span><br><span class="line">Bootstrap框架版本有 <span class="number">2.</span>x <span class="number">3.</span>x <span class="number">4.</span>x <span class="comment"># 推荐使用3.x</span></span><br><span class="line"><span class="number">3.</span>x版本文档: https://v3.bootcss.com/</span><br><span class="line">    </span><br><span class="line">使用框架调整页面样式一般都是操作标签的<span class="class"><span class="keyword">class</span>属性</span></span><br><span class="line"><span class="class"><span class="title">bootstarp</span>需要依赖<span class="title">jQuery</span>才能正常执行</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">引入方式:</span></span><br><span class="line">  <span class="number">1.</span>本地引入</span><br><span class="line">    Bootstrap下载地址: https://github.com/twbs/bootstrap/releases/download/v3<span class="number">.4</span><span class="number">.1</span>/bootstrap-<span class="number">3.4</span><span class="number">.1</span>-dist.<span class="built_in">zip</span></span><br><span class="line">    先导入jQuery文件</span><br><span class="line">    导入Bootstrap的css文件</span><br><span class="line">    导入Bootstrap的js文件</span><br><span class="line">    </span><br><span class="line">    &lt;script src=<span class="string">&quot;jQuery-3.6.0.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;bootstrap-3.4.1-dist/css/bootstrap.css&quot;</span>&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;bootstrap-3.4.1-dist/js/bootstrap.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">      </span><br><span class="line">  <span class="number">2.</span>CDN引入</span><br><span class="line">    引入jQuery CND</span><br><span class="line">    引入Bootstrap的css CDN</span><br><span class="line">    引入Bootstrap的js  CDN</span><br><span class="line">    </span><br><span class="line">    &lt;script src=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;link href=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css&quot;</span> rel=<span class="string">&quot;stylesheet&quot;</span>&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">PS: pycharm中第一次最好使用本地导入，可以有代码提示</span><br><span class="line">  </span><br><span class="line">Normalize.css:增强跨浏览器渲染的一致性</span><br><span class="line">  https://necolas.github.io/normalize.css/</span><br></pre></td></tr></table></figure>
+
+<h3 id="布局容器"><a href="#布局容器" class="headerlink" title="布局容器"></a>布局容器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">container 左右留白</span><br><span class="line">container-fluid 左右不留白</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;jQuery-3.6.0.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;bootstrap-3.4.1-dist/css/bootstrap.css&quot;</span>&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;bootstrap-3.4.1-dist/js/bootstrap.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .c1 &#123;</span><br><span class="line">            background-color: red;</span><br><span class="line">            height: 100px;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">container</span> <span class="title">c1</span>&quot;&gt;&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="栅格系统"><a href="#栅格系统" class="headerlink" title="栅格系统"></a>栅格系统</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Bootstrap 提供了一套响应式、移动设备优先的流式栅格系统，随着屏幕或视口（viewport）尺寸的增加，系统会自动分为最多<span class="number">12</span>列。它包含了易于使用的预定义类，还有强大的mixin 用于生成更具语义的布局</span><br><span class="line"></span><br><span class="line">row 行</span><br><span class="line"></span><br><span class="line">一行中占几份，添加下列所有自适应显示</span><br><span class="line">col-xs-<span class="number">1</span>  </span><br><span class="line">col-sm-<span class="number">1</span></span><br><span class="line">col-md-<span class="number">1</span></span><br><span class="line">col-lg-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>以下代码可以看到被分成了12份</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;jQuery-3.6.0.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;bootstrap-3.4.1-dist/css/bootstrap.css&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;bootstrap-3.4.1-dist/js/bootstrap.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.c1</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">background-color</span>: red;</span></span><br><span class="line"><span class="css">            <span class="attribute">height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">border</span>: <span class="number">3px</span> solid black;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-1 c1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container table-responsive&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">&quot;table table-striped table-bordered table-hover table table-condensed&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>ID<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>UserName<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">th</span>&gt;</span>PassWord<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">&quot;danger&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>tony<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>123<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">&quot;success&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>2<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>jason<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>313<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">&quot;warning&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>3<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>xxx<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>007<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tr</span> <span class="attr">class</span>=<span class="string">&quot;info&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>4<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>zzz<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">td</span>&gt;</span>800<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h3><p><code>class=form-control</code></p>
+<p>checkbox和radio最好加，否则样式会更难看</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-8 col-md-offset-2&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h2</span>&gt;</span>登录页面<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>username:</span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>password:</span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">&quot;&quot;</span> <span class="attr">id</span>=<span class="string">&quot;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span>&gt;</span>111<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span>&gt;</span>222<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span>&gt;</span>333<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">name</span>=<span class="string">&quot;&quot;</span> <span class="attr">id</span>=<span class="string">&quot;&quot;</span> <span class="attr">cols</span>=<span class="string">&quot;30&quot;</span> <span class="attr">rows</span>=<span class="string">&quot;10&quot;</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="按钮组"><a href="#按钮组" class="headerlink" title="按钮组"></a>按钮组</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.baidu.com&quot;</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-primary btn-block&quot;</span>&gt;</span>点点点<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-danger btn-lg&quot;</span>&gt;</span>这是按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-default btn-sm&quot;</span>&gt;</span>这是按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-success btn-xs&quot;</span>&gt;</span>这是按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-info&quot;</span>&gt;</span>这是按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-warning&quot;</span>&gt;</span>这是按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col-md-8 col-md-offset-2&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://img0.baidu.com/it/u=2777952672,1831955507&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=500&amp;h=313&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;img-rounded&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://img0.baidu.com/it/u=2777952672,1831955507&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=500&amp;h=313&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;img-circle&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://img0.baidu.com/it/u=2777952672,1831955507&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=500&amp;h=313&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;img-thumbnail&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="图标"><a href="#图标" class="headerlink" title="图标"></a>图标</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>bootstrap自带的Glyphicons 字体图标</span><br><span class="line">通过span标签修改<span class="class"><span class="keyword">class</span>属性值</span></span><br><span class="line"><span class="class">&lt;<span class="title">span</span> <span class="title">class</span>=&quot;<span class="title">glyphicon</span> <span class="title">glyphicon</span>-<span class="title">user</span>&quot; <span class="title">style</span>=&quot;<span class="title">color</span>:</span> red;<span class="string">&quot;&gt;&lt;/span&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2.fontawesome网站</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  官网: http://www.fontawesome.com.cn/</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  文件引入方式: &lt;link rel=&quot;</span>stylesheet<span class="string">&quot; href=&quot;</span>font-awesome-<span class="number">4.7</span><span class="number">.0</span>/css/font-awesome.<span class="built_in">min</span>.css<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">  使用: &lt;i class=&quot;</span>fa fa-university<span class="string">&quot; aria-hidden=&quot;</span>true<span class="string">&quot;&gt;&lt;/i&gt;</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">3. 两者之间完全兼容</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Bootstrap/" rel="tag"><i class="fa fa-tag"></i> Bootstrap</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/e173abca.html" rel="prev" title="HTML基础">
+                  <i class="fa fa-chevron-left"></i> HTML基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/889563.html" rel="next" title="jQuery基础">
+                  jQuery基础 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">692k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">10:29</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
