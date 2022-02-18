@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="存储引擎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL数据类型-补充">
+<meta property="og:url" content="https://klcc.cc/be17b709.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="存储引擎">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-08T03:18:08.406Z">
+<meta property="article:modified_time" content="2022-02-18T08:08:11.205Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://klcc.cc/be17b709.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/be17b709.html","path":"be17b709.html","title":"MySQL数据类型-补充"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL数据类型-补充 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">26</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">20</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">1.</span> <span class="nav-text">存储引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">MySQL基本数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B4%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">整型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">浮点型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.3.</span> <span class="nav-text">字符类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E5%92%8C%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.4.</span> <span class="nav-text">枚举和集合类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.5.</span> <span class="nav-text">日期类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">约束条件</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/be17b709.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL数据类型-补充
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 11:18:08" itemprop="dateCreated datePublished" datetime="2022-02-08T11:18:08+08:00">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-18 16:08:11" itemprop="dateModified" datetime="2022-02-18T16:08:11+08:00">2022-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h3><span id="more"></span>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">MyISAM</span><br><span class="line">  mysql5<span class="number">.5</span>之前默认支持存储引擎，不支持事务、行级锁</span><br><span class="line"></span><br><span class="line">InnoDB</span><br><span class="line">  mysql5<span class="number">.5</span>之后默认的存储引擎。支持事务，行级锁，更安全</span><br><span class="line">  </span><br><span class="line">memory</span><br><span class="line">  基于内存存取数据，断电之后数据会丢失</span><br><span class="line">  </span><br><span class="line">blackhole</span><br><span class="line">  写入其中的数据都会立刻消失 /dev/null</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 创建不同存储引擎的表</span></span><br><span class="line">create table t1(<span class="built_in">id</span> <span class="built_in">int</span>) engine=myisam;</span><br><span class="line">create table t2(<span class="built_in">id</span> <span class="built_in">int</span>) engine=innodb;</span><br><span class="line">create table t3(<span class="built_in">id</span> <span class="built_in">int</span>) engine=memory;</span><br><span class="line">create table t4(<span class="built_in">id</span> <span class="built_in">int</span>) engine=blackhole;</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">myisam引擎 创建的表有三个文件</span></span><br><span class="line"><span class="string">.frm  表结构文件</span></span><br><span class="line"><span class="string">.myd  表数据文件</span></span><br><span class="line"><span class="string">.myi  表索引文件</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">innodb引擎 创建的表有两个文件</span></span><br><span class="line"><span class="string">.frm 表结构文件</span></span><br><span class="line"><span class="string">.ibd 表数据和表索引</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">memory引擎</span></span><br><span class="line"><span class="string">  .frm 表结构文件</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">blackhole引擎</span></span><br><span class="line"><span class="string">  .frm 表结构文件</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="MySQL基本数据类型"><a href="#MySQL基本数据类型" class="headerlink" title="MySQL基本数据类型"></a>MySQL基本数据类型</h3><h4 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">tinyint smallint <span class="built_in">int</span> bigint</span><br><span class="line"></span><br><span class="line">正负号会占一个比特位</span><br><span class="line">所有的<span class="built_in">int</span>类型默认都需要正负号</span><br><span class="line"></span><br><span class="line">create table t(<span class="built_in">id</span> <span class="built_in">int</span>(<span class="number">3</span>));</span><br><span class="line">insert into t values(<span class="number">4444444</span>);</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">在整型中括号内的数字并不是用来限制存储的长度 而是用来控制展示的长度</span></span><br><span class="line"><span class="string">我们以后在定义整型字段的时候 不需要自己添加数字 使用默认的就可以</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">create table t14(<span class="built_in">id</span> <span class="built_in">int</span>(<span class="number">3</span>) zerofill);</span><br><span class="line">insert into t13 values(<span class="number">4</span>);</span><br><span class="line"><span class="comment"># 整型比较的特殊 是唯一个不是用来限制存储长度的类型</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">float</span> double decimal</span><br><span class="line"></span><br><span class="line"><span class="built_in">float</span>(<span class="number">255</span>,<span class="number">30</span>)   <span class="comment"># 总共255位 小数占30位</span></span><br><span class="line">double(<span class="number">255</span>,<span class="number">30</span>)  <span class="comment"># 总共255位 小数占30位</span></span><br><span class="line">decimal(<span class="number">65</span>,<span class="number">30</span>)  <span class="comment"># 总共65位 小数占30位</span></span><br><span class="line"></span><br><span class="line">create table t5(<span class="built_in">id</span> <span class="built_in">float</span>(<span class="number">255</span>,<span class="number">30</span>));</span><br><span class="line">create table t6(<span class="built_in">id</span> double(<span class="number">255</span>,<span class="number">30</span>));</span><br><span class="line">create table t7(<span class="built_in">id</span> decimal(<span class="number">65</span>,<span class="number">30</span>));</span><br><span class="line">insert into t5 values(<span class="number">1.1111111111111111111111</span>);</span><br><span class="line">insert into t6 values(<span class="number">1.1111111111111111111111</span>);</span><br><span class="line">insert into t7 values(<span class="number">1.1111111111111111111111</span>);</span><br><span class="line">select * <span class="keyword">from</span> t5;</span><br><span class="line">select * <span class="keyword">from</span> t6;</span><br><span class="line">select * <span class="keyword">from</span> t7;</span><br><span class="line"></span><br><span class="line">精确度: <span class="built_in">float</span> &lt; double &lt; decimal</span><br></pre></td></tr></table></figure>
+
+<h4 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a>字符类型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">char(<span class="number">4</span>)     <span class="comment"># 定长类型 最多存4个字符   多了报错少了空格会填充至四个</span></span><br><span class="line">varchar(<span class="number">3</span>)  <span class="comment"># 变长类型 有几个存几个字符 最多存4个字符</span></span><br><span class="line"></span><br><span class="line">create table t6(name char(<span class="number">4</span>));</span><br><span class="line">create table t7(name varchar(<span class="number">4</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment"># mysql5.6 不会报错 5.7会报错</span></span><br><span class="line"><span class="comment"># 5.7在sql_mode上做了SQL92严格模式</span></span><br><span class="line"><span class="comment"># show variables like &#x27;%sql_mode%&#x27;</span></span><br><span class="line"><span class="comment"># set global sql_mode = &#x27;strict_trans_tables,pad_char_to_full_length&#x27;</span></span><br><span class="line">insert into t6 values(<span class="string">&#x27;xxxxx&#x27;</span>);</span><br><span class="line">insert into t7 values(<span class="string">&#x27;xxxxx&#x27;</span>);</span><br><span class="line"></span><br><span class="line">对比:</span><br><span class="line">char:</span><br><span class="line">  优势: 整存整取，速度快</span><br><span class="line">  劣势: 浪费存储空间</span><br><span class="line">    </span><br><span class="line">varchar:</span><br><span class="line">  优势: 节省存储空间</span><br><span class="line">  劣势: 存取数据的速度较char慢</span><br><span class="line">    </span><br><span class="line">varchar类型会把字段信息也存入，取时就根据该信息取</span><br></pre></td></tr></table></figure>
+
+<h4 id="枚举和集合类型"><a href="#枚举和集合类型" class="headerlink" title="枚举和集合类型"></a>枚举和集合类型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">enum()  <span class="comment"># 多选一</span></span><br><span class="line"></span><br><span class="line">create tables user(</span><br><span class="line">  <span class="built_in">id</span> <span class="built_in">int</span>,</span><br><span class="line">  name varchar(<span class="number">32</span>),</span><br><span class="line">  gender enum(<span class="string">&#x27;male&#x27;</span>,<span class="string">&#x27;female&#x27;</span>,<span class="string">&#x27;others&#x27;</span>)</span><br><span class="line">);</span><br><span class="line">insert into user values(<span class="number">1</span>,<span class="string">&#x27;tom&#x27;</span>,<span class="string">&#x27;male&#x27;</span>)  </span><br><span class="line"><span class="comment"># gender字段的取值只有&#x27;male&#x27;,&#x27;female&#x27;,&#x27;others&#x27;里面的一个</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>()  <span class="comment"># 多选多(包含多选一)</span></span><br><span class="line"></span><br><span class="line">create table userinfo(</span><br><span class="line">	<span class="built_in">id</span> <span class="built_in">int</span>,</span><br><span class="line">  hobby <span class="built_in">set</span>(<span class="string">&#x27;basketball&#x27;</span>,<span class="string">&#x27;football&#x27;</span>,<span class="string">&#x27;doublecolorball&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h4 id="日期类型"><a href="#日期类型" class="headerlink" title="日期类型"></a>日期类型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create table client(</span><br><span class="line">	<span class="built_in">id</span> <span class="built_in">int</span>,</span><br><span class="line">    name varchar(<span class="number">32</span>),</span><br><span class="line">    reg_time date,</span><br><span class="line">    birth datetime,</span><br><span class="line">    study_time time,</span><br><span class="line">    join_time year</span><br><span class="line">);</span><br><span class="line">insert into client values(<span class="number">1</span>,<span class="string">&#x27;jason&#x27;</span>,<span class="string">&#x27;2000-11-11&#x27;</span>,<span class="string">&#x27;2000-1-21 11:11:11&#x27;</span>,<span class="string">&#x27;11:11:11&#x27;</span>,<span class="number">1995</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="约束条件"><a href="#约束条件" class="headerlink" title="约束条件"></a>约束条件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">约束条件相当于是在字段类型的基础之上添加的额外约束</span></span><br><span class="line"><span class="string">	eg: id int unsigned</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">unsigned		让数字没有正负号</span><br><span class="line">zerofill		多余的使用数字<span class="number">0</span>填充</span><br><span class="line"><span class="keyword">not</span> null		非空</span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">	新增表数据的方式</span></span><br><span class="line"><span class="string">		方式1:  按照字段顺序一一传值</span></span><br><span class="line"><span class="string">			 insert into t1 values(1,&#x27;jason&#x27;);</span></span><br><span class="line"><span class="string">		方式2:  自定义传值顺序 甚至不传</span></span><br><span class="line"><span class="string">			insert into t1(name,id) values(&#x27;jason&#x27;,1);</span></span><br><span class="line"><span class="string">			insert into t1(id) values(1);</span></span><br><span class="line"><span class="string">	在MySQL中不传数据 会使用关键字NULL填充意思就是空 类似于python的None</span></span><br><span class="line"><span class="string">	&quot;&quot;&quot;</span></span><br><span class="line">    create table t2(</span><br><span class="line">    	<span class="built_in">id</span> <span class="built_in">int</span>,</span><br><span class="line">        name varchar(<span class="number">32</span>) <span class="keyword">not</span> null</span><br><span class="line">    );</span><br><span class="line">default			默认值</span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">	所有的字段都可以设置默认值 </span></span><br><span class="line"><span class="string">		用户不给该字段传值则使用默认的 否则使用传了的</span></span><br><span class="line"><span class="string">	create table t3(</span></span><br><span class="line"><span class="string">		id int default 911,</span></span><br><span class="line"><span class="string">		name varchar(16) default &#x27;jason&#x27;</span></span><br><span class="line"><span class="string">	);</span></span><br><span class="line"><span class="string">	&quot;&quot;&quot;</span></span><br><span class="line">unique			唯一值</span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">	单列唯一</span></span><br><span class="line"><span class="string">		create table t4(</span></span><br><span class="line"><span class="string">			id int,</span></span><br><span class="line"><span class="string">			name varchar(32) unique</span></span><br><span class="line"><span class="string">		);</span></span><br><span class="line"><span class="string">	联合唯一</span></span><br><span class="line"><span class="string">		create table t5(</span></span><br><span class="line"><span class="string">			id int,</span></span><br><span class="line"><span class="string">			host varchar(32),</span></span><br><span class="line"><span class="string">			port int,</span></span><br><span class="line"><span class="string">			unique(host,port)</span></span><br><span class="line"><span class="string">		);</span></span><br><span class="line"><span class="string">	&quot;&quot;&quot;</span></span><br><span class="line">primary key		主键</span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">	但从约束层面上来说 相当于是 not null + unique(非空且唯一)</span></span><br><span class="line"><span class="string">	在此基础之上还可以加快数据的查询</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	InnoDB存储引擎规定了一张表必须有且只有一个主键</span></span><br><span class="line"><span class="string">		因为InnoDB是通过主键的方式来构造表的</span></span><br><span class="line"><span class="string">		如果没有设置主键</span></span><br><span class="line"><span class="string">			情况1:没有主键和其他约束条件</span></span><br><span class="line"><span class="string">				InnoDB会采用隐藏的字段作为主键 不能加快数据的查询</span></span><br><span class="line"><span class="string">			情况2:没有主键但是有非空且唯一的字段</span></span><br><span class="line"><span class="string">				自动将该字段升级为主键</span></span><br><span class="line"><span class="string">				create table t6(</span></span><br><span class="line"><span class="string">					id int,</span></span><br><span class="line"><span class="string">					age int not null unique,</span></span><br><span class="line"><span class="string">					pwd int not null unique</span></span><br><span class="line"><span class="string">				);</span></span><br><span class="line"><span class="string">	结论:</span></span><br><span class="line"><span class="string">		以后我们在创建表的时候一定要设置主键</span></span><br><span class="line"><span class="string">		并且主键字段一般都是表的id字段(uid sid pid cid)</span></span><br><span class="line"><span class="string">		create table user(</span></span><br><span class="line"><span class="string">			id int primary key,</span></span><br><span class="line"><span class="string">			name varchar(32)</span></span><br><span class="line"><span class="string">		);</span></span><br><span class="line"><span class="string">	&quot;&quot;&quot;</span></span><br><span class="line">auto_increment		自增</span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">	由于主键类似于数据的唯一标识 并且主键一般都是数字类型</span></span><br><span class="line"><span class="string">	我们在添加数据的时候不可能记住接下来的序号是多少 太麻烦</span></span><br><span class="line"><span class="string">	create table user1(</span></span><br><span class="line"><span class="string">			id int primary key auto_increment,</span></span><br><span class="line"><span class="string">			name varchar(32)</span></span><br><span class="line"><span class="string">		);</span></span><br><span class="line"><span class="string">	&quot;&quot;&quot;</span></span><br><span class="line">  自增不会因为删除操作而回退</span><br><span class="line">	  delete <span class="keyword">from</span>无法影响自增</span><br><span class="line">    </span><br><span class="line">  如果想要重置需需要使用truncate关键字</span><br><span class="line">	  truncate 表名  <span class="comment"># 清空表数据并且重置主键值</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">create database db1 charset=&#x27;utf8&#x27;;</span><br><span class="line">use db1;</span><br><span class="line">create table student(</span><br><span class="line">  id int primary key auto_increment comment &#x27;学号&#x27;,</span><br><span class="line">  name varchar(64) not null comment &#x27;学生姓名&#x27;,</span><br><span class="line">  age int not null comment &#x27;学生年龄&#x27;,</span><br><span class="line">  gender enum(&#x27;male&#x27;,&#x27;female&#x27;,&#x27;others&#x27;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"><i class="fa fa-tag"></i> MySQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/e173abca.html" rel="prev" title="HTML基础">
+                  <i class="fa fa-chevron-left"></i> HTML基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/be528f81.html" rel="next" title="Pod基本使用">
+                  Pod基本使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">705k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">10:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
