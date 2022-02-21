@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://klcc.cc/42260158.html</loc>
+    
+    <lastmod>2022-02-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/b3b90dfb.html</loc>
+    
+    <lastmod>2022-02-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/34975bbc.html</loc>
+    
+    <lastmod>2022-02-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://klcc.cc/c1ca5201.html</loc>
     
     <lastmod>2022-02-21</lastmod>
@@ -1227,6 +1254,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://klcc.cc/tags/Django/</loc>
+    <lastmod>2022-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -1364,6 +1398,13 @@
   
   <url>
     <loc>https://klcc.cc/categories/Bootstrap/</loc>
+    <lastmod>2022-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://klcc.cc/categories/Django/</loc>
     <lastmod>2022-02-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

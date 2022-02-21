@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="HTTP协议 规定了浏览器与服务端之间的数据交互格式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手撸简易的web框架">
+<meta property="og:url" content="https://klcc.cc/34975bbc.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="HTTP协议 规定了浏览器与服务端之间的数据交互格式">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/2240626-20210312230334847-1372533552.png">
+<meta property="article:published_time" content="2022-02-08T03:18:08.406Z">
+<meta property="article:modified_time" content="2022-02-21T09:28:30.527Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/2240626-20210312230334847-1372533552.png">
+
+
+<link rel="canonical" href="https://klcc.cc/34975bbc.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/34975bbc.html","path":"34975bbc.html","title":"手撸简易的web框架"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>手撸简易的web框架 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">21</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">116</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.</span> <span class="nav-text">HTTP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">四大特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">数据格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">响应状态码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">请求方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%86%99web%E6%A1%86%E6%9E%B6"><span class="nav-number">3.</span> <span class="nav-text">手写web框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Ewsgiref%E6%A8%A1%E5%9D%97"><span class="nav-number">4.</span> <span class="nav-text">基于wsgiref模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E5%A4%84%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">封装处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5"><span class="nav-number">6.</span> <span class="nav-text">动静态网页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%B5%81%E7%9A%84web%E6%A1%86%E6%9E%B6"><span class="nav-number">8.</span> <span class="nav-text">主流的web框架</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/34975bbc.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          手撸简易的web框架
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 11:18:08" itemprop="dateCreated datePublished" datetime="2022-02-08T11:18:08+08:00">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-21 17:28:30" itemprop="dateModified" datetime="2022-02-21T17:28:30+08:00">2022-02-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h3><blockquote>
+<p>规定了浏览器与服务端之间的数据交互格式</p>
+</blockquote>
+<span id="more"></span>
+<h4 id="四大特性"><a href="#四大特性" class="headerlink" title="四大特性"></a>四大特性</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>基于TCP/IP作用于应用层之上的协议</span><br><span class="line"><span class="number">2.</span>基于请求响应</span><br><span class="line"><span class="number">3.</span>无状态</span><br><span class="line">	保存状态的的技术有cookie、session、token</span><br><span class="line"><span class="number">4.</span>无(短)连接</span><br><span class="line">  长连接:websocket</span><br></pre></td></tr></table></figure>
+
+<h4 id="数据格式"><a href="#数据格式" class="headerlink" title="数据格式"></a>数据格式</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>请求数据格式:</span><br><span class="line">  请求首行(包含有请求方法...)</span><br><span class="line">  请求头(K:V键值对信息)</span><br><span class="line">  \r\n</span><br><span class="line">  请求体(主要用来携带敏感数据)</span><br><span class="line">  </span><br><span class="line"><span class="number">2.</span>响应数据格式:</span><br><span class="line">  响应首行(响应状态码)</span><br><span class="line">  响应头(K:V键值对)</span><br><span class="line">  \r\n</span><br><span class="line">  响应体(展示给用户的数据)</span><br></pre></td></tr></table></figure>
+
+<h4 id="响应状态码"><a href="#响应状态码" class="headerlink" title="响应状态码"></a>响应状态码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">用一串数字表示信息</span><br><span class="line">1xx:服务端已经接收到数据并正在处理，可以继续提交</span><br><span class="line">2xx:<span class="number">200</span>请求成功</span><br><span class="line">3xx:重定向</span><br><span class="line">4xx:<span class="number">403</span> <span class="number">404</span></span><br><span class="line">5xx:服务器内部错误</span><br><span class="line">  </span><br><span class="line">响应状态码可以自定义</span><br></pre></td></tr></table></figure>
+
+<h3 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>get请求</span><br><span class="line">	从指定资源请求数据</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>post请求</span><br><span class="line">  将数据发送到服务器</span><br><span class="line">  </span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">get请求: url?username=xxx&amp;password=123456</span></span><br><span class="line"><span class="string">post请求:数据是放在请求体内</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="手写web框架"><a href="#手写web框架" class="headerlink" title="手写web框架"></a>手写web框架</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line">server = socket.socket()</span><br><span class="line">server.bind((<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8000</span>))</span><br><span class="line">server.listen(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    conn, add = server.accept()</span><br><span class="line">    data = conn.recv(<span class="number">1024</span>)</span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line">    res = data.decode(<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">    path = res.split(<span class="string">&#x27; &#x27;</span>)[<span class="number">1</span>]</span><br><span class="line">    <span class="comment"># 发送响应头</span></span><br><span class="line">    conn.send(<span class="string">b&#x27;HTTP/1.1 200 OK\r\n\r\n&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> path == <span class="string">&#x27;/index&#x27;</span>:</span><br><span class="line">        <span class="comment"># conn.send(b&#x27;index&#x27;)</span></span><br><span class="line">        <span class="comment"># 发送html页面</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;demo1.html&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            data = f.read()</span><br><span class="line">            conn.send(data)</span><br><span class="line">    <span class="keyword">elif</span> path == <span class="string">&#x27;/login&#x27;</span>:</span><br><span class="line">        conn.send(<span class="string">b&#x27;login&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        conn.send(<span class="string">b&#x27;404 error&#x27;</span>)</span><br><span class="line">    <span class="comment"># conn.send(b&#x27;hello world&#x27;)</span></span><br><span class="line">    conn.close()</span><br></pre></td></tr></table></figure>
+
+<h3 id="基于wsgiref模块"><a href="#基于wsgiref模块" class="headerlink" title="基于wsgiref模块"></a>基于<code>wsgiref</code>模块</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">request, response</span>):</span></span><br><span class="line">    response(<span class="string">&#x27;200 OK&#x27;</span>, [])</span><br><span class="line">    current_path = request.get(<span class="string">&quot;PATH_INFO&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> current_path == <span class="string">&#x27;/index&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">b&#x27;index&#x27;</span>]</span><br><span class="line">    <span class="keyword">elif</span> current_path == <span class="string">&#x27;/login&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">b&#x27;login&#x27;</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">b&#x27;404 error&#x27;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    server = make_server(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8000</span>, run)</span><br><span class="line">    server.serve_forever()</span><br></pre></td></tr></table></figure>
+
+<h3 id="封装处理"><a href="#封装处理" class="headerlink" title="封装处理"></a>封装处理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>定义一个网址与函数的对应关系 urls.py</span><br><span class="line"><span class="keyword">from</span> views <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">urls = [</span><br><span class="line">    (<span class="string">&#x27;/index&#x27;</span>, index_func),</span><br><span class="line">    (<span class="string">&#x27;/login&#x27;</span>, login_func),</span><br><span class="line">    (<span class="string">&#x27;/reg&#x27;</span>, reg_func),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>定义函数功能 views.py</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index_func</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;index&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login_func</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;login&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reg_func</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;reg&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">errors</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;404 error&#x27;</span></span><br><span class="line">  </span><br><span class="line"><span class="number">3.</span>服务端文件 server.py</span><br><span class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server</span><br><span class="line"><span class="keyword">import</span> urls</span><br><span class="line"><span class="keyword">from</span> views <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">request, response</span>):</span></span><br><span class="line">    response(<span class="string">&#x27;200 OK&#x27;</span>, [])</span><br><span class="line">    current_path = request.get(<span class="string">&quot;PATH_INFO&quot;</span>)</span><br><span class="line">    func = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">for</span> url_tuple <span class="keyword">in</span> urls:</span><br><span class="line">        <span class="keyword">if</span> current_path == url_tuple[<span class="number">0</span>]:</span><br><span class="line">            func = url_tuple[<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> func:</span><br><span class="line">        res = func(request)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        res = errors(request)</span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">bytes</span>(res, encoding=<span class="string">&#x27;utf8&#x27;</span>)]</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    server = make_server(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">8000</span>, run)</span><br><span class="line">    server.serve_forever()</span><br></pre></td></tr></table></figure>
+
+<h3 id="动静态网页"><a href="#动静态网页" class="headerlink" title="动静态网页"></a>动静态网页</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 静态网页</span></span><br><span class="line">	数据全是写死的</span><br><span class="line"><span class="comment"># 动态网页</span></span><br><span class="line">  数据来源于后端(代码、数据库)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>访问展示当前时间(时间是后端模块生成)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py 添加</span></span><br><span class="line">  (<span class="string">&#x27;/get_time&#x27;</span>, get_time_func)</span><br><span class="line">  </span><br><span class="line"><span class="comment"># views.py中对应的功能函数</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_time_func</span>(<span class="params">request</span>):</span></span><br><span class="line">      <span class="keyword">import</span> time</span><br><span class="line">      current_time = time.strftime(<span class="string">&#x27;%Y-%m-%d %X&#x27;</span>)</span><br><span class="line">      <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;demo1.html&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">          data = f.read()</span><br><span class="line">      data = data.replace(<span class="string">&#x27;asdasdasd&#x27;</span>, current_time)</span><br><span class="line">      <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line"><span class="comment"># demo1.html</span></span><br><span class="line">  &lt;h1&gt;asdasdasd&lt;/h1&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>后端字典展示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">pip3 install jinja2</span><br><span class="line"></span><br><span class="line"><span class="comment"># urls.py 添加</span></span><br><span class="line">  (<span class="string">&#x27;/get_dict&#x27;</span>, get_dict_func)</span><br><span class="line"></span><br><span class="line"><span class="comment"># views.py中对应的功能函数</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_dict_func</span>(<span class="params">request</span>):</span></span><br><span class="line">      user_dict = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;jason&#x27;</span>, <span class="string">&#x27;age&#x27;</span>: <span class="number">18</span>, <span class="string">&#x27;password&#x27;</span>: <span class="number">123456</span>&#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;Template/dem02.html&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">          data = f.read()</span><br><span class="line">      temp = Template(data)</span><br><span class="line">      <span class="comment"># 将user_dict 传递给demo2.html页面 在该页面上使用变量名user_data</span></span><br><span class="line">      res = temp.render(user_data=user_dict)</span><br><span class="line">      <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"><span class="comment"># Template/dem02.html</span></span><br><span class="line">  &#123;&#123; user_data &#125;&#125; &lt;br&gt;</span><br><span class="line">  &#123;&#123; user_data.get(<span class="string">&#x27;name&#x27;</span>) &#125;&#125; &lt;br&gt;</span><br><span class="line">  &#123;&#123; user_data[<span class="string">&#x27;age&#x27;</span>] &#125;&#125; &lt;br&gt;</span><br><span class="line">  &#123;&#123; user_data.password &#125;&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>获取MySQL数据库数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py 添加</span></span><br><span class="line">  (<span class="string">&#x27;/get_sql&#x27;</span>, get_sql_func)</span><br><span class="line">  </span><br><span class="line"><span class="comment"># views.py 中对应的功能函数</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_sql_func</span>(<span class="params">request</span>):</span></span><br><span class="line">      <span class="keyword">import</span> pymysql</span><br><span class="line">      conn = pymysql.connect(</span><br><span class="line">          host=<span class="string">&#x27;10.0.0.60&#x27;</span>,</span><br><span class="line">          port=<span class="number">3306</span>,</span><br><span class="line">          user=<span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">          password=<span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">          db=<span class="string">&#x27;db1&#x27;</span>,</span><br><span class="line">          charset=<span class="string">&#x27;utf8&#x27;</span>,</span><br><span class="line">          autocommit=<span class="literal">True</span></span><br><span class="line">      )</span><br><span class="line">      cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)</span><br><span class="line">      sql = <span class="string">&#x27;select * from student&#x27;</span></span><br><span class="line">      affect_rows = cursor.execute(sql)</span><br><span class="line">      res1 = cursor.fetchall()  <span class="comment"># [&#123;&#125;,&#123;&#125;,&#123;&#125;]</span></span><br><span class="line">      <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&#x27;Template/db.html&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">          data = f.read()  <span class="comment"># 字符串</span></span><br><span class="line">      temp = Template(data)</span><br><span class="line">      <span class="comment"># 将user_dict传递给get_dict.html页面 在该页面上使用变量名user_data调用</span></span><br><span class="line">      res = temp.render(data_list=res1)</span><br><span class="line">      <span class="keyword">return</span> res</span><br><span class="line">    </span><br><span class="line"><span class="comment"># Template/db.html</span></span><br><span class="line">&lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">container</span>&quot;&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">row</span>&quot;&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">h1</span> <span class="title">class</span>=&quot;<span class="title">text</span>-<span class="title">center</span>&quot;&gt;学生数据&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">col</span>-<span class="title">md</span>-8 <span class="title">col</span>-<span class="title">md</span>-<span class="title">offset</span>-2&quot;&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">table</span> <span class="title">class</span>=&quot;<span class="title">table</span> <span class="title">table</span>-<span class="title">hover</span> <span class="title">table</span>-<span class="title">striped</span> <span class="title">table</span>-<span class="title">bordered</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">thead</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">tr</span>&gt;</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">td</span>&gt;学号&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">td</span>&gt;姓名&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">td</span>&gt;年龄&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">td</span>&gt;性别&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;/<span class="title">thead</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">tbody</span>&gt;</span></span><br><span class="line"><span class="class">                &#123;%<span class="title">for</span> <span class="title">user_dict</span> <span class="title">in</span> <span class="title">data_list</span>%&#125;</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">tr</span>&gt;</span></span><br><span class="line"><span class="class">                        &lt;<span class="title">td</span>&gt;&#123;&#123;<span class="title">user_dict</span>.<span class="title">id</span>&#125;&#125;&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="class">                        &lt;<span class="title">td</span>&gt;&#123;&#123;<span class="title">user_dict</span>.<span class="title">name</span>&#125;&#125;&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="class">                        &lt;<span class="title">td</span>&gt;&#123;&#123;<span class="title">user_dict</span>.<span class="title">age</span>&#125;&#125;&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="class">                        &lt;<span class="title">td</span>&gt;&#123;&#123;<span class="title">user_dict</span>.<span class="title">gender</span>&#125;&#125;&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="class">                    &lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line"><span class="class">                &#123;%<span class="title">endfor</span>%&#125;</span></span><br><span class="line"><span class="class">                &lt;/<span class="title">tbody</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;/<span class="title">table</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">wsgiref模块</span><br><span class="line">  <span class="number">1.</span> 封装了socket代码</span><br><span class="line">  <span class="number">2.</span> 处理了http数据格式</span><br><span class="line"></span><br><span class="line">根据功能的不同拆分成不同的文件</span><br><span class="line">urls.py    路由与视图函数对应关系</span><br><span class="line">views.py   视图函数</span><br><span class="line">templates  模板文件夹</span><br><span class="line"><span class="comment"># 1.第一步添加路由与视图函数的对应关系</span></span><br><span class="line"><span class="comment"># 2.去views中书写功能代码</span></span><br><span class="line"><span class="comment"># 3.如果需要使用到html则去模板文件夹中操作</span></span><br><span class="line"></span><br><span class="line">jinja2模板语法</span><br><span class="line">&#123;&#123;&#125;&#125;</span><br><span class="line">&#123;%%&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/2240626-20210312230334847-1372533552.png" alt="img"></p>
+<h3 id="主流的web框架"><a href="#主流的web框架" class="headerlink" title="主流的web框架"></a>主流的web框架</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Django框架</span><br><span class="line">  大而全，自带的功能组件非常多，但是缺点就是太重了</span><br><span class="line">  </span><br><span class="line">Flask框架</span><br><span class="line">  小而精，自带组件少，第三方模块非常多，但是第三方模块比较难管理</span><br><span class="line">  </span><br><span class="line">Tornado框架</span><br><span class="line">  异步非阻塞 速度非常快</span><br><span class="line">  </span><br><span class="line">A:socket部分</span><br><span class="line">B:路由与视图匹配</span><br><span class="line">C:模板语法</span><br><span class="line">  </span><br><span class="line">django</span><br><span class="line">   A:用的是wsgiref模块</span><br><span class="line">   B:自己写的</span><br><span class="line">   C:自己写的</span><br><span class="line">flask</span><br><span class="line">   A:用的是wsgiref模块封装之后werkzeug</span><br><span class="line">   B:自己写的</span><br><span class="line">   C:jinja2模块</span><br><span class="line">tornado	</span><br><span class="line">	A、B、C都是自己写的</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"><i class="fa fa-tag"></i> Django</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/b3b90dfb.html" rel="prev" title="静态文件、request方法、连接MySQL、ORM">
+                  <i class="fa fa-chevron-left"></i> 静态文件、request方法、连接MySQL、ORM
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/66126033.html" rel="next" title="MySQL外键与查询-补充">
+                  MySQL外键与查询-补充 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">726k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

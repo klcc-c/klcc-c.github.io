@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="静态文件配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="静态文件、request方法、连接MySQL、ORM">
+<meta property="og:url" content="https://klcc.cc/b3b90dfb.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="静态文件配置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220135919254.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220141801183.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220151141386.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220151232719.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220151548372.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220151639520.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220161526931.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220161906012.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220162439594.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220163206695.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220163348612.png">
+<meta property="article:published_time" content="2022-02-08T03:18:08.406Z">
+<meta property="article:modified_time" content="2022-02-21T09:28:30.529Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220135919254.png">
+
+
+<link rel="canonical" href="https://klcc.cc/b3b90dfb.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/b3b90dfb.html","path":"b3b90dfb.html","title":"静态文件、request方法、连接MySQL、ORM"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>静态文件、request方法、连接MySQL、ORM | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">21</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">116</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">静态文件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#request%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">request对象方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#form%E8%A1%A8%E5%8D%95"><span class="nav-number">2.1.</span> <span class="nav-text">form表单</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">相关文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#request-method"><span class="nav-number">2.3.</span> <span class="nav-text">request.method</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#request-POST"><span class="nav-number">2.4.</span> <span class="nav-text">request.POST</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#request-GET"><span class="nav-number">2.5.</span> <span class="nav-text">request.GET</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reqest-FILES"><span class="nav-number">2.6.</span> <span class="nav-text">reqest.FILES</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pycharm%E8%BF%9E%E6%8E%A5MySQL"><span class="nav-number">3.</span> <span class="nav-text">Pycharm连接MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Django%E8%BF%9E%E6%8E%A5MySQL"><span class="nav-number">4.</span> <span class="nav-text">Django连接MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ORM%E7%AE%80%E4%BB%8B"><span class="nav-number">5.</span> <span class="nav-text">ORM简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ORM%E6%93%8D%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">ORM操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E6%A8%A1%E5%9E%8B%E7%B1%BB"><span class="nav-number">6.1.</span> <span class="nav-text">编写模型类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB"><span class="nav-number">6.2.</span> <span class="nav-text">数据库迁移</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8C%E6%AD%A5"><span class="nav-number">6.3.</span> <span class="nav-text">数据库同步</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84CRUD"><span class="nav-number">7.</span> <span class="nav-text">数据的CRUD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E6%AE%B5"><span class="nav-number">7.1.</span> <span class="nav-text">字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE"><span class="nav-number">7.2.</span> <span class="nav-text">数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ORM%E5%88%9B%E5%BB%BA%E5%A4%96%E9%94%AE%E5%85%B3%E7%B3%BB"><span class="nav-number">8.</span> <span class="nav-text">ORM创建外键关系</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/b3b90dfb.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          静态文件、request方法、连接MySQL、ORM
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 11:18:08" itemprop="dateCreated datePublished" datetime="2022-02-08T11:18:08+08:00">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-21 17:28:30" itemprop="dateModified" datetime="2022-02-21T17:28:30+08:00">2022-02-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="静态文件配置"><a href="#静态文件配置" class="headerlink" title="静态文件配置"></a>静态文件配置</h3><span id="more"></span>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>什么是静态文件</span><br><span class="line">静态文件，写好之后不改变的文件，如css文件、js文件、图片、第三方框架等</span><br><span class="line">这类文件一般单独使用一个名为 static 的文件夹存放</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>使用静态文件</span><br><span class="line">html文件调用</span><br><span class="line">html在引入时，使用static文件夹的相对路径会在页面无法加载(<span class="number">404</span>)</span><br><span class="line">原因是在 urls.py 并没有设置该路由</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>配置</span><br><span class="line">django框架针对这类文件有单独的设置，在settings.py中设置</span><br><span class="line">settings.py最下方</span><br><span class="line">...</span><br><span class="line">STATIC_URL = <span class="string">&#x27;/static/&#x27;</span>  <span class="comment"># 接口前缀</span></span><br><span class="line"></span><br><span class="line">STATICFILES_DIRS = [</span><br><span class="line">  os.path.join(BASE_DIR,<span class="string">&#x27;static&#x27;</span>)  <span class="comment"># static文件夹的路径</span></span><br><span class="line">  ...                              <span class="comment"># 文件夹可以有多个</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">html文件引入</span><br><span class="line">&lt;script src=<span class="string">&quot;/static/jQuery-3.6.0.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="comment"># 这边的 /static/ 是接口而不是路径了</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>动态解析</span><br><span class="line">在settings.py文件中的接口前缀是可以随意变换的，html文件中不可能一个个更改</span><br><span class="line">因此就需要动态解析，配置在html文件中，如下配置</span><br><span class="line">&#123;% load static %&#125;</span><br><span class="line">&lt;script src=<span class="string">&quot;&#123;% static &#x27;jQuery-3.6.0.js&#x27; %&#125;&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>关闭谷歌浏览器的缓存</strong></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220135919254.png" alt="image-20220220135919254"></p>
+<h3 id="request对象方法"><a href="#request对象方法" class="headerlink" title="request对象方法"></a><code>request</code>对象方法</h3><h4 id="form表单"><a href="#form表单" class="headerlink" title="form表单"></a><code>form</code>表单</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;&quot;</span> method=<span class="string">&quot;post&quot;</span> enctype=<span class="string">&quot;multipart/form-data&quot;</span>&gt;&lt;/form&gt;</span><br><span class="line"></span><br><span class="line">action:</span><br><span class="line">  控制后端的提交路径</span><br><span class="line">  不写: 默认朝当前页面地址提交数据</span><br><span class="line">  后缀: /index/</span><br><span class="line">  全写: https://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span>/index</span><br><span class="line">  </span><br><span class="line">method提交方法</span><br><span class="line">  get   <span class="comment"># 默认的提交方法</span></span><br><span class="line">  post</span><br><span class="line"></span><br><span class="line">当有文件提交时需要增加属性: enctype=<span class="string">&quot;multipart/form-data&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>前期使用post提交时，先在django中的settings.py先注释该行</p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220141801183.png" alt="image-20220220141801183"></p>
+<h4 id="相关文件"><a href="#相关文件" class="headerlink" title="相关文件"></a>相关文件</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urls.py</span></span><br><span class="line">  url(<span class="string">r&#x27;^login/&#x27;</span>, views.login),</span><br><span class="line">  </span><br><span class="line"><span class="comment"># views.py</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="comment"># res = request.method</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        <span class="comment"># print(request.POST)</span></span><br><span class="line">        username = request.POST.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">        password = request.POST.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">        hobby = request.POST.getlist(<span class="string">&#x27;hobby&#x27;</span>)</span><br><span class="line">        files = request.FILES</span><br><span class="line">        <span class="built_in">print</span>(username, password, hobby, files)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;demo2.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># templates/demo2.html</span></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;/title&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;link href=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css&quot;</span> rel=<span class="string">&quot;stylesheet&quot;</span>&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">container</span>&quot;&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">row</span>&quot;&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">col</span>-<span class="title">md</span>-8 <span class="title">col</span>-<span class="title">md</span>-<span class="title">offset</span>-2&quot;&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">h1</span> <span class="title">class</span>=&quot;<span class="title">text</span>-<span class="title">center</span>&quot;&gt;登录界面&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">form</span> <span class="title">action</span>=&quot;&quot; <span class="title">method</span>=&quot;<span class="title">post</span>&quot; <span class="title">enctype</span>=&quot;<span class="title">multipart</span>/<span class="title">form</span>-<span class="title">data</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">p</span>&gt;<span class="title">username</span>:</span>&lt;<span class="built_in">input</span> <span class="built_in">type</span>=<span class="string">&quot;text&quot;</span> <span class="class"><span class="keyword">class</span>=&quot;<span class="title">form</span>-<span class="title">control</span>&quot; <span class="title">name</span>=&quot;<span class="title">name</span>&quot;&gt;&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">p</span>&gt;<span class="title">password</span>&lt;<span class="title">input</span> <span class="title">type</span>=&quot;<span class="title">password</span>&quot; <span class="title">class</span>=&quot;<span class="title">form</span>-<span class="title">control</span>&quot; <span class="title">name</span>=&quot;<span class="title">password</span>&quot;&gt;&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">input</span> <span class="title">type</span>=&quot;<span class="title">checkbox</span>&quot; <span class="title">name</span>=&quot;<span class="title">hobby</span>&quot; <span class="title">value</span>=&quot;<span class="title">fb</span>&quot;&gt;足球</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">input</span> <span class="title">type</span>=&quot;<span class="title">checkbox</span>&quot; <span class="title">name</span>=&quot;<span class="title">hobby</span>&quot; <span class="title">value</span>=&quot;<span class="title">bb</span>&quot;&gt;篮球</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">input</span> <span class="title">type</span>=&quot;<span class="title">checkbox</span>&quot; <span class="title">name</span>=&quot;<span class="title">hobby</span>&quot; <span class="title">value</span>=&quot;<span class="title">cb</span>&quot;&gt;双色球</span></span><br><span class="line"><span class="class">                &lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">input</span> <span class="title">type</span>=&quot;<span class="title">file</span>&quot; <span class="title">name</span>=&quot;<span class="title">files</span>&quot; <span class="title">multiple</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">input</span> <span class="title">type</span>=&quot;<span class="title">submit</span>&quot; <span class="title">class</span>=&quot;<span class="title">btn</span> <span class="title">btn</span>-<span class="title">success</span> <span class="title">btn</span>-<span class="title">block</span>&quot; <span class="title">value</span>=&quot;提交&quot;&gt;</span></span><br><span class="line"><span class="class">            &lt;/<span class="title">form</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="request-method"><a href="#request-method" class="headerlink" title="request.method"></a><code>request.method</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">获取当前请求的请求方法，结果是纯大写的字符串类型，默认处理的也是GET请求</span><br><span class="line"></span><br><span class="line"><span class="comment"># 针对不同的请求方法返回不同的操作，默认的GET就直接返回页面</span></span><br><span class="line"><span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span></span><br><span class="line">		<span class="keyword">pass</span></span><br><span class="line"><span class="keyword">return</span> render(request, <span class="string">&#x27;demo2.html&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="request-POST"><a href="#request-POST" class="headerlink" title="request.POST"></a><code>request.POST</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">获取用户通过POST请求过来的基本数据(不包含文件)，结果可以看成一个字典&#123;<span class="string">&#x27;&#x27;</span>:[],<span class="string">&#x27;&#x27;</span>:[]&#125;</span><br><span class="line"></span><br><span class="line">get()</span><br><span class="line">request.POST.get(<span class="string">&#x27;name&#x27;</span>)  <span class="comment"># 获取name对应列表里的最后一个元素</span></span><br><span class="line"></span><br><span class="line">getlist()</span><br><span class="line">request.POST.get(<span class="string">&#x27;hobby&#x27;</span>)  <span class="comment"># 获取hobby对应的整个列表</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="request-GET"><a href="#request-GET" class="headerlink" title="request.GET"></a><code>request.GET</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">获取用户通过GET请求过来的基本数据(不包含文件)，结果可以看成一个字典&#123;<span class="string">&#x27;&#x27;</span>:[],<span class="string">&#x27;&#x27;</span>:[]&#125;</span><br><span class="line">get()       <span class="comment"># 获取列表的最后一个元素</span></span><br><span class="line">getlist()   <span class="comment"># 获取整个列表</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="reqest-FILES"><a href="#reqest-FILES" class="headerlink" title="reqest.FILES"></a><code>reqest.FILES</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">获取用户上传的数据</span><br><span class="line">request.FILES  <span class="comment"># 一个文件对象</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Pycharm连接MySQL"><a href="#Pycharm连接MySQL" class="headerlink" title="Pycharm连接MySQL"></a>Pycharm连接MySQL</h3><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220151141386.png" alt="image-20220220151141386"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220151232719.png" alt="image-20220220151232719"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220151548372.png" alt="image-20220220151548372"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220151639520.png" alt="image-20220220151639520"></p>
+<h3 id="Django连接MySQL"><a href="#Django连接MySQL" class="headerlink" title="Django连接MySQL"></a>Django连接MySQL</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Django默认使用自带的sqlite3，需要使用MySQL数据库需要配置</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>settings.py文件设置</span><br><span class="line"><span class="comment"># 将这段代码注释</span></span><br><span class="line"><span class="comment"># DATABASES = &#123;</span></span><br><span class="line"><span class="comment">#     &#x27;default&#x27;: &#123;</span></span><br><span class="line"><span class="comment">#         &#x27;ENGINE&#x27;: &#x27;django.db.backends.sqlite3&#x27;,</span></span><br><span class="line"><span class="comment">#         &#x27;NAME&#x27;: os.path.join(BASE_DIR, &#x27;db.sqlite3&#x27;),</span></span><br><span class="line"><span class="comment">#     &#125;</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加如下代码</span></span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;ENGINE&#x27;</span>: <span class="string">&#x27;django.db.backends.mysql&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;db01&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;HOST&#x27;</span>: <span class="string">&#x27;10.0.0.60&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;PORT&#x27;</span>: <span class="number">3306</span>,</span><br><span class="line">        <span class="string">&#x27;USER&#x27;</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;PASSWORD&#x27;</span>: <span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;CHARSET&#x27;</span>: <span class="string">&#x27;utf8&#x27;</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> 在项目文件夹或者应用文件夹内的__init__.py文件中书写固定的代码=</span><br><span class="line">	 <span class="keyword">import</span> pymysql</span><br><span class="line">	 pymysql.install_as_MySQLdb()</span><br><span class="line">    </span><br><span class="line">	 <span class="comment"># 如果不写上述两行代码会报如下错误</span></span><br><span class="line">   <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">   django.core.exceptions.ImproperlyConfigured: Error loading MySQLdb module: No module named &#x27;MySQLdb&#x27;.</span></span><br><span class="line"><span class="string">    Did you install mysqlclient or MySQL-python?</span></span><br><span class="line"><span class="string">   &#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ORM简介"><a href="#ORM简介" class="headerlink" title="ORM简介"></a>ORM简介</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ORM: 对象关系映射</span><br><span class="line">优点: 不用直接操作SQL语句，更好的操作业务层面上的逻辑</span><br><span class="line">缺点: 封装程度太高，有些时候效率低，就需要自己编写SQL语句</span><br><span class="line">  </span><br><span class="line">类          表</span><br><span class="line">对象        字段  </span><br><span class="line">属性        字段对应的值</span><br></pre></td></tr></table></figure>
+
+<h3 id="ORM操作"><a href="#ORM操作" class="headerlink" title="ORM操作"></a>ORM操作</h3><h4 id="编写模型类"><a href="#编写模型类" class="headerlink" title="编写模型类"></a>编写模型类</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">模型类需要写在应用下的 models.py 文件中</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    <span class="comment"># id int primary key auto_increment</span></span><br><span class="line">    <span class="built_in">id</span> = models.AutoField(primary_key=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># name varchar(32)</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>,verbose_name=<span class="string">&#x27;用户名&#x27;</span>)  <span class="comment"># 默认是varchar max_length参数必须添加</span></span><br><span class="line">    <span class="comment"># age int</span></span><br><span class="line">    age = models.IntegerField(<span class="string">&#x27;年龄&#x27;</span>)</span><br><span class="line">    <span class="comment"># 中文注释 使用 verbose_name 参数 和MySQL的 comment 功能一样</span></span><br><span class="line">    <span class="comment"># 或者直接写入注释 verbose_name位置参数在第一个</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="数据库迁移"><a href="#数据库迁移" class="headerlink" title="数据库迁移"></a>数据库迁移</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 将数据库修改记录先记录到对应应用下的migrations文件夹内</span><br><span class="line">	 python3 manage.py makemigrations</span><br><span class="line">		</span><br><span class="line"><span class="number">2.</span> 执行数据库迁移操作</span><br><span class="line">	 python3 manage.py migrate</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 只要操作了models.py中跟数据库相关的代码就必须要重新执行上述两条命令</span></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> 针对主键字段</span><br><span class="line">   <span class="comment"># 如果不指定主键，ORM会自动创建一个名为id的主键字段(MySQL创建的是隐藏的主键)</span></span><br><span class="line">   <span class="comment"># 主键字段名可以不交id 需要命名其他名称就手动指定</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220161526931.png" alt="image-20220220161526931"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220161906012.png" alt="image-20220220161906012"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220162439594.png" alt="image-20220220162439594"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220163206695.png" alt="image-20220220163206695"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220220163348612.png" alt="image-20220220163348612"></p>
+<h4 id="数据库同步"><a href="#数据库同步" class="headerlink" title="数据库同步"></a>数据库同步</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">数据库里面已经有一些表，我们如何通过django orm操作?</span></span><br><span class="line"><span class="string">	1.照着数据库表字段自己在models.py</span></span><br><span class="line"><span class="string">		数据需要自己二次同步</span></span><br><span class="line"><span class="string">	2.django提供的反向同步</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="number">1.</span>先执行数据库迁移命令 完成链接</span><br><span class="line">	python manage.py makemigrations</span><br><span class="line"><span class="number">2.</span>查看代码</span><br><span class="line">	python manage.py inspectdb</span><br><span class="line">  	</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Userinfo</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">        <span class="built_in">id</span> = models.IntegerField(blank=<span class="literal">True</span>, null=<span class="literal">True</span>)</span><br><span class="line">        name = models.CharField(max_length=<span class="number">32</span>, blank=<span class="literal">True</span>, null=<span class="literal">True</span>)</span><br><span class="line">        pwd = models.IntegerField(blank=<span class="literal">True</span>, null=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">            managed = <span class="literal">False</span></span><br><span class="line">            db_table = <span class="string">&#x27;userinfo&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据的CRUD"><a href="#数据的CRUD" class="headerlink" title="数据的CRUD"></a>数据的CRUD</h3><h4 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 增</span></span><br><span class="line">pwd = models.IntegerField(<span class="string">&#x27;密码&#x27;</span>,null=<span class="literal">True</span>)  <span class="comment"># 该字段可以为空</span></span><br><span class="line">is_delete = models.IntegerField(default=<span class="number">0</span>)  <span class="comment"># 默认值</span></span><br><span class="line"><span class="comment"># 如果不写入上述参数 执行数据库迁移命令是会提示</span></span><br><span class="line"><span class="comment"># 原因是新添加字段，那么旧数据的新字段的数据填充什么</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 改</span></span><br><span class="line">直接改代码然后直接数据库迁移命令即可</span><br><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删</span></span><br><span class="line">注释代码然后执行数据库迁移命令即可，删除后的数据也丢失</span><br><span class="line">python3 manage.py makemigrations</span><br><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure>
+
+<h4 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询数据</span></span><br><span class="line"><span class="comment"># views.py 文件中功能函数</span></span><br><span class="line">username = request.POST.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">password = request.POST.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> models</span><br><span class="line"><span class="comment"># select * from user where name=username</span></span><br><span class="line">user_obj = models.User.objects.<span class="built_in">filter</span>(name=username).first()</span><br><span class="line"><span class="comment"># 返回的结果是一个表名对象，打印时可以触发 __str__方法</span></span><br><span class="line"><span class="comment"># 然后结果是一个列表套数据对象</span></span><br><span class="line"><span class="comment"># models.py (上面的代码中需要添加如下代码)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">  <span class="keyword">return</span> self.name  <span class="comment"># 必须要返回一个字符串类型</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加数据</span></span><br><span class="line">username = request.POST.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">password = request.POST.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line"><span class="comment"># insert into user(name,pwd) values(username,password)</span></span><br><span class="line">models.User.objects.create(name=username,pwd=password)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询所有数据</span></span><br><span class="line">models.User.<span class="built_in">object</span>.<span class="built_in">all</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改数据</span></span><br><span class="line">  <span class="comment"># models.User.objects.filter(id=edit_id).update(name=username, pwd=password)</span></span><br><span class="line">  edit_obj.name = username</span><br><span class="line">  edit_obj.pwd = password</span><br><span class="line">  edit_obj.save()</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 删除数据</span></span><br><span class="line">models.User.objects.<span class="built_in">filter</span>(<span class="built_in">id</span>=delete_id).delete()</span><br></pre></td></tr></table></figure>
+
+<h3 id="ORM创建外键关系"><a href="#ORM创建外键关系" class="headerlink" title="ORM创建外键关系"></a>ORM创建外键关系</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ORM针对外键字段的创建位置</span></span><br><span class="line">	一对多: 推荐在多的一方</span><br><span class="line">  一对一: 在任意方都可以创建，推荐建在查询频率较高的一方</span><br><span class="line">  多对多: 自己建表</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    title = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    price = models.DecimalField(max_digits=<span class="number">8</span>, decimal_places=<span class="number">2</span>)  <span class="comment"># 总共8位 小数占2位</span></span><br><span class="line">    publish = models.ForeignKey(to=<span class="string">&#x27;Publish&#x27;</span>)  <span class="comment"># 出版社外键 默认是主键 自动在外键字段后面加 _id 后缀</span></span><br><span class="line">    authors = models.ManyToManyField(to=<span class="string">&#x27;Author&#x27;</span>)  <span class="comment"># 自动创建书籍和作者的第三张表</span></span><br><span class="line">	  <span class="comment"># 虚拟字段不会在表中实例化出来  而是告诉ORM创建第三张关系表</span></span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Publish</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    title = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    email = models.EmailField()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Author</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    age = models.IntegerField()</span><br><span class="line">    author_detail = models.OneToOneField(to=<span class="string">&#x27;AuthorDetail&#x27;</span>)  <span class="comment"># 自动在外键字段后面加 _id 后缀</span></span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthorDetail</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    phone = models.BigIntegerField()</span><br><span class="line">    addr = models.CharField(max_length=<span class="number">128</span>)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"><i class="fa fa-tag"></i> Django</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/42260158.html" rel="prev" title="Django的安装及三板斧">
+                  <i class="fa fa-chevron-left"></i> Django的安装及三板斧
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/34975bbc.html" rel="next" title="手撸简易的web框架">
+                  手撸简易的web框架 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">726k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
