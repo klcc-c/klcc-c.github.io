@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="auth组件介绍123django提供了用户认证，创建，修改密码等用户相关的操作不需要创建用户表，默认自带了(auth_user)创建用户: python3 manage.py createsuperuser">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Auth组件">
+<meta property="og:url" content="https://klcc.cc/3d30357f.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="auth组件介绍123django提供了用户认证，创建，修改密码等用户相关的操作不需要创建用户表，默认自带了(auth_user)创建用户: python3 manage.py createsuperuser">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220306142948086.png">
+<meta property="article:published_time" content="2022-02-08T03:18:08.406Z">
+<meta property="article:modified_time" content="2022-03-06T09:23:12.989Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220306142948086.png">
+
+
+<link rel="canonical" href="https://klcc.cc/3d30357f.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/3d30357f.html","path":"3d30357f.html","title":"Auth组件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Auth组件 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">21</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">127</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#auth%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">auth组件介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auth%E7%BB%84%E4%BB%B6%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">auth组件常用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#authenticate"><span class="nav-number">2.1.</span> <span class="nav-text">authenticate()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#login-HttpRequest-user"><span class="nav-number">2.2.</span> <span class="nav-text">login(HttpRequest, user)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logout-request"><span class="nav-number">2.3.</span> <span class="nav-text">logout(request)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#is-authenticated"><span class="nav-number">2.4.</span> <span class="nav-text">is_authenticated</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#login-requierd"><span class="nav-number">2.5.</span> <span class="nav-text">login_requierd()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#create-user"><span class="nav-number">2.6.</span> <span class="nav-text">create_user()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#create-superuser"><span class="nav-number">2.7.</span> <span class="nav-text">create_superuser()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#check-password-password"><span class="nav-number">2.8.</span> <span class="nav-text">check_password(password)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set-password-password"><span class="nav-number">2.9.</span> <span class="nav-text">set_password(password)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF"><span class="nav-number">2.10.</span> <span class="nav-text">后端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF"><span class="nav-number">2.11.</span> <span class="nav-text">前端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">User对象属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E9%BB%98%E8%AE%A4%E7%9A%84auth-user%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">扩展默认的auth_user表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80"><span class="nav-number">4.1.</span> <span class="nav-text">方式一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C"><span class="nav-number">4.2.</span> <span class="nav-text">方式二</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/3d30357f.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Auth组件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 11:18:08" itemprop="dateCreated datePublished" datetime="2022-02-08T11:18:08+08:00">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-06 17:23:12" itemprop="dateModified" datetime="2022-03-06T17:23:12+08:00">2022-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="auth组件介绍"><a href="#auth组件介绍" class="headerlink" title="auth组件介绍"></a><code>auth</code>组件介绍</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">django提供了用户认证，创建，修改密码等用户相关的操作</span><br><span class="line">不需要创建用户表，默认自带了(auth_user)</span><br><span class="line">创建用户: python3 manage.py createsuperuser</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220306142948086.png" alt="image-20220306142948086"></p>
+<h3 id="auth组件常用方法"><a href="#auth组件常用方法" class="headerlink" title="auth组件常用方法"></a><code>auth</code>组件常用方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> auth</span><br></pre></td></tr></table></figure>
+
+<h4 id="authenticate"><a href="#authenticate" class="headerlink" title="authenticate()"></a><code>authenticate()</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">提供了用户认证功能，验证用户名以及密码是否正确，一般需要username、password两个关键字参数</span><br><span class="line">如果认证成功，便会返回一个User对象</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> authenticate</span><br><span class="line">user = authenticate(username=<span class="string">&#x27;username&#x27;</span>,password=<span class="string">&#x27;password&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="login-HttpRequest-user"><a href="#login-HttpRequest-user" class="headerlink" title="login(HttpRequest, user)"></a><code>login(HttpRequest, user)</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">该函数接收一个HttpResqest对象，以及一个经过认证的User对象</span><br><span class="line">该函数实现一个用户登录功能，本质上会在后端为该用户生成相关session数据</span><br><span class="line"></span><br><span class="line">登录成功后调用</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> login</span><br><span class="line">login(request, user)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="logout-request"><a href="#logout-request" class="headerlink" title="logout(request)"></a><code>logout(request)</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">该函数接收一个HttpReqest对象，无返回值</span><br><span class="line">当调用该函数是，当前请求的session信息会全部清除，该用户即使没有登录，使用该函数也不会报错</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> logout</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logout_view</span>(<span class="params">request</span>):</span></span><br><span class="line">  logout(request)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="is-authenticated"><a href="#is-authenticated" class="headerlink" title="is_authenticated"></a><code>is_authenticated</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">用来判断当前请求是否通过了认证，这个方法<span class="built_in">property</span>装饰过，不用加()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在视图中使用</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> request.user.is_authenticated:</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 模板中使用</span></span><br><span class="line">&#123;% <span class="keyword">if</span> request.user.is_authenticated %&#125;</span><br><span class="line">    &#123;&#123; request.user.username &#125;&#125; 欢迎你</span><br><span class="line">    &lt;a href=<span class="string">&quot;/auth_logout/&quot;</span>&gt;注销登录&lt;/a&gt;</span><br><span class="line">&#123;% <span class="keyword">else</span> %&#125;</span><br><span class="line">    &lt;a href=<span class="string">&quot;/login_auth/&quot;</span>&gt;请去登录&lt;/a&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="login-requierd"><a href="#login-requierd" class="headerlink" title="login_requierd()"></a><code>login_requierd()</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">auth 提供的一个装饰器工具，用来快捷的给某个视图添加登录校验</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.decorators <span class="keyword">import</span> login_required</span><br><span class="line"><span class="comment"># login_url如果不填会有一个默认的地址 accounts/login 的位置</span></span><br><span class="line"><span class="meta">@login_required(<span class="params">login_url=<span class="string">&#x27;/auth_login/&#x27;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">auth_order</span>(<span class="params">request</span>):</span></span><br><span class="line">  ...</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 默认的地址可以在settings.py文件中配置</span></span><br><span class="line">LOGIN_URL = <span class="string">&#x27;/login/&#x27;</span>  <span class="comment"># 这里配置成你项目登录页面的路由</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="create-user"><a href="#create-user" class="headerlink" title="create_user()"></a><code>create_user()</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auth 提供的一个创建新用户的方法，需要提供必要参数(username password)等</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line">user = User.objects.create_user(username=<span class="string">&#x27;用户名&#x27;</span>,password=<span class="string">&#x27;密码&#x27;</span>,email=<span class="string">&#x27;邮箱&#x27;</span>,...)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="create-superuser"><a href="#create-superuser" class="headerlink" title="create_superuser()"></a><code>create_superuser()</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auth 提供的一个创建新的超级用户的方法，需要提供必要参数(username password)等</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line">user = User.objects.create_superuser(username=<span class="string">&#x27;用户名&#x27;</span>,password=<span class="string">&#x27;密码&#x27;</span>,email=<span class="string">&#x27;邮箱&#x27;</span>,...)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="check-password-password"><a href="#check-password-password" class="headerlink" title="check_password(password)"></a><code>check_password(password)</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auth 提供的一个检查密码是否正确的方法，需要提供当前请求用户的密码</span><br><span class="line">密码正确返回<span class="literal">True</span>，否则返回<span class="literal">False</span></span><br><span class="line"></span><br><span class="line">ok = user.check_password(<span class="string">&#x27;密码&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="set-password-password"><a href="#set-password-password" class="headerlink" title="set_password(password)"></a><code>set_password(password)</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">auth 提供的一个修改密码的方法，接收要设置的新密码作为参数</span><br><span class="line">注意：设置完一定要调用用户对象的save方法</span><br><span class="line"></span><br><span class="line">user.set_password(password=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">user.save()</span><br></pre></td></tr></table></figure>
+
+<h4 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render, HttpResponse, redirect</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> authenticate, login, logout</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.decorators <span class="keyword">import</span> login_required</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">auth_login</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render(request, <span class="string">&#x27;login_auth.html&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        username = request.POST.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">        password = request.POST.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(username, password)</span><br><span class="line">        <span class="comment"># password是加密的，不能直接认证</span></span><br><span class="line">        <span class="comment"># User.objects.filter(username=username, password=password)</span></span><br><span class="line">        <span class="comment"># 存在返回True 否则None 内部相当于对密码加密之后再比对， username  字段是auth_user里面的</span></span><br><span class="line">        user = authenticate(username=username, password=password)</span><br><span class="line">        <span class="keyword">if</span> user:  <span class="comment"># 登录成功</span></span><br><span class="line">            <span class="comment"># 登录成功需要要调用一下login，此时表示用户登录了</span></span><br><span class="line">            login(request, user)  <span class="comment"># 存到session里的</span></span><br><span class="line">            next_url = request.GET.get(<span class="string">&#x27;next&#x27;</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> next_url:</span><br><span class="line">                next_url = <span class="string">&#x27;/auth_home/&#x27;</span></span><br><span class="line">            <span class="keyword">return</span> redirect(next_url)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;用户名或密码错误&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">auth_home</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="comment"># 直接拿到当前登录用户</span></span><br><span class="line">    <span class="built_in">print</span>(request.user)  <span class="comment"># 如果没有登录，显示的是 AnonymousUser 如果用户登录了(调用了login)，直接拿到用户</span></span><br><span class="line">    <span class="built_in">print</span>(request.user.username)</span><br><span class="line">    <span class="built_in">print</span>(request.user.<span class="built_in">id</span>)</span><br><span class="line">    <span class="keyword">if</span> request.user.is_authenticated:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;用户登录了&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;用户没有登录&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">&#x27;auth_home.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># login_url如果不填会有一个默认的地址 accounts/login 的位置</span></span><br><span class="line"><span class="meta">@login_required(<span class="params">login_url=<span class="string">&#x27;/auth_login/&#x27;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">auth_order</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="comment"># 必须登录才能访问</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;我是order, 必须登录才可能进入&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">auth_logout</span>(<span class="params">request</span>):</span></span><br><span class="line">    logout(request)  <span class="comment"># 注销</span></span><br><span class="line">    <span class="comment"># return HttpResponse(&#x27;注销成功&#x27;)</span></span><br><span class="line">    <span class="keyword">return</span> redirect(<span class="string">&#x27;/auth_login/&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">auth_register</span>(<span class="params">request</span>):</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render(request, <span class="string">&#x27;register.html&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        username = request.POST.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">        password = request.POST.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">        <span class="comment"># password是加密的，不能这样创建</span></span><br><span class="line">        <span class="comment"># User.objects.create(username=username, password=password)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建超级用户 email 字段需要传入</span></span><br><span class="line">        <span class="comment"># User.objects.create_superuser(username=username, password=password, email=None)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 创建普通用户</span></span><br><span class="line">        User.objects.create_user(username=username, password=password)</span><br><span class="line">        <span class="keyword">return</span> redirect(<span class="string">&#x27;/auth_login/&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">auth_check_password</span>(<span class="params">request</span>):</span></span><br><span class="line">    user = User.objects.<span class="built_in">filter</span>(pk=<span class="number">1</span>).first()</span><br><span class="line">    res = user.check_password(<span class="string">&#x27;admin12345&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(res)</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;测试页面&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">auth_set_password</span>(<span class="params">request</span>):</span></span><br><span class="line">    user = User.objects.<span class="built_in">filter</span>(pk=<span class="number">2</span>).first()</span><br><span class="line">    user.set_password(<span class="string">&#x27;123456&#x27;</span>)</span><br><span class="line">    user.save()</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">&#x27;测试页面2&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--auth_home.html--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>这是home页面<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">&#123;% if request.user.is_authenticated %&#125;</span><br><span class="line">    &#123;&#123; request.user.username &#125;&#125; 欢迎你</span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/auth_logout/&quot;</span>&gt;</span>注销登录<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">&#123;% else %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/login_auth/&quot;</span>&gt;</span>请去登录<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--register.html--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>注册功能<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    &#123;% csrf_token %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>用户名: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>密码: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--login_auth.html--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    &#123;% csrf_token %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>用户名: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>密码: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="User对象属性"><a href="#User对象属性" class="headerlink" title="User对象属性"></a><code>User</code>对象属性</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">User对象属性: username password</span><br><span class="line">is_staff: 用户是否拥有网站的管理权限，如果没有，后台admin登录不进去</span><br><span class="line">is_active: 是否允许用户登录, 设置为 <span class="literal">False</span>，可以在不删除用户的前提下禁止用户登录</span><br></pre></td></tr></table></figure>
+
+<h3 id="扩展默认的auth-user表"><a href="#扩展默认的auth-user表" class="headerlink" title="扩展默认的auth_user表"></a>扩展默认的<code>auth_user</code>表</h3><h4 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">再创建一张表，与User表一对一关系</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">user_detail</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    user=models.OneToOneField(to=User)</span><br><span class="line">    phone=models.CharField(max_length=<span class="number">32</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> AbstractUser</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseModel</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    create_time = models.DateTimeField(auto_now_add=<span class="literal">True</span>)</span><br><span class="line">    last_update_time = models.DateTimeField(auto_add=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        abstract = <span class="literal">True</span>  <span class="comment"># 此时这张表是抽象表，只能用来继承，不会在数据库生成表</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span>(<span class="params">BaseModel</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line">继承 AbstractUser 类扩写(不是继承authd的User，因为这个也是继承的 AbstractUser 类)</span><br><span class="line">使用步骤:</span><br><span class="line">  大前提是auth_user表没有创建之前进行</span><br><span class="line">  models.py中写一个类，继承 AbstractUser 在类中扩写字段</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">MyAuthUser</span>(<span class="params">AbstractUser</span>):</span></span><br><span class="line">    username = models.CharFaield(max_length=<span class="number">12</span>)</span><br><span class="line">    phone = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">  <span class="comment"># 引用Django自带的User表，继承使用时需要设置，在settings.py中配置</span></span><br><span class="line">  AUTH_USER_MODEL = <span class="string">&quot;app01.MyAuthUser&quot;</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 如果auth_user表已经有了，需要扩写，需要删除之前数据库内的数据(危)</span></span><br><span class="line">  <span class="number">1.</span>删除库</span><br><span class="line">  <span class="number">2.</span>清空项目中所有migration的记录</span><br><span class="line">  <span class="number">3.</span>清空源码中admin，auth俩app的migration的记录</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"><i class="fa fa-tag"></i> Django</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/e173abca.html" rel="prev" title="HTML基础">
+                  <i class="fa fa-chevron-left"></i> HTML基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/8dabf6aa.html" rel="next" title="Django中间件">
+                  Django中间件 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">813k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">12:20</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
