@@ -86,7 +86,7 @@
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a></li>
         <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">21</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">129</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">130</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -157,7 +157,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -366,40 +366,110 @@
     
     <div class="post-body" itemprop="articleBody">
           <h3 id="Web应用模式"><a href="#Web应用模式" class="headerlink" title="Web应用模式"></a>Web应用模式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">前后端混合开发（前后端不分离）：返回的是html的内容，需要写模板</span><br><span class="line">前后端分离：只专注于写后端接口，返回json，xml格式数据</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/ed2d6155.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
-<h4 id="前后端不分离"><a href="#前后端不分离" class="headerlink" title="前后端不分离"></a>前后端不分离</h4><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/002.jpg" alt="img"></p>
-<h4 id="前后端分离"><a href="#前后端分离" class="headerlink" title="前后端分离"></a>前后端分离</h4><p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/001.jpg" alt="img"></p>
-<h3 id="API接口"><a href="#API接口" class="headerlink" title="API接口"></a><code>API</code>接口</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">API接口: 规定了前后端信息交互规则的url链接，也就是前后台信息交互的媒介</span><br><span class="line">接口文档: 手动编写或者自动生成(coreapi、swagger)</span><br></pre></td></tr></table></figure>
+    
+    
+    
 
-<h3 id="RESTful规范"><a href="#RESTful规范" class="headerlink" title="RESTful规范"></a><code>RESTful</code>规范</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 数据的安全保障，通常使用https进行传输</span><br><span class="line"><span class="number">2.</span> 域名(api的标识)</span><br><span class="line">   https://api.example.com/      <span class="comment"># 尽量部署在API专用域名下</span></span><br><span class="line">   https://www.example.com/api/  </span><br><span class="line"><span class="number">3.</span> 请求地址带版本，或者在请求头中</span><br><span class="line">   https://api.example.com/v1/</span><br><span class="line">   https://www.example.com/api/v1</span><br><span class="line"><span class="number">4.</span> 任何东西都是资源，均用名词表示(尽量不要用动词)</span><br><span class="line">   https://api.example.com/v1/books/</span><br><span class="line"><span class="number">5.</span> 通过请求方式区分不同操作</span><br><span class="line">   get: 获取数据</span><br><span class="line">   post: 新增数据</span><br><span class="line">   put/patch: put是全部更新，patch是局部更新</span><br><span class="line">   delete: 删除</span><br><span class="line"><span class="number">6.</span> 在请求路径中带过滤</span><br><span class="line">   https://api.example.com/v1/?name=<span class="string">&#x27;三&#x27;</span>&amp;order=asc</span><br><span class="line"><span class="number">7.</span> 返回数据中带状态码</span><br><span class="line">   http请求状态码(2xx 3xx 4xx 5xx)</span><br><span class="line">   返回的JSON格式中带状态码(标志当次请求成功或失败)</span><br><span class="line"><span class="number">8.</span> 返回数据中带错误信息</span><br><span class="line">   错误处理，应返回错误信息，error当做key</span><br><span class="line"><span class="number">9.</span> 对不同的操作，返回数据符合如下规范</span><br><span class="line">   GET https://api.example.com/v1/books/       <span class="comment"># 返回资源对象的列表(数组) [&#123;&#125;,&#123;&#125;]</span></span><br><span class="line">   GET https://api.example.com/v1/books/<span class="number">1</span>/     <span class="comment"># 返回单个资源对象 &#123;&#125;</span></span><br><span class="line">   POST https://api.example.com/v1/books/      <span class="comment"># 返回新生成的资源对象 &#123;新增的数据&#125;</span></span><br><span class="line">   PUT  https://api.example.com/v1/books/<span class="number">1</span>/    <span class="comment"># 返回完整的资源对象  &#123;返回修改后的数据&#125;</span></span><br><span class="line">   PATCH https://api.example.com/v1/books/<span class="number">1</span>/   <span class="comment"># 返回完整的资源对象 &#123;返回修改后的数据&#125;</span></span><br><span class="line">   DELETE https://api.example.com/v1/books/<span class="number">1</span>/  <span class="comment"># 返回一个空文档 </span></span><br><span class="line">   <span class="comment"># &#123;status:100,msg:查询成功,data:null&#125;</span></span><br><span class="line"><span class="number">10</span> 返回结果中带连接</span><br></pre></td></tr></table></figure>
-
-<h3 id="postman的使用"><a href="#postman的使用" class="headerlink" title="postman的使用"></a><code>postman</code>的使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">后端写好之后需要测试，因此需要一个工具测试接口，常用的postman </span><br><span class="line">下载地址: https://www.postman.com/</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220314110921244.png" alt="image-20220314110921244"></p>
-<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220314111001390.png" alt="image-20220314111001390"></p>
-<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220314111111514.png" alt="image-20220314111111514"></p>
-<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220314111310044.png" alt="image-20220314111310044"></p>
-<h3 id="序列化与反序列化"><a href="#序列化与反序列化" class="headerlink" title="序列化与反序列化"></a>序列化与反序列化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">api接口开发，最核心最常见的一个过程就是序列化，所谓序列化就是把数据转换格式，序列化可以分两个阶段：</span><br><span class="line">    <span class="number">1.</span>序列化： 把我们语言识别的数据转换成指定的格式提供给别人。</span><br><span class="line">              字典，列表，对象 ---&gt; json/xml/prop,massagepack ---&gt; 提供给别人(前端或其他服务)</span><br><span class="line">    <span class="number">2.</span>反序列化：把别人提供的数据转换/还原成我们需要的格式</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">我们在django中获取到的数据默认是模型对象（qs对象），但是模型对象数据无法直接提供给前端或别的平台使用，所以我们需要把数据进行序列化，变成字符串或者json数据，提供给别人 ---&gt;序列化过程</span><br><span class="line"></span><br><span class="line">前端传入到后台的数据 ---&gt;json格式字符串 ---&gt;后端存到数据库中，需要转成python中的对象 ---&gt; 把json格式字符串转成python对象存到数据库的过程称为反序列化</span><br></pre></td></tr></table></figure>
-
-<h3 id="DRF介绍和安装"><a href="#DRF介绍和安装" class="headerlink" title="DRF介绍和安装"></a><code>DRF</code>介绍和安装</h3><h4 id="介绍和安装"><a href="#介绍和安装" class="headerlink" title="介绍和安装"></a>介绍和安装</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DRF可以更方便的使用django写出符合RESTful规范的接口(不用也可以写出符合规范的接口)</span><br><span class="line">是一个app(需要在settings.py中配置)</span><br><span class="line">安装: pip3 install djangorestframework</span><br><span class="line">官网: https://www.django-rest-framework.org/</span><br></pre></td></tr></table></figure>
-
-<h4 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># csrf已经禁用了</span></span><br><span class="line"><span class="comment"># 路由</span></span><br><span class="line">path(<span class="string">&#x27;test/&#x27;</span>, views.Test.as_view()),</span><br><span class="line"></span><br><span class="line"><span class="comment"># 视图</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span>(<span class="params">APIView</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        <span class="keyword">return</span> Response(&#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;xxx&#x27;</span>, <span class="string">&#x27;age&#x27;</span>: <span class="number">18</span>&#125;)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        <span class="keyword">return</span> Response(&#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;yyy&#x27;</span>, <span class="string">&#x27;age&#x27;</span>: <span class="number">20</span>&#125;)</span><br><span class="line">      </span><br><span class="line"><span class="comment"># 注册app(settings.py)</span></span><br><span class="line">  INSTALLED_APPS = [</span><br><span class="line">      ...</span><br><span class="line">      <span class="string">&#x27;rest_framework&#x27;</span>,</span><br><span class="line">      ...</span><br><span class="line">  ]</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 请求地址</span></span><br><span class="line">  http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span>/test/</span><br><span class="line">  <span class="comment"># 使用post和浏览器会有不同的结果</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="DRF的快速使用"><a href="#DRF的快速使用" class="headerlink" title="DRF的快速使用"></a><code>DRF</code>的快速使用</h3><h4 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a><code>models.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Books</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    publish = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    price = models.IntegerField()</span><br></pre></td></tr></table></figure>
-
-<h4 id="app01-serializer-py"><a href="#app01-serializer-py" class="headerlink" title="app01/serializer.py"></a><code>app01/serializer.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.serializers <span class="keyword">import</span> ModelSerializer</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> models</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookSerializer</span>(<span class="params">ModelSerializer</span>):</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = models.Books</span><br><span class="line">        fields = <span class="string">&#x27;__all__&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="views-py"><a href="#views-py" class="headerlink" title="views.py"></a><code>views.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.viewsets <span class="keyword">import</span> ModelViewSet</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> app01.serializer <span class="keyword">import</span> BookSerializer</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookView</span>(<span class="params">ModelViewSet</span>):</span></span><br><span class="line">    serializer_class = BookSerializer</span><br><span class="line">    queryset = models.Books.objects.<span class="built_in">all</span>()</span><br></pre></td></tr></table></figure>
-
-<h4 id="urls-py"><a href="#urls-py" class="headerlink" title="urls.py"></a><code>urls.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"><span class="keyword">from</span> rest_framework.routers <span class="keyword">import</span> SimpleRouter</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">router = SimpleRouter()</span><br><span class="line">router.register(<span class="string">&#x27;books&#x27;</span>, views.BookView)</span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">]</span><br><span class="line">urlpatterns += router.urls</span><br></pre></td></tr></table></figure>
-
-<h3 id="CBV源码分析"><a href="#CBV源码分析" class="headerlink" title="CBV源码分析"></a><code>CBV</code>源码分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">path(<span class="string">&#x27;test/&#x27;</span>,views.TestView.as_view()),</span><br><span class="line">    <span class="comment"># path(&#x27;test/&#x27;,View类的as_view内部有个view闭包函数内存地址)</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    1 path的第二个参数是：View类的as_view内部有个view闭包函数内存地址</span></span><br><span class="line"><span class="string">    2 一旦有请求来了，匹配test路径成功</span></span><br><span class="line"><span class="string">    3 执行第二个参数view函数内存地址(requset)</span></span><br><span class="line"><span class="string">    4 本质执行了self.dispatch(request)</span></span><br><span class="line"><span class="string">    5 通过反射去获得方法（如果是get请求，就是get方法）</span></span><br><span class="line"><span class="string">     if request.method.lower() in self.http_method_names:</span></span><br><span class="line"><span class="string">        handler = getattr(self, request.method.lower(), self.http_method_not_allowed)</span></span><br><span class="line"><span class="string">    6 执行get方法，传入参数</span></span><br><span class="line"><span class="string">    handler(request, *args, **kwargs)</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    </span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">装饰器函数 csrf_exempt</span></span><br><span class="line"><span class="string">@csrf_exempt</span></span><br><span class="line"><span class="string">def test():</span></span><br><span class="line"><span class="string">    pass</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">本质就是</span></span><br><span class="line"><span class="string">test=csrf_exempt(test)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="APIview源码分析"><a href="#APIview源码分析" class="headerlink" title="APIview源码分析"></a><code>APIview</code>源码分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># path(&#x27;test/&#x27;,APIView类的as_view内部是用了View的as_view内的view闭包函数),</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    1 path的第二个参数是：APIView类的as_view内部是用了View的as_view内的view闭包函数</span></span><br><span class="line"><span class="string">    2 一旦有请求来了，匹配test路径成功</span></span><br><span class="line"><span class="string">    3 执行第二个参数view函数内存地址(requset)，还是执行View的as_view内的view闭包函数，但是加了个csrf_exempt装饰器</span></span><br><span class="line"><span class="string">    4 所以，继承了APIView的所有接口，都没有csrf的校验了 （*****************）</span></span><br><span class="line"><span class="string">    5 执行self.dispatch(request)----》APIView类的</span></span><br><span class="line"><span class="string">        def dispatch(self, request, *args, **kwargs):</span></span><br><span class="line"><span class="string">            # 以后所有的request对象，都是****新的request对象***，它是drf的Request类的对象</span></span><br><span class="line"><span class="string">            request = self.initialize_request(request, *args, **kwargs)</span></span><br><span class="line"><span class="string">            self.request = request</span></span><br><span class="line"><span class="string">            try:</span></span><br><span class="line"><span class="string">                #整个drf的执行流程内的权限，频率，认证</span></span><br><span class="line"><span class="string">                self.initial(request, *args, **kwargs)</span></span><br><span class="line"><span class="string">                if request.method.lower() in self.http_method_names:</span></span><br><span class="line"><span class="string">                    handler = getattr(self, request.method.lower(),</span></span><br><span class="line"><span class="string">                                      self.http_method_not_allowed)</span></span><br><span class="line"><span class="string">                else:</span></span><br><span class="line"><span class="string">                    handler = self.http_method_not_allowed</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">                response = handler(request, *args, **kwargs)</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">            except Exception as exc:</span></span><br><span class="line"><span class="string">                # 全局异常</span></span><br><span class="line"><span class="string">                response = self.handle_exception(exc)</span></span><br><span class="line"><span class="string">            # 响应</span></span><br><span class="line"><span class="string">            self.response = self.finalize_response(request, response, *args, **kwargs)</span></span><br><span class="line"><span class="string">            return self.response</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">## request = self.initialize_request(request, *args, **kwargs)</span></span><br><span class="line"><span class="comment">## 返回的request对象是drf   Request类的request对象</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialize_request</span>(<span class="params">self, request, *args, **kwargs</span>):</span></span><br><span class="line">    <span class="keyword">return</span> Request(</span><br><span class="line">        request,</span><br><span class="line">        parsers=self.get_parsers(),</span><br><span class="line">        authenticators=self.get_authenticators(),</span><br><span class="line">        negotiator=self.get_content_negotiator(),</span><br><span class="line">        parser_context=parser_context</span><br><span class="line">    )</span><br><span class="line"><span class="comment">## ******以后，在视图类中使用的request对象已经不是原来的request对象了，现在都是drf的request对象了</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##### 需要记住的</span></span><br><span class="line">  所有的csrf都不校验了</span><br><span class="line">  request对象变成了新的request对象，drf的request对象</span><br><span class="line">  执行了权限，频率，认证</span><br><span class="line">  捕获了全局异常（统一处理异常）</span><br><span class="line">  处理了response对象，如果浏览器访问是一个样，postman访问又一个样</span><br><span class="line">  以后，在视图类中使用的request对象已经不是原来的request对象了，现在都是drf的request对象了</span><br></pre></td></tr></table></figure>
-
-<h3 id="Request对象分析"><a href="#Request对象分析" class="headerlink" title="Request对象分析"></a><code>Request</code>对象分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> django 原生的Request：django.core.handlers.wsgi.WSGIRequest</span><br><span class="line"></span><br><span class="line"><span class="number">2</span> drf的Request：rest_framework.request.Request</span><br><span class="line"></span><br><span class="line"><span class="number">3</span> drf的request对象内有原生的request</span><br><span class="line">	request._request:原生的Request</span><br><span class="line">    </span><br><span class="line"><span class="number">4</span> 在视图类中使用</span><br><span class="line">	request.method  拿到的就是请求方式，</span><br><span class="line">    正常拿，应该request._request.method</span><br><span class="line">    </span><br><span class="line"><span class="number">5</span> 如何实现这种操作？</span><br><span class="line">	-对象.属性会触发 类的__getattr__方法</span><br><span class="line">    </span><br><span class="line"><span class="number">6</span> drf的Request类重写了__getattr__</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span>(<span class="params">self, attr</span>):</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># 去原生的request反射属性</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getattr</span>(self._request, attr)</span><br><span class="line">        <span class="keyword">except</span> AttributeError:</span><br><span class="line">            <span class="keyword">return</span> self.__getattribute__(attr)</span><br><span class="line">        </span><br><span class="line"> <span class="number">7</span> 虽然视图类中request对象变成了drf的request，但是用起来，跟原来的一样，只不过它多了一些属性</span><br><span class="line">	 request.data  <span class="comment"># post请求提交的数据，不论什么格式，都在它中</span></span><br><span class="line">   requst.query_params  <span class="comment"># get请求提交的数据（查询参数）</span></span><br><span class="line">    </span><br><span class="line"><span class="number">8</span> 重点记住：</span><br><span class="line">	drf的request对象用起来跟原来一样（重写了__getattr__）</span><br><span class="line">  request.data  <span class="comment"># post请求提交的数据，不论什么格式，都在它中</span></span><br><span class="line">  requst.query_params  <span class="comment"># get请求提交的数据（查询参数）</span></span><br></pre></td></tr></table></figure>
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
 
 
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/73f3258a.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/73f3258a.html" class="post-title-link" itemprop="url">序列化器与请求响应</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 11:18:08" itemprop="dateCreated datePublished" datetime="2022-02-08T11:18:08+08:00">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>15k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="序列化器的作用"><a href="#序列化器的作用" class="headerlink" title="序列化器的作用"></a>序列化器的作用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">序列化: 把python中的对象转成JSON格式字符串</span><br><span class="line">反序列化: 把JSON格式字符串转成python中的对象</span><br><span class="line">  </span><br><span class="line">注意: drf的序列化组件(序列化器)</span><br><span class="line">把对象(Book，queryset对象)转成字典，因为有字典，直接使用Response就可以了</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/73f3258a.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1099,111 +1169,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://klcc.cc/bf389a0f.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="klcc">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="klcc">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/bf389a0f.html" class="post-title-link" itemprop="url">描述符</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-  
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-11 14:11:12" itemprop="dateCreated datePublished" datetime="2022-01-11T14:11:12+08:00">2022-01-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>16k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="描述符"><a href="#描述符" class="headerlink" title="描述符"></a>描述符</h1><ul>
-<li><p>描述符是什么：描述符本质就是一个新式类，在这个新式类中，至少实现了</p>
-<p>get()，set()，delete()中的一个，这也被称为描述符协议</p>
-<ul>
-<li><strong>get</strong>()：调用一个属性时，触发</li>
-<li><strong>set</strong>()：为一个属性赋值时，触发</li>
-<li><strong>delete</strong>()：采用del删除属性时，触发</li>
-</ul>
-</li>
-<li><p>定义一个描述符</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/bf389a0f.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -1229,14 +1194,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">821k</span>
+    <span title="站点总字数">836k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12:26</span>
+    <span title="站点阅读时长">12:40</span>
   </span>
 </div>
 <div class="busuanzi-count">
