@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="认证登录接口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="认证、权限、频率">
+<meta property="og:url" content="https://klcc.cc/a94d8114.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="认证登录接口">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220405161826558.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220405162315439.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220405163147257.png">
+<meta property="article:published_time" content="2022-02-08T03:18:08.406Z">
+<meta property="article:modified_time" content="2022-04-05T09:14:26.812Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="Django">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220405161826558.png">
+
+
+<link rel="canonical" href="https://klcc.cc/a94d8114.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/a94d8114.html","path":"a94d8114.html","title":"认证、权限、频率"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>认证、权限、频率 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">27</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">21</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">132</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81"><span class="nav-number">1.</span> <span class="nav-text">认证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.1.</span> <span class="nav-text">登录接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">认证的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81%E7%B1%BB%E7%9A%84%E7%BC%96%E5%86%99"><span class="nav-number">1.2.1.</span> <span class="nav-text">认证类的编写</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">认证类的使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%83%E9%99%90"><span class="nav-number">2.</span> <span class="nav-text">权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%B1%BB%E7%9A%84%E7%BC%96%E5%86%99"><span class="nav-number">2.1.</span> <span class="nav-text">权限类的编写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">权限类的使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%91%E7%8E%87"><span class="nav-number">3.</span> <span class="nav-text">频率</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%91%E7%8E%87%E7%B1%BB%E7%9A%84%E7%BC%96%E5%86%99"><span class="nav-number">3.1.</span> <span class="nav-text">频率类的编写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%91%E7%8E%87%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">频率类的使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">综合使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#models-py"><span class="nav-number">4.1.</span> <span class="nav-text">models.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#serializer-py"><span class="nav-number">4.2.</span> <span class="nav-text">serializer.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#auth-py"><span class="nav-number">4.3.</span> <span class="nav-text">auth.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#views-py"><span class="nav-number">4.4.</span> <span class="nav-text">views.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#urls-py"><span class="nav-number">4.5.</span> <span class="nav-text">urls.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#settings-py"><span class="nav-number">4.6.</span> <span class="nav-text">settings.py</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">132</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/a94d8114.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          认证、权限、频率
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 11:18:08" itemprop="dateCreated datePublished" datetime="2022-02-08T11:18:08+08:00">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Django/" itemprop="url" rel="index"><span itemprop="name">Django</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h3><h4 id="登录接口"><a href="#登录接口" class="headerlink" title="登录接口"></a>登录接口</h4><span id="more"></span>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># modles.py</span></span><br><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    username = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    password = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    user_type = models.IntegerField(choices=((<span class="number">1</span>, <span class="string">&#x27;超级用户&#x27;</span>), (<span class="number">2</span>, <span class="string">&#x27;普通用户&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;二笔用户&#x27;</span>)))</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserToken</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    user = models.OneToOneField(to=<span class="string">&#x27;User&#x27;</span>, on_delete=models.CASCADE)</span><br><span class="line">    token = models.CharField(max_length=<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># serializer.py</span></span><br><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> models</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserSerializer</span>(<span class="params">serializers.ModelSerializer</span>):</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = models.User</span><br><span class="line">        fields = <span class="string">&#x27;__all__&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># views.py</span></span><br><span class="line"><span class="keyword">import</span> uuid</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> serializer</span><br><span class="line"><span class="keyword">from</span> rest_framework.viewsets <span class="keyword">import</span> ViewSetMixin</span><br><span class="line"><span class="keyword">from</span> rest_framework.generics <span class="keyword">import</span> CreateAPIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.decorators <span class="keyword">import</span> action</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserView</span>(<span class="params">ViewSetMixin, CreateAPIView</span>):</span></span><br><span class="line">    queryset = models.User.objects.<span class="built_in">all</span>()</span><br><span class="line">    serializer_class = serializer.UserSerializer</span><br><span class="line"></span><br><span class="line"><span class="meta">    @action(<span class="params">methods=[<span class="string">&#x27;POST&#x27;</span>], detail=<span class="literal">False</span></span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        username = request.data.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">        password = request.data.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">        user = models.User.objects.<span class="built_in">filter</span>(username=username, password=password).first()</span><br><span class="line">        token = uuid.uuid4()</span><br><span class="line">        <span class="comment"># 根据user去查询，如果能查到，就修改token，如果查不到，就新增一条</span></span><br><span class="line">        models.UserToken.objects.update_or_create(defaults=&#123;<span class="string">&#x27;token&#x27;</span>: token&#125;, user=user)</span><br><span class="line">        <span class="keyword">if</span> user:</span><br><span class="line">            <span class="keyword">return</span> Response(&#123;<span class="string">&#x27;msg&#x27;</span>: <span class="string">&#x27;登录成功&#x27;</span>, <span class="string">&quot;token&quot;</span>: token&#125;)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> Response(&#123;<span class="string">&#x27;status&#x27;</span>: <span class="number">101</span>, <span class="string">&#x27;msg&#x27;</span>: <span class="string">&#x27;用户名或密码错误&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># urls.py</span></span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path, include</span><br><span class="line"><span class="keyword">from</span> rest_framework.routers <span class="keyword">import</span> SimpleRouter</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">router = SimpleRouter()</span><br><span class="line">router.register(<span class="string">&#x27;user&#x27;</span>, views.UserView)</span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">    path(<span class="string">&#x27;api/&#x27;</span>, include(router.urls)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h4 id="认证的使用"><a href="#认证的使用" class="headerlink" title="认证的使用"></a>认证的使用</h4><h5 id="认证类的编写"><a href="#认证类的编写" class="headerlink" title="认证类的编写"></a>认证类的编写</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 认证类：用来校验用户是否登录，如果登录了，继续往下走，如果没有登录，直接返回</span></span><br><span class="line"><span class="comment"># 编写步骤：</span></span><br><span class="line">  <span class="number">1.</span>写一个类，继承BaseAuthentication,</span><br><span class="line">  <span class="number">2.</span>重写authenticate，在方法中做校验，校验是否登录，返回两个值，没有登录抛异常</span><br><span class="line">  <span class="number">3.</span>全局配置，局部配置</span><br><span class="line">    全局配置：配置文件中</span><br><span class="line">        REST_FRAMEWORK=&#123;</span><br><span class="line">        <span class="string">&quot;DEFAULT_AUTHENTICATION_CLASSES&quot;</span>:[<span class="string">&quot;app01.auth.LoginAuth&quot;</span>,]</span><br><span class="line">        &#125;</span><br><span class="line">    局部配置：在视图类中</span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">UserView</span>(<span class="params">ViewSet</span>):</span></span><br><span class="line">          authentication_classes = [LoginAuth] </span><br><span class="line">        </span><br><span class="line">    局部禁用：</span><br><span class="line">         <span class="class"><span class="keyword">class</span> <span class="title">UserView</span>(<span class="params">ViewSet</span>):</span></span><br><span class="line">            authentication_classes = [] </span><br><span class="line"></span><br><span class="line"><span class="comment"># 认证类中返回的两个变量</span></span><br><span class="line">	 返回的第一个，给了request.user，就是当前登录用户</span><br><span class="line">   返回的第二个，给了request.auth，就是token串</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 app01 下创建 auth.py</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.authentication <span class="keyword">import</span> BaseAuthentication</span><br><span class="line"><span class="keyword">from</span> rest_framework.exceptions <span class="keyword">import</span> AuthenticationFailed</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoginAuth</span>(<span class="params">BaseAuthentication</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">authenticate</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        token = request.query_params.get(<span class="string">&#x27;token&#x27;</span>)</span><br><span class="line">        user_token = models.UserToken.objects.<span class="built_in">filter</span>(token=token).first()</span><br><span class="line">        <span class="keyword">if</span> user_token:</span><br><span class="line">            <span class="keyword">return</span> user_token.user, token</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> AuthenticationFailed(<span class="string">&#x27;您没有登录&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="认证类的使用"><a href="#认证类的使用" class="headerlink" title="认证类的使用"></a>认证类的使用</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局使用 在 settings.py 中配置 ---&gt; 所有接口都需要认证</span></span><br><span class="line">  REST_FRAMEWORK=&#123;</span><br><span class="line">      <span class="string">&quot;DEFAULT_AUTHENTICATION_CLASSES&quot;</span>:[<span class="string">&quot;app01.auth.LoginAuth&quot;</span>,]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 局部禁用 在视图类中添加(如登录的时候就不能要求认证)</span></span><br><span class="line">  authentication_classes = []</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 局部使用</span></span><br><span class="line">	<span class="keyword">from</span> app01 <span class="keyword">import</span> auth</span><br><span class="line">  authentication_classes = [auth.LoginAuth,]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220405161826558.png" alt="image-20220405161826558"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220405162315439.png" alt="image-20220405162315439"></p>
+<h3 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h3><h4 id="权限类的编写"><a href="#权限类的编写" class="headerlink" title="权限类的编写"></a>权限类的编写</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 登录成功 ---&gt; 所有必须登录能访问 ---&gt; 每个视图类上加认证类</span></span><br><span class="line"><span class="comment"># 用户是普通用户 ---&gt; 普通用户可以访问所有和单条</span></span><br><span class="line"><span class="comment"># 普通管理员和超级用户可以操作所有，除了访问单条和所有的那个视图类，加上认证类</span></span><br><span class="line"><span class="comment"># books：查看一条，和所有</span></span><br><span class="line"><span class="comment"># booksdetail 路由下有：删除，新增，修改 ---&gt; 权限类加在这里</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># book 5个接口，必须登录才能访问</span></span><br><span class="line"><span class="comment"># 5个接口分成了俩视图写: </span></span><br><span class="line">    BookView：获取所有，获取单条</span><br><span class="line">    BookDetailView：删除，修改，新增</span><br><span class="line">    这俩视图都需要登录：authentication_classes = [LoginAuth, ]</span><br><span class="line">    BookView只要登陆就可以操作</span><br><span class="line">    BookDetailView必须有权限才能，加了一个权限，permission_classes = [UserPermission, ]</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 跟写认证类步骤差不多</span></span><br><span class="line">第一步：写一个类，继承BasePermission，重写has_permission，判断如果有权限，返回<span class="literal">True</span>，如果没有权限，返回<span class="literal">False</span></span><br><span class="line">第二步：局部使用和全局使用</span><br><span class="line">    局部使用</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">BookDetailView</span>(<span class="params">GenericViewSet, CreateModelMixin, DestroyModelMixin, UpdateModelMixin</span>):</span></span><br><span class="line">      permission_classes = [UserPermission, ]</span><br><span class="line">    </span><br><span class="line">    全局使用</span><br><span class="line">      REST_FRAMEWORK=&#123;</span><br><span class="line">        <span class="string">&quot;DEFAULT_PERMISSION_CLASSES&quot;</span>:[<span class="string">&quot;app01.auth.UserPermission&quot;</span>,]</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 app01 下创建 auth.py</span></span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> rest_framework.permissions <span class="keyword">import</span> BasePermission</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPermission</span>(<span class="params">BasePermission</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">has_permission</span>(<span class="params">self, request, view</span>):</span></span><br><span class="line">        self.message = <span class="string">&quot;您是: %s，权限不足&quot;</span> % request.user.get_user_type_display()  <span class="comment"># 没有权限的提示信息</span></span><br><span class="line">        user_type = request.user.user_type</span><br><span class="line">				<span class="comment"># 如果有权限，返回True,没有权限返回False</span></span><br><span class="line">        <span class="comment"># 权限类，在认证类之后，request.user有了当前登录用户</span></span><br><span class="line">        <span class="keyword">if</span> user_type &gt; <span class="number">2</span>:  <span class="comment"># 是 1 和 2 就没有权限</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="权限类的使用"><a href="#权限类的使用" class="headerlink" title="权限类的使用"></a>权限类的使用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 局部使用（在视图类中加）</span></span><br><span class="line">  <span class="keyword">from</span> app01 <span class="keyword">import</span> auth</span><br><span class="line">	permission_classes = [auth.MyPermission,]</span><br><span class="line"><span class="comment"># 全局使用（在配置文件中配置）</span></span><br><span class="line">  REST_FRAMEWORK=&#123;</span><br><span class="line">      <span class="string">&quot;DEFAULT_PERMISSION_CLASSES&quot;</span>:[<span class="string">&quot;app01.auth.MyPermission&quot;</span>,],</span><br><span class="line">  &#125;	</span><br></pre></td></tr></table></figure>
+<p>使用一个普通用户登录的token访问需要权限的视图类就会失败<br><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220405163147257.png" alt="image-20220405163147257"></p>
+<h3 id="频率"><a href="#频率" class="headerlink" title="频率"></a>频率</h3><h4 id="频率类的编写"><a href="#频率类的编写" class="headerlink" title="频率类的编写"></a>频率类的编写</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 认证，权限都通过以后，现在某个接口的访问频率 ---&gt; 一般根据ip或者用户限制</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用步骤</span></span><br><span class="line">	第一步：写一个类，继承SimpleRateThrottle，重写类属性：scope，和get_cache_key方法</span><br><span class="line">  	get_cache_key返回什么，就以什么做现在，scope配置文件中要用</span><br><span class="line">    </span><br><span class="line">  第二步：在配置文件中配置</span><br><span class="line">  	  <span class="string">&#x27;DEFAULT_THROTTLE_RATES&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;minute_3&#x27;</span>: <span class="string">&#x27;3/m&#x27;</span>  <span class="comment"># minute_3是scope的字符串，一分钟访问3次</span></span><br><span class="line">        <span class="string">&#x27;minute_5&#x27;</span>：<span class="string">&#x27;5/m&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">      </span><br><span class="line">  局部使用 ---&gt; 视图类中</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">BookView</span>(<span class="params">GenericViewSet, ListModelMixin, RetrieveModelMixin</span>):</span></span><br><span class="line">    throttle_classes = [IPThrottle]</span><br><span class="line">  全局使用--配置文件中</span><br><span class="line">     <span class="string">&#x27;DEFAULT_THROTTLE_CLASSES&#x27;</span>: (  <span class="comment"># 全局配置频率类</span></span><br><span class="line">        <span class="string">&#x27;app01.auth.IPThrottle&#x27;</span></span><br><span class="line">    ),</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 app01 下创建 auth.py</span></span><br><span class="line"><span class="comment"># 以客户端IP限制</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IPThrottle</span>(<span class="params">SimpleRateThrottle</span>):</span></span><br><span class="line">    scope = <span class="string">&#x27;min_throttle&#x27;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_cache_key</span>(<span class="params">self, request, view</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.get_ident(request)  <span class="comment"># 真实的客户端IP</span></span><br><span class="line">        <span class="comment"># return request.META.get(&#x27;REMOTE_ADDR&#x27;)  # 有代理的IP地址</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以用户限制</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserThrottle</span>(<span class="params">SimpleRateThrottle</span>):</span></span><br><span class="line">    scope = <span class="string">&#x27;user_throttle&#x27;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_cache_key</span>(<span class="params">self, request, view</span>):</span></span><br><span class="line">        <span class="keyword">return</span> request.user.<span class="built_in">id</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="频率类的使用"><a href="#频率类的使用" class="headerlink" title="频率类的使用"></a>频率类的使用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局使用 settings.py</span></span><br><span class="line"><span class="comment">## 以IP地址限制</span></span><br><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">&quot;DEFAULT_THROTTLE_CLASSES&quot;</span>: [<span class="string">&quot;app01.auth.IPThrottle&quot;</span>,],</span><br><span class="line">    <span class="string">&quot;DEFAULT_THROTTLE_RATES&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;min_throttle&#x27;</span>: <span class="string">&#x27;3/m&#x27;</span>,  <span class="comment"># 每分钟三次的访问</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">## 以用户限制</span></span><br><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">&quot;DEFAULT_THROTTLE_CLASSES&quot;</span>: [<span class="string">&quot;app01.auth.UserThrottle&quot;</span>,],</span><br><span class="line">    <span class="string">&quot;DEFAULT_THROTTLE_RATES&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;user_throttle&#x27;</span>: <span class="string">&#x27;5/m&#x27;</span>,,  <span class="comment"># 每分钟五次的访问</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 局部使用 视图类中写 throttle_classes 属性</span></span><br><span class="line">  <span class="keyword">from</span> app01 <span class="keyword">import</span> auth</span><br><span class="line">  <span class="comment"># 以IP限制</span></span><br><span class="line">  throttle_classes = [auth.IPThrottle]</span><br><span class="line">  <span class="comment"># 以用户限制</span></span><br><span class="line">  throttle_classes = [auth.UserThrottle]</span><br><span class="line">  <span class="comment"># settings.py 文件中的 &quot;DEFAULT_THROTTLE_RATES&quot; 还是需要设置</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="综合使用"><a href="#综合使用" class="headerlink" title="综合使用"></a>综合使用</h3><h4 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a><code>models.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    username = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    password = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    user_type = models.IntegerField(choices=((<span class="number">1</span>, <span class="string">&quot;超级用户&quot;</span>), (<span class="number">2</span>, <span class="string">&quot;管理用户&quot;</span>), (<span class="number">3</span>, <span class="string">&quot;普通用户&quot;</span>)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserToken</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    user = models.OneToOneField(to=<span class="string">&quot;User&quot;</span>, on_delete=models.CASCADE)</span><br><span class="line">    token = models.CharField(max_length=<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Books</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    price = models.DecimalField(max_digits=<span class="number">8</span>, decimal_places=<span class="number">2</span>)</span><br><span class="line">    publish = models.ForeignKey(to=<span class="string">&quot;Publish&quot;</span>, on_delete=models.CASCADE)</span><br><span class="line">    authors = models.ManyToManyField(to=<span class="string">&quot;Author&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">publish_list</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&#x27;name&#x27;</span>: self.publish.name, <span class="string">&#x27;city&#x27;</span>: self.publish.city, <span class="string">&#x27;email&#x27;</span>: self.publish.email&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">authors_list</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> [&#123;<span class="string">&#x27;name&#x27;</span>: author.name, <span class="string">&#x27;age&#x27;</span>: author.age, <span class="string">&#x27;phone&#x27;</span>: author.author_detail.tel,</span><br><span class="line">                 <span class="string">&#x27;address&#x27;</span>: author.author_detail.addr&#125; <span class="keyword">for</span> author <span class="keyword">in</span> self.authors.<span class="built_in">all</span>()]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Publish</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    city = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    email = models.EmailField()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Author</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    age = models.IntegerField()</span><br><span class="line">    author_detail = models.OneToOneField(to=<span class="string">&quot;AuthorDetail&quot;</span>, on_delete=models.CASCADE)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.name</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tel</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.author_detail.tel</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addr</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.author_detail.addr</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">detail_info</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&#x27;phone&#x27;</span>: self.author_detail.tel, <span class="string">&#x27;address&#x27;</span>: self.author_detail.addr&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthorDetail</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    tel = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line">    addr = models.CharField(max_length=<span class="number">32</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.addr</span><br></pre></td></tr></table></figure>
+
+<h4 id="serializer-py"><a href="#serializer-py" class="headerlink" title="serializer.py"></a><code>serializer.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserSerializer</span>(<span class="params">serializers.ModelSerializer</span>):</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = models.User</span><br><span class="line">        fields = <span class="string">&quot;__all__&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookSerializer</span>(<span class="params">serializers.ModelSerializer</span>):</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = models.Books</span><br><span class="line">        fields = <span class="string">&quot;__all__&quot;</span></span><br><span class="line">        extra_kwargs = &#123;</span><br><span class="line">            <span class="string">&quot;publish&quot;</span>: &#123;<span class="string">&#x27;write_only&#x27;</span>: <span class="literal">True</span>&#125;,</span><br><span class="line">            <span class="string">&quot;authors&quot;</span>: &#123;<span class="string">&#x27;write_only&#x27;</span>: <span class="literal">True</span>&#125;,</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    publish_list = serializers.DictField(read_only=<span class="literal">True</span>)</span><br><span class="line">    authors_list = serializers.ListField(read_only=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PublishSerializer</span>(<span class="params">serializers.ModelSerializer</span>):</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = models.Publish</span><br><span class="line">        fields = <span class="string">&quot;__all__&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthorSerializer</span>(<span class="params">serializers.ModelSerializer</span>):</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = models.Author</span><br><span class="line">        fields = [<span class="string">&quot;id&quot;</span>, <span class="string">&quot;name&quot;</span>, <span class="string">&quot;age&quot;</span>, <span class="string">&quot;tel&quot;</span>, <span class="string">&quot;addr&quot;</span>]</span><br><span class="line"></span><br><span class="line">    tel = serializers.CharField()</span><br><span class="line">    addr = serializers.CharField()</span><br><span class="line">		</span><br><span class="line">    <span class="comment"># 重写了 create 和 update 方法 在插入作者的时候可以将详情以前插入</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span>(<span class="params">self, validated_data</span>):</span></span><br><span class="line">        detail = models.AuthorDetail.objects.create(tel=validated_data.get(<span class="string">&quot;tel&quot;</span>), addr=validated_data.get(<span class="string">&quot;addr&quot;</span>))</span><br><span class="line">        author = models.Author.objects.create(author_detail=detail, name=validated_data.get(<span class="string">&#x27;name&#x27;</span>),</span><br><span class="line">                                              age=validated_data.get(<span class="string">&#x27;age&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> author</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span>(<span class="params">self, instance, validated_data</span>):</span></span><br><span class="line">        name = validated_data.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">        age = validated_data.get(<span class="string">&#x27;age&#x27;</span>)</span><br><span class="line">        tel = validated_data.get(<span class="string">&#x27;tel&#x27;</span>)</span><br><span class="line">        addr = validated_data.get(<span class="string">&#x27;addr&#x27;</span>)</span><br><span class="line">        instance.author_detail.tel = tel</span><br><span class="line">        instance.author_detail.addr = addr</span><br><span class="line">        instance.name = name</span><br><span class="line">        instance.age = age</span><br><span class="line">        instance.save()</span><br><span class="line">        <span class="keyword">return</span> instance</span><br></pre></td></tr></table></figure>
+
+<h4 id="auth-py"><a href="#auth-py" class="headerlink" title="auth.py"></a><code>auth.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.authentication <span class="keyword">import</span> BaseAuthentication</span><br><span class="line"><span class="keyword">from</span> rest_framework.exceptions <span class="keyword">import</span> AuthenticationFailed</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> rest_framework.permissions <span class="keyword">import</span> BasePermission</span><br><span class="line"><span class="keyword">from</span> rest_framework.throttling <span class="keyword">import</span> BaseThrottle, SimpleRateThrottle</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoginAuth</span>(<span class="params">BaseAuthentication</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">authenticate</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        token = request.query_params.get(<span class="string">&#x27;token&#x27;</span>)</span><br><span class="line">        user_token = models.UserToken.objects.<span class="built_in">filter</span>(token=token).first()</span><br><span class="line">        <span class="keyword">if</span> user_token:</span><br><span class="line">            <span class="keyword">return</span> user_token.user, token</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> AuthenticationFailed(<span class="string">&#x27;您没有登录&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPermission</span>(<span class="params">BasePermission</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">has_permission</span>(<span class="params">self, request, view</span>):</span></span><br><span class="line">        self.message = <span class="string">&quot;您是: %s，权限不足&quot;</span> % request.user.get_user_type_display()</span><br><span class="line">        user_type = request.user.user_type</span><br><span class="line">        <span class="keyword">if</span> user_type &gt; <span class="number">2</span>:  <span class="comment"># 不是1 2 就是3 没有权限</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以客户端IP</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IPThrottle</span>(<span class="params">SimpleRateThrottle</span>):</span></span><br><span class="line">    scope = <span class="string">&#x27;min_throttle&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_cache_key</span>(<span class="params">self, request, view</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.get_ident(request)  <span class="comment"># 真实的客户端IP</span></span><br><span class="line">        <span class="comment"># return request.META.get(&#x27;REMOTE_ADDR&#x27;)  # 客户端ip</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以用户限制</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserThrottle</span>(<span class="params">SimpleRateThrottle</span>):</span></span><br><span class="line">    scope = <span class="string">&#x27;user_throttle&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_cache_key</span>(<span class="params">self, request, view</span>):</span></span><br><span class="line">        <span class="keyword">return</span> request.user.<span class="built_in">id</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="views-py"><a href="#views-py" class="headerlink" title="views.py"></a><code>views.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> uuid</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> models, serializer, auth</span><br><span class="line"><span class="keyword">from</span> rest_framework.viewsets <span class="keyword">import</span> ViewSetMixin, ModelViewSet</span><br><span class="line"><span class="keyword">from</span> rest_framework.generics <span class="keyword">import</span> CreateAPIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.decorators <span class="keyword">import</span> action</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserView</span>(<span class="params">ViewSetMixin, CreateAPIView</span>):</span></span><br><span class="line">    authentication_classes = []  <span class="comment"># 登录接口禁用认证类</span></span><br><span class="line">    queryset = models.User.objects.<span class="built_in">all</span>()</span><br><span class="line">    serializer_class = serializer.UserSerializer</span><br><span class="line"></span><br><span class="line"><span class="meta">    @action(<span class="params">methods=[<span class="string">&#x27;POST&#x27;</span>], detail=<span class="literal">False</span></span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">login</span>(<span class="params">self, request</span>):</span></span><br><span class="line">        username = request.data.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">        password = request.data.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line">        user = models.User.objects.<span class="built_in">filter</span>(username=username, password=password).first()</span><br><span class="line">        token = uuid.uuid4()</span><br><span class="line">        models.UserToken.objects.update_or_create(user=user, defaults=&#123;<span class="string">&#x27;token&#x27;</span>: token&#125;)</span><br><span class="line">        <span class="keyword">if</span> user:</span><br><span class="line">            <span class="keyword">return</span> Response(&#123;<span class="string">&#x27;msg&#x27;</span>: <span class="string">&#x27;登录成功&#x27;</span>, <span class="string">&#x27;token&#x27;</span>: token&#125;)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> Response(&#123;<span class="string">&#x27;status&#x27;</span>: <span class="number">101</span>, <span class="string">&#x27;msg&#x27;</span>: <span class="string">&#x27;用户名或密码错误&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookView</span>(<span class="params">ModelViewSet</span>):</span></span><br><span class="line">    queryset = models.Books.objects.<span class="built_in">all</span>()</span><br><span class="line">    serializer_class = serializer.BookSerializer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PublishView</span>(<span class="params">ModelViewSet</span>):</span></span><br><span class="line">    permission_classes = [auth.MyPermission, ]  <span class="comment"># 有管理员权限才可以操作该接口</span></span><br><span class="line">    queryset = models.Publish.objects.<span class="built_in">all</span>()</span><br><span class="line">    serializer_class = serializer.PublishSerializer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthorView</span>(<span class="params">ModelViewSet</span>):</span></span><br><span class="line">    queryset = models.Author.objects.<span class="built_in">all</span>()</span><br><span class="line">    serializer_class = serializer.AuthorSerializer</span><br></pre></td></tr></table></figure>
+
+<h4 id="urls-py"><a href="#urls-py" class="headerlink" title="urls.py"></a><code>urls.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path, include</span><br><span class="line"><span class="keyword">from</span> app01 <span class="keyword">import</span> views</span><br><span class="line"><span class="keyword">from</span> rest_framework.routers <span class="keyword">import</span> SimpleRouter</span><br><span class="line"></span><br><span class="line">router = SimpleRouter()</span><br><span class="line">router.register(<span class="string">&#x27;user&#x27;</span>, views.UserView)</span><br><span class="line">router.register(<span class="string">&#x27;books&#x27;</span>, views.BookView)</span><br><span class="line">router.register(<span class="string">&#x27;publish&#x27;</span>, views.PublishView)</span><br><span class="line">router.register(<span class="string">&#x27;authors&#x27;</span>, views.AuthorView)</span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">    path(<span class="string">&#x27;api/&#x27;</span>, include(router.urls)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h4 id="settings-py"><a href="#settings-py" class="headerlink" title="settings.py"></a><code>settings.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># drf配置</span></span><br><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">&quot;DEFAULT_AUTHENTICATION_CLASSES&quot;</span>: [<span class="string">&quot;app01.auth.LoginAuth&quot;</span>, ],</span><br><span class="line">    <span class="string">&quot;DEFAULT_THROTTLE_CLASSES&quot;</span>: [<span class="string">&quot;app01.auth.IPThrottle&quot;</span>,],  <span class="comment"># 使用的是以IP为限制</span></span><br><span class="line">    <span class="comment"># &quot;DEFAULT_THROTTLE_CLASSES&quot;: [&quot;app01.auth.UserThrottle&quot;,],</span></span><br><span class="line">    <span class="string">&quot;DEFAULT_THROTTLE_RATES&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;min_throttle&#x27;</span>: <span class="string">&#x27;3/m&#x27;</span>,  <span class="comment"># 每分钟只允许访问三次</span></span><br><span class="line">        <span class="comment"># &#x27;user_throttle&#x27;: &#x27;5/m&#x27;,</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"><i class="fa fa-tag"></i> Django</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/e173abca.html" rel="prev" title="HTML基础">
+                  <i class="fa fa-chevron-left"></i> HTML基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/9f25bd5d.html" rel="next" title="视图和路由">
+                  视图和路由 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">865k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:06</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
