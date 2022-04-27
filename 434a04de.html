@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Celery介绍12345678910111213141516# Celery: 分布式的异步任务框架Celery是一个简单、灵活且可靠的，处理大量消息的分布式系统Celery is a project with minimal funding, so we don’t support Microsoft Windows. Please don’t open any issues related">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Celery分布式的异步任务框架">
+<meta property="og:url" content="https://klcc.cc/434a04de.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="Celery介绍12345678910111213141516# Celery: 分布式的异步任务框架Celery是一个简单、灵活且可靠的，处理大量消息的分布式系统Celery is a project with minimal funding, so we don’t support Microsoft Windows. Please don’t open any issues related">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220427161427983.png">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/celery.png">
+<meta property="article:published_time" content="2022-02-08T03:18:08.406Z">
+<meta property="article:modified_time" content="2022-04-27T13:39:11.131Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220427161427983.png">
+
+
+<link rel="canonical" href="https://klcc.cc/434a04de.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/434a04de.html","path":"434a04de.html","title":"Celery分布式的异步任务框架"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Celery分布式的异步任务框架 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">22</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">140</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Celery%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Celery介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Celery%E6%9E%B6%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">Celery架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Celery%E5%BF%AB%E9%80%9F%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">Celery快速使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Celery%E5%B0%81%E8%A3%85%E5%8C%85%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">Celery封装包使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#celery-py"><span class="nav-number">4.1.</span> <span class="nav-text">celery.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#user-task-py"><span class="nav-number">4.2.</span> <span class="nav-text">user_task.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#add-task-py"><span class="nav-number">4.3.</span> <span class="nav-text">add_task.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get-result-py"><span class="nav-number">4.4.</span> <span class="nav-text">get_result.py</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Celery%E6%89%A7%E8%A1%8C%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1"><span class="nav-number">5.</span> <span class="nav-text">Celery执行异步任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Celery%E6%89%A7%E8%A1%8C%E5%BB%B6%E8%BF%9F%E4%BB%BB%E5%8A%A1"><span class="nav-number">6.</span> <span class="nav-text">Celery执行延迟任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Celery%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="nav-number">7.</span> <span class="nav-text">Celery执行定时任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Django%E4%B8%ADCelery%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">8.</span> <span class="nav-text">Django中Celery的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E6%9B%B4%E6%96%B0%E8%BD%AE%E6%92%AD%E5%9B%BE%E6%8E%A5%E5%8F%A3"><span class="nav-number">9.</span> <span class="nav-text">定时更新轮播图接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E4%B8%AD%E5%8A%A0%E5%85%A5%E7%BC%93%E5%AD%98"><span class="nav-number">9.1.</span> <span class="nav-text">视图中加入缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5%E7%BC%93%E5%AD%98%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">9.2.</span> <span class="nav-text">加入缓存的问题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/434a04de.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Celery分布式的异步任务框架
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 11:18:08" itemprop="dateCreated datePublished" datetime="2022-02-08T11:18:08+08:00">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Celery介绍"><a href="#Celery介绍" class="headerlink" title="Celery介绍"></a><code>Celery</code>介绍</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Celery: 分布式的异步任务框架</span></span><br><span class="line">Celery是一个简单、灵活且可靠的，处理大量消息的分布式系统</span><br><span class="line">Celery <span class="keyword">is</span> a project <span class="keyword">with</span> minimal funding, so we don’t support Microsoft Windows. Please don’t <span class="built_in">open</span> <span class="built_in">any</span> issues related to that platform.</span><br><span class="line"></span><br><span class="line"><span class="comment"># celery: 能做什么事，解决什么问题？</span></span><br><span class="line">  异步任务: 项目中同步的操作，可以通过celery把它做成异步</span><br><span class="line">  延迟任务: 隔一会再执行任务</span><br><span class="line">  定时任务: 每隔多长时间干什么事</span><br><span class="line">    如果你的项目仅仅想做定时任务，没有必要使用celery，使用apscheduler</span><br><span class="line">    https://www.cnblogs.com/xiao-xue-di/p/<span class="number">14081790.</span>html</span><br><span class="line">      </span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">可以不依赖任何服务器，通过自身命令，启动服务</span></span><br><span class="line"><span class="string">celery服务为为其他项目服务提供异步解决任务需求的</span></span><br><span class="line"><span class="string">注：会有两个服务同时运行，一个是项目服务(django)，一个是celery服务，项目服务将需要异步处理的任务交给celery服务，celery就会在需要时异步完成项目的需求</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<h3 id="Celery架构"><a href="#Celery架构" class="headerlink" title="Celery架构"></a><code>Celery</code>架构</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">broker: 任务中间件，消息队列中间件，存储任务，celery本身不提供，需要借助第三方：redis，rabbitmq..</span><br><span class="line">worker: 任务执行单元，真正指向任务的进程，celery提供的</span><br><span class="line">backend:结果存储，任务执行结果存在某个地方，借助于第三方：redis</span><br></pre></td></tr></table></figure>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220427161427983.png" alt="image-20220427161427983"></p>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/celery.png" alt="img"></p>
+<h3 id="Celery快速使用"><a href="#Celery快速使用" class="headerlink" title="Celery快速使用"></a><code>Celery</code>快速使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">pip install celery</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 t_celery/celery_task.py 写任务</span></span><br><span class="line">    <span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line">    <span class="keyword">import</span> time</span><br><span class="line">    <span class="comment"># 消息中间件</span></span><br><span class="line">    broker = <span class="string">&#x27;redis://127.0.0.1:6379/1&#x27;</span></span><br><span class="line">    <span class="comment"># 结果存储</span></span><br><span class="line">    <span class="comment"># backend = &#x27;redis://:123456@127.0.0.1:6379/1&#x27;</span></span><br><span class="line">    backend = <span class="string">&#x27;redis://127.0.0.1:6379/2&#x27;</span></span><br><span class="line">    app = Celery(<span class="string">&#x27;test&#x27;</span>, broker=broker, backend=backend)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 写任务</span></span><br><span class="line"><span class="meta">    @app.task</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">a, b</span>):</span></span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> a + b</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交任务 t_celery/add_task.py</span></span><br><span class="line">    <span class="keyword">from</span> celery_task <span class="keyword">import</span> add</span><br><span class="line">    <span class="comment"># res = add(1, 2)  # 同步调用</span></span><br><span class="line">    <span class="comment"># print(res)</span></span><br><span class="line">    res = add.apply_async(args=[<span class="number">7</span>, <span class="number">8</span>])  <span class="comment"># 将任务提交到任务中间件中</span></span><br><span class="line">    <span class="built_in">print</span>(res)  <span class="comment"># 得到任务ID: 090eb8b8-6a64-40f4-9177-c67e753cd447</span></span><br><span class="line">    <span class="comment"># 该任务ID可以在redis中查到</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 任务就被提交到redis中了，等待worker执行该任务，启动worker</span></span><br><span class="line">    <span class="comment"># 启动worker执行任务 ---&gt; 使用命令启动 如果有虚拟环境需要进入到虚拟环境内</span></span><br><span class="line">    <span class="comment"># cd t_celery 目录下执行</span></span><br><span class="line">    <span class="comment"># 非windows </span></span><br><span class="line">    celery -A celery_task worker -l info</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># windows</span></span><br><span class="line">    pip3 install eventlet</span><br><span class="line">    celery -A celery_task worker -l info -P eventlet</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行完成结果在redis中，可以直接查到</span></span><br><span class="line">    <span class="comment"># 通过代码取出 t_celery/get_result.py</span></span><br><span class="line">    <span class="keyword">from</span> celery_task <span class="keyword">import</span> app  <span class="comment"># 借助于app</span></span><br><span class="line">    <span class="keyword">from</span> celery.result <span class="keyword">import</span> AsyncResult  <span class="comment"># 导入一个类，来查询结果</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">id</span> = <span class="string">&#x27;090eb8b8-6a64-40f4-9177-c67e753cd447&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">        res = AsyncResult(<span class="built_in">id</span>=<span class="built_in">id</span>, app=app)  <span class="comment"># 根据id，去哪个app中找哪个任务，</span></span><br><span class="line">        <span class="keyword">if</span> res.successful():  <span class="comment"># 执行成功</span></span><br><span class="line">            result = res.get()</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;任务执行成功&#x27;</span>)</span><br><span class="line">            <span class="built_in">print</span>(result)  <span class="comment"># 15</span></span><br><span class="line">        <span class="keyword">elif</span> res.failed():</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;任务失败&#x27;</span>)</span><br><span class="line">        <span class="keyword">elif</span> res.status == <span class="string">&#x27;PENDING&#x27;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;任务等待中被执行&#x27;</span>)</span><br><span class="line">        <span class="keyword">elif</span> res.status == <span class="string">&#x27;RETRY&#x27;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;任务异常后正在重试&#x27;</span>)</span><br><span class="line">        <span class="keyword">elif</span> res.status == <span class="string">&#x27;STARTED&#x27;</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;任务已经开始被执行&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 借助于celery的异步秒杀场景分析</span></span><br><span class="line"><span class="comment"># 原始同步场景</span></span><br><span class="line"><span class="number">100</span>个人，秒杀<span class="number">3</span>个商品 ---&gt; <span class="number">100</span>个人在浏览器等着开始 ---&gt; 一旦开始 ---&gt; 瞬间<span class="number">100</span>个人同时发送秒杀请求到后端 ----&gt; 假设秒杀函数执行2s钟 ---&gt; <span class="number">100</span>个请求在2s内，一直跟后端连着，假设我的并发量是<span class="number">100</span>，这两秒钟，其他任何人都访问不了了</span><br><span class="line">假设 <span class="number">150</span>人来秒杀 ---&gt; 最多能承受<span class="number">100</span>个人，<span class="number">50</span>个人就请求不了 ---&gt; 不友好</span><br><span class="line"></span><br><span class="line"><span class="comment"># 异步场景</span></span><br><span class="line"><span class="number">100</span>个人，秒杀<span class="number">3</span>个商品 ---&gt; <span class="number">100</span>个人在浏览器等着开始 ---&gt; 一旦开始---&gt; 瞬间<span class="number">100</span>个人同时发送秒杀请求到后端 ---&gt; 假设秒杀函数执行2s钟 ---&gt; 当前<span class="number">100</span>个请求，过来，使用celery提交<span class="number">100</span>个任务，请求立马返回 ---&gt; 这样的话，2s内能提交特别多的任务，可以接收特别多人发的请求 ---&gt; 后台使用worker慢慢的执行秒杀任务 ---&gt; 多起几个worker ---&gt; 过了一会，所有提交的任务都执行完了</span><br><span class="line"></span><br><span class="line">提交完任务，返回前端 ---&gt; 前端使用个动态图片盖住页面，显示您正在排队，每个2s钟，向后端发送一次ajax请求，带着<span class="built_in">id</span>号，查询结果是否完成，如果没完成 ---&gt; 再等2s钟 ---&gt; 如果秒杀成功了，显示恭喜您，成了 ---&gt; 如果没有成功，显示很遗憾，没有秒到</span><br></pre></td></tr></table></figure>
+
+<h3 id="Celery封装包使用"><a href="#Celery封装包使用" class="headerlink" title="Celery封装包使用"></a><code>Celery</code>封装包使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── celery_task        <span class="comment"># 包</span></span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── celery.py      <span class="comment"># 写app的py文件</span></span><br><span class="line">│   ├── home_task.py   <span class="comment"># 任务一</span></span><br><span class="line">│   ├── order_task.py  <span class="comment"># 任务一</span></span><br><span class="line">│   └── user_task.py   <span class="comment"># 任务一</span></span><br><span class="line">├── add_task.py        <span class="comment"># 提交任务</span></span><br><span class="line">└── get_result.py      <span class="comment"># 查询结果</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">提交任务和查询结果可以在不同的项目中</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h4 id="celery-py"><a href="#celery-py" class="headerlink" title="celery.py"></a><code>celery.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line"><span class="comment"># 消息中间件</span></span><br><span class="line"><span class="comment"># backend = &#x27;redis://:123456@127.0.0.1:6379/1&#x27;</span></span><br><span class="line">backend = <span class="string">&#x27;redis://127.0.0.1:6379/2&#x27;</span></span><br><span class="line"><span class="comment"># 结果存储</span></span><br><span class="line">broker = <span class="string">&#x27;redis://127.0.0.1:6379/1&#x27;</span></span><br><span class="line">app = Celery(<span class="string">&#x27;test&#x27;</span>, broker=broker, backend=backend, include=[</span><br><span class="line">    <span class="string">&#x27;celery_task.home_task&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;celery_task.user_task&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;celery_task.order_task&#x27;</span>,</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 celery_task 包同级下执行下面命令</span></span><br><span class="line"><span class="comment"># celery -A celery_task worker -l info </span></span><br></pre></td></tr></table></figure>
+
+<h4 id="user-task-py"><a href="#user-task-py" class="headerlink" title="user_task.py"></a><code>user_task.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> .celery <span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.task</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_sms</span>(<span class="params">phone</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;%s 短信发送成功&#x27;</span> % phone)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;sms send ok&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="add-task-py"><a href="#add-task-py" class="headerlink" title="add_task.py"></a><code>add_task.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> celery_task.user_task <span class="keyword">import</span> send_sms</span><br><span class="line"></span><br><span class="line">res = send_sms.apply_async(args=[<span class="string">&#x27;13088888888&#x27;</span>, ])</span><br><span class="line"><span class="built_in">print</span>(res)</span><br></pre></td></tr></table></figure>
+
+<h4 id="get-result-py"><a href="#get-result-py" class="headerlink" title="get_result.py"></a><code>get_result.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> celery_task.celery <span class="keyword">import</span> app</span><br><span class="line"><span class="keyword">from</span> celery.result <span class="keyword">import</span> AsyncResult</span><br><span class="line"></span><br><span class="line"><span class="built_in">id</span> = <span class="string">&#x27;88f9b8cd-a09a-4aae-9f4a-023790dd5637&#x27;</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    res = AsyncResult(<span class="built_in">id</span>=<span class="built_in">id</span>, app=app)  <span class="comment"># 根据id，去哪个app中找哪个任务，</span></span><br><span class="line">    <span class="keyword">if</span> res.successful():  <span class="comment"># 执行成功</span></span><br><span class="line">        result = res.get()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;任务执行成功&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(result)  <span class="comment"># 15</span></span><br><span class="line">    <span class="keyword">elif</span> res.failed():</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;任务失败&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> res.status == <span class="string">&#x27;PENDING&#x27;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;任务等待中被执行&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> res.status == <span class="string">&#x27;RETRY&#x27;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;任务异常后正在重试&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> res.status == <span class="string">&#x27;STARTED&#x27;</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;任务已经开始被执行&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Celery执行异步任务"><a href="#Celery执行异步任务" class="headerlink" title="Celery执行异步任务"></a><code>Celery</code>执行异步任务</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用上述封装的包 add_task.py 中使用</span></span><br><span class="line"><span class="keyword">from</span> celery_task.user_task <span class="keyword">import</span> send_sms</span><br><span class="line"></span><br><span class="line">res = send_sms.delay(<span class="string">&#x27;13088888888&#x27;</span>)  <span class="comment"># 直接执行异步任务</span></span><br><span class="line"><span class="built_in">print</span>(res)</span><br></pre></td></tr></table></figure>
+<h3 id="Celery执行延迟任务"><a href="#Celery执行延迟任务" class="headerlink" title="Celery执行延迟任务"></a><code>Celery</code>执行延迟任务</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建时间对象</span></span><br><span class="line">eta = datetime.utcnow() + timedelta(seconds=<span class="number">10</span>)  <span class="comment"># 10s后</span></span><br><span class="line"><span class="comment"># eta = datetime.utcnow() + timedelta(days=3)  # 3天后后时间</span></span><br><span class="line">res = send_sms.apply_async(args=[<span class="string">&#x27;13088888888&#x27;</span>, ], eta=eta)  <span class="comment"># 10s后执行</span></span><br><span class="line"><span class="built_in">print</span>(res)</span><br></pre></td></tr></table></figure>
+<h3 id="Celery执行定时任务"><a href="#Celery执行定时任务" class="headerlink" title="Celery执行定时任务"></a><code>Celery</code>执行定时任务</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置定时任务 在 celery_task/celery.py 中配置</span></span><br><span class="line">    <span class="comment"># celery的配置信息</span></span><br><span class="line">    <span class="comment"># 时区</span></span><br><span class="line">    app.conf.timezone = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line">    <span class="comment"># 是否使用UTC</span></span><br><span class="line">    app.conf.enable_utc = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 配置定时任务</span></span><br><span class="line">    <span class="keyword">from</span> datetime <span class="keyword">import</span> timedelta</span><br><span class="line">    <span class="keyword">from</span> celery.schedules <span class="keyword">import</span> crontab</span><br><span class="line"></span><br><span class="line">    app.conf.beat_schedule = &#123;</span><br><span class="line">        <span class="string">&#x27;send_sms_5&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;task&#x27;</span>: <span class="string">&#x27;celery_task.user_task.send_sms&#x27;</span>,  <span class="comment"># 指定哪个任务</span></span><br><span class="line">            <span class="string">&#x27;schedule&#x27;</span>: timedelta(seconds=<span class="number">5</span>),  <span class="comment"># 每5s执行一次</span></span><br><span class="line">            <span class="comment"># &#x27;schedule&#x27;: crontab(hour=8, day_of_week=1),  # 每周一早八点</span></span><br><span class="line">            <span class="string">&#x27;args&#x27;</span>: (<span class="string">&#x27;18988377473&#x27;</span>,),</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 在 celery_task 同级下启动 worker</span></span><br><span class="line">celery -A celery_task worker -l info</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 celery_task 同级下启动 beat </span></span><br><span class="line">celery -A celery_task beat -l info</span><br><span class="line"></span><br><span class="line"><span class="comment"># 本质是 beat 5s 提交一次任务，worker 执行</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Django中Celery的使用"><a href="#Django中Celery的使用" class="headerlink" title="Django中Celery的使用"></a><code>Django</code>中<code>Celery</code>的使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将 celery_task 包放在项目目录下 celery.py 添加下面配置  </span></span><br><span class="line"><span class="comment"># celery_task 的包也可以放在 apps 内 使用时注意 include 路径即可</span></span><br><span class="line">  <span class="comment"># 加载 django 配置环境</span></span><br><span class="line">  <span class="keyword">import</span> os</span><br><span class="line">  os.environ.setdefault(<span class="string">&quot;DJANGO_SETTINGS_MODULE&quot;</span>, <span class="string">&quot;luffy_api.setting.dev&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># celery_task/user_task.py</span></span><br><span class="line">  <span class="keyword">from</span> .celery <span class="keyword">import</span> app</span><br><span class="line"></span><br><span class="line"><span class="meta">  @app.task</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">create_user</span>(<span class="params">mobile, username, password</span>):</span></span><br><span class="line">      <span class="comment"># 一旦使用了djang内的 就要加载配置</span></span><br><span class="line">      <span class="keyword">from</span> user.models <span class="keyword">import</span> User</span><br><span class="line">      User.objects.create_user(mobile=mobile, username=username, password=password)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 apps/user/views.py</span></span><br><span class="line"><span class="keyword">from</span> celery_task.user_task <span class="keyword">import</span> create_user</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestView</span>(<span class="params">APIView</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span>(<span class="params">self, requeste</span>):</span></span><br><span class="line">        create_user.delay(<span class="string">&#x27;18066666666&#x27;</span>, <span class="string">&#x27;lzjuser&#x27;</span>, <span class="string">&#x27;asd123...&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> Response(<span class="string">&#x27;用户创建任务提交&#x27;</span>)</span><br><span class="line">      </span><br><span class="line"><span class="comment"># 配置路由</span></span><br><span class="line">  path(<span class="string">&#x27;test/&#x27;</span>, TestView.as_view()),</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 此时就要在项目第一层下启动 worker</span></span><br><span class="line">  celery -A celery_task worker -l info</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 访问就会创建 user</span></span><br><span class="line">  http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span>/api/v1/user/test/</span><br></pre></td></tr></table></figure>
+<h3 id="定时更新轮播图接口"><a href="#定时更新轮播图接口" class="headerlink" title="定时更新轮播图接口"></a>定时更新轮播图接口</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">首页轮播图现在是去mysql中查的，假设瞬间10w访问首页，数据库会查询10w次返回数据，但是实际上轮播图基本不变</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">优化思路：对轮播图接口做个缓存，第一次访问查询mysql，放到reids中，以后都从redis中取，如果redis中没有，再去数据库中查，好处在于，对mysql压力小，redis性能高</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">以后如果接口响应慢，第一想法先加缓存：把查出来的数据缓存到redis中，再来请求，先从redis中查，如果没有，再去mysql查，然后在redis缓存一份</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="视图中加入缓存"><a href="#视图中加入缓存" class="headerlink" title="视图中加入缓存"></a>视图中加入缓存</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BannerView</span>(<span class="params">GenericViewSet, ListModelMixin, UpdateModelMixin</span>):</span></span><br><span class="line">    queryset = Banner.objects.<span class="built_in">filter</span>(is_delete=<span class="literal">False</span>, is_show=<span class="literal">True</span>).order_by(<span class="string">&#x27;orders&#x27;</span>)[</span><br><span class="line">               :settings.BANNER_COUNT]  <span class="comment"># 自定义轮播图片数量</span></span><br><span class="line">    serializer_class = BannerSerializer</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">list</span>(<span class="params">self, request, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="comment"># 先去 redis 中查询 如果有就返回，如果没有就执行 super() 去数据库中查询</span></span><br><span class="line">        banner_list = cache.get(<span class="string">&#x27;banner_list&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> banner_list:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;走了缓存&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> APIResponse(data=banner_list)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;没走缓存&#x27;</span>)</span><br><span class="line">            res = <span class="built_in">super</span>().<span class="built_in">list</span>(request, *args, **kwargs)</span><br><span class="line">            cache.<span class="built_in">set</span>(<span class="string">&#x27;banner_list&#x27;</span>, res.data)  <span class="comment"># 可以设置键的超时时间 timeout=300</span></span><br><span class="line">            <span class="keyword">return</span> APIResponse(data=res.data)</span><br></pre></td></tr></table></figure>
+
+<h4 id="加入缓存的问题"><a href="#加入缓存的问题" class="headerlink" title="加入缓存的问题"></a>加入缓存的问题</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">redis中有一份数据，mysql中有一份数据</span></span><br><span class="line"><span class="string">存在问题:mysql更新了，reids更新了么？</span></span><br><span class="line"><span class="string">双写一致性问题  写入mysql，redis是否同步</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决方案 根据业务场景选择</span></span><br><span class="line">	<span class="number">1.</span>定时更新: 例如<span class="number">10</span>分钟更新一次缓存   </span><br><span class="line">  <span class="number">2.</span>写入mysql时删除缓存</span><br><span class="line">  <span class="number">3.</span>写入mysql时更新缓存</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 轮播图通过celery定时更新，解决双写一致性问题</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># celery_task/home_task.py</span></span><br><span class="line"><span class="keyword">from</span> .celery <span class="keyword">import</span> app</span><br><span class="line"><span class="keyword">from</span> home <span class="keyword">import</span> models, serializer</span><br><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> django.core.cache <span class="keyword">import</span> cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.task</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_banner_list</span>():</span></span><br><span class="line">    queryset = models.Banner.objects.<span class="built_in">filter</span>(is_delete=<span class="literal">False</span>, is_show=<span class="literal">True</span>).order_by(<span class="string">&#x27;-orders&#x27;</span>)[:settings.BANNER_COUNT]</span><br><span class="line">    banner_list = serializer.BannerSerializer(queryset, many=<span class="literal">True</span>).data</span><br><span class="line">    <span class="comment"># 拿不到request对象，所以头像的连接base_url要自己组装</span></span><br><span class="line">    <span class="keyword">for</span> banner <span class="keyword">in</span> banner_list:</span><br><span class="line">        banner[<span class="string">&#x27;image&#x27;</span>] = <span class="string">&#x27;http://127.0.0.1:8000%s&#x27;</span> % banner[<span class="string">&#x27;image&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    cache.<span class="built_in">set</span>(<span class="string">&#x27;banner_list&#x27;</span>, banner_list, <span class="number">86400</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># celery_task/celery.py</span></span><br><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.environ.setdefault(<span class="string">&quot;DJANGO_SETTINGS_MODULE&quot;</span>, <span class="string">&quot;luffy_api.setting.dev&quot;</span>)</span><br><span class="line"></span><br><span class="line">backend = <span class="string">&#x27;redis://127.0.0.1:6379/2&#x27;</span></span><br><span class="line">broker = <span class="string">&#x27;redis://127.0.0.1:6379/1&#x27;</span></span><br><span class="line"></span><br><span class="line">app = Celery(<span class="string">&#x27;test&#x27;</span>, broker=broker, backend=backend, include=[</span><br><span class="line">    <span class="string">&#x27;celery_task.home_task&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;celery_task.user_task&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;celery_task.order_task&#x27;</span>,</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">app.conf.timezone = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line">app.conf.enable_utc = <span class="literal">False</span></span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> timedelta</span><br><span class="line"><span class="keyword">from</span> celery.schedules <span class="keyword">import</span> crontab</span><br><span class="line"></span><br><span class="line">app.conf.beat_schedule = &#123;</span><br><span class="line">    <span class="string">&#x27;update_banner_5&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;task&#x27;</span>: <span class="string">&#x27;celery_task.home_task.update_banner_list&#x27;</span>,  </span><br><span class="line">        <span class="string">&#x27;schedule&#x27;</span>: timedelta(seconds=<span class="number">5</span>), </span><br><span class="line">        <span class="string">&#x27;args&#x27;</span>: (),</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 celery_task 同级下启动 worker</span></span><br><span class="line">celery -A celery_task worker -l info</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 celery_task 同级下启动 beat </span></span><br><span class="line">celery -A celery_task beat -l info</span><br><span class="line"></span><br><span class="line"><span class="comment"># 此时在数据库中将 banner 表的数据 改为 is_delete 观察前后端的情况</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/e173abca.html" rel="prev" title="HTML基础">
+                  <i class="fa fa-chevron-left"></i> HTML基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/26caf8d5.html" rel="next" title="Python中Redis的使用">
+                  Python中Redis的使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:55</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
