@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220420213100218.png">
 <meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220420213028715.png">
 <meta property="article:published_time" content="2022-02-08T03:18:08.406Z">
-<meta property="article:modified_time" content="2022-04-20T14:15:34.289Z">
+<meta property="article:modified_time" content="2022-05-03T13:27:49.250Z">
 <meta property="article:author" content="klcc">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -98,7 +98,7 @@
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
         <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">22</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">141</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">144</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -325,7 +325,7 @@
 
 <h5 id="序列化类"><a href="#序列化类" class="headerlink" title="序列化类"></a>序列化类</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># luffy_api/apps/home/serializer.py</span></span><br><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Banner</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BannerSerializer</span>(<span class="params">serializers.ModelSerializer</span>):</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = Banner</span><br><span class="line">        fields = [<span class="string">&#x27;title&#x27;</span>, <span class="string">&#x27;image&#x27;</span>, <span class="string">&#x27;link&#x27;</span>, <span class="string">&#x27;orders&#x27;</span>]</span><br></pre></td></tr></table></figure>
 
-<h3 id="跨域问题"><a href="#跨域问题" class="headerlink" title="跨域问题"></a>跨域问题</h3><h4 id="跨域错误和同源策略"><a href="#跨域错误和同源策略" class="headerlink" title="跨域错误和同源策略"></a>跨域错误和同源策略</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 现在写好了后端接口，前端加载数据时会报如下错误</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">localhost/:1 Access to XMLHttpRequest at </span></span><br><span class="line"><span class="string">&#x27;http://127.0.0.1:8000/api/v1/home/banner/&#x27; </span></span><br><span class="line"><span class="string">from origin &#x27;http://localhost:8080&#x27; </span></span><br><span class="line"><span class="string">has been blocked by CORS policy: </span></span><br><span class="line"><span class="string">No &#x27;Access-Control-Allow-Origin&#x27; header </span></span><br><span class="line"><span class="string">is present on the requested resource.</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">该错误是跨域的错误</span><br><span class="line"></span><br><span class="line"><span class="comment"># 浏览器的同源策略</span></span><br><span class="line">	请求的url地址,必须与浏览器上的url地址处于同域上,也就是域名,端口,协议相同，否则，加载回来的数据就会禁止</span><br><span class="line">  前端：http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span></span><br><span class="line">  后端：http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span></span><br><span class="line">  这俩属于不同源，协议，地址一样，但是端口不一样，所以请求成功，但是到了浏览器被禁止掉了，因为浏览器的同源策略</span><br><span class="line">  前后端分离，就会遇到这个问题，解决这个问题</span><br></pre></td></tr></table></figure>
+<h3 id="跨域问题"><a href="#跨域问题" class="headerlink" title="跨域问题"></a>跨域问题</h3><h4 id="跨域错误和同源策略"><a href="#跨域错误和同源策略" class="headerlink" title="跨域错误和同源策略"></a>跨域错误和同源策略</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 现在写好了后端接口，前端加载数据时会报如下错误</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">localhost/:1 Access to XMLHttpRequest at </span></span><br><span class="line"><span class="string">&#x27;http://127.0.0.1:8000/api/v1/home/banner/&#x27; </span></span><br><span class="line"><span class="string">from origin &#x27;http://localhost:8080&#x27; </span></span><br><span class="line"><span class="string">has been blocked by CORS policy: </span></span><br><span class="line"><span class="string">No &#x27;Access-Control-Allow-Origin&#x27; header </span></span><br><span class="line"><span class="string">is present on the requested resource.</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">该错误是跨域的错误</span><br><span class="line"></span><br><span class="line"><span class="comment"># 浏览器的同源策略</span></span><br><span class="line">  请求的url地址,必须与浏览器上的url地址处于同域上,也就是域名,端口,协议相同，否则，加载回来的数据就会禁止</span><br><span class="line">  前端：http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8080</span></span><br><span class="line">  后端：http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span></span><br><span class="line">  这俩属于不同源，协议，地址一样，但是端口不一样，所以请求成功，但是到了浏览器被禁止掉了，因为浏览器的同源策略</span><br><span class="line">  前后端分离，就会遇到这个问题，解决这个问题</span><br></pre></td></tr></table></figure>
 
 <h4 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> jsonp 通过 img，script，link 这些标签回调(已经不常用了)</span><br><span class="line">   https://www.zhihu.com/question/<span class="number">19966531</span></span><br><span class="line">    </span><br><span class="line"><span class="number">2.</span> 通过CORS(跨域资源共享)</span><br><span class="line">   CORS需要浏览器和服务器同时支持。目前，所有浏览器都支持该功能</span><br><span class="line">   实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信</span><br><span class="line">   只需要在响应头中指定，允许跨域即可</span><br></pre></td></tr></table></figure>
 
@@ -399,14 +399,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.2m</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:56</span>
+    <span title="站点阅读时长">17:33</span>
   </span>
 </div>
 <div class="busuanzi-count">

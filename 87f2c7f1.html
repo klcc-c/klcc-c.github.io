@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="支付宝支付介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="支付功能">
+<meta property="og:url" content="https://klcc.cc/87f2c7f1.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="支付宝支付介绍">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220504154604470.png">
+<meta property="article:published_time" content="2022-02-08T03:18:08.406Z">
+<meta property="article:modified_time" content="2022-05-04T15:28:52.795Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220504154604470.png">
+
+
+<link rel="canonical" href="https://klcc.cc/87f2c7f1.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/87f2c7f1.html","path":"87f2c7f1.html","title":"支付功能"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>支付功能 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">22</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">144</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">支付宝支付介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%AF%E4%BB%98SDK"><span class="nav-number">2.</span> <span class="nav-text">支付宝支付SDK</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">测试使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%B0%81%E8%A3%85"><span class="nav-number">2.2.</span> <span class="nav-text">二次封装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">支付接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.1.</span> <span class="nav-text">表设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apps-order-models-py"><span class="nav-number">3.2.</span> <span class="nav-text">apps&#x2F;order&#x2F;models.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apps-order-admin-py"><span class="nav-number">3.3.</span> <span class="nav-text">apps&#x2F;order&#x2F;admin.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.4.</span> <span class="nav-text">实现接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apps-order-views-py"><span class="nav-number">3.5.</span> <span class="nav-text">apps&#x2F;order&#x2F;views.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apps-order-serializer-py"><span class="nav-number">3.6.</span> <span class="nav-text">apps&#x2F;order&#x2F;serializer.py</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apps-order-urls-py"><span class="nav-number">3.7.</span> <span class="nav-text">apps&#x2F;order&#x2F;urls.py</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E4%BB%98%E5%89%8D%E7%AB%AF"><span class="nav-number">4.</span> <span class="nav-text">支付前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%89%98%E7%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">文件托管</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/87f2c7f1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          支付功能
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 11:18:08" itemprop="dateCreated datePublished" datetime="2022-02-08T11:18:08+08:00">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>12k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="支付宝支付介绍"><a href="#支付宝支付介绍" class="headerlink" title="支付宝支付介绍"></a>支付宝支付介绍</h3><span id="more"></span>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 目前线上付款方式有多种：支付宝，微信，银联</span></span><br><span class="line"><span class="comment"># 以支付宝为例</span></span><br><span class="line"><span class="comment"># 官方提供了API接口，原来没有提供python的sdk，使用第三方</span></span><br><span class="line"><span class="comment"># 现在官方提供了python的sdk可以尝试使用官方sdk</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用支付宝支付，需要是企业，要有营业执照才能申请，支付宝商家</span></span><br><span class="line"><span class="comment"># 测试环境，沙箱环境，即便咱们不是商家，也可以测试，以后换成真正的appid，公钥私钥--》付款就到真正的地址</span></span><br><span class="line"><span class="comment"># 沙箱环境：https://openhome.alipay.com/platform/appDaily.htm?tab=info</span></span><br><span class="line"><span class="comment"># 沙箱版支付宝客户端：一个app，连得环境是测试环境，里面的钱可以一直冲，支付付到测试环境里</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 支付宝支付的场景</span></span><br><span class="line">	https://opendocs.alipay.com/<span class="built_in">open</span>/<span class="number">270</span>/<span class="number">105898</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 流程</span></span><br><span class="line">	网站有个立即购买按钮 </span><br><span class="line">  用户点击 </span><br><span class="line">  向后端发送一个请求 </span><br><span class="line">  后端生成一个没有支付的订单和支付连接(支付宝的)</span><br><span class="line">  返回给前端 </span><br><span class="line">  前端放在支付连接的地址 </span><br><span class="line">  显示出支付宝支付页面</span><br><span class="line">  app扫码支付，账号密码支付 </span><br><span class="line">  支付成功 </span><br><span class="line">  支付宝收到了支付</span><br><span class="line">  支付宝会回调回咱们项目支付成功的页面</span><br><span class="line">  页面展示用户购买成功</span><br><span class="line">  支付宝还有一个post回调</span><br><span class="line">  咱们项目利用post回调，修改订单状态</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220504154604470.png" alt="image-20220504154604470"></p>
+<h3 id="支付宝支付SDK"><a href="#支付宝支付SDK" class="headerlink" title="支付宝支付SDK"></a>支付宝支付SDK</h3><h4 id="测试使用"><a href="#测试使用" class="headerlink" title="测试使用"></a>测试使用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 非官方的</span></span><br><span class="line">https://github.com/fzlee/alipay </span><br><span class="line">  </span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">pip install python-alipay-sdk --upgrade</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成公钥私钥</span></span><br><span class="line">	对称加密 ：加密和解密使用同一个秘钥</span><br><span class="line">  非对称加密：加密用公钥，解密用私钥 </span><br><span class="line">  补充：支付宝为了更安全，需要使用自己的公钥配置在网站上，再生成一个支付宝公钥</span><br><span class="line">  https://opendocs.alipay.com/common/02kipl</span><br><span class="line">  下载软件，在软件中生成</span><br><span class="line">  </span><br><span class="line">  创建文件夹 scripts/t_alipay 存放</span><br><span class="line">  软件生成的秘钥</span><br><span class="line">  软件生成的公钥</span><br><span class="line">  支付宝公钥</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试脚本 scripts/t_alipay/pay_test.py </span></span><br><span class="line">  <span class="keyword">from</span> alipay <span class="keyword">import</span> AliPay</span><br><span class="line"></span><br><span class="line">  app_private_key_string = <span class="built_in">open</span>(<span class="string">&quot;./key.txt&quot;</span>).read()</span><br><span class="line">  app_public_key_string = <span class="built_in">open</span>(<span class="string">&quot;./pub_alipay.txt&quot;</span>).read()</span><br><span class="line">  a = AliPay(</span><br><span class="line">      appid=<span class="string">&#x27;2021000119681771&#x27;</span>,</span><br><span class="line">      app_notify_url=<span class="literal">None</span>,</span><br><span class="line">      app_private_key_string=app_private_key_string,</span><br><span class="line">      alipay_public_key_string=app_public_key_string,</span><br><span class="line">      sign_type=<span class="string">&#x27;RSA2&#x27;</span>,</span><br><span class="line">      debug=<span class="literal">True</span></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  res = a.api_alipay_trade_page_pay(</span><br><span class="line">      subject=<span class="string">&quot;测试支付&quot;</span>,</span><br><span class="line">      out_trade_no=<span class="string">&quot;2112233&quot;</span>,</span><br><span class="line">      total_amount=<span class="built_in">float</span>(<span class="number">999</span>),  <span class="comment"># 只有生成支付宝链接时，不能用Decimal</span></span><br><span class="line">      return_url=<span class="string">&#x27;http://192.168.0.198:8080/actual/detail/1&#x27;</span>,</span><br><span class="line">      notify_url=<span class="string">&#x27;http://192.168.0.198:8080/actual/detail/1&#x27;</span>,</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&quot;https://openapi.alipaydev.com/gateway.do?&quot;</span> + res)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">  公钥和私钥首尾格式</span></span><br><span class="line"><span class="string">  -----BEGIN RSA PRIVATE KEY-----</span></span><br><span class="line"><span class="string">  base64 encoded content</span></span><br><span class="line"><span class="string">  -----END RSA PRIVATE KEY-----</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  -----BEGIN PUBLIC KEY-----</span></span><br><span class="line"><span class="string">  base64 encoded content</span></span><br><span class="line"><span class="string">  -----END PUBLIC KEY-----</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">  会生成支付链接</span></span><br><span class="line"><span class="string">  &#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>![image-20220504160731166](/Users/zhijinliu/Library/Application Support/typora-user-images/image-20220504160731166.png)</p>
+<h4 id="二次封装"><a href="#二次封装" class="headerlink" title="二次封装"></a>二次封装</h4><p>目录结构</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">luffy_api/libs/iPay            <span class="comment"># aliapy二次封装包</span></span><br><span class="line">├── __init__.py				         <span class="comment"># 包文件</span></span><br><span class="line">├── pay.py                     <span class="comment"># 支付文件</span></span><br><span class="line">├── pem                        <span class="comment"># 公钥私钥文件夹</span></span><br><span class="line">│   ├── alipay_public_key.pem  <span class="comment"># 支付宝公钥文件</span></span><br><span class="line">│   └── app_private_key.pem    <span class="comment"># 应用私钥文件</span></span><br><span class="line">└── settings.py                <span class="comment"># 应用配置</span></span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">注意公钥私钥首尾格式</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>libs/iPay/settings.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用私钥</span></span><br><span class="line">APP_PRIVATE_KEY_STRING = <span class="built_in">open</span>(</span><br><span class="line">    os.path.join(os.path.dirname(os.path.abspath(__file__)), <span class="string">&#x27;pem&#x27;</span>, <span class="string">&#x27;app_private_key.pem&#x27;</span>)).read()</span><br><span class="line"><span class="comment"># 支付宝公钥</span></span><br><span class="line">ALIPAY_PUBLIC_KEY_STRING = <span class="built_in">open</span>(</span><br><span class="line">    os.path.join(os.path.dirname(os.path.abspath(__file__)), <span class="string">&#x27;pem&#x27;</span>, <span class="string">&#x27;alipay_public_key.pem&#x27;</span>)).read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用ID</span></span><br><span class="line">APP_ID = <span class="string">&#x27;2021000119681771&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加密方式</span></span><br><span class="line">SIGN = <span class="string">&#x27;RSA2&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否是支付宝测试环境(沙箱环境)，如果采用真是支付宝环境，配置False</span></span><br><span class="line">DEBUG = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 支付网关</span></span><br><span class="line">GATEWAY = <span class="string">&#x27;https://openapi.alipaydev.com/gateway.do&#x27;</span> <span class="keyword">if</span> DEBUG <span class="keyword">else</span> <span class="string">&#x27;https://openapi.alipay.com/gateway.do&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>libs/iPay/pay.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> alipay <span class="keyword">import</span> AliPay</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> settings</span><br><span class="line"></span><br><span class="line"><span class="comment"># 支付对象</span></span><br><span class="line">alipay = AliPay(</span><br><span class="line">    appid=settings.APP_ID,</span><br><span class="line">    app_notify_url=<span class="literal">None</span>,</span><br><span class="line">    app_private_key_string=settings.APP_PRIVATE_KEY_STRING,</span><br><span class="line">    alipay_public_key_string=settings.ALIPAY_PUBLIC_KEY_STRING,</span><br><span class="line">    sign_type=settings.SIGN,</span><br><span class="line">    debug=settings.DEBUG</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 支付网关</span></span><br><span class="line">gateway = settings.GATEWAY</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># __init__.py</span></span><br><span class="line"><span class="keyword">from</span> .pay <span class="keyword">import</span> gateway, alipay</span><br></pre></td></tr></table></figure>
+
+<h3 id="支付接口"><a href="#支付接口" class="headerlink" title="支付接口"></a>支付接口</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">登录之后才可以访问前端的支付按钮</span><br><span class="line">点击支付按钮，向后端发送 post 请求 &#123;courses:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],total_amount:<span class="number">99</span>&#125;</span><br><span class="line">生成订单(订单表)</span><br><span class="line">生成支付链接</span><br><span class="line">返回给前端</span><br><span class="line"></span><br><span class="line">扩写 auth 的 user表 可以使用drf-jwt 提供的认证类、权限类、</span><br></pre></td></tr></table></figure>
+
+<h4 id="表设计"><a href="#表设计" class="headerlink" title="表设计"></a>表设计</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 订单表  </span></span><br><span class="line"><span class="comment"># 订单详情表</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">class Order(models.Model):</span></span><br><span class="line"><span class="string">    # 主键、总金额、订单名、订单号、订单状态、创建时间、支付时间、流水号、支付方式、支付人(外键) - 优惠劵(外键，可为空)</span></span><br><span class="line"><span class="string">    pass</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">class OrderDetail(models.Model):</span></span><br><span class="line"><span class="string">    # 订单号(外键)、商品(外键)、实价、成交价 - 商品数量</span></span><br><span class="line"><span class="string">    pass</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 app</span></span><br><span class="line">cd luffy_api/apps</span><br><span class="line">python3 ../../manage.py startapp order</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制一个 urls.py 过来</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注册 app</span></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;order&#x27;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 总路由注册 order</span></span><br><span class="line">path(<span class="string">&#x27;api/v1/order/&#x27;</span>, include(<span class="string">&#x27;order.urls&#x27;</span>)),  <span class="comment"># http://127.0.0.1:8000/api/v1/order/</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="apps-order-models-py"><a href="#apps-order-models-py" class="headerlink" title="apps/order/models.py"></a><code>apps/order/models.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> user.models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> course.models <span class="keyword">import</span> Course</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 订单表</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Order</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;订单模型&quot;&quot;&quot;</span></span><br><span class="line">    status_choices = (</span><br><span class="line">        (<span class="number">0</span>, <span class="string">&#x27;未支付&#x27;</span>),</span><br><span class="line">        (<span class="number">1</span>, <span class="string">&#x27;已支付&#x27;</span>),</span><br><span class="line">        (<span class="number">2</span>, <span class="string">&#x27;已取消&#x27;</span>),</span><br><span class="line">        (<span class="number">3</span>, <span class="string">&#x27;超时取消&#x27;</span>),</span><br><span class="line">    )</span><br><span class="line">    pay_choices = (</span><br><span class="line">        (<span class="number">1</span>, <span class="string">&#x27;支付宝&#x27;</span>),</span><br><span class="line">        (<span class="number">2</span>, <span class="string">&#x27;微信支付&#x27;</span>),</span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 订单标题</span></span><br><span class="line">    subject = models.CharField(max_length=<span class="number">150</span>, verbose_name=<span class="string">&quot;订单标题&quot;</span>)</span><br><span class="line">    <span class="comment"># 总价格</span></span><br><span class="line">    total_amount = models.DecimalField(max_digits=<span class="number">10</span>, decimal_places=<span class="number">2</span>, verbose_name=<span class="string">&quot;订单总价&quot;</span>, default=<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># 订单号--使用uuid生成</span></span><br><span class="line">    out_trade_no = models.CharField(max_length=<span class="number">64</span>, verbose_name=<span class="string">&quot;订单号&quot;</span>, unique=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 流水号支付宝返回的</span></span><br><span class="line">    trade_no = models.CharField(max_length=<span class="number">64</span>, null=<span class="literal">True</span>, verbose_name=<span class="string">&quot;流水号&quot;</span>)</span><br><span class="line">    <span class="comment"># 订单状态  待支付，已支付。。。</span></span><br><span class="line">    order_status = models.SmallIntegerField(choices=status_choices, default=<span class="number">0</span>, verbose_name=<span class="string">&quot;订单状态&quot;</span>)</span><br><span class="line">    <span class="comment"># 微信，支付宝</span></span><br><span class="line">    pay_type = models.SmallIntegerField(choices=pay_choices, default=<span class="number">1</span>, verbose_name=<span class="string">&quot;支付方式&quot;</span>)</span><br><span class="line">    <span class="comment"># 支付时间--》支付宝回调回来会有</span></span><br><span class="line">    pay_time = models.DateTimeField(null=<span class="literal">True</span>, verbose_name=<span class="string">&quot;支付时间&quot;</span>)</span><br><span class="line">    <span class="comment"># 用户表关联</span></span><br><span class="line">    user = models.ForeignKey(User, related_name=<span class="string">&#x27;order_user&#x27;</span>, on_delete=models.DO_NOTHING, db_constraint=<span class="literal">False</span>,</span><br><span class="line">                             verbose_name=<span class="string">&quot;下单用户&quot;</span>)</span><br><span class="line">    <span class="comment"># 订单创建时间  auto_now_add:新增这个时间可以不传，用当前时间   auto_now：修改时间不传，自动存入当前时间</span></span><br><span class="line">    created_time = models.DateTimeField(auto_now_add=<span class="literal">True</span>, verbose_name=<span class="string">&#x27;创建时间&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        db_table = <span class="string">&quot;luffy_order&quot;</span></span><br><span class="line">        verbose_name = <span class="string">&quot;订单记录&quot;</span></span><br><span class="line">        verbose_name_plural = <span class="string">&quot;订单记录&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;%s - ￥%s&quot;</span> % (self.subject, self.total_amount)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">courses</span>(<span class="params">self</span>):</span></span><br><span class="line">        data_list = []</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> self.order_courses.<span class="built_in">all</span>():</span><br><span class="line">            data_list.append(&#123;</span><br><span class="line">                <span class="string">&quot;id&quot;</span>: item.<span class="built_in">id</span>,</span><br><span class="line">                <span class="string">&quot;course_name&quot;</span>: item.course.name,</span><br><span class="line">                <span class="string">&quot;real_price&quot;</span>: item.real_price,</span><br><span class="line">            &#125;)</span><br><span class="line">        <span class="keyword">return</span> data_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 订单详情表</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OrderDetail</span>(<span class="params">models.Model</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;订单详情&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 跟订单一对多</span></span><br><span class="line">    order = models.ForeignKey(Order, related_name=<span class="string">&#x27;order_courses&#x27;</span>, on_delete=models.CASCADE, db_constraint=<span class="literal">False</span>,</span><br><span class="line">                              verbose_name=<span class="string">&quot;订单&quot;</span>)</span><br><span class="line">    <span class="comment"># 跟课程一对多</span></span><br><span class="line">    course = models.ForeignKey(Course, related_name=<span class="string">&#x27;course_orders&#x27;</span>, on_delete=models.CASCADE, db_constraint=<span class="literal">False</span>,</span><br><span class="line">                               verbose_name=<span class="string">&quot;课程&quot;</span>)</span><br><span class="line">    <span class="comment"># 价格</span></span><br><span class="line">    price = models.DecimalField(max_digits=<span class="number">6</span>, decimal_places=<span class="number">2</span>, verbose_name=<span class="string">&quot;课程原价&quot;</span>)</span><br><span class="line">    <span class="comment"># 真实价格</span></span><br><span class="line">    real_price = models.DecimalField(max_digits=<span class="number">6</span>, decimal_places=<span class="number">2</span>, verbose_name=<span class="string">&quot;课程实价&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        db_table = <span class="string">&quot;luffy_order_detail&quot;</span></span><br><span class="line">        verbose_name = <span class="string">&quot;订单详情&quot;</span></span><br><span class="line">        verbose_name_plural = <span class="string">&quot;订单详情&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;%s的订单：%s&quot;</span> % (self.course.name, self.order.out_trade_no)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">super</span>().__str__()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="apps-order-admin-py"><a href="#apps-order-admin-py" class="headerlink" title="apps/order/admin.py"></a><code>apps/order/admin.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">admin.site.register(Order)</span><br><span class="line">admin.site.register(OrderDetail)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 manage.py makemigrations</span><br><span class="line">python3 manage.py migrate </span><br></pre></td></tr></table></figure>
+
+<h4 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h4><h4 id="apps-order-views-py"><a href="#apps-order-views-py" class="headerlink" title="apps/order/views.py"></a><code>apps/order/views.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.viewsets <span class="keyword">import</span> GenericViewSet</span><br><span class="line"><span class="keyword">from</span> rest_framework.mixins <span class="keyword">import</span> CreateModelMixin</span><br><span class="line"><span class="keyword">from</span> rest_framework.permissions <span class="keyword">import</span> IsAuthenticated</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework_jwt.authentication <span class="keyword">import</span> JSONWebTokenAuthentication</span><br><span class="line"><span class="keyword">from</span> utils.APIResponse <span class="keyword">import</span> APIResponse</span><br><span class="line"><span class="keyword">from</span> utils.luffy_logging <span class="keyword">import</span> logger</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Order</span><br><span class="line"><span class="keyword">from</span> .serializer <span class="keyword">import</span> OrderSerializer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OrderView</span>(<span class="params">GenericViewSet, CreateModelMixin</span>):</span></span><br><span class="line">    <span class="comment"># 登录之后才可以访问</span></span><br><span class="line">    authentication_classes = [JSONWebTokenAuthentication, ]</span><br><span class="line">    permission_classes = [IsAuthenticated, ]</span><br><span class="line">    queryset = Order.objects.<span class="built_in">all</span>()</span><br><span class="line">    serializer_class = OrderSerializer</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span>(<span class="params">self, request, *args, **kwargs</span>):</span></span><br><span class="line">        serializer = self.get_serializer(data=request.data)</span><br><span class="line">        serializer.is_valid(raise_exception=<span class="literal">True</span>)</span><br><span class="line">        pay_url = serializer.context.get(<span class="string">&#x27;pay_url&#x27;</span>)</span><br><span class="line">        self.perform_create(serializer)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> APIResponse(data=&#123;<span class="string">&#x27;pay_url&#x27;</span>: pay_url&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 支付回调接口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SuccessViewSet</span>(<span class="params">APIView</span>):</span></span><br><span class="line">    <span class="comment"># 认证取消</span></span><br><span class="line">    authentication_classes = ()</span><br><span class="line">    permission_classes = ()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 支付宝同步回调给前台，在同步通知给后台处理</span></span><br><span class="line">    <span class="comment"># 写不写都行---》给咱们前端做二次验证的</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span>(<span class="params">self, request, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="comment"># return Response(&#x27;后台已知晓，Over！！！&#x27;)</span></span><br><span class="line">        <span class="comment"># 不能在该接口完成订单修改操作</span></span><br><span class="line">        <span class="comment"># 但是可以在该接口中校验订单状态(已经收到支付宝post异步通知，订单已修改)，告诉前台</span></span><br><span class="line">        <span class="comment"># print(type(request.query_params))  # django.http.request.QueryDict</span></span><br><span class="line">        <span class="comment"># print(type(request.query_params.dict()))  # dict</span></span><br><span class="line"></span><br><span class="line">        out_trade_no = request.query_params.get(<span class="string">&#x27;out_trade_no&#x27;</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            Order.objects.get(out_trade_no=out_trade_no, order_status=<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> APIResponse(status=<span class="number">100</span>, msg=<span class="string">&#x27;订单支付成功&#x27;</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">return</span> APIResponse(status=<span class="number">101</span>, msg=<span class="string">&#x27;订单还未支付&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 支付宝异步回调处理</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span>(<span class="params">self, request, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># request.data前端(支付宝)post传给咱们的数据--》request.data--》 QueyDic对象，不允许pop，把它转成字典</span></span><br><span class="line">            result_data = request.data.<span class="built_in">dict</span>()</span><br><span class="line">            <span class="comment"># 支付宝给我的订单号---》数据库有个订单号</span></span><br><span class="line">            out_trade_no = result_data.get(<span class="string">&#x27;out_trade_no&#x27;</span>)</span><br><span class="line">            <span class="comment"># 前面--&gt;验证签名才信任支付宝，防止伪造</span></span><br><span class="line">            signature = result_data.pop(<span class="string">&#x27;sign&#x27;</span>)</span><br><span class="line">            <span class="keyword">from</span> libs <span class="keyword">import</span> iPay</span><br><span class="line">            result = iPay.alipay.verify(result_data, signature)</span><br><span class="line">            <span class="keyword">if</span> result <span class="keyword">and</span> result_data[<span class="string">&quot;trade_status&quot;</span>] <span class="keyword">in</span> (<span class="string">&quot;TRADE_SUCCESS&quot;</span>, <span class="string">&quot;TRADE_FINISHED&quot;</span>):</span><br><span class="line">                <span class="comment"># 完成订单修改：订单状态、流水号、支付时间</span></span><br><span class="line">                <span class="comment"># 已支付</span></span><br><span class="line">                Order.objects.<span class="built_in">filter</span>(out_trade_no=out_trade_no).update(order_status=<span class="number">1</span>)</span><br><span class="line">                <span class="comment"># 完成日志记录</span></span><br><span class="line">                logger.warning(<span class="string">&#x27;%s订单支付成功&#x27;</span> % out_trade_no)</span><br><span class="line">                <span class="keyword">return</span> Response(<span class="string">&#x27;success&#x27;</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                logger.error(<span class="string">&#x27;%s订单支付失败&#x27;</span> % out_trade_no)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">return</span> Response(<span class="string">&#x27;failed&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="apps-order-serializer-py"><a href="#apps-order-serializer-py" class="headerlink" title="apps/order/serializer.py"></a><code>apps/order/serializer.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</span><br><span class="line"><span class="keyword">from</span> rest_framework.validators <span class="keyword">import</span> ValidationError</span><br><span class="line"><span class="keyword">from</span> libs <span class="keyword">import</span> iPay</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Order, Course, OrderDetail</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 只用来做反序列化---&gt;数据校验--&gt;重写create方法--》存两个表</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OrderSerializer</span>(<span class="params">serializers.ModelSerializer</span>):</span></span><br><span class="line">    <span class="comment"># 前端传入的是课程列表[1,2,3,]---》转成[课程对象1，课程对象2，课程对象三]</span></span><br><span class="line">    courses = serializers.PrimaryKeyRelatedField(queryset=Course.objects.<span class="built_in">all</span>(), many=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = Order</span><br><span class="line">        fields = [<span class="string">&#x27;subject&#x27;</span>, <span class="string">&#x27;total_amount&#x27;</span>, <span class="string">&#x27;pay_type&#x27;</span>, <span class="string">&#x27;courses&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_check_total_amount</span>(<span class="params">self, attrs</span>):</span></span><br><span class="line">        courses = attrs.get(<span class="string">&#x27;courses&#x27;</span>)  <span class="comment"># 列表[课程1，课程2，课程3]</span></span><br><span class="line">        total_amount = attrs.get(<span class="string">&#x27;total_amount&#x27;</span>)  <span class="comment"># 前端传入的总价格</span></span><br><span class="line">        total_price = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> course <span class="keyword">in</span> courses:</span><br><span class="line">            total_price += course.price</span><br><span class="line">        <span class="keyword">if</span> total_price != total_amount:  <span class="comment"># 计算完的价格不等于传入的价格，抛异常</span></span><br><span class="line">            <span class="keyword">raise</span> ValidationError(<span class="string">&#x27;total_amount error&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> total_amount</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_out_trade_no</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">import</span> uuid</span><br><span class="line">        code = <span class="built_in">str</span>(uuid.uuid4())  <span class="comment"># 分布式id的生成方案：订单号全局唯一，如何生成全局唯一的订单号：uuid，使用当前时间时间戳(重复概率)，雪花算法</span></span><br><span class="line">        <span class="keyword">return</span> code.replace(<span class="string">&#x27;-&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取支付人</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_user</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.context.get(<span class="string">&#x27;request&#x27;</span>).user</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取支付链接</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_pay_url</span>(<span class="params">self, out_trade_no, total_amount, subject</span>):</span></span><br><span class="line">        order_string = iPay.alipay.api_alipay_trade_page_pay(</span><br><span class="line">            out_trade_no=out_trade_no,</span><br><span class="line">            total_amount=<span class="built_in">float</span>(total_amount),  <span class="comment"># 只有生成支付宝链接时，不能用Decimal</span></span><br><span class="line">            subject=subject,</span><br><span class="line">            return_url=settings.RETURN_URL,  <span class="comment"># get回调地址，前台地址</span></span><br><span class="line">            notify_url=settings.NOTIFY_URL,  <span class="comment"># post回调地址,后台地址</span></span><br><span class="line">        )</span><br><span class="line">        pay_url = iPay.gateway + <span class="string">&#x27;?&#x27;</span> + order_string</span><br><span class="line">        <span class="comment"># 将支付链接存入，传递给views</span></span><br><span class="line">        self.context[<span class="string">&#x27;pay_url&#x27;</span>] = pay_url</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 入库(两个表)的信息准备</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_before_create</span>(<span class="params">self, attrs, user, out_trade_no</span>):</span></span><br><span class="line">        attrs[<span class="string">&#x27;user&#x27;</span>] = user</span><br><span class="line">        attrs[<span class="string">&#x27;out_trade_no&#x27;</span>] = out_trade_no</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">validate</span>(<span class="params">self, attrs</span>):</span></span><br><span class="line">        <span class="comment"># 1）订单总价校验--</span></span><br><span class="line">        total_amount = self._check_total_amount(attrs)</span><br><span class="line">        <span class="comment"># 2）生成订单号--》唯一的</span></span><br><span class="line">        out_trade_no = self._get_out_trade_no()</span><br><span class="line">        <span class="comment"># 3）支付用户：request.user</span></span><br><span class="line">        user = self._get_user()</span><br><span class="line">        <span class="comment"># 4）支付链接生成</span></span><br><span class="line">        self._get_pay_url(out_trade_no, total_amount, attrs.get(<span class="string">&#x27;subject&#x27;</span>))</span><br><span class="line">        <span class="comment"># 5）入库(两个表)的信息准备</span></span><br><span class="line">        self._before_create(attrs, user, out_trade_no)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 代表该校验方法通过，进入入库操作</span></span><br><span class="line">        <span class="keyword">return</span> attrs</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span>(<span class="params">self, validated_data</span>):</span></span><br><span class="line">        courses = validated_data.pop(<span class="string">&#x27;courses&#x27;</span>)</span><br><span class="line">        <span class="comment"># 订单表入库，不需要courses, 订单号，订单标题，订单价格，购买人，支付方式</span></span><br><span class="line">        order = Order.objects.create(**validated_data)</span><br><span class="line">        <span class="comment"># 订单详情表入库：只需要订单对象，课程对象(courses要拆成一个个course)</span></span><br><span class="line">        <span class="keyword">for</span> course <span class="keyword">in</span> courses:</span><br><span class="line">            OrderDetail.objects.create(order=order, course=course, price=course.price, real_price=course.price)</span><br><span class="line">        <span class="keyword">return</span> order</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="apps-order-urls-py"><a href="#apps-order-urls-py" class="headerlink" title="apps/order/urls.py"></a><code>apps/order/urls.py</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path, include</span><br><span class="line"><span class="keyword">from</span> rest_framework.routers <span class="keyword">import</span> SimpleRouter</span><br><span class="line"><span class="keyword">from</span> .views <span class="keyword">import</span> OrderView, SuccessViewSet</span><br><span class="line"></span><br><span class="line">router = SimpleRouter()</span><br><span class="line">router.register(<span class="string">&#x27;pay&#x27;</span>, OrderView, <span class="string">&#x27;pay&#x27;</span>)</span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">&#x27;&#x27;</span>, include(router.urls)),</span><br><span class="line">    path(<span class="string">&#x27;success/&#x27;</span>, SuccessViewSet.as_view()),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="支付前端"><a href="#支付前端" class="headerlink" title="支付前端"></a>支付前端</h3><p>在课程章节和详情的页面 <code>views/CourseDetail.vue</code> 中的 立即购买 功能( go_pay 方法)</p>
+<p>内网中回调会出现问题，可以使用内网穿透</p>
+<h3 id="文件托管"><a href="#文件托管" class="headerlink" title="文件托管"></a>文件托管</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 图片，视频，一般不放在自己项目中---&gt;只要访问一次图片，就向后端发一次请求--》消耗服务器资源</span></span><br><span class="line"><span class="comment"># 静态类型文件，托管到第三方平台---》花钱---》使用第三方平台的服务器资源和带宽</span></span><br><span class="line"><span class="comment"># 视频托管到云平台了</span></span><br><span class="line">	-阿里 oss</span><br><span class="line">  -七牛云存储</span><br><span class="line"></span><br><span class="line"><span class="comment"># 公司里多种方案---》托管到其他平台</span></span><br><span class="line">	-云平台---》花钱---》七牛云</span><br><span class="line">  -公司自己搭建文件服务器</span><br><span class="line">  	-fastdfs：搭建笔记，python上传：https://zhuanlan.zhihu.com/p/<span class="number">372286804</span></span><br><span class="line">    -Minio：自己搭建Minio，阿里云上--》搭建笔记--》上传下载比较简单</span><br><span class="line">    	-图形化界面后台，登陆上看到文件</span><br><span class="line">    -ceph</span><br><span class="line">    。。。</span><br><span class="line">  -放到项目中</span><br><span class="line">  </span><br><span class="line"><span class="comment"># 七牛云上传</span></span><br><span class="line">	-手动上传---》手动配置视频地址--（不采取）</span><br><span class="line">  -前端上传，返回连接地址，提交到咱们自己的后端，存到数据库</span><br><span class="line">  -前端把视频传到咱们后端，咱们后端通过python传到七牛云，生成连接，存到数据库</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/99eec33e.html" rel="prev" title="实战课页面功能">
+                  <i class="fa fa-chevron-left"></i> 实战课页面功能
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/9a10c56b.html" rel="next" title="课程详情和搜索功能">
+                  课程详情和搜索功能 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">1.2m</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:33</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
