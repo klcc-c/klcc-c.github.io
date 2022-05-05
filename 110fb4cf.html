@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="上线架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目上线">
+<meta property="og:url" content="https://klcc.cc/110fb4cf.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="上线架构">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220505183254286.png">
+<meta property="article:published_time" content="2022-02-08T03:18:08.406Z">
+<meta property="article:modified_time" content="2022-05-05T12:47:49.572Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220505183254286.png">
+
+
+<link rel="canonical" href="https://klcc.cc/110fb4cf.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/110fb4cf.html","path":"110fb4cf.html","title":"项目上线"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>项目上线 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">22</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">146</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E7%BA%BF%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">上线架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85mysql"><span class="nav-number">2.</span> <span class="nav-text">安装mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85redis"><span class="nav-number">3.</span> <span class="nav-text">安装redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85python3-8"><span class="nav-number">4.</span> <span class="nav-text">安装python3.8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85nginx"><span class="nav-number">5.</span> <span class="nav-text">安装nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E7%BA%BF%E5%89%8D%E7%AB%AF"><span class="nav-number">6.</span> <span class="nav-text">上线前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E7%BA%BF%E5%90%8E%E7%AB%AF"><span class="nav-number">7.</span> <span class="nav-text">上线后端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8A%E7%BA%BF%E5%89%8D%E5%87%86%E5%A4%87"><span class="nav-number">7.1.</span> <span class="nav-text">上线前准备</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#setting-pro-py"><span class="nav-number">7.1.1.</span> <span class="nav-text">setting&#x2F;pro.py</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#setting-user-settings-py"><span class="nav-number">7.1.2.</span> <span class="nav-text">setting&#x2F;user_settings.py</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#manage-pro-py"><span class="nav-number">7.1.3.</span> <span class="nav-text">manage_pro.py</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA%E6%A8%A1%E5%9D%97"><span class="nav-number">7.1.4.</span> <span class="nav-text">导出模块</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E4%BB%A3%E7%A0%81"><span class="nav-number">7.2.</span> <span class="nav-text">提交代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%8A%E7%BA%BF"><span class="nav-number">7.3.</span> <span class="nav-text">服务端上线</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81"><span class="nav-number">7.3.1.</span> <span class="nav-text">拉取代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">7.3.2.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#uwsgi%E4%B8%8Enginx%E9%85%8D%E7%BD%AE"><span class="nav-number">7.3.3.</span> <span class="nav-text">uwsgi与nginx配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="nav-number">7.3.4.</span> <span class="nav-text">数据库创建用户</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB"><span class="nav-number">7.3.5.</span> <span class="nav-text">数据库迁移</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8uwsgi"><span class="nav-number">7.3.6.</span> <span class="nav-text">启动uwsgi</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%8E%E5%8F%B0%E7%9A%84%E9%9D%99%E6%80%81%E6%A0%B7%E5%BC%8F%E6%94%B6%E9%9B%86%E5%92%8C%E4%B8%8A%E7%BA%BF"><span class="nav-number">7.3.7.</span> <span class="nav-text">后台的静态样式收集和上线</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">146</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/110fb4cf.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          项目上线
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-08 11:18:08" itemprop="dateCreated datePublished" datetime="2022-02-08T11:18:08+08:00">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>14k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="上线架构"><a href="#上线架构" class="headerlink" title="上线架构"></a>上线架构</h3><span id="more"></span>
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220505183254286.png" alt="image-20220505183254286"></p>
+<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 下载 mysql5.7</span></span><br><span class="line">wget http://dev.mysql.com/get/mysql57-community-release-el7-10.noarch.rpm</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装 mysql5.7</span></span><br><span class="line">yum -y install mysql57-community-release-el7-10.noarch.rpm</span><br><span class="line">yum install mysql-community-server --nogpgcheck</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动 mysql5.7 并查看启动状态</span> </span><br><span class="line">systemctl start mysqld.service  # 启动mysql服务</span><br><span class="line">systemctl enable mysqld.service # 开机自启动</span><br><span class="line">systemctl status mysqld.service # 查看服务</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看默认密码并登录</span></span><br><span class="line">grep &quot;password&quot; /var/log/mysqld.log</span><br><span class="line">mysql -uroot -p</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改密码</span></span><br><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;Mysql12345?&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 下载redis-5.0.5</span></span><br><span class="line">wget http://download.redis.io/releases/redis-5.0.5.tar.gz</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 解压安装包</span></span><br><span class="line">tar -xf redis-5.0.5.tar.gz</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入目标文件</span></span><br><span class="line">cd redis-5.0.5</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 编译环境  src路径下就有可执行文件 redis-server redis-cli 等</span></span><br><span class="line">make -j `cat /proc/cpuinfo |grep processor |wc -l`</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 复制环境到指定路径完成安装</span></span><br><span class="line">cp -rp ~/redis-5.0.5 /usr/local/redis</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置redis可以后台启动：修改下方内容</span></span><br><span class="line">vim /usr/local/redis/redis.conf</span><br><span class="line">daemonize yes</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 建立软连接</span> </span><br><span class="line">ln -s /usr/local/redis/src/redis-server /usr/bin/redis-server</span><br><span class="line">ln -s /usr/local/redis/src/redis-cli /usr/bin/redis-cli</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 后台运行redis</span></span><br><span class="line">cd /usr/local/redis</span><br><span class="line">redis-server ./redis.conf</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看服务是否启动</span></span><br><span class="line">ps aux |grep redis</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 测试redis环境</span></span><br><span class="line">redis-cli</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 关闭redis服务</span></span><br><span class="line">pkill -f redis -9</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装python3-8"><a href="#安装python3-8" class="headerlink" title="安装python3.8"></a>安装python3.8</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 下载依赖</span></span><br><span class="line">yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make libffi-devel python-devel mariadb-devel gdbm-devel python-setuptools python-devel -y</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载源码安装</span></span><br><span class="line">wget https://registry.npmmirror.com/-/binary/python/3.8.6/Python-3.8.6.tgz</span><br><span class="line">tar xf Python-3.8.6.tgz</span><br><span class="line">cd Python-3.8.6/</span><br><span class="line">./configure --prefix=/usr/local/python38</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line">ln -s /usr/local/python38/bin/python3 /usr/bin/python3.8</span><br><span class="line">ln -s /usr/local/python38/bin/pip3 /usr/bin/pip3.8</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装uwsgi</span></span><br><span class="line">pip3.8 install uwsgi</span><br><span class="line">ln -s /usr/local/python38/bin/uwsgi /usr/bin/uwsgi</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置虚拟环境</span></span><br><span class="line">python3.8 -m pip install --upgrade pip</span><br><span class="line">python3.8 -m pip install --upgrade setuptools</span><br><span class="line">pip3.8 install virtualenv</span><br><span class="line">pip3.8 install virtualenvwrapper</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 建立软连接</span></span><br><span class="line">ln -s /usr/local/python38/bin/virtualenv /usr/bin/virtualenv</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置环境变量</span></span><br><span class="line">cat &gt;&gt; ~/.bashrc &lt;&lt;EOF</span><br><span class="line">VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.8</span><br><span class="line">source /usr/local/python38/bin/virtualenvwrapper.sh</span><br><span class="line">EOF</span><br><span class="line"><span class="meta">#</span><span class="bash"> 虚拟环境默认根目录：~/.virtualenvs</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建虚拟环境</span></span><br><span class="line">mkvirtualenv luffy</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc zlib zlib-devel pcre-devel openssl openssl-devel -y</span><br><span class="line"></span><br><span class="line">wget http://nginx.org/download/nginx-1.20.1.tar.gz</span><br><span class="line"></span><br><span class="line">tar xf nginx-1.20.1.tar.gz </span><br><span class="line"></span><br><span class="line">cd nginx-1.20.1/</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/nginx  \</span><br><span class="line">--with-http_stub_status_module  \</span><br><span class="line">--with-http_ssl_module --with-pcre </span><br><span class="line"></span><br><span class="line">make -j `cat /proc/cpuinfo |grep processor |wc -l` &amp;&amp; make install</span><br><span class="line"></span><br><span class="line">echo &#x27;export PATH=/usr/local/nginx/sbin:$PATH&#x27; &gt;&gt; /etc/profile</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h3 id="上线前端"><a href="#上线前端" class="headerlink" title="上线前端"></a>上线前端</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 修改后端地址 luffycity/src/assets/js/settings.js  改为公网 IP</span></span><br><span class="line">export default &#123;base_url:&#x27;http://119.91.117.23:8080/api/v1/&#x27;&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将 vue 项目 编译为 html css js 等纯静态文件 项目目录下执行</span></span><br><span class="line">npm run build </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将 dist 文件夹压缩上传到服务器上 sftp 等工具</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入到上传所在的目录</span></span><br><span class="line">mkdir /web/luffy -p</span><br><span class="line">unzip dist.zip -d /web/luffy/</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改 nginx 配置文件</span></span><br><span class="line">cd /usr/local/nginx/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改配置文件，如下</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">nginx.conf</span><br><span class="line">worker_processes  auto;</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line">http</span><br><span class="line">    &#123;</span><br><span class="line">        include       mime.types;</span><br><span class="line">        default_type  application/octet-stream;</span><br><span class="line">        charset UTF-8;</span><br><span class="line">        server_names_hash_bucket_size 128;</span><br><span class="line">        client_header_buffer_size 32k;</span><br><span class="line">        large_client_header_buffers 4 32k;</span><br><span class="line">        client_max_body_size 50m;</span><br><span class="line">        #####################################</span><br><span class="line">        sendfile   on;</span><br><span class="line">        tcp_nopush on;</span><br><span class="line">        keepalive_timeout 60;</span><br><span class="line">        tcp_nodelay on;</span><br><span class="line">        #####################################</span><br><span class="line">        fastcgi_connect_timeout 300;</span><br><span class="line">        fastcgi_send_timeout 300;</span><br><span class="line">        fastcgi_read_timeout 300;</span><br><span class="line">        fastcgi_buffer_size 64k;</span><br><span class="line">        fastcgi_buffers 4 64k;</span><br><span class="line">        fastcgi_busy_buffers_size 128k;</span><br><span class="line">        fastcgi_temp_file_write_size 256k;</span><br><span class="line">        #####################################</span><br><span class="line">        gzip on;</span><br><span class="line">        gzip_min_length  1k;</span><br><span class="line">        gzip_buffers     4 16k;</span><br><span class="line">        gzip_http_version 1.1;</span><br><span class="line">        gzip_comp_level 2;</span><br><span class="line">        gzip_vary on;</span><br><span class="line">        gzip_proxied   expired no-cache no-store private auth;</span><br><span class="line">        server_tokens off;</span><br><span class="line">        include vhost/*.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建目录</span></span><br><span class="line">mkdir vhost</span><br><span class="line">cat &gt; vhost/web.conf &lt;&lt;EOF</span><br><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name  localhost;</span><br><span class="line">    charset utf-8;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root /web/luffy/dist;</span><br><span class="line">        index index.html;</span><br><span class="line">        try_files $uri $uri/ /index.html; # 解决单页面应用刷新404问题</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 检查</span></span><br><span class="line">nginx -t </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动</span></span><br><span class="line">nginx</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 检查是否成功启动</span></span><br><span class="line">netstat -lntup</span><br><span class="line">ps -ef |grep nginx</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 访问地址</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="上线后端"><a href="#上线后端" class="headerlink" title="上线后端"></a>上线后端</h3><h4 id="上线前准备"><a href="#上线前准备" class="headerlink" title="上线前准备"></a>上线前准备</h4><h5 id="setting-pro-py"><a href="#setting-pro-py" class="headerlink" title="setting/pro.py"></a><code>setting/pro.py</code></h5><p>将luffy_api/setting/dev.py 拷贝过来修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))</span><br><span class="line"></span><br><span class="line">sys.path.append(os.path.join(BASE_DIR, <span class="string">&#x27;apps&#x27;</span>))</span><br><span class="line">sys.path.append(BASE_DIR)</span><br><span class="line"></span><br><span class="line">SECRET_KEY = <span class="string">&#x27;-b4z=*^wa1rjc-5a+@+)f%t-%mppmx@vz%8zdps1$rr9r@y&amp;$5&#x27;</span></span><br><span class="line"></span><br><span class="line">DEBUG = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">ALLOWED_HOSTS = [<span class="string">&#x27;*&#x27;</span>]</span><br><span class="line"></span><br><span class="line">INSTALLED_APPS = [</span><br><span class="line">    <span class="string">&#x27;simpleui&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.admin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.contenttypes&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.staticfiles&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;rest_framework&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;corsheaders&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;course&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;order&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django_filters&#x27;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">MIDDLEWARE = [</span><br><span class="line">    <span class="string">&#x27;django.middleware.security.SecurityMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.sessions.middleware.SessionMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.middleware.common.CommonMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.middleware.csrf.CsrfViewMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.auth.middleware.AuthenticationMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.contrib.messages.middleware.MessageMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;django.middleware.clickjacking.XFrameOptionsMiddleware&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;corsheaders.middleware.CorsMiddleware&#x27;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">ROOT_URLCONF = <span class="string">&#x27;luffy_api.urls&#x27;</span></span><br><span class="line"></span><br><span class="line">TEMPLATES = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;BACKEND&#x27;</span>: <span class="string">&#x27;django.template.backends.django.DjangoTemplates&#x27;</span>,</span><br><span class="line">        <span class="comment"># &#x27;DIRS&#x27;: [BASE_DIR / &#x27;templates&#x27;],</span></span><br><span class="line">        <span class="string">&#x27;APP_DIRS&#x27;</span>: <span class="literal">True</span>,</span><br><span class="line">        <span class="string">&#x27;OPTIONS&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;context_processors&#x27;</span>: [</span><br><span class="line">                <span class="string">&#x27;django.template.context_processors.debug&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;django.template.context_processors.request&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;django.contrib.auth.context_processors.auth&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;django.contrib.messages.context_processors.messages&#x27;</span>,</span><br><span class="line">            ],</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">WSGI_APPLICATION = <span class="string">&#x27;luffy_api.wsgi.application&#x27;</span></span><br><span class="line"></span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;ENGINE&#x27;</span>: <span class="string">&#x27;django.db.backends.mysql&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;luffy&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;USER&#x27;</span>: <span class="string">&#x27;luffy&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;PASSWORD&#x27;</span>: <span class="string">&#x27;Luffy123?&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;HOST&#x27;</span>: <span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;PORT&#x27;</span>: <span class="number">3306</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AUTH_PASSWORD_VALIDATORS = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;django.contrib.auth.password_validation.UserAttributeSimilarityValidator&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;django.contrib.auth.password_validation.MinimumLengthValidator&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;django.contrib.auth.password_validation.CommonPasswordValidator&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;django.contrib.auth.password_validation.NumericPasswordValidator&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">LANGUAGE_CODE = <span class="string">&#x27;zh-hans&#x27;</span></span><br><span class="line">TIME_ZONE = <span class="string">&#x27;Asia/Shanghai&#x27;</span></span><br><span class="line">USE_I18N = <span class="literal">True</span></span><br><span class="line">USE_L10N = <span class="literal">True</span></span><br><span class="line">USE_TZ = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">STATIC_URL = <span class="string">&#x27;/static/&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 日志相关</span></span><br><span class="line">LOGGING = &#123;</span><br><span class="line">    <span class="string">&#x27;version&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">&#x27;disable_existing_loggers&#x27;</span>: <span class="literal">False</span>,</span><br><span class="line">    <span class="string">&#x27;formatters&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;verbose&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;format&#x27;</span>: <span class="string">&#x27;%(levelname)s %(asctime)s %(module)s %(lineno)d %(message)s&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&#x27;simple&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;format&#x27;</span>: <span class="string">&#x27;%(levelname)s %(module)s %(lineno)d %(message)s&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&#x27;filters&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;require_debug_true&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;()&#x27;</span>: <span class="string">&#x27;django.utils.log.RequireDebugTrue&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&#x27;handlers&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;console&#x27;</span>: &#123;</span><br><span class="line">            <span class="comment"># 实际开发建议使用WARNING</span></span><br><span class="line">            <span class="string">&#x27;level&#x27;</span>: <span class="string">&#x27;DEBUG&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;filters&#x27;</span>: [<span class="string">&#x27;require_debug_true&#x27;</span>],</span><br><span class="line">            <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;logging.StreamHandler&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;formatter&#x27;</span>: <span class="string">&#x27;simple&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&#x27;file&#x27;</span>: &#123;</span><br><span class="line">            <span class="comment"># 实际开发建议使用ERROR</span></span><br><span class="line">            <span class="string">&#x27;level&#x27;</span>: <span class="string">&#x27;INFO&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;logging.handlers.RotatingFileHandler&#x27;</span>,</span><br><span class="line">            <span class="comment"># 日志位置,日志文件名,日志保存目录必须手动创建，注：这里的文件路径要注意BASE_DIR代表的是小luffyapi</span></span><br><span class="line">            <span class="string">&#x27;filename&#x27;</span>: os.path.join(os.path.dirname(BASE_DIR), <span class="string">&quot;logs&quot;</span>, <span class="string">&quot;luffy.log&quot;</span>),</span><br><span class="line">            <span class="comment"># 日志文件的最大值,这里我们设置300M</span></span><br><span class="line">            <span class="string">&#x27;maxBytes&#x27;</span>: <span class="number">300</span> * <span class="number">1024</span> * <span class="number">1024</span>,</span><br><span class="line">            <span class="comment"># 日志文件的数量,设置最大日志数量为10</span></span><br><span class="line">            <span class="string">&#x27;backupCount&#x27;</span>: <span class="number">10</span>,</span><br><span class="line">            <span class="comment"># 日志格式:详细格式</span></span><br><span class="line">            <span class="string">&#x27;formatter&#x27;</span>: <span class="string">&#x27;verbose&#x27;</span>,</span><br><span class="line">            <span class="comment"># 文件内容编码</span></span><br><span class="line">            <span class="string">&#x27;encoding&#x27;</span>: <span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment"># 日志对象</span></span><br><span class="line">    <span class="string">&#x27;loggers&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;django&#x27;</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;handlers&#x27;</span>: [<span class="string">&#x27;console&#x27;</span>, <span class="string">&#x27;file&#x27;</span>],</span><br><span class="line">            <span class="string">&#x27;propagate&#x27;</span>: <span class="literal">True</span>,  <span class="comment"># 是否让日志信息继续冒泡给其他的日志处理系统</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">&#x27;DEFAULT_RENDERER_CLASSES&#x27;</span>: (  <span class="comment"># 默认响应渲染类</span></span><br><span class="line">        <span class="string">&#x27;rest_framework.renderers.JSONRenderer&#x27;</span>,  <span class="comment"># json渲染器</span></span><br><span class="line">        <span class="comment"># &#x27;rest_framework.renderers.BrowsableAPIRenderer&#x27;,  # 浏览API渲染器</span></span><br><span class="line">    ),</span><br><span class="line">    <span class="string">&#x27;EXCEPTION_HANDLER&#x27;</span>: <span class="string">&#x27;utils.exception.common_exception_handler&#x27;</span>  <span class="comment"># 再出异常，会执行这个函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自定义User表</span></span><br><span class="line">AUTH_USER_MODEL = <span class="string">&#x27;user.User&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置media</span></span><br><span class="line">MEDIA_URL = <span class="string">&#x27;/media/&#x27;</span></span><br><span class="line">MEDIA_ROOT = os.path.join(BASE_DIR, <span class="string">&#x27;media&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 跨域问题处理</span></span><br><span class="line"><span class="comment"># 允许简单请求，所有地址 相当于CORS_ORIGIN_ALLOW_ALL=&quot;*&quot;</span></span><br><span class="line">CORS_ALLOW_ALL_ORIGINS = <span class="literal">True</span></span><br><span class="line"><span class="comment"># 运行的请求</span></span><br><span class="line">CORS_ALLOW_METHODS = (</span><br><span class="line">    <span class="string">&#x27;DELETE&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;OPTIONS&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;PATCH&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;PUT&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;VIEW&#x27;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许的请求头</span></span><br><span class="line">CORS_ALLOW_HEADERS = (</span><br><span class="line">    <span class="string">&#x27;XMLHttpRequest&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;X_FILENAME&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;accept-encoding&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;authorization&#x27;</span>,  <span class="comment"># jwt</span></span><br><span class="line">    <span class="string">&#x27;content-type&#x27;</span>,  <span class="comment"># json</span></span><br><span class="line">    <span class="string">&#x27;dnt&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;origin&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;user-agent&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;x-csrftoken&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;x-requested-with&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Pragma&#x27;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入用户自定义配置</span></span><br><span class="line"><span class="keyword">from</span> .user_settings <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">JWT_AUTH = &#123;</span><br><span class="line">    <span class="comment"># 过期时间1天</span></span><br><span class="line">    <span class="string">&#x27;JWT_EXPIRATION_DELTA&#x27;</span>: datetime.timedelta(days=<span class="number">7</span>),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># redis 配置</span></span><br><span class="line">CACHES = &#123;</span><br><span class="line">    <span class="string">&quot;default&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;BACKEND&quot;</span>: <span class="string">&quot;django_redis.cache.RedisCache&quot;</span>,</span><br><span class="line">        <span class="string">&quot;LOCATION&quot;</span>: <span class="string">&quot;redis://127.0.0.1:6379&quot;</span>,</span><br><span class="line">        <span class="string">&quot;OPTIONS&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;CLIENT_CLASS&quot;</span>: <span class="string">&quot;django_redis.client.DefaultClient&quot;</span>,  <span class="comment"># 这句指的是django中的缓存也缓存到redis中了</span></span><br><span class="line">            <span class="string">&quot;CONNECTION_POOL_KWARGS&quot;</span>: &#123;<span class="string">&quot;max_connections&quot;</span>: <span class="number">100</span>&#125;  <span class="comment"># 连接池的大小</span></span><br><span class="line">            <span class="comment"># &quot;PASSWORD&quot;: &quot;123&quot;,</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="setting-user-settings-py"><a href="#setting-user-settings-py" class="headerlink" title="setting/user_settings.py"></a><code>setting/user_settings.py</code></h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用户自己的配置，单独放到另一个py文件中</span></span><br><span class="line">BANNER_COUNT = <span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户自己别的配置</span></span><br><span class="line"><span class="comment"># 上线后必须换成公网地址</span></span><br><span class="line"><span class="comment"># 后台基URL</span></span><br><span class="line">BASE_URL = <span class="string">&#x27;http://119.91.117.23:8080&#x27;</span></span><br><span class="line"><span class="comment"># 前台基URL</span></span><br><span class="line">LUFFY_URL = <span class="string">&#x27;http://119.91.117.23&#x27;</span></span><br><span class="line"><span class="comment"># 支付宝同步异步回调接口配置</span></span><br><span class="line"><span class="comment"># 后台post异步回调接口</span></span><br><span class="line">NOTIFY_URL = BASE_URL + <span class="string">&quot;/api/v1/order/success/&quot;</span></span><br><span class="line"><span class="comment"># 前台同步回调接口，没有 / 结尾</span></span><br><span class="line">RETURN_URL = LUFFY_URL + <span class="string">&quot;/pay/success&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="manage-pro-py"><a href="#manage-pro-py" class="headerlink" title="manage_pro.py"></a><code>manage_pro.py</code></h5><p>将 <code>manage.py</code> 复制一份改为 <code>manage_pro.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;Django&#x27;s command-line utility for administrative tasks.&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    os.environ.setdefault(<span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>, <span class="string">&#x27;luffy_api.setting.pro&#x27;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">from</span> django.core.management <span class="keyword">import</span> execute_from_command_line</span><br><span class="line">    <span class="keyword">except</span> ImportError <span class="keyword">as</span> exc:</span><br><span class="line">        <span class="keyword">raise</span> ImportError(</span><br><span class="line">            <span class="string">&quot;Couldn&#x27;t import Django. Are you sure it&#x27;s installed and &quot;</span></span><br><span class="line">            <span class="string">&quot;available on your PYTHONPATH environment variable? Did you &quot;</span></span><br><span class="line">            <span class="string">&quot;forget to activate a virtual environment?&quot;</span></span><br><span class="line">        ) <span class="keyword">from</span> exc</span><br><span class="line">    execute_from_command_line(sys.argv)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h5 id="导出模块"><a href="#导出模块" class="headerlink" title="导出模块"></a>导出模块</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
+
+<h4 id="提交代码"><a href="#提交代码" class="headerlink" title="提交代码"></a>提交代码</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add . </span><br><span class="line">git commit -m &quot;发布版本&quot;</span><br><span class="line">git tag -a v1.5 -m &quot;发布版本&quot;</span><br><span class="line">git push origin &quot;master&quot; --tags v1.5</span><br></pre></td></tr></table></figure>
+
+<h4 id="服务端上线"><a href="#服务端上线" class="headerlink" title="服务端上线"></a>服务端上线</h4><h5 id="拉取代码"><a href="#拉取代码" class="headerlink" title="拉取代码"></a>拉取代码</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /web/luffy</span><br><span class="line">git clone https://gitee.com/liuzhijin1/luffy_api.git</span><br></pre></td></tr></table></figure>
+
+<h5 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 进入虚拟环境</span></span><br><span class="line">workon luffy</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下载 mysqlclient 的依赖</span></span><br><span class="line">yum install mysql-devel -y</span><br><span class="line">yum install python-devel -y</span><br><span class="line">rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装所需模块</span></span><br><span class="line">pip install -r requirements.txt</span><br><span class="line">pip install uwsgi</span><br></pre></td></tr></table></figure>
+
+<h5 id="uwsgi与nginx配置"><a href="#uwsgi与nginx配置" class="headerlink" title="uwsgi与nginx配置"></a><code>uwsgi</code>与<code>nginx</code>配置</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> uwsgi</span></span><br><span class="line">cat &gt; /web/luffy/luffy_api/luffyapi.xml &lt;&lt;EOF</span><br><span class="line">&lt;uwsgi&gt;    </span><br><span class="line">   &lt;socket&gt;127.0.0.1:8888&lt;/socket&gt;</span><br><span class="line">   &lt;chdir&gt;/web/luffy/luffy_api/&lt;/chdir&gt;    </span><br><span class="line">   &lt;module&gt;luffy_api.wsgi&lt;/module&gt;</span><br><span class="line">   &lt;processes&gt;4&lt;/processes&gt;</span><br><span class="line">   &lt;daemonize&gt;uwsgi.log&lt;/daemonize&gt;</span><br><span class="line">&lt;/uwsgi&gt;</span><br><span class="line">EOF</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> nginx 配置文件</span></span><br><span class="line">cat &gt; /usr/local/nginx/conf/vhost/luffapi.conf&lt;&lt; EOF</span><br><span class="line">server &#123;</span><br><span class="line">    listen 8080;</span><br><span class="line">    server_name  127.0.0.1;</span><br><span class="line">    charset utf-8;</span><br><span class="line">    location / &#123;</span><br><span class="line">       include uwsgi_params;</span><br><span class="line">       uwsgi_pass 127.0.0.1:8888;</span><br><span class="line">       uwsgi_param UWSGI_SCRIPT luffy_api.wsgi;</span><br><span class="line">       uwsgi_param UWSGI_CHDIR /web/luffy/luffy_api/;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<h5 id="数据库创建用户"><a href="#数据库创建用户" class="headerlink" title="数据库创建用户"></a>数据库创建用户</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -pMysql12345?</span><br><span class="line"></span><br><span class="line">create database luffy default charset=utf8mb4;</span><br><span class="line">grant all privileges on luffy.* to &#x27;luffy&#x27;@&#x27;%&#x27; identified by &#x27;Luffy123?&#x27;;</span><br><span class="line">grant all privileges on luffy.* to &#x27;luffy&#x27;@&#x27;localhost&#x27; identified by &#x27;Luffy123?&#x27;;</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">quit</span><br></pre></td></tr></table></figure>
+
+<h5 id="数据库迁移"><a href="#数据库迁移" class="headerlink" title="数据库迁移"></a>数据库迁移</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 只有库，没有表，迁移数据</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 必须在luffy环境下</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 数据库迁移</span></span><br><span class="line">cd /web/luffy/luffy_api</span><br><span class="line">python manage_pro.py migrate</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 导入测试数据</span></span><br><span class="line">把原来本地的数据，导入到正式库中</span><br><span class="line">navicat 中导出先 结构和数据  放到桌面  </span><br><span class="line">然后导入到线上库做测试用 </span><br><span class="line">无法导入可能是编码格式有问题，将sql文件中的编码格式修改一下即可</span><br></pre></td></tr></table></figure>
+
+<h5 id="启动uwsgi"><a href="#启动uwsgi" class="headerlink" title="启动uwsgi"></a>启动uwsgi</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 可能缺少的依赖</span></span><br><span class="line">yum install libxml*</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 需要进入到虚拟环境中</span> </span><br><span class="line">workon luffy</span><br><span class="line">uwsgi -x ./luffyapi.xml</span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<h5 id="后台的静态样式收集和上线"><a href="#后台的静态样式收集和上线" class="headerlink" title="后台的静态样式收集和上线"></a>后台的静态样式收集和上线</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建静态文件目录</span></span><br><span class="line">mkdir /web/luffy/luffy_api/luffy_api/static -p</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改配置</span></span><br><span class="line">vim /web/luffy/luffy_api/luffy_api/setting/pro.py</span><br><span class="line">STATIC_URL = <span class="string">&#x27;/static/&#x27;</span></span><br><span class="line">STATIC_ROOT = <span class="string">&#x27;/web/luffy/luffy_api/luffy_api/static&#x27;</span>   </span><br><span class="line">STATICFILES_DIRS = (os.path.join(BASE_DIR, <span class="string">&quot;static&quot;</span>),)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 后台静态文件迁移 自动迁移到 上面创建的静态文件目录</span></span><br><span class="line">python /home/project/luffy_api/manage_pro.py collectstatic</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加入 nginx 的配置解析 后端是 8080端口的</span></span><br><span class="line">cat  /usr/local/nginx/conf/vhost/luffapi.conf </span><br><span class="line">server &#123;</span><br><span class="line">    listen <span class="number">8080</span>;</span><br><span class="line">    server_name  <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>;</span><br><span class="line">    charset utf-<span class="number">8</span>;</span><br><span class="line">    location / &#123;</span><br><span class="line">       include uwsgi_params;</span><br><span class="line">       uwsgi_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8888</span>;</span><br><span class="line">       uwsgi_param UWSGI_SCRIPT luffy_api.wsgi;</span><br><span class="line">       uwsgi_param UWSGI_CHDIR /web/luffy/luffy_api/;</span><br><span class="line">    &#125;</span><br><span class="line">    location /static &#123;</span><br><span class="line">       alias /web/luffy/luffy_api/luffy_api/static;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /media &#123;</span><br><span class="line">       alias /web/luffy/luffy_api/luffy_api/media;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2631bbe2.html" rel="prev" title="常用软件部署安装">
+                  <i class="fa fa-chevron-left"></i> 常用软件部署安装
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/99eec33e.html" rel="next" title="实战课页面功能">
+                  实战课页面功能 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">1.2m</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:53</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
