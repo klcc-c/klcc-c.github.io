@@ -20,15 +20,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Docker">
+<meta name="description" content="GolangGolang基础gRPC的使用Gin框架User-svc 容器操作">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kuberneters从入门到入土">
+<meta property="og:title" content="云原生从入门到放弃">
 <meta property="og:url" content="https://klcc.cc/30dd6ee6.html">
 <meta property="og:site_name" content="klcc">
-<meta property="og:description" content="Docker">
+<meta property="og:description" content="GolangGolang基础gRPC的使用Gin框架User-svc 容器操作">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-11T11:13:02.738Z">
-<meta property="article:modified_time" content="2022-05-02T10:39:08.122Z">
+<meta property="article:modified_time" content="2022-07-04T12:13:34.596Z">
 <meta property="article:author" content="klcc">
 <meta property="article:tag" content="Kuberneters">
 <meta name="twitter:card" content="summary">
@@ -38,10 +38,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/30dd6ee6.html","path":"30dd6ee6.html","title":"Kuberneters从入门到入土"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/30dd6ee6.html","path":"30dd6ee6.html","title":"云原生从入门到放弃"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Kuberneters从入门到入土 | klcc</title>
+<title>云原生从入门到放弃 | klcc</title>
   
 
   <script src="/js/third-party/analytics/baidu-analytics.js"></script>
@@ -89,9 +89,9 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">29</span></a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">23</span></a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">151</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">33</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">27</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">157</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -148,7 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker"><span class="nav-number">1.</span> <span class="nav-text">Docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Containerd"><span class="nav-number">2.</span> <span class="nav-text">Containerd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kuberneters%E5%9F%BA%E7%A1%80"><span class="nav-number">3.</span> <span class="nav-text">Kuberneters基础</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E5%AE%89%E5%85%A8"><span class="nav-number">4.</span> <span class="nav-text">配置管理安全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kuberneters%E7%BD%91%E7%BB%9C"><span class="nav-number">5.</span> <span class="nav-text">Kuberneters网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E5%BA%A6%E5%99%A8%E4%B8%8ECRD"><span class="nav-number">6.</span> <span class="nav-text">调度器与CRD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kuberneters%E5%AD%98%E5%82%A8"><span class="nav-number">7.</span> <span class="nav-text">Kuberneters存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Helm%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-number">8.</span> <span class="nav-text">Helm管理工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7"><span class="nav-number">9.</span> <span class="nav-text">应用可观测性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DevOps"><span class="nav-number">10.</span> <span class="nav-text">DevOps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Service-Mesh"><span class="nav-number">11.</span> <span class="nav-text">Service Mesh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E7%BB%B4%E6%8A%A4"><span class="nav-number">12.</span> <span class="nav-text">集群维护</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Golang"><span class="nav-number">1.</span> <span class="nav-text">Golang</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">容器操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kuberneters"><span class="nav-number">3.</span> <span class="nav-text">Kuberneters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Operator"><span class="nav-number">4.</span> <span class="nav-text">Operator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Prometheus%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91"><span class="nav-number">5.</span> <span class="nav-text">Prometheus二次开发</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -163,18 +163,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">151</span>
+          <span class="site-state-item-count">157</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -227,7 +227,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Kuberneters从入门到入土
+          云原生从入门到放弃
         </h1>
 
         <div class="post-meta-container">
@@ -269,7 +269,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>169</span>
+      <span>146</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -287,11 +287,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><span id="more"></span>
-<p><a href="https://klcc.cc/4a318272.html">CGroups和Namespace</a><br><a href="https://klcc.cc/cd988ed5.html">Docker使用</a></p>
-<h4 id="Containerd"><a href="#Containerd" class="headerlink" title="Containerd"></a>Containerd</h4><p><a href="https://klcc.cc/4610149.html">Containerd相关使用</a></p>
-<h4 id="Kuberneters基础"><a href="#Kuberneters基础" class="headerlink" title="Kuberneters基础"></a>Kuberneters基础</h4><p><a href="https://klcc.cc/60b500c7.html">kubeadm安装</a><br><a href="https://klcc.cc/2391e1e4.html">yaml资源清单格式</a><br><a href="https://klcc.cc/be528f81.html">Pod的基本使用</a></p>
-<h4 id="配置管理安全"><a href="#配置管理安全" class="headerlink" title="配置管理安全"></a>配置管理安全</h4><h4 id="Kuberneters网络"><a href="#Kuberneters网络" class="headerlink" title="Kuberneters网络"></a>Kuberneters网络</h4><h4 id="调度器与CRD"><a href="#调度器与CRD" class="headerlink" title="调度器与CRD"></a>调度器与CRD</h4><h4 id="Kuberneters存储"><a href="#Kuberneters存储" class="headerlink" title="Kuberneters存储"></a>Kuberneters存储</h4><h4 id="Helm管理工具"><a href="#Helm管理工具" class="headerlink" title="Helm管理工具"></a>Helm管理工具</h4><h4 id="应用可观测性"><a href="#应用可观测性" class="headerlink" title="应用可观测性"></a>应用可观测性</h4><h4 id="DevOps"><a href="#DevOps" class="headerlink" title="DevOps"></a>DevOps</h4><h4 id="Service-Mesh"><a href="#Service-Mesh" class="headerlink" title="Service Mesh"></a>Service Mesh</h4><h4 id="集群维护"><a href="#集群维护" class="headerlink" title="集群维护"></a>集群维护</h4>
+        <h4 id="Golang"><a href="#Golang" class="headerlink" title="Golang"></a>Golang</h4><p><a href="https://klcc.cc/66a817b6.html">Golang基础</a><br><a href="https://klcc.cc/7cd7dc76.html">gRPC的使用</a><br><a href="https://klcc.cc/6d104c29.html">Gin框架</a><br><a href="https://klcc.cc/33232ac3.html">User-svc</a></p>
+<h4 id="容器操作"><a href="#容器操作" class="headerlink" title="容器操作"></a>容器操作</h4><span id="more"></span>
+<p><a href="https://klcc.cc/4a318272.html">CGroups和Namespace</a><br><a href="https://klcc.cc/cd988ed5.html">Docker使用</a><br><a href="https://klcc.cc/4610149.html">Containerd相关使用</a></p>
+<h4 id="Kuberneters"><a href="#Kuberneters" class="headerlink" title="Kuberneters"></a>Kuberneters</h4><p><a href="https://klcc.cc/60b500c7.html">kubeadm安装</a><br><a href="https://klcc.cc/2391e1e4.html">yaml资源清单格式</a><br><a href="https://klcc.cc/be528f81.html">Pod的基本使用</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.qikqiak.com/k8strain/">第一期</a><br><a target="_blank" rel="noopener" href="https://www.qikqiak.com/k8strain2/">第二期</a><br><a target="_blank" rel="noopener" href="https://www.qikqiak.com/k3s/">第三期</a></p>
+<h4 id="Operator"><a href="#Operator" class="headerlink" title="Operator"></a>Operator</h4><h4 id="Prometheus二次开发"><a href="#Prometheus二次开发" class="headerlink" title="Prometheus二次开发"></a>Prometheus二次开发</h4>
     </div>
 
     
@@ -347,14 +348,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">1.2m</span>
+    <span title="站点总字数">1.4m</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">18:52</span>
+    <span title="站点阅读时长">21:10</span>
   </span>
 </div>
 <div class="busuanzi-count">

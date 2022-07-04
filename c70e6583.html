@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"klcc.cc","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Elasticsearch介绍产生背景1234567大规模数据的检索应对如下问题大量数据存储，只要机器硬盘够，就能存储数据安全性，分片和副本保证几个节点挂了，数据也是完整的大数据量的检索，倒排索引单点故障问题，分片和副本,某个节点挂了，数据完整">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch入门及使用">
+<meta property="og:url" content="https://klcc.cc/c70e6583.html">
+<meta property="og:site_name" content="klcc">
+<meta property="og:description" content="Elasticsearch介绍产生背景1234567大规模数据的检索应对如下问题大量数据存储，只要机器硬盘够，就能存储数据安全性，分片和副本保证几个节点挂了，数据也是完整的大数据量的检索，倒排索引单点故障问题，分片和副本,某个节点挂了，数据完整">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220525153449930.png">
+<meta property="article:published_time" content="2021-12-29T00:53:11.047Z">
+<meta property="article:modified_time" content="2022-07-04T12:02:51.876Z">
+<meta property="article:author" content="klcc">
+<meta property="article:tag" content="Elasticsearch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220525153449930.png">
+
+
+<link rel="canonical" href="https://klcc.cc/c70e6583.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://klcc.cc/c70e6583.html","path":"c70e6583.html","title":"Elasticsearch入门及使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Elasticsearch入门及使用 | klcc</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?725ad6b586949dd6e89c022fb8d748f7"></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">klcc</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">33</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">27</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">157</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Elasticsearch%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Elasticsearch介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A7%E7%94%9F%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">产生背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%92%8Csolr%E5%AF%B9%E6%AF%94"><span class="nav-number">1.3.</span> <span class="nav-text">和solr对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">1.4.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%92%8C%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">1.5.</span> <span class="nav-text">和关系型数据库的比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.6.</span> <span class="nav-text">使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">安装部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E9%83%A8%E7%BD%B2"><span class="nav-number">2.1.</span> <span class="nav-text">二进制部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">2.1.1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.2.</span> <span class="nav-text">简单配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8"><span class="nav-number">2.1.3.</span> <span class="nav-text">启动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPM%E5%8C%85%E5%AE%89%E8%A3%85"><span class="nav-number">2.2.</span> <span class="nav-text">RPM包安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="nav-number">2.3.</span> <span class="nav-text">ES集群部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E9%9B%86%E7%BE%A4"><span class="nav-number">2.3.1.</span> <span class="nav-text">部署集群</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%84%E5%88%92"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">规划</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">系统优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6"><span class="nav-number">2.3.1.3.</span> <span class="nav-text">下载软件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.3.1.4.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E5%AF%86%E7%A0%81"><span class="nav-number">2.3.1.5.</span> <span class="nav-text">开启密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8kibana"><span class="nav-number">2.3.1.6.</span> <span class="nav-text">启动kibana</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%A5%E5%BA%B7%E7%8A%B6%E6%80%81"><span class="nav-number">2.3.2.</span> <span class="nav-text">健康状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.3.3.</span> <span class="nav-text">集群节点类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2"><span class="nav-number">2.4.</span> <span class="nav-text">可视化界面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95"><span class="nav-number">3.1.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%A1%A3"><span class="nav-number">3.2.</span> <span class="nav-text">文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%A0%E5%B0%84"><span class="nav-number">3.3.</span> <span class="nav-text">映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.4.</span> <span class="nav-text">文档类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95"><span class="nav-number">3.5.</span> <span class="nav-text">倒排索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">基本的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E6%93%8D%E4%BD%9C"><span class="nav-number">4.1.</span> <span class="nav-text">索引操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%E7%AE%A1%E7%90%86"><span class="nav-number">4.2.</span> <span class="nav-text">映射管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5"><span class="nav-number">4.3.</span> <span class="nav-text">文档的增删改查</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.</span> <span class="nav-text">常用接口</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="klcc"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">klcc</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">157</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://klcc.cc/c70e6583.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="klcc">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="klcc">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Elasticsearch入门及使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-29 08:53:11" itemprop="dateCreated datePublished" datetime="2021-12-29T08:53:11+08:00">2021-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Elasticsearch/" itemprop="url" rel="index"><span itemprop="name">Elasticsearch</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>18k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>17 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="Elasticsearch介绍"><a href="#Elasticsearch介绍" class="headerlink" title="Elasticsearch介绍"></a><code>Elasticsearch</code>介绍</h2><h3 id="产生背景"><a href="#产生背景" class="headerlink" title="产生背景"></a>产生背景</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">大规模数据的检索</span><br><span class="line"></span><br><span class="line">应对如下问题</span><br><span class="line">大量数据存储，只要机器硬盘够，就能存储</span><br><span class="line">数据安全性，分片和副本保证几个节点挂了，数据也是完整的</span><br><span class="line">大数据量的检索，倒排索引</span><br><span class="line">单点故障问题，分片和副本,某个节点挂了，数据完整</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ES是elaticsearch简写， Elasticsearch是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据</span><br><span class="line">Elasticsearch使用Java开发，在Apache许可条款下开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便</span><br><span class="line">使用Lucene作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，使得全文检索变得简单</span><br><span class="line">设计用途：用于分布式全文检索，通过HTTP使用JSON进行数据索引，速度快</span><br><span class="line"></span><br><span class="line">Lucene</span><br><span class="line">  java中的搜索引擎，但是只能给java用，比较复杂，需要懂搜索引擎的知识</span><br><span class="line">  python想做搜索引擎-基于lucene，进行封装，做成web服务，提供restful接口，现在无论任何语言，只要发送http的resful请求，携带参数，就能完成搜素</span><br><span class="line">  </span><br><span class="line">Lucene与Elasticsearch关系</span><br><span class="line">	1）Lucene只是一个库。想要使用它，你必须使用Java来作为开发语言并将其直接集成到你的应用中，更糟糕的是，Lucene非常复杂，你需要深入了解检索的相关知识来理解它是如何工作的</span><br><span class="line">	2）Elasticsearch也使用Java开发并使用Lucene作为其核心来实现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得简单</span><br></pre></td></tr></table></figure>
+
+<h3 id="和solr对比"><a href="#和solr对比" class="headerlink" title="和solr对比"></a>和<code>solr</code>对比</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1）Solr是Apache Lucene项目的开源企业搜索平台。其主要功能包括全文检索、命中标示、分面搜索、动态聚类、数据库集成，以及富文本（如Word、PDF）的处理。</span><br><span class="line">2）Solr是高度可扩展的，并提供了分布式搜索和索引复制。Solr是最流行的企业级搜索引擎，Solr4 还增加了NoSQL支持。</span><br><span class="line">3）Solr是用Java编写、运行在Servlet容器（如 Apache Tomcat 或Jetty）的一个独立的全文搜索服务器。 Solr采用了 Lucene Java 搜索库为核心的全文索引和搜索，并具有类似REST的HTTP/XML和JSON的API</span><br><span class="line">4）Solr强大的外部配置功能使得无需进行Java编码，便可对 其进行调整以适应多种类型的应用程序。Solr有一个插件架构，以支持更多的高级定制</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> solr 也是一个用java开发的企业级搜索引擎</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 传统企业喜欢用solr，互联网企业喜欢用es</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Elasticsearch 与 Solr 的比较总结</span></span><br><span class="line">二者安装都很简单</span><br><span class="line">Solr 利用 Zookeeper 进行分布式管理，而 Elasticsearch 自身带有分布式协调管理功能</span><br><span class="line">Solr 支持更多格式的数据，而 Elasticsearch 仅支持json文件格式</span><br><span class="line">Solr 官方提供的功能更多，而 Elasticsearch 本身更注重于核心功能，高级功能多有第三方插件提供</span><br><span class="line">Solr 在传统的搜索应用中表现好于 Elasticsearch，但在处理实时搜索应用时效率明显低于 Elastics</span><br></pre></td></tr></table></figure>
+
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Cluster：集群</span><br><span class="line">	ES可以作为一个独立的单个搜索服务器。不过，为了处理大型数据集，实现容错和高可用性，ES可以运行在许多互相合作的服务器上。这些服务器的集合称为集群</span><br><span class="line">	</span><br><span class="line">Node：节点</span><br><span class="line">  形成集群的每个服务器称为节点</span><br><span class="line"></span><br><span class="line">Shard：分片</span><br><span class="line">  当有大量的文档时，由于内存的限制、磁盘处理能力不足、无法足够快的响应客户端的请求等，一个节点可能不够。这种情况下，数据可以分为较小的分片。每个分片放到不同的服务器上。</span><br><span class="line">当你查询的索引分布在多个分片上时，ES会把查询发送给每个相关的分片，并将结果组合在一起，而应用程序并不知道分片的存在。即：这个过程对用户来说是透明的</span><br><span class="line"></span><br><span class="line">Replia：副本</span><br><span class="line">  为提高查询吞吐量或实现高可用性，可以使用分片副本。</span><br><span class="line">  副本是一个分片的精确复制，每个分片可以有零个或多个副本。ES中可以有许多相同的分片，其中之一被选择更改索引操作，这种特殊的分片称为主分片。</span><br><span class="line">  当主分片丢失时，如：该分片所在的数据不可用时，集群将副本提升为新的主分片。</span><br><span class="line"><span class="meta">	#</span><span class="bash"> 注意区分主从</span></span><br><span class="line">	</span><br><span class="line">全文检索</span><br><span class="line">  全文检索就是对一篇文章进行索引，可以根据关键字搜索，类似于mysql里的like语句。</span><br><span class="line">  全文索引就是把内容根据词的意义进行分词，然后分别创建索引，例如”今日是周日我们出去玩” 可能会被分词成：“今天“，”周日“，“我们“，”出去玩“ 等token，这样当你搜索“周日” 或者 “出去玩” 都会把这句搜出来</span><br></pre></td></tr></table></figure>
+
+<h3 id="和关系型数据库的比较"><a href="#和关系型数据库的比较" class="headerlink" title="和关系型数据库的比较"></a>和关系型数据库的比较</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql          es</span><br><span class="line">数据库          索引</span><br><span class="line">表             类型</span><br><span class="line">建表语句        mapping(映射)建表</span><br><span class="line">数据行          文档</span><br><span class="line">字段            字段</span><br><span class="line"></span><br><span class="line">增删查改        get，put，post，delete。。。。</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ELK---》不懂开发的运维---》不能扩展功能</span></span><br><span class="line">ELK=elasticsearch+Logstash+kibana</span><br><span class="line">elasticsearch：后台分布式存储以及全文检索</span><br><span class="line">logstash: 日志加工、“搬运工”</span><br><span class="line">kibana：数据可视化展示。</span><br><span class="line">ELK架构为数据分布式存储、可视化查询和日志解析创建了一个功能强大的管理链。 三者相互配合，取长补短，共同完成分布式大数据处理工作</span><br><span class="line"><span class="meta">#</span><span class="bash"> ELK是Logstash、Elasticsearch、Kibana的集合。其中 ELasticsearch 负责日志分析和存储，Logstash负责日志收集，Kibana 负责界面展示。</span></span><br><span class="line">EFK 是Elasticsearch，FileBeat，Kibana的集合。与ELK不同的是，FileBeat替代了Logstash，负责日志收集</span><br><span class="line">Logstash	数据收集引擎。它支持动态的从各种数据源搜集数据，并对数据进行过滤、分析、丰富、统一格式等操作，然后存储到用户指定的位置</span><br><span class="line">Filebeat	轻量级数据收集引擎。基于原先 Logstash-fowarder 的源码改造出来。换句话说：Filebeat就是新版的 Logstash-fowarder，也会是 ELK Stack 在 shipper 端的第一选择</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Elasticsearch特点和优势</span></span><br><span class="line">1）分布式实时文件存储，可将每一个字段存入索引，使其可以被检索到</span><br><span class="line">2）实时分析的分布式搜索引擎。</span><br><span class="line">分布式：索引分拆成多个分片，每个分片可有零个或多个副本。集群中的每个数据节点都可承载一个或多个分片，并且协调和处理各种操作；</span><br><span class="line">负载再平衡和路由在大多数情况下自动完成。</span><br><span class="line">3）可以扩展到上百台服务器，处理PB级别的结构化或非结构化数据。也可以运行在单台PC上</span><br><span class="line">4）支持插件机制，分词插件(中文分词)、同步插件、可视化插件(kibana)等</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 国内外优秀案例</span></span><br><span class="line">github  2013年全部换成es作为搜索引擎</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 我们应用场景 只要涉及到大数据量搜索，全文检索，都可以使用</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Elasticsearch索引到底能处理多大数据</span></span><br><span class="line">单一索引的极限取决于存储索引的硬件、索引的设计、如何处理数据以及你为索引备份了多少副本。</span><br><span class="line"></span><br><span class="line">通常来说，一个Lucene索引（也就是一个elasticsearch分片，一个es索引默认5个分片）不能处理多于21亿篇文档，或者多于2740亿的唯一词条。但达到这个极限之前，我们可能就没有足够的磁盘空间了！</span><br><span class="line">当然，一个分片如何很大的话，读写性能将会变得非常差</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><h3 id="二进制部署"><a href="#二进制部署" class="headerlink" title="二进制部署"></a>二进制部署</h3><h4 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#系统优化</span></span><br><span class="line">vim /etc/security/limits.conf   <span class="comment">#断开连接或者重新登录生效</span></span><br><span class="line"><span class="comment"># End of file</span></span><br><span class="line">* soft nofile 65535</span><br><span class="line">* hard nofile 65535</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 131072</span><br><span class="line">* soft nproc 4096</span><br><span class="line">* hard nproc 4096</span><br><span class="line">* soft memlock unlimited</span><br><span class="line">* hard memlock unlimited</span><br><span class="line"></span><br><span class="line">vim /etc/sysctl.conf</span><br><span class="line">vm.max_map_count=655360</span><br><span class="line">vm.swappiness=0</span><br><span class="line"></span><br><span class="line">sysctl -p</span><br><span class="line"><span class="built_in">ulimit</span> -n</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载tar包</span></span><br><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.13.0-linux-x86_64.tar.gz</span><br><span class="line"></span><br><span class="line">useradd elastic</span><br><span class="line">tar xf elasticsearch-7.13.0-linux-x86_64.tar.gz</span><br><span class="line">mv elasticsearch-7.13.0 /usr/<span class="built_in">local</span>/elasticsearch</span><br><span class="line">chown -R elastic:elastic /usr/<span class="built_in">local</span>/elasticsearch</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">wget https://artifacts.elastic.co/downloads/kibana/kibana-7.13.0-linux-x86_64.tar.gz</span><br><span class="line">tar xf kibana-7.13.0-linux-x86_64.tar.gz</span><br><span class="line">mv kibana-7.13.0-linux-x86_64 /usr/<span class="built_in">local</span>/kibana</span><br><span class="line">chown -R elastic:elastic /usr/<span class="built_in">local</span>/kibana</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据位置</span></span><br><span class="line">mkdir /data/elastic/logs -p</span><br><span class="line">chown -R elastic:elastic /data/elastic/</span><br></pre></td></tr></table></figure>
+
+<h4 id="简单配置文件"><a href="#简单配置文件" class="headerlink" title="简单配置文件"></a>简单配置文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简单的配置修改</span></span><br><span class="line"><span class="comment"># elasticsearch地址修改</span></span><br><span class="line">vim /usr/<span class="built_in">local</span>/elasticsearch/config/elasticsearch.yml</span><br><span class="line">...</span><br><span class="line">network.host: 127.0.0.1</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment"># jvm内存调整(一般建议为物理内存的一半)</span></span><br><span class="line">vim /usr/<span class="built_in">local</span>/elasticsearch/config/jvm.options</span><br><span class="line">...</span><br><span class="line">-Xms512m</span><br><span class="line">-Xmx512m</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment"># kibana简单配置文件</span></span><br><span class="line">vim /usr/<span class="built_in">local</span>/kibana/config/kibana.yml</span><br><span class="line">...</span><br><span class="line">server.port: 5601       <span class="comment"># kibana默认监听端 口</span></span><br><span class="line">server.host: <span class="string">&quot;0.0.0.0&quot;</span>  <span class="comment"># 设置地址</span></span><br><span class="line">elasticsearch.hosts: [<span class="string">&quot;http://localhost:9200&quot;</span>] <span class="comment"># kibana 丛 coordinating节点获取数据 可以多个</span></span><br><span class="line">i18n.locale: <span class="string">&quot;zh-CN&quot;</span>    <span class="comment"># 设置中文</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 切换用户(elasticsearch和kibana默认是不能使用root用户启动的)</span><br><span class="line">su - elastic</span><br><span class="line"></span><br><span class="line"># 启动elasticsearch</span><br><span class="line">/usr/local/elasticsearch/bin/elasticsearch -d</span><br><span class="line"></span><br><span class="line"># 如果使用了root用户启动的话再次启动需要删除下面的文件</span><br><span class="line">rm -f /usr/local/elasticsearch/config/elasticsearch.keystore</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"># 启动kibana(没有-d参数，可以用nohup或者写启动脚本)</span><br><span class="line">/usr/local/kibana/bin/kibana &amp;</span><br><span class="line"></span><br><span class="line"># 浏览器访问kibana</span><br><span class="line">https://IP:5601</span><br></pre></td></tr></table></figure>
+
+<h3 id="RPM包安装"><a href="#RPM包安装" class="headerlink" title="RPM包安装"></a>RPM包安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">yum install java -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载rpm包</span></span><br><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.13.0-x86_64.rpm</span><br><span class="line">wget https://artifacts.elastic.co/downloads/kibana/kibana-7.13.0-x86_64.rpm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">rpm -ivh elasticsearch-7.13.0-x86_64.rpm</span><br><span class="line">rpm -ivh kibana-7.13.0-x86_64.rpm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件位置，配置修改参考二进制部署</span></span><br><span class="line">/etc/elasticsearch/</span><br><span class="line">/etc/kibana/</span><br><span class="line"></span><br><span class="line">systemctl start elasticsearch.service</span><br><span class="line">systemctl start kibana.service</span><br></pre></td></tr></table></figure>
+
+<h3 id="ES集群部署"><a href="#ES集群部署" class="headerlink" title="ES集群部署"></a>ES集群部署</h3><h4 id="部署集群"><a href="#部署集群" class="headerlink" title="部署集群"></a>部署集群</h4><h5 id="规划"><a href="#规划" class="headerlink" title="规划"></a>规划</h5><table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th>IP地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">node1</td>
+<td>192.168.0.21</td>
+</tr>
+<tr>
+<td align="left">node2</td>
+<td>192.168.0.21</td>
+</tr>
+<tr>
+<td align="left">node3</td>
+<td>192.168.0.21</td>
+</tr>
+</tbody></table>
+<h5 id="系统优化"><a href="#系统优化" class="headerlink" title="系统优化"></a>系统优化</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 三台主机都要操作</span></span><br><span class="line">vim /etc/security/limits.conf   # 断开连接或者重新登录生效</span><br><span class="line"><span class="meta">#</span><span class="bash"> End of file</span></span><br><span class="line">* soft nofile 65535</span><br><span class="line">* hard nofile 65535</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 131072</span><br><span class="line">* soft nproc 4096</span><br><span class="line">* hard nproc 4096</span><br><span class="line">* soft memlock unlimited</span><br><span class="line">* hard memlock unlimited</span><br><span class="line"></span><br><span class="line">vim /etc/sysctl.conf</span><br><span class="line">vm.max_map_count=655360</span><br><span class="line">vm.swappiness=0</span><br><span class="line"></span><br><span class="line">sysctl -p</span><br><span class="line">ulimit -n</span><br></pre></td></tr></table></figure>
+
+<h5 id="下载软件"><a href="#下载软件" class="headerlink" title="下载软件"></a>下载软件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 三台主机都要操作</span></span><br><span class="line">yum install java -y</span><br><span class="line">useradd elastic</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> elasticsearch</span></span><br><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.13.0-linux-x86_64.tar.gz</span><br><span class="line">tar xf elasticsearch-7.13.0-linux-x86_64.tar.gz</span><br><span class="line">mv elasticsearch-7.13.0 /usr/local/elasticsearch</span><br><span class="line">chown -R elastic:elastic /usr/local/elasticsearch</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> kibana</span></span><br><span class="line">wget https://artifacts.elastic.co/downloads/kibana/kibana-7.13.0-linux-x86_64.tar.gz</span><br><span class="line">tar xf kibana-7.13.0-linux-x86_64.tar.gz</span><br><span class="line">mv kibana-7.13.0-linux-x86_64 /usr/local/kibana</span><br><span class="line">chown -R elastic:elastic /usr/local/kibana</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 数据位置</span></span><br><span class="line">mkdir /data/elastic/logs -p</span><br><span class="line">chown -R elastic:elastic /data/elastic/</span><br></pre></td></tr></table></figure>
+
+<h5 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> node1</span></span><br><span class="line">grep ^[a-z] /usr/local/elasticsearch/config/elasticsearch.yml </span><br><span class="line">cluster.name: my-application       # 集群名称</span><br><span class="line">node.name: node-1                  # 节点名称</span><br><span class="line">path.data: /data/elastic           # 数据存储路径</span><br><span class="line">path.logs: /data/elastic/logs      # 日志存储路径</span><br><span class="line">network.host: 192.168.0.21         # 监听在本地哪个地址上</span><br><span class="line">http.port: 9200                    # 监听端口</span><br><span class="line">discovery.seed_hosts: [&quot;192.168.0.21&quot;, &quot;192.168.0.22&quot;, &quot;192.168.0.23&quot;]           # 集群主机列表</span><br><span class="line">cluster.initial_master_nodes: [&quot;192.168.0.21&quot;, &quot;192.168.0.22&quot;, &quot;192.168.0.23&quot;]   # 仅第一次启动集群时进行选举</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> node2</span></span><br><span class="line">grep ^[a-z] /usr/local/elasticsearch/config/elasticsearch.yml</span><br><span class="line">cluster.name: my-application</span><br><span class="line">node.name: node-2</span><br><span class="line">path.data: /data/elastic</span><br><span class="line">path.logs: /data/elastic/logs</span><br><span class="line">network.host: 192.168.0.22</span><br><span class="line">http.port: 9200</span><br><span class="line">discovery.seed_hosts: [&quot;192.168.0.21&quot;, &quot;192.168.0.22&quot;, &quot;192.168.0.23&quot;]</span><br><span class="line">cluster.initial_master_nodes: [&quot;192.168.0.21&quot;, &quot;192.168.0.22&quot;, &quot;192.168.0.23&quot;]</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> node3</span> </span><br><span class="line">grep ^[a-z] /usr/local/elasticsearch/config/elasticsearch.yml</span><br><span class="line">cluster.name: my-application</span><br><span class="line">node.name: node-3</span><br><span class="line">path.data: /data/elastic</span><br><span class="line">path.logs: /data/elastic/logs</span><br><span class="line">network.host: 192.168.0.23</span><br><span class="line">http.port: 9200</span><br><span class="line">discovery.seed_hosts: [&quot;192.168.0.21&quot;, &quot;192.168.0.22&quot;, &quot;192.168.0.23&quot;]</span><br><span class="line">cluster.initial_master_nodes: [&quot;192.168.0.21&quot;, &quot;192.168.0.22&quot;, &quot;192.168.0.23&quot;]</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 优化</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 锁定物理内存地址，避免es使用swap交换分区，频繁 的交换，会导致IOPS变高</span></span></span><br><span class="line">   bootstrap.memory_lock: true</span><br><span class="line">   </span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># jvm参数 可根据服务器内存大小，修改为合适的值。一般设置为服 务器物理内存的一半最佳，但最大不能超过32G</span></span></span><br><span class="line">   vim /usr/local/elasticsearch/config/jvm.options</span><br><span class="line">   -Xms31g # 最小堆内存</span><br><span class="line">   -Xmx31g # 最大堆内存</span><br><span class="line">   </span><br><span class="line"><span class="meta">   #</span><span class="bash"> 每天1TB左右的数据量的服务器配置</span></span><br><span class="line"><span class="meta">   #</span><span class="bash"> 16C 64G 6T 3台ECS</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="开启密码"><a href="#开启密码" class="headerlink" title="开启密码"></a>开启密码</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> node1 机器上操作</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 生成证书和密钥 免交互的</span>  </span><br><span class="line">/usr/local/elasticsearch/bin/elasticsearch-certutil ca --out /usr/local/elasticsearch/config/elastic-stack-ca.p12 --pass &#x27;&#x27;</span><br><span class="line">/usr/local/elasticsearch/bin/elasticsearch-certutil cert --ca /usr/local/elasticsearch/config/elastic-stack-ca.p12 --pass &#x27;&#x27; --ca-pass &#x27;&#x27; --out /usr/local/elasticsearch/config/elastic-certificates.p12</span><br><span class="line"><span class="meta">#</span><span class="bash"> 非免交互的在生成证书和密钥的过程，直接回车即可，使用默认的名字和空密码</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 发送证书给其他机器</span></span><br><span class="line">scp -rp  /usr/local/elasticsearch/config/elastic-stack-ca.p12      root@192.168.0.22:/usr/local/elasticsearch/config/</span><br><span class="line">scp -rp  /usr/local/elasticsearch/config/elastic-certificates.p12  root@192.168.0.22:/usr/local/elasticsearch/config/</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 保证权限</span></span><br><span class="line">chown -R elastic:elastic /usr/local/elasticsearch </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 三台机器上都追加该配置信息</span></span><br><span class="line">vim /usr/local/elasticsearch/config/elasticsearch.yml</span><br><span class="line">xpack.security.enabled: true                                              #开启安全功能</span><br><span class="line">xpack.security.transport.ssl.enabled: true                                #开启传输的时候通过SSL加密功能</span><br><span class="line">xpack.security.transport.ssl.verification_mode: certificate               #认证模式是证书认证</span><br><span class="line">xpack.security.transport.ssl.keystore.path: /usr/local/elasticsearch/config/elastic-certificates.p12    # 证书位置</span><br><span class="line">xpack.security.transport.ssl.truststore.path: /usr/local/elasticsearch/config/elastic-certificates.p12  # 证书位置</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果节点证书配置密码的话，这里要加入密码库</span></span><br><span class="line">/usr/local/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.keystore.secure_password</span><br><span class="line">/usr/local/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.truststore.secure_password</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 全部机器都启动 elasticsearch</span></span><br><span class="line">su - elastic</span><br><span class="line">/usr/local/elasticsearch/bin/elasticsearch -d</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> node1 机器上操作</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 初始化密码</span></span><br><span class="line">/usr/local/elasticsearch/bin/elasticsearch-setup-passwords interactive</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 上面只是elasticsearch开启了密码</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="启动kibana"><a href="#启动kibana" class="headerlink" title="启动kibana"></a>启动<code>kibana</code></h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将kibana安装在node1上</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 将证书拷贝到kibana相关目录(还是在elastic用户下操作)</span></span><br><span class="line">su - elastic</span><br><span class="line">cp -rp /usr/local/elasticsearch/config/elastic-* /usr/local/kibana/config</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 有两种解决认证的方式</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 将用户名密码写在配置文件中 设置密码，账户一定要是elastic，密码也一定要是之前设置的密码 (不推荐)</span></span></span><br><span class="line">   vim /usr/local/kibana/config/kibana.yml </span><br><span class="line">   elasticsearch.username: &quot;elastic&quot;</span><br><span class="line">   elasticsearch.password: &quot;111111&quot;</span><br><span class="line">   elasticsearch.ssl.certificate: /usr/local/kibana/config/elastic-certificates.p12</span><br><span class="line">   elasticsearch.ssl.key: /usr/local/kibana/config/elastic-stack-ca.p12</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 通过keystore配置加密的用户名密码信息</span></span></span><br><span class="line">   vim /usr/local/kibana/config/kibana.yml </span><br><span class="line">   elasticsearch.ssl.certificate: /usr/local/kibana/config/elastic-certificates.p12</span><br><span class="line">   elasticsearch.ssl.key: /usr/local/kibana/config/elastic-stack-ca.p12</span><br><span class="line">   </span><br><span class="line"><span class="meta">   #</span><span class="bash"> 用户名是elastic 密码是设置的密码</span></span><br><span class="line">   /usr/local/kibana/bin/kibana-keystore create </span><br><span class="line">   /usr/local/kibana/bin/kibana-keystore add elasticsearch.username</span><br><span class="line">   /usr/local/kibana/bin/kibana-keystore add elasticsearch.password</span><br><span class="line">   </span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置文件</span></span><br><span class="line">grep ^[a-z] config/kibana.yml </span><br><span class="line">server.port: 5601</span><br><span class="line">server.host: &quot;0.0.0.0&quot;</span><br><span class="line">elasticsearch.hosts: [&quot;http://192.168.0.21:9200&quot;, &quot;http://192.168.0.22:9200&quot;, &quot;http://192.168.0.23:9200&quot;]</span><br><span class="line">i18n.locale: &quot;zh-CN&quot;</span><br><span class="line">elasticsearch.ssl.certificate: /usr/local/kibana/config/elastic-certificates.p12</span><br><span class="line">elasticsearch.ssl.key: /usr/local/kibana/config/elastic-stack-ca.p12</span><br><span class="line">xpack.reporting.encryptionKey: &quot;a_random_string&quot;</span><br><span class="line">xpack.security.encryptionKey: &quot;something_at_least_32_characters&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 启动 nohup</span></span><br><span class="line">/usr/local/kibana/bin/kibana &amp;</span><br></pre></td></tr></table></figure>
+
+<h4 id="健康状态"><a href="#健康状态" class="headerlink" title="健康状态"></a>健康状态</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Cluster Health 获取集群的健康状态，整个集群状态</span><br><span class="line">包括以下三种:</span><br><span class="line">1.green 健康状态，指所有主副分片都正常分配 </span><br><span class="line">2.yellow 指所有主分片都正常分配，但是有副本分 片未正常分配</span><br><span class="line">3.red 有主分片未分配，表示索引不完备，写可能有 问题。(但不代表不能存储数据和读取数据)</span><br><span class="line"></span><br><span class="line">检查 ES 集群是否正常运行，可以通过 curl、Cerebro 两种方式</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 方式一</span></span><br><span class="line">curl 192.168.0.22:9200/_cluster/health?pretty=true</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 方式二 Cerebor</span></span><br><span class="line">https://github.com/lmenezes/cerebro/releases</span><br><span class="line">rpm -ivh cerebro-0.9.4-1.noarch.rpm</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改存放数据的地方</span></span><br><span class="line">vim /etc/cerebro/application.conf</span><br><span class="line">data.path: &quot;/var/lib/cerebro/cerebro.db&quot;</span><br><span class="line">systemctl start cerebro</span><br><span class="line">netstat -lntup |grep 9000</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 浏览器访问</span></span><br><span class="line">192.168.0.22:9000  # 然后填入 es的地址 如 192.168.0.22:9200</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://klcc-img-1251900471.cos.ap-chengdu.myqcloud.com/img/image-20220525153449930.png" alt="image-20220525153449930"></p>
+<h4 id="集群节点类型"><a href="#集群节点类型" class="headerlink" title="集群节点类型"></a>集群节点类型</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Cluster State</span><br><span class="line">集群相关的数据称为cluster state会存储在每个节点中，主要有如下信息: </span><br><span class="line">1)节点信息，比如节点名称、节点连接地址等</span><br><span class="line">2)索引信息，比如索引名称、索引配置信息等</span><br><span class="line"></span><br><span class="line">Master</span><br><span class="line">集群中只能有一个 节点， 节点 用于控制整个集群的操作;</span><br><span class="line">主要维护cluster state，当有新数据产生后，Master会将数据同步给其他Node节点；</span><br><span class="line">master节点是通过选举产生的，可以通过 node.master:true 指定为Master节点，默认是true</span><br><span class="line">当使用API创建索引 Cluster state 则会发生变化，由Master同步至其他Node节点</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">存储数据的节点即为data节点，默认节点都是data类型，配置node.data:true </span><br><span class="line">当创建索引后，索引创建的数据会存储至某个节点， 能够存储数据的节点，称为 data 节点</span><br><span class="line"></span><br><span class="line">Coordinating</span><br><span class="line">处理请求的节点即为coordinating节点，该节点为所有节点的默认角色，不能取消</span><br><span class="line">coordinating节点主要将请求路由到正确的节点处理。比如创建索引的请求会由coordinating路由到master节点处理，当配置node.master:false、node.data:false则为coordinating节点</span><br></pre></td></tr></table></figure>
+
+<h3 id="可视化界面"><a href="#可视化界面" class="headerlink" title="可视化界面"></a>可视化界面</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> elasticsearch-head</span></span><br><span class="line">https://github.com/mobz/elasticsearch-head</span><br><span class="line"></span><br><span class="line">cd elasticsearch-head</span><br><span class="line">npm install</span><br><span class="line">npm run start</span><br><span class="line">http://localhost:9100/</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 跨域的配置---》es的config目录下的elasticsearch.yml</span></span><br><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 可以不用安装也可以使用，谷歌浏览器插件中有 elasticsearch-head</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> kibana 安装如上集群，可以操作es</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">索引（index）是 Elasticsearch 对逻辑数据的逻辑存储，所以它可以 分为更小的部分</span><br><span class="line">可以把索引看成关系型数据库的表，索引的结构是为快速有效的全文索 引准备的，特别是它不存储原始值</span><br><span class="line">Elasticsearch 可以把索引存放在一台机器或者分散在多台服务器上， 每个索引有一或多个分片（shard），每个分片可以有多个副本（replica）</span><br></pre></td></tr></table></figure>
+
+<h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Elasticsearch是面向文档的，文档是所有可搜索数据的最小单位</span><br><span class="line">存储在 Elasticsearch 中的主要实体叫文档（document）。用关系型数 据库来类比的话，一个文档相当于数据库表中的一行记录</span><br><span class="line">Elasticsearch 和 MongoDB 中的文档类似，都可以有不同的结构，但 Elasticsearch 的文档中，相同字段必须有相同类型</span><br><span class="line">文档由多个字段组成，每个字段可能多次出现在一个文档里，这样的字 段叫多值字段（multivalued）。 每个字段的类型，可以是文本、数值、日期等。 字段类型也可以是复杂类型，一个字段包含其他子文档或者数组</span><br></pre></td></tr></table></figure>
+
+<h3 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">所有文档写进索引之前都会先进行分析，如何将输入的文本分割为词条、哪 些词条又会被过滤，这种行为叫做映射（mapping） 一般由用户自己定义规则</span><br></pre></td></tr></table></figure>
+
+<h3 id="文档类型"><a href="#文档类型" class="headerlink" title="文档类型"></a>文档类型</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在 Elasticsearch 中，一个索引对象可以存储很多不同用途的对象。例如，一个博客应用程序可以保存文章和评论</span><br><span class="line">每个文档可以有不同的结构</span><br><span class="line">不同的文档类型不能为相同的属性设置不同的类型。例如，在同一索引 中的所有文档类型中，一个叫 title 的字段必须具有相同的类型</span><br></pre></td></tr></table></figure>
+
+<h3 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 面试es重点：倒排索引  keywords和text区别</span></span><br><span class="line">	keyword不分词，直接建索引  </span><br><span class="line">  text要分词，再建索引</span><br><span class="line"><span class="meta">#</span><span class="bash"> 倒排索引：通过关键字简历索引查询文档，存的时候对关键字建立索引</span></span><br><span class="line">文章id  ---&gt; 文章内容  ---&gt; 正向索引</span><br><span class="line">关键词1</span><br><span class="line">关键词2 ---&gt; 文章内容1，文章内容2 ---&gt; 倒排索引</span><br><span class="line">关键词3</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 总结</span></span><br><span class="line">- 反向索引又叫倒排索引，是根据文章内容中的关键字建立索引</span><br><span class="line">- 搜索引擎原理就是建立反向索引</span><br><span class="line">- Elasticsearch 在 Lucene 的基础上进行封装，实现了分布式搜索引擎</span><br><span class="line">- Elasticsearch 中的索引、类型和文档的概念比较重要，类似于 MySQL 中的数据库、表和行</span><br><span class="line">- Elasticsearch 也是 Master-slave 架构，也实现了数据的分片和备份</span><br><span class="line">- Elasticsearch 一个典型应用就是 ELK 日志分析系统</span><br></pre></td></tr></table></figure>
+
+<h2 id="基本的使用"><a href="#基本的使用" class="headerlink" title="基本的使用"></a>基本的使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Elasticsearch是通过RUSTful API来操作数据的，包括CRUD，创建索引，删除索引等</span><br></pre></td></tr></table></figure>
+
+<h3 id="索引操作"><a href="#索引操作" class="headerlink" title="索引操作"></a>索引操作</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在 Lucene 中，创建索引是需要定义字段名称以及字段的类型的，在 Elasticsearch 中提供了非结构化的索引，就是不需要创建索引结构，即可写入 数据到索引中，实际上在 Elasticsearch 底层会进行结构化操作，此操作对用户是透明的</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 索引对等mysql的数据库 在kibana中操作</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 新增索引 建立一个 <span class="built_in">test</span> 索引，有5个分片，每个分片一个副本</span></span><br><span class="line">PUT test</span><br><span class="line">&#123;</span><br><span class="line">  &quot;settings&quot;: &#123;</span><br><span class="line">    &quot;index&quot;:&#123;</span><br><span class="line">      &quot;number_of_shards&quot;:5,</span><br><span class="line">      &quot;number_of_replicas&quot;:1</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看索引</span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> 获取lqz2索引的配置信息</span></span><br><span class="line">  GET test/_settings</span><br><span class="line"><span class="meta">  #</span><span class="bash"> 获取所有索引的配置信息</span></span><br><span class="line">  GET _all/_settings</span><br><span class="line">  GET _settings</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改索引(一般不改)</span></span><br><span class="line">PUT test/_settings</span><br><span class="line">&#123;</span><br><span class="line">  &quot;number_of_replicas&quot;: 2</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除索引</span></span><br><span class="line">DELETE test</span><br></pre></td></tr></table></figure>
+
+<h3 id="映射管理"><a href="#映射管理" class="headerlink" title="映射管理"></a>映射管理</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 对比mysql中建表语句</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> es 6.x之前，一个索引下可以有多个类型  ---&gt; 一个库下可以有多个表，6.x 可以使用多个类型，但不能创建了</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> es 6.x以后，一个索引下只能有一个类型  ---&gt;一个库下只能有一个表</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在es中，索引没有，类型没有，可以直接插入文档--》插入文档后，自动创建索引和类型，</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mysql必须先建库，再建表，再插入数据</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建类型</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 6.x之前的建立类型，给books索引，建立一个类型book类型，无论索引是否存在</span></span></span><br><span class="line">PUT books</span><br><span class="line">&#123;</span><br><span class="line">  &quot;mappings&quot;: &#123;</span><br><span class="line">    &quot;book&quot;:&#123;</span><br><span class="line">      &quot;properties&quot;:&#123;</span><br><span class="line">        &quot;title&quot;:&#123;</span><br><span class="line">          &quot;type&quot;:&quot;text&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;price&quot;:&#123;</span><br><span class="line">          &quot;type&quot;:&quot;integer&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;addr&quot;:&#123;</span><br><span class="line">          &quot;type&quot;:&quot;keyword&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;company&quot;:&#123;</span><br><span class="line">          &quot;properties&quot;:&#123;</span><br><span class="line">            &quot;name&quot;:&#123;&quot;type&quot;:&quot;text&quot;&#125;,</span><br><span class="line">            &quot;company_addr&quot;:&#123;&quot;type&quot;:&quot;text&quot;&#125;,</span><br><span class="line">            &quot;employee_count&quot;:&#123;&quot;type&quot;:&quot;integer&quot;&#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;publish_date&quot;:&#123;&quot;type&quot;:&quot;date&quot;,&quot;format&quot;:&quot;yyy-MM-dd&quot;&#125;</span><br><span class="line">       </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 6.x以后的建立类型 ---&gt; 不能建多个类型了，不需要指定类型，默认叫 _doc</span></span></span><br><span class="line">PUT books</span><br><span class="line">&#123;</span><br><span class="line">  &quot;mappings&quot;: &#123;</span><br><span class="line">    &quot;properties&quot;:&#123;</span><br><span class="line">      &quot;title&quot;:&#123;</span><br><span class="line">        &quot;type&quot;:&quot;text&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;price&quot;:&#123;</span><br><span class="line">        &quot;type&quot;:&quot;integer&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;addr&quot;:&#123;</span><br><span class="line">        &quot;type&quot;:&quot;keyword&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;company&quot;:&#123;</span><br><span class="line">        &quot;properties&quot;:&#123;</span><br><span class="line">          &quot;name&quot;:&#123;&quot;type&quot;:&quot;text&quot;&#125;,</span><br><span class="line">          &quot;company_addr&quot;:&#123;&quot;type&quot;:&quot;text&quot;&#125;,</span><br><span class="line">          &quot;employee_count&quot;:&#123;&quot;type&quot;:&quot;integer&quot;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;publish_date&quot;:&#123;&quot;type&quot;:&quot;date&quot;,&quot;format&quot;:&quot;yyy-MM-dd&quot;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> python 没有基础数据类型 ---&gt; 对象 ---&gt; 整形可以无限长</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 字段类型  字段数据类型</span></span><br><span class="line">  string类型：text，keyword</span><br><span class="line">  数字类型：byte(int8-&gt;一个字节)，short(int16-&gt;2个字节)，integer(int32-&gt;4个字节)，long(int64--&gt;8个字节)，float(float32),double(float64)</span><br><span class="line">  日期类型：data</span><br><span class="line">  布尔类型：boolean</span><br><span class="line">  binary类型：binary</span><br><span class="line">  复杂类型：object（实体，对象），nested（列表）</span><br><span class="line">  geo类型：geo-point，geo-shape（地理位置）</span><br><span class="line">  专业类型：ip，competion（搜索建议）</span><br><span class="line">  </span><br><span class="line"><span class="meta">  </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 字段参数 ---&gt; 字段有参数</span></span><br><span class="line">store	值为yes表示存储，no表示不存储，默认为yes	all</span><br><span class="line">index	yes表示分析，no表示不分析，默认为true	text</span><br><span class="line">null_value	如果字段为空，可以设置一个默认值，比如&quot;NA&quot;（传过来为空，不能搜索，na可以搜索）	all</span><br><span class="line">analyzer	可以设置索引和搜索时用的分析器，默认使用的是standard分析器，还可以使用whitespace，simple。都是英文分析器	all</span><br><span class="line">include_in_all	默认es为每个文档定义一个特殊域_all,它的作用是让每个字段都被搜索到，如果想让某个字段不被搜索到，可以设置为false	all</span><br><span class="line">format	时间格式字符串模式	date</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">##### 查看映射 mapping  类型</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">查看books索引的mapping</span></span><br><span class="line">GET books/_mapping</span><br><span class="line"><span class="meta">#</span><span class="bash">获取所有的mapping</span></span><br><span class="line">GET _all/_mapping</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">### 插入文档</span></span></span><br><span class="line">PUT books/_doc/1</span><br><span class="line">&#123;</span><br><span class="line">  &quot;title&quot;:&quot;大头儿子小偷爸爸&quot;,</span><br><span class="line">  &quot;price&quot;:100,  </span><br><span class="line">  &quot;addr&quot;:&quot;北京天安门&quot;,</span><br><span class="line">  &quot;company&quot;:&#123;</span><br><span class="line">    &quot;name&quot;:&quot;我爱北京天安门&quot;,</span><br><span class="line">    &quot;company_addr&quot;:&quot;我的家在东北松花江傻姑娘&quot;,</span><br><span class="line">    &quot;employee_count&quot;:10</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;publish_date&quot;:&quot;2019-08-19&quot;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 测试数据2</span></span><br><span class="line">PUT books/_doc/2</span><br><span class="line">&#123;</span><br><span class="line">  &quot;title&quot;:&quot;白雪公主和十个小矮人&quot;,</span><br><span class="line">  &quot;price&quot;:&quot;99&quot;,</span><br><span class="line">  &quot;addr&quot;:&quot;黑暗森里&quot;,</span><br><span class="line">  &quot;company&quot;:&#123;</span><br><span class="line">    &quot;name&quot;:&quot;我的家乡在上海&quot;,</span><br><span class="line">    &quot;company_addr&quot;:&quot;朋友一生一起走&quot;,</span><br><span class="line">    &quot;employee_count&quot;:10</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;publish_date&quot;:&quot;2018-05-19&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="文档的增删改查"><a href="#文档的增删改查" class="headerlink" title="文档的增删改查"></a>文档的增删改查</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 文档增</span></span></span><br><span class="line">PUT test/_doc/1</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;:&quot;顾老二&quot;,</span><br><span class="line">  &quot;age&quot;:30,</span><br><span class="line">  &quot;from&quot;: &quot;gu&quot;,</span><br><span class="line">  &quot;desc&quot;: &quot;皮肤黑、武器长、性格直&quot;,</span><br><span class="line">  &quot;tags&quot;: [&quot;黑&quot;, &quot;长&quot;, &quot;直&quot;]</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 文档改</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 方式一：覆盖更新</span></span></span><br><span class="line">PUT test/_doc/1</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;:&quot;lxx&quot;,</span><br><span class="line">  &quot;age&quot;:30</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 方式二：真更新</span></span></span><br><span class="line">POST test/_doc/1/_update</span><br><span class="line">&#123;</span><br><span class="line">  &quot;doc&quot;: &#123;</span><br><span class="line">    &quot;desc&quot;: &quot;皮肤很黄，武器很长，性格很直&quot;,</span><br><span class="line">    &quot;tags&quot;: [&quot;很黄&quot;,&quot;很长&quot;, &quot;很直&quot;]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">POST test/_update/1</span><br><span class="line">&#123;</span><br><span class="line">  &quot;doc&quot;: &#123;</span><br><span class="line">    &quot;desc&quot;: &quot;xx，yy，zz&quot;,</span><br><span class="line">    &quot;tags&quot;: [&quot;很黄&quot;,&quot;很长&quot;, &quot;很直&quot;]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 文档删</span></span></span><br><span class="line">DELETE test/_doc/1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 文档查（最复杂）</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 方式一：根据id</span></span></span><br><span class="line">GET test/_doc/1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 方式二：根据查询字符串</span></span></span><br><span class="line">GET test/_search?q=from:gu</span><br><span class="line">GET test/_search?q=age:29</span><br><span class="line"><span class="meta">  </span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">### 方式三：结构化查询（常用，功能丰富）</span></span></span><br><span class="line">GET book/_search</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot;: &#123;</span><br><span class="line">    &quot;match&quot;: &#123;</span><br><span class="line">      &quot;name&quot;: &quot;我爱北京天安门天安门上太阳升&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">### 面试重点：term和match的区别</span></span></span><br><span class="line">     term 代表完全匹配，不进行分词器分析</span><br><span class="line">		   term 查询的字段需要在mapping的时候定义好，否则可能词被分词。传入指定的字符串，查不到数据</span><br><span class="line">     match</span><br><span class="line">		   match的查询词会被分词，会把要搜索的词分词 ---&gt; 搜索</span><br><span class="line">  </span><br><span class="line">      存的时候，如果是text类型，会分词，建索引存储</span><br><span class="line"></span><br><span class="line">es是个存数据的地方</span><br><span class="line">	mysql ---&gt; 存到es</span><br><span class="line">	pymysql 取出mysql数据 ---&gt; 存到es中</span><br><span class="line">  查询数据</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="常用接口"><a href="#常用接口" class="headerlink" title="常用接口"></a>常用接口</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://10.0.0.51:9200/_cluster/health?pretty  # 查看集群健康情况</span><br></pre></td></tr></table></figure>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Elasticsearch/" rel="tag"><i class="fa fa-tag"></i> Elasticsearch</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2c9a5c07.html" rel="prev" title="MySQL优化">
+                  <i class="fa fa-chevron-left"></i> MySQL优化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/f9ef965d.html" rel="next" title="Linux磁盘挂载分区">
+                  Linux磁盘挂载分区 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">klcc</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">1.4m</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">21:10</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
